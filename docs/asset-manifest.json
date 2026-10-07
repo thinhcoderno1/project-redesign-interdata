@@ -1,0 +1,174 @@
+[
+  {
+    "source": "C:/Users/interdigi 03/Downloads/KLVN/BlogPost/Viettel-IDC.jpg",
+    "asset": "/images/viettel-idc.jpg",
+    "width": 2000,
+    "height": 1333,
+    "note": "User-supplied photograph copied unchanged on 2026-10-07. Active decorative background for the infrastructure section; no external author or license inferred."
+  },
+  {
+    "source": "https://unsplash.com/photos/an-aerial-view-of-a-large-industrial-building-N9pLLb_M8DQ",
+    "download": "https://images.unsplash.com/photo-1715026323215-a2dbb71272f6?auto=format&fit=max&w=2400&q=88&fm=jpg",
+    "asset": "/images/datacenter-exterior.webp",
+    "width": 2400,
+    "height": 1350,
+    "author": "Geoffrey Moffett",
+    "license": "Unsplash License",
+    "licenseUrl": "https://unsplash.com/license",
+    "note": "Real aerial exterior photograph; source caption identifies a data centre in Coleraine. Decorative background for the infrastructure section, not a verified InterData facility. Source and license checked 2026-10-07."
+  },
+  {
+    "source": "https://pxhere.com/en/photo/628457",
+    "download": "https://c.pxhere.com/photos/e5/b3/server_room_data_center_computers_servers-628457.jpg!d",
+    "asset": "/images/hero-datacenter-aisle.webp",
+    "width": 1200,
+    "height": 2136,
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "note": "Stock photograph of a central aisle between two server rack rows; used only in the hero. Source and license checked 2026-10-07."
+  },
+  {
+    "source": "D:/InterData-Project-News-Website-2026/public/images/logo.webp",
+    "asset": "/images/logo.webp",
+    "width": 500,
+    "height": 174
+  },
+  {
+    "source": "D:/InterData-Project-News-Website-2026/public/images/hero.webp",
+    "asset": "/images/datacenter.webp",
+    "width": 1500,
+    "height": 842
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/testimonial/balico.png",
+    "asset": "/images/balico-person.webp",
+    "width": 320,
+    "height": 320
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/testimonial/thang-nguyen.jpg",
+    "asset": "/images/umix-person.webp",
+    "width": 160,
+    "height": 160
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/testimonial/vu-minh-dao-realdev.jpg",
+    "asset": "/images/realdev-person.webp",
+    "width": 160,
+    "height": 160
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/customer/balico.png",
+    "asset": "/images/balico-logo.webp",
+    "width": 200,
+    "height": 56
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/customer/logo-umix-vietnam.png",
+    "asset": "/images/umix-logo.webp",
+    "width": 148,
+    "height": 53
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/customer/logo-realdev.png",
+    "asset": "/images/realdev-logo.webp",
+    "width": 200,
+    "height": 111
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/news/news.png",
+    "asset": "/images/press-vnexpress.webp",
+    "width": 418,
+    "height": 281
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/news/news-1.png",
+    "asset": "/images/press-thanhnien.webp",
+    "width": 418,
+    "height": 281
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/news/vtv.png",
+    "asset": "/images/press-vtv.webp",
+    "width": 551,
+    "height": 284
+  },
+  {
+    "source": "D:/InterData/home/public/assets/promotions/banner-inter-platinum-series-2026.webp",
+    "asset": "/images/promo-platinum.webp",
+    "width": 750,
+    "height": 750
+  },
+  {
+    "source": "D:/InterData/home/public/assets/promotions/banner-real-cloud-2026.webp",
+    "asset": "/images/promo-cloud.webp",
+    "width": 750,
+    "height": 750
+  },
+  {
+    "source": "D:/InterData/home/public/assets/logo/dai-hoc-bach-khoa.png",
+    "asset": "/images/dai-hoc-bach-khoa.webp",
+    "width": 240,
+    "height": 361
+  },
+  {
+    "source": "D:/InterData/home/public/assets/logo/FPT_Polytechnic.png",
+    "asset": "/images/FPT_Polytechnic.webp",
+    "width": 240,
+    "height": 82
+  },
+  {
+    "source": "D:/InterData/home/public/assets/logo/dai-hoc-cong-thuong.png",
+    "asset": "/images/dai-hoc-cong-thuong.webp",
+    "width": 240,
+    "height": 240
+  },
+  {
+    "source": "D:/InterData/home/public/assets/logo/dai-hoc-yersin.png",
+    "asset": "/images/dai-hoc-yersin.webp",
+    "width": 240,
+    "height": 141
+  },
+  {
+    "source": "D:/InterData/home/public/assets/logo/cao-dang-kinh-te-doi-ngoai.png",
+    "asset": "/images/cao-dang-kinh-te-doi-ngoai.webp",
+    "width": 240,
+    "height": 288
+  },
+  {
+    "source": "D:/InterData/home/public/assets/logo/dai-hoc-gia-dinh.png",
+    "asset": "/images/dai-hoc-gia-dinh.webp",
+    "width": 240,
+    "height": 249
+  },
+  {
+    "source": "D:/InterData/home/public/assets/logo/Melbourne-Polytechnic.png",
+    "asset": "/images/Melbourne-Polytechnic.webp",
+    "width": 240,
+    "height": 124
+  },
+  {
+    "source": "https://interdata.vn/blog/wp-content/uploads/2026/02/Cac-thong-so-can-biet-khi-thue-VPS.jpg",
+    "asset": "/images/cac-thong-so-can-biet-khi-thue-vps.webp",
+    "width": 800,
+    "height": 537
+  },
+  {
+    "source": "https://interdata.vn/blog/wp-content/uploads/2026/03/Huong-dan-su-dung-VPS.webp",
+    "asset": "/images/huong-dan-su-dung-vps.webp",
+    "width": 800,
+    "height": 537
+  },
+  {
+    "source": "https://interdata.vn/blog/wp-content/uploads/2026/03/Bot-telegram-giam-sat-tai-nguyen-VPS.jpg",
+    "asset": "/images/tao-bot-giam-sat-tai-nguyen-vps.webp",
+    "width": 800,
+    "height": 537
+  },
+  {
+    "source": "https://interdata.vn/blog/wp-content/uploads/2024/07/InterData-va-VNPT-hop-tac-chien-luoc-va-khai-thac-ha-tang-Datacenter.jpeg",
+    "asset": "/images/interdata-hop-tac-chien-luoc-cung-vnpt.webp",
+    "width": 960,
+    "height": 759
+  }
+]

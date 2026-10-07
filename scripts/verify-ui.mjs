@@ -1,0 +1,178 @@
+import { chromium, expect } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
+import fs from "node:fs/promises";
+const base = process.env.TEST_BASE_URL || "http://localhost:3100";
+await fs.mkdir("artifacts", { recursive: true });
+const browser = await chromium.launch({ headless: true });
+const results = [];
+try {
+  for (const width of [360, 390, 768, 1024, 1440]) {
+    const context = await browser.newContext({
+      viewport: { width, height: 960 },
+      reducedMotion: "reduce",
+    });
+    const page = await context.newPage();
+    const errors = [];
+    page.on("pageerror", (e) => errors.push(e.message));
+    page.on("response", (r) => {
+      if (r.status() >= 400 && r.url().startsWith(base))
+        errors.push(`${r.status()} ${r.url()}`);
+    });
+    await page.goto(base, { waitUntil: "networkidle" });
+    await page.evaluate(() => document.fonts.ready);
+    await expect(page.locator("h1")).toHaveCount(1);
+    await expect(page.locator("html")).toHaveAttribute("lang", "vi");
+    const audit = await page.evaluate(() => ({
+      width: innerWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+      missingAnchors: [...document.querySelectorAll('a[href^="#"]')]
+        .map((a) => a.getAttribute("href"))
+        .filter((h) => h === "#" || !document.getElementById(h.slice(1))),
+      brokenImages: [...document.images]
+        .filter((i) => i.complete && i.naturalWidth === 0)
+        .map((i) => i.src),
+      sections: [...document.querySelectorAll("main>section")].map(
+        (s) => s.id || s.className,
+      ),
+      fonts: document.fonts.check('16px "Be Vietnam Pro"'),
+    }));
+    expect(audit.scrollWidth, `Overflow ${width}`).toBeLessThanOrEqual(width);
+    expect(audit.missingAnchors).toEqual([]);
+    expect(audit.brokenImages).toEqual([]);
+    await page.screenshot({ path: `artifacts/home-${width}-hero.png` });
+    // Scroll every section to trigger lazy images before full-page evidence.
+    for (const section of await page.locator("main>section").all()) {
+      await section.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(100);
+    }
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(400);
+    await page.screenshot({
+      path: `artifacts/home-${width}-full.png`,
+      fullPage: true,
+    });
+    if (width < 960) {
+      const trigger = page.getByRole("button", { name: "Mở điều hướng" });
+      await trigger.click();
+      await expect(page.getByRole("dialog")).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: "Đóng điều hướng" }),
+      ).toBeFocused();
+      await page.keyboard.press("Shift+Tab");
+      expect(
+        await page.evaluate(() => !!document.activeElement?.closest("dialog")),
+      ).toBe(true);
+      await page.keyboard.press("Escape");
+      await expect(page.getByRole("dialog")).not.toBeVisible();
+      await expect(trigger).toBeFocused();
+      await trigger.click();
+      await page.getByRole("dialog").locator("summary").click();
+      await page
+        .getByRole("dialog")
+        .getByRole("link", { name: "Triển khai Proxmox" })
+        .click();
+      await expect(page.getByRole("dialog")).not.toBeVisible();
+      await expect(page).toHaveURL(/#proxmox$/);
+    } else {
+      await page.evaluate(() => window.scrollTo(0, 0));
+      const toggle = page.getByRole("button", { name: "Giải Pháp" });
+      await toggle.focus();
+      await page.keyboard.press("Enter");
+      await expect(toggle).toHaveAttribute("aria-expanded", "true");
+      await page.keyboard.press("Tab");
+      await expect(
+        page.locator("#solution-navigation a").first(),
+      ).toBeFocused();
+      await page.keyboard.press("Escape");
+      await expect(toggle).toBeFocused();
+      await expect(toggle).toHaveAttribute("aria-expanded", "false");
+      await toggle.click();
+      await page.locator("#solution-navigation a").nth(1).click();
+      await expect(page).toHaveURL(/#kubernetes$/);
+      await expect(toggle).toHaveAttribute("aria-expanded", "false");
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await toggle.click();
+      await page.locator("h1").click();
+      await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    }
+    for (const tab of await page.getByRole("tab").all()) {
+      await tab.click();
+      await expect(tab).toHaveAttribute("aria-selected", "true");
+      const id = await tab.getAttribute("id");
+      await expect(page.getByRole("tabpanel")).toHaveAttribute(
+        "aria-labelledby",
+        id,
+      );
+      await expect(
+        page.getByRole("tabpanel").getByRole("link").first(),
+      ).toHaveAttribute("href", /^https:\/\/interdata.vn\//);
+    }
+    await page.getByRole("tab").first().focus();
+    await page.keyboard.press("End");
+    await expect(page.getByRole("tab").last()).toBeFocused();
+    await page.keyboard.press("Home");
+    await expect(page.getByRole("tab").first()).toBeFocused();
+    await page.keyboard.press("ArrowDown");
+    await expect(page.getByRole("tab").nth(1)).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+    await page.getByRole("tab").first().click();
+    await page.locator("#nhu-cau").scrollIntoViewIfNeeded();
+    await page.screenshot({ path: `artifacts/home-${width}-consultation.png` });
+    const a11y = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+      .analyze();
+    const violations = a11y.violations.map((v) => ({
+      id: v.id,
+      impact: v.impact,
+      description: v.description,
+      nodes: v.nodes.map((n) => ({
+        target: n.target,
+        summary: n.failureSummary,
+      })),
+    }));
+    const targets = await page.evaluate(() =>
+      [...document.querySelectorAll("button,a")]
+        .filter(
+          (e) =>
+            e.getBoundingClientRect().width > 0 &&
+            e.getBoundingClientRect().height > 0,
+        )
+        .map((e) => ({
+          text: e.textContent?.trim() || e.getAttribute("aria-label"),
+          w: Math.round(e.getBoundingClientRect().width),
+          h: Math.round(e.getBoundingClientRect().height),
+        }))
+        .filter((e) => e.w < 24 || e.h < 24),
+    );
+    expect(errors).toEqual([]);
+    results.push({
+      width,
+      audit,
+      errors,
+      violations,
+      smallTargets: targets,
+      interactions: "passed",
+    });
+    await context.close();
+  }
+  const page = await browser.newPage();
+  await page.goto(`${base}/content-review`);
+  await expect(
+    page.getByRole("heading", { name: "Nội dung chờ duyệt", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator("tbody tr")).toHaveCount(7);
+  await page.close();
+} finally {
+  await fs.writeFile(
+    "artifacts/qa-results.json",
+    JSON.stringify(results, null, 2),
+  );
+  await browser.close();
+}
+for (const result of results)
+  console.log(
+    `${result.width}px: ${result.violations.length} accessibility violations; ${result.smallTargets.length} small targets; interactions passed`,
+  );
+expect(results.flatMap((r) => r.violations)).toEqual([]);
