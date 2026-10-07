@@ -170,5 +170,61 @@
     "asset": "/images/interdata-hop-tac-chien-luoc-cung-vnpt.webp",
     "width": 960,
     "height": 759
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/customer/logo-seoviet.png",
+    "asset": "/images/testimonials/logo-seoviet.png",
+    "width": 609,
+    "height": 236,
+    "note": "Customer logo from the active testimonials-2.jsx feedback content; copied unchanged on 2026-10-07."
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/customer/logo-realdev.png",
+    "asset": "/images/testimonials/logo-realdev.png",
+    "width": 500,
+    "height": 277,
+    "note": "Customer logo from the active testimonials-2.jsx feedback content; copied unchanged on 2026-10-07."
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/customer/balico.png",
+    "asset": "/images/testimonials/balico.png",
+    "width": 400,
+    "height": 111,
+    "note": "Customer logo from the active testimonials-2.jsx feedback content; copied unchanged on 2026-10-07."
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/customer/logo-themewpgiare-truongphong.png",
+    "asset": "/images/testimonials/logo-themewpgiare-truongphong.png",
+    "width": 1024,
+    "height": 269,
+    "note": "Customer logo from the active testimonials-2.jsx feedback content; copied unchanged on 2026-10-07."
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/customer/logo-umix-vietnam.png",
+    "asset": "/images/testimonials/logo-umix-vietnam.png",
+    "width": 148,
+    "height": 53,
+    "note": "Customer logo from the active testimonials-2.jsx feedback content; copied unchanged on 2026-10-07."
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/customer/logo-digizone-vietnam.png",
+    "asset": "/images/testimonials/logo-digizone-vietnam.png",
+    "width": 1024,
+    "height": 384,
+    "note": "Customer logo from the active testimonials-2.jsx feedback content; copied unchanged on 2026-10-07."
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/customer/logo-donghohaitrieu.png",
+    "asset": "/images/testimonials/logo-donghohaitrieu.png",
+    "width": 900,
+    "height": 190,
+    "note": "Customer logo from the active testimonials-2.jsx feedback content; copied unchanged on 2026-10-07."
+  },
+  {
+    "source": "D:/InterData/thue-vps/public/images/skin/customer/logo-jobkey.png",
+    "asset": "/images/testimonials/logo-jobkey.png",
+    "width": 260,
+    "height": 55,
+    "note": "Customer logo from the active testimonials-2.jsx feedback content; copied unchanged on 2026-10-07."
   }
 ]

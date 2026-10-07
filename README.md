@@ -15,11 +15,15 @@ npm run typecheck
 npm run build
 npm run start
 npm run test:ui
+npm run test:parallax
+npm run test:testimonials
 npm run test:links
 node scripts/contrast-check.mjs
 ```
 
-`test:ui` và `test:links` cần server cục bộ đang chạy. Nếu thiếu browser của Playwright, chạy `npx playwright install chromium`. Không chạy `dev` và `start` cùng port. Lệnh `start` phục vụ bản production cục bộ sau khi build; chưa deploy.
+`test:ui`, `test:parallax`, `test:testimonials` và `test:links` cần server cục bộ đang chạy. Nếu thiếu browser của Playwright, chạy `npx playwright install chromium`. Không chạy `dev` và `start` cùng port. Lệnh `start` phục vụ bản production cục bộ sau khi build; chưa deploy.
+
+Section phản hồi có 8 feedback từ `D:\InterData\thue-vps\components\testimonials-2.jsx`, sử dụng logo và nguyên văn lời chia sẻ. Carousel chuyển bằng nút, chấm chọn, bàn phím, kéo chuột hoặc vuốt; không tự chạy. `test:testimonials` kiểm tra thêm bản nguồn nếu checkout này có sẵn, hoặc đường dẫn đặt trong `TESTIMONIAL_SOURCE_ROOT`.
 
 - `src/data/content.ts`: dịch vụ, giải pháp, phản hồi, báo chí, trường học, CTA và trạng thái duyệt.
 - `src/data/articles.json`: tiêu đề, ảnh, URL và ngày xuất bản lấy từ WordPress API chính thức; trang không gọi API khi tải.

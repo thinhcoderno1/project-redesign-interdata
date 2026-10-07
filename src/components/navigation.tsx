@@ -6,12 +6,33 @@ import { links, solutions } from "@/data/content";
 import { Icon } from "./icon";
 
 export function Navigation() {
+  const header = useRef<HTMLElement>(null);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const menu = useRef<HTMLDivElement>(null);
   const solutionTrigger = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    const element = header.current;
+    if (!element) return;
+    const root = document.documentElement;
+    const previous = root.style.getPropertyValue("--site-header-height");
+    const update = () => {
+      root.style.setProperty(
+        "--site-header-height",
+        `${Math.ceil(element.getBoundingClientRect().height)}px`,
+      );
+    };
+    const observer = new ResizeObserver(update);
+    update();
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      if (previous) root.style.setProperty("--site-header-height", previous);
+      else root.style.removeProperty("--site-header-height");
+    };
+  }, []);
   useEffect(() => {
     const close = (e: PointerEvent) => {
       if (!menu.current?.contains(e.target as Node)) setSolutionsOpen(false);
@@ -49,7 +70,7 @@ export function Navigation() {
     { name: "Chỗ Đặt Máy Chủ", href: links.colocation },
   ];
   return (
-    <header id="trang-chu">
+    <header className="site-header" ref={header}>
       <a className="skip-link" href="#noi-dung">
         Bỏ qua điều hướng
       </a>

@@ -6,8 +6,11 @@ Bản review ngày 07/10/2026. Chưa deploy hoặc publish.
 
 - Đủ thứ tự A–N: utility/header, hero, khuyến mãi, 4 dịch vụ, 3 giải pháp, năng lực, phản hồi, báo chí, giáo dục, tư vấn theo nhu cầu, hạ tầng, tài nguyên, CTA và footer.
 - Hero full width, nội dung căn giữa. Ảnh chụp lối đi giữa hai dãy rack từ PxHere (CC0), lớp phủ navy 72%, vị trí ảnh căn giữa; không dùng ảnh AI.
+- Parallax nhẹ cho nền Hero và section hạ tầng: biên độ tối đa ±64px trên desktop/tablet, ±28px trên mobile. Chỉ cập nhật theo frame khi section đang hiển thị; hỗ trợ thay đổi `prefers-reduced-motion` tức thời và nền tĩnh khi JavaScript không chạy.
 - 22 color tokens theo tài liệu, focus 3px/offset 4px, trạng thái selected/hover, skip link, `lang=vi`, một H1 trên mỗi trang.
 - Menu desktop mở bằng click/Enter, đóng bằng Escape hoặc click ngoài; mobile dialog có focus containment, trả focus và khóa scroll. Selector tư vấn cập nhật nội dung, hướng chọn và CTA; hỗ trợ phím mũi tên, Home/End.
+- Top bar và nav bar nằm trong cùng một header sticky, nền trắng và lớp bóng nhẹ. Khoảng tránh header khi đến anchor theo chiều cao thực tế, cập nhật bằng ResizeObserver; có fallback CSS trên desktop/tablet/mobile.
+- Phản hồi chuyển thành carousel thủ công gồm 8 slide: logo doanh nghiệp và nguyên văn lời chia sẻ, bố cục mới theo giao diện homepage. Có nút trước/sau, chấm chọn, phím trái/phải/Home/End, kéo chuột và vuốt cảm ứng; không autoplay. Khi JavaScript không chạy, nội dung vẫn có sẵn và lướt ngang bằng cơ chế native của trình duyệt.
 - Ảnh WebP, font Be Vietnam Pro đóng gói cục bộ, ảnh đầu trang được ưu tiên, ảnh bên dưới lazy-load. Bản đồ SVG trang trí, không có datacenter markers/routes.
 - Không thêm Shared Hosting vào dịch vụ chính, không dựng trang sản phẩm/backend/account riêng, không tạo form báo thành công giả.
 
@@ -17,8 +20,8 @@ Hai tài liệu brief/color tìm thấy trong `C:\Users\interdigi 03\Downloads\K
 
 | Nội dung | Nguồn | Cách dùng |
 | --- | --- | --- |
-| Phản hồi | `D:\InterData\thue-vps\components\testimonials-2.jsx` | Giữ nguyên lời chia sẻ và attribution Trịnh Bảo/BALICO, Thắng Nguyễn/UMIX, Vĩnh Minh Đạo/RealDev. Không thêm rating, doanh thu hoặc kết quả định lượng. |
-| Ảnh khách hàng/logo | `D:\InterData\thue-vps\public\images\skin\testimonial` và `customer` | BALICO chỉ có logo tại asset được chọn, nên không trình bày logo như ảnh Trịnh Bảo. Hai portrait còn lại giữ attribution từ dự án nguồn, cần duyệt quan hệ ảnh/người. |
+| Phản hồi | `D:\InterData\thue-vps\components\testimonials-2.jsx` (được import tại `app/page.js`) | Giữ đủ 8 feedback, nguyên văn lời chia sẻ, tên và đơn vị theo thứ tự nguồn: SEO Việt, RealDev, BALICO, Trường Phong, UMIX Việt Nam, Digizone Việt Nam, Đồng Hồ Hải Triều, Jobke. Chỉ sử dụng content; không lấy thiết kế, animation hoặc rating. |
+| Logo phản hồi | `D:\InterData\thue-vps\public\images\skin\customer` | Sao chép nguyên bản 8 logo được khai báo trong feedback đang dùng, đóng gói tại `/images/testimonials/`. Dùng đúng tỷ lệ, không gán logo thành chân dung khách hàng. Các portrait từ bố cục cũ không còn hiển thị trong section này. |
 | Báo chí | `D:\InterData\thue-vps\components\partners.js` và `public\images\skin\news` | Chọn bài VnExpress, Thanh Niên, VTV; giữ title, thumbnail, URL. Không coi bài báo là endorsement. |
 | Trường học | `D:\InterData\home\components\free-hosting\infine-slider.tsx` và `public\assets\logo` | 7 logo, giữ màu và tỷ lệ. Intro không bổ sung phạm vi hợp tác. |
 | Chiến dịch | `D:\InterData\home\components\header\dealhosting.js` và `public\assets\promotions` | 2 artwork nguyên vẹn, layout mới. Không thêm giá, ngày hết hạn hoặc countdown. Banner có thông báo chờ duyệt trong review; public mode ẩn các banner pending. |
@@ -32,6 +35,7 @@ Chi tiết đường dẫn ảnh và kích thước: `asset-manifest.json`. Ch�
 
 ## Kiểm tra đã thực hiện
 
+- Carousel phản hồi ngày 07/10/2026: `test:testimonials` đạt tại 320, 390, 768, 1024, 1440, 1920px trên bản production cục bộ. Đối chiếu đủ 8 lời chia sẻ/tên/đơn vị với component nguồn và cả 8 logo khớp byte với file gốc. Nút trước/sau/chấm chọn, bàn phím, kéo chuột, vuốt cảm ứng tại 390px, giữ slide khi resize, nội dung khi tắt JavaScript và kiểm tra không tự chạy đều đạt. Không có tràn ngang, chữ bị cắt hoặc page errors. DOM homepage ngoài section phản hồi và heading của section giữ nguyên so với baseline trước thay đổi. Bằng chứng: `artifacts/testimonials-results.json`, `artifacts/testimonials-preservation.json`, `artifacts/testimonials-*.png`. `test:ui` chạy lại đạt 5 viewport, không axe violations hoặc control/link nhỏ hơn 24px; `test:parallax` chạy lại đạt. Các thay đổi carousel được kiểm tra cục bộ, chưa deploy.
 - `npm run lint`: đạt, không lỗi/cảnh báo.
 - `npm run typecheck`: đạt.
 - `npm run build`: đạt; tạo static routes `/`, `/content-review` và not-found. `npm run start` chạy ở http://localhost:3100.

@@ -9,6 +9,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test:ui": "node scripts/verify-ui.mjs",
+    "test:parallax": "node scripts/verify-parallax.mjs",
+    "test:testimonials": "node scripts/verify-testimonials.mjs",
     "test:links": "node scripts/verify-links.mjs"
   },
   "dependencies": {

@@ -44,6 +44,10 @@ try {
     for (const section of await page.locator("main>section").all()) {
       await section.scrollIntoViewIfNeeded();
       await page.waitForTimeout(100);
+      expect((await page.locator(".site-header").boundingBox()).y).toBeCloseTo(
+        0,
+        1,
+      );
     }
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.waitForTimeout(400);
@@ -73,9 +77,23 @@ try {
         .click();
       await expect(page.getByRole("dialog")).not.toBeVisible();
       await expect(page).toHaveURL(/#proxmox$/);
+      await expect
+        .poll(() =>
+          page.locator("#proxmox").evaluate((target) => {
+            const gap =
+              target.getBoundingClientRect().top -
+              document.querySelector(".site-header").getBoundingClientRect()
+                .bottom;
+            return gap >= 0 && gap <= 64;
+          }),
+        )
+        .toBe(true);
     } else {
       await page.evaluate(() => window.scrollTo(0, 0));
-      const toggle = page.getByRole("button", { name: "Giải Pháp" });
+      const toggle = page.getByRole("button", {
+        name: "Giải Pháp",
+        exact: true,
+      });
       await toggle.focus();
       await page.keyboard.press("Enter");
       await expect(toggle).toHaveAttribute("aria-expanded", "true");
@@ -89,6 +107,17 @@ try {
       await toggle.click();
       await page.locator("#solution-navigation a").nth(1).click();
       await expect(page).toHaveURL(/#kubernetes$/);
+      await expect
+        .poll(() =>
+          page.locator("#kubernetes").evaluate((target) => {
+            const gap =
+              target.getBoundingClientRect().top -
+              document.querySelector(".site-header").getBoundingClientRect()
+                .bottom;
+            return gap >= 0 && gap <= 64;
+          }),
+        )
+        .toBe(true);
       await expect(toggle).toHaveAttribute("aria-expanded", "false");
       await page.evaluate(() => window.scrollTo(0, 0));
       await toggle.click();
@@ -147,6 +176,8 @@ try {
         .filter((e) => e.w < 24 || e.h < 24),
     );
     expect(errors).toEqual([]);
+    await page.locator('a[href="#trang-chu"]').click();
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
     results.push({
       width,
       audit,

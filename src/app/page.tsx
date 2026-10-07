@@ -4,6 +4,8 @@ import { Navigation } from "@/components/navigation";
 import { Consultation } from "@/components/consultation";
 import { Icon } from "@/components/icon";
 import { WorldMap } from "@/components/world-map";
+import { TestimonialCarousel } from "@/components/testimonial-carousel";
+import { ParallaxBackground } from "@/components/parallax-background";
 import {
   articles,
   claims,
@@ -67,18 +69,21 @@ export default function Home() {
   const capacityClaim = visibleClaims.find((c) => c.id === "business");
   return (
     <>
+      <div id="trang-chu" aria-hidden="true" />
       <Navigation />
       <main id="noi-dung">
         <section className="hero-shell" aria-labelledby="hero-title">
           <div className="hero">
-            <Image
-              src="/images/hero-datacenter-aisle.webp"
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              className="hero-photo"
-            />
+            <ParallaxBackground className="hero-background">
+              <Image
+                src="/images/hero-datacenter-aisle.webp"
+                alt=""
+                fill
+                priority
+                sizes="100vw"
+                className="hero-photo"
+              />
+            </ParallaxBackground>
             <div className="hero-overlay" />
             <div className="hero-content">
               <span className="hero-badge">
@@ -254,44 +259,7 @@ export default function Home() {
               title="Câu Chuyện Thành Công Cùng InterData"
               description="Những chia sẻ về trải nghiệm sử dụng dịch vụ và làm việc với đội ngũ hỗ trợ."
             />
-            <div className="testimonial-layout">
-              {testimonials.map((t, i) => (
-                <article
-                  className={`testimonial testimonial-${i}`}
-                  key={t.name}
-                >
-                  <div className="quote-header">
-                    <span className="quote-mark" aria-hidden="true">
-                      “
-                    </span>
-                    <Image
-                      className="customer-logo"
-                      src={t.logo}
-                      alt={t.company}
-                      width={140}
-                      height={48}
-                      sizes="140px"
-                    />
-                  </div>
-                  <blockquote>{t.quote}</blockquote>
-                  <div className="attribution">
-                    {i !== 0 && (
-                      <Image
-                        src={t.image}
-                        alt={t.name}
-                        width={56}
-                        height={56}
-                        sizes="56px"
-                      />
-                    )}
-                    <div>
-                      <strong>{t.name}</strong>
-                      <span>{t.company}</span>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
+            <TestimonialCarousel items={testimonials} />
           </div>
         </section>
         <section id="bao-chi" className="press section">
@@ -357,7 +325,7 @@ export default function Home() {
         </section>
         <Consultation />
         <section id="ha-tang" className="infrastructure dark section">
-          <div className="infra-background" aria-hidden="true">
+          <ParallaxBackground className="infra-background">
             <Image
               src="/images/viettel-idc.jpg"
               alt=""
@@ -366,7 +334,7 @@ export default function Home() {
               className="infra-photo"
             />
             <div className="infra-overlay" />
-          </div>
+          </ParallaxBackground>
           <div className="container infrastructure-layout">
             <div className="infra-content">
               <span className="eyebrow">NỀN TẢNG PHÍA SAU DỊCH VỤ</span>
@@ -394,7 +362,8 @@ export default function Home() {
               </a>
               {showEditorialNotes && (
                 <p className="photo-credit">
-                  Ảnh minh họa datacenter · Viettel-IDC.jpg (tệp người dùng cung cấp)
+                  Ảnh minh họa datacenter · Viettel-IDC.jpg (tệp người dùng cung
+                  cấp)
                 </p>
               )}
             </div>
