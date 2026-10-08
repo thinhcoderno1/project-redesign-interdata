@@ -6,6 +6,8 @@ import { Icon } from "@/components/icon";
 import { WorldMap } from "@/components/world-map";
 import { TestimonialCarousel } from "@/components/testimonial-carousel";
 import { ParallaxBackground } from "@/components/parallax-background";
+import { InfrastructureServices } from "@/components/infrastructure-services";
+import solutionStyles from "@/components/solutions.module.css";
 import {
   articles,
   claims,
@@ -143,80 +145,40 @@ export default function Home() {
             />
           </a>
         </section>
-        <section id="dich-vu" className="section services">
-          <div className="container">
-            <SectionHeading
-              eyebrow="DỊCH VỤ HẠ TẦNG"
-              title="Chọn nền tảng để vận hành hệ thống"
-              description="Máy chủ ảo, tài nguyên đám mây hay phần cứng riêng — bắt đầu từ nhu cầu sử dụng và cách bạn muốn quản trị."
-            />
-            <div className="service-grid">
-              {services.map((s) => (
-                <article className="service-card" key={s.id}>
-                  <div className="service-top">
-                    <span className="icon-box">
+        <InfrastructureServices />
+        <section
+          id="giai-phap"
+          className={`solutions dark section ${solutionStyles.section}`}
+        >
+          <div className={`container ${solutionStyles.layout}`}>
+            <div className={solutionStyles.intro}>
+              <div>
+                <span className="eyebrow">GIẢI PHÁP TRIỂN KHAI</span>
+                <h2>Từ tài nguyên đến môi trường chạy ứng dụng</h2>
+              </div>
+              <div className={solutionStyles.introDetail}>
+                <p>
+                  Đã xác định bài toán? Trao đổi cách tổ chức mạng riêng, máy
+                  ảo, container và lưu trữ trên nền hạ tầng phù hợp.
+                </p>
+                <a href="#nhu-cau" className="text-link">
+                  Tìm hướng triển khai <Icon name="arrow" />
+                </a>
+              </div>
+            </div>
+            <div className={solutionStyles.grid}>
+              {solutions.map((s) => (
+                <article id={s.id} className={solutionStyles.card} key={s.id}>
+                  <div className={solutionStyles.cardTop}>
+                    <div className={solutionStyles.icon}>
                       <Icon name={s.icon} />
-                    </span>
-                    <span className="service-type">{s.type}</span>
-                  </div>
-                  <h3>{s.name}</h3>
-                  <p>{s.description}</p>
-                  <ul>
-                    {s.features.map((f) => (
-                      <li key={f}>
-                        <Icon name="check" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <a className="service-link" href={s.href}>
-                    {s.cta}
-                    <Icon name="arrow" />
-                  </a>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-        <section id="giai-phap" className="solutions dark section">
-          <div className="container solution-layout">
-            <div className="solution-intro">
-              <span className="eyebrow">GIẢI PHÁP TRIỂN KHAI</span>
-              <h2>
-                Từ tài nguyên
-                <br />
-                đến môi trường
-                <br />
-                chạy ứng dụng
-              </h2>
-              <p>
-                Đã xác định bài toán? Trao đổi cách tổ chức máy ảo, container và
-                lưu trữ trên nền hạ tầng phù hợp.
-              </p>
-              <a href="#nhu-cau" className="text-link">
-                Tìm hướng triển khai <Icon name="arrow" />
-              </a>
-            </div>
-            <div className="solution-list">
-              {solutions.map((s, i) => (
-                <article id={s.id} className="solution-card" key={s.id}>
-                  <div className="solution-icon">
-                    <Icon name={s.icon} />
-                  </div>
-                  <div>
-                    <span className="solution-number">
-                      0{i + 1} / {s.tags}
-                    </span>
+                    </div>
                     <h3>{s.name}</h3>
+                  </div>
+                  <div className={solutionStyles.content}>
                     <p>{s.description}</p>
                     <a className="text-link" href={links.contact}>
-                      Trao đổi về{" "}
-                      {i === 0
-                        ? "Proxmox"
-                        : i === 1
-                          ? "Kubernetes"
-                          : "S3 Storage"}{" "}
-                      <Icon name="external" />
+                      Trao đổi về {s.shortName} <Icon name="external" />
                     </a>
                   </div>
                 </article>

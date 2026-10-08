@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="480" viewBox="0 0 900 480" fill="none">
+  <defs>
+    <linearGradient id="wave" x1="0" y1="210" x2="800" y2="70" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#69BDFF" stop-opacity=".24"/>
+      <stop offset=".45" stop-color="#438AFF" stop-opacity=".18"/>
+      <stop offset=".8" stop-color="#65AAFF" stop-opacity=".07"/>
+      <stop offset="1" stop-color="#65AAFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="data" x1="0" y1="160" x2="720" y2="100" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8BD8FF" stop-opacity=".32"/>
+      <stop offset=".55" stop-color="#6DB7FF" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#6DB7FF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g stroke="url(#wave)" stroke-width="1.2" stroke-linecap="round">
+    <path d="M-100-56C24-24 48 121 182 144S347-28 500-6 690 101 860-92"/>
+    <path d="M-100-38C24-6 48 133 182 158S347-16 500 6 690 109 860-78"/>
+    <path d="M-100-20C24 12 48 145 182 172S347-4 500 18 690 117 860-64"/>
+    <path d="M-100-2C24 30 48 157 182 186S347 8 500 30 690 125 860-50"/>
+    <path d="M-100 16C24 48 48 169 182 200S347 20 500 42 690 133 860-36"/>
+    <path d="M-100 34C24 66 48 181 182 214S347 32 500 54 690 141 860-22"/>
+    <path d="M-100 52C24 84 48 193 182 228S347 44 500 66 690 149 860-8"/>
+    <path d="M-100 70C24 102 48 205 182 242S347 56 500 78 690 157 860 6"/>
+    <path d="M-100 88C24 120 48 217 182 256S347 68 500 90 690 165 860 20"/>
+    <path d="M-100 106C24 138 48 229 182 270S347 80 500 102 690 173 860 34"/>
+    <path d="M-100 124C24 156 48 241 182 284S347 92 500 114 690 181 860 48"/>
+    <path d="M-100 142C24 174 48 253 182 298S347 104 500 126 690 189 860 62"/>
+    <path d="M-100 160C24 192 48 265 182 312S347 116 500 138 690 197 860 76"/>
+    <path d="M-100 178C24 210 48 277 182 326S347 128 500 150 690 205 860 90"/>
+    <path d="M-100 196C24 228 48 289 182 340S347 140 500 162 690 213 860 104"/>
+    <path d="M-100 214C24 246 48 301 182 354S347 152 500 174 690 221 860 118"/>
+  </g>
+  <g stroke="url(#data)" stroke-width="2" stroke-linecap="round" stroke-dasharray="22 150 5 110">
+    <path d="M-100-2C24 30 48 157 182 186S347 8 500 30 690 125 860-50"/>
+    <path d="M-100 70C24 102 48 205 182 242S347 56 500 78 690 157 860 6" stroke-dashoffset="85"/>
+    <path d="M-100 142C24 174 48 253 182 298S347 104 500 126 690 189 860 62" stroke-dashoffset="170"/>
+    <path d="M-100 214C24 246 48 301 182 354S347 152 500 174 690 221 860 118" stroke-dashoffset="40"/>
+  </g>
+</svg>

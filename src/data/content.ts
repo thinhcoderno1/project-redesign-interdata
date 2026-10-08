@@ -141,24 +141,45 @@ export const services = [
 ] as const;
 export const solutions = [
   {
+    id: "private-network",
+    name: "Triển khai Private Network",
+    shortName: "Private Network",
+    icon: "network",
+    description:
+      "Kết nối các máy chủ qua mạng riêng để tổ chức giao tiếp nội bộ. Trao đổi sơ đồ kết nối, phân vùng mạng và nhu cầu truy cập của hệ thống.",
+    tags: "Mạng riêng · Kết nối nội bộ",
+  },
+  {
     id: "proxmox",
-    name: "Triển khai Proxmox",
+    name: "Triển Khai Ảo Hóa Proxmox / CEPH",
+    shortName: "Proxmox / CEPH",
     icon: "layers",
     description:
-      "Tổ chức máy ảo và container trên hạ tầng riêng. Bắt đầu từ số lượng máy ảo, tài nguyên và cách vận hành.",
-    tags: "Ảo hóa · Quản trị tập trung",
+      "Triển khai môi trường ảo hóa Proxmox kết hợp lưu trữ phân tán CEPH. Lựa chọn tài nguyên, kiến trúc cụm và phương án vận hành theo nhu cầu.",
+    tags: "Ảo hóa · Lưu trữ phân tán",
   },
   {
     id: "kubernetes",
     name: "Triển khai Kubernetes (K8s)",
+    shortName: "Kubernetes",
     icon: "boxes",
     description:
       "Triển khai ứng dụng container theo cụm. Làm rõ kiến trúc, môi trường chạy và trách nhiệm quản trị trước khi chọn.",
     tags: "Container · Điều phối ứng dụng",
   },
   {
+    id: "vmware",
+    name: "Triển khai VMWare",
+    shortName: "VMware",
+    icon: "database",
+    description:
+      "Triển khai môi trường máy ảo trên nền tảng VMware. Trao đổi tài nguyên, yêu cầu bản quyền và cách quản trị theo hệ thống bạn đang vận hành.",
+    tags: "Máy ảo · Quản trị hạ tầng",
+  },
+  {
     id: "s3",
-    name: "Lưu trữ S3 Storage",
+    name: "Triển khai lưu trữ S3 Storage",
+    shortName: "S3 Storage",
     icon: "harddrive",
     description:
       "Lưu trữ đối tượng cho tệp, hình ảnh và bản sao lưu. Đánh giá dung lượng, truy cập và yêu cầu tích hợp của ứng dụng.",
@@ -231,7 +252,7 @@ export const testimonials = [
   },
   {
     name: "Tạ Quốc Khánh",
-    company: "Công ty Cổ phần Jobke",
+    company: "Công ty Cổ phần Jobkey",
     logo: "/images/testimonials/logo-jobkey.png",
     quote:
       "Đội ngũ hỗ trợ kỹ thuật nhiệt tình và nhanh chóng. Tôi sẽ giới thiệu thêm cho bạn bè và đối tác của mình về dịch vụ của InterData trong thời gian tới.",

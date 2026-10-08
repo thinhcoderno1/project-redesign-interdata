@@ -4,13 +4,13 @@ Bản review ngày 07/10/2026. Chưa deploy hoặc publish.
 
 ## Đã triển khai
 
-- Đủ thứ tự A–N: utility/header, hero, khuyến mãi, 4 dịch vụ, 3 giải pháp, năng lực, phản hồi, báo chí, giáo dục, tư vấn theo nhu cầu, hạ tầng, tài nguyên, CTA và footer.
+- Đủ thứ tự A–N: utility/header, hero, khuyến mãi, dịch vụ hạ tầng, 5 giải pháp, năng lực, phản hồi, báo chí, giáo dục, tư vấn theo nhu cầu, hạ tầng, tài nguyên, CTA và footer.
 - Hero full width, nội dung căn giữa. Ảnh chụp lối đi giữa hai dãy rack từ PxHere (CC0), lớp phủ navy 72%, vị trí ảnh căn giữa; không dùng ảnh AI.
 - Parallax nhẹ cho nền Hero và section hạ tầng: biên độ tối đa ±64px trên desktop/tablet, ±28px trên mobile. Chỉ cập nhật theo frame khi section đang hiển thị; hỗ trợ thay đổi `prefers-reduced-motion` tức thời và nền tĩnh khi JavaScript không chạy.
 - 22 color tokens theo tài liệu, focus 3px/offset 4px, trạng thái selected/hover, skip link, `lang=vi`, một H1 trên mỗi trang.
 - Menu desktop mở bằng click/Enter, đóng bằng Escape hoặc click ngoài; mobile dialog có focus containment, trả focus và khóa scroll. Selector tư vấn cập nhật nội dung, hướng chọn và CTA; hỗ trợ phím mũi tên, Home/End.
 - Top bar và nav bar nằm trong cùng một header sticky, nền trắng và lớp bóng nhẹ. Khoảng tránh header khi đến anchor theo chiều cao thực tế, cập nhật bằng ResizeObserver; có fallback CSS trên desktop/tablet/mobile.
-- Phản hồi chuyển thành carousel thủ công gồm 8 slide: logo doanh nghiệp và nguyên văn lời chia sẻ, bố cục mới theo giao diện homepage. Có nút trước/sau, chấm chọn, phím trái/phải/Home/End, kéo chuột và vuốt cảm ứng; không autoplay. Khi JavaScript không chạy, nội dung vẫn có sẵn và lướt ngang bằng cơ chế native của trình duyệt.
+- Phản hồi gồm 8 card trong 3 slide (3–3–2), desktop 3 cột, màn hình nhỏ xếp dọc. Card theo mẫu người dùng ngày 08/10/2026: logo trong ô nổi, sao vàng trang trí, quote và thông tin khách hàng dưới đường phân cách. Sao không biểu thị số điểm đánh giá được xác minh. Mặc định trích khoảng 25% số từ; “Xem đầy đủ / Thu gọn” dùng `details/summary` native, giữ nguyên toàn bộ lời chia sẻ và dùng được khi không có JavaScript. Có nút trước/sau, chấm chọn, phím trái/phải/Home/End, kéo chuột và vuốt cảm ứng; không autoplay. Khi JavaScript không chạy, lướt ngang bằng cơ chế native của trình duyệt.
 - Ảnh WebP, font Be Vietnam Pro đóng gói cục bộ, ảnh đầu trang được ưu tiên, ảnh bên dưới lazy-load. Bản đồ SVG trang trí, không có datacenter markers/routes.
 - Không thêm Shared Hosting vào dịch vụ chính, không dựng trang sản phẩm/backend/account riêng, không tạo form báo thành công giả.
 
@@ -20,7 +20,7 @@ Hai tài liệu brief/color tìm thấy trong `C:\Users\interdigi 03\Downloads\K
 
 | Nội dung | Nguồn | Cách dùng |
 | --- | --- | --- |
-| Phản hồi | `D:\InterData\thue-vps\components\testimonials-2.jsx` (được import tại `app/page.js`) | Giữ đủ 8 feedback, nguyên văn lời chia sẻ, tên và đơn vị theo thứ tự nguồn: SEO Việt, RealDev, BALICO, Trường Phong, UMIX Việt Nam, Digizone Việt Nam, Đồng Hồ Hải Triều, Jobke. Chỉ sử dụng content; không lấy thiết kế, animation hoặc rating. |
+| Phản hồi | `D:\InterData\thue-vps\components\testimonials-2.jsx` (được import tại `app/page.js`) | Giữ đủ 8 feedback, nguyên văn lời chia sẻ, tên và đơn vị theo thứ tự nguồn: SEO Việt, RealDev, BALICO, Trường Phong, UMIX Việt Nam, Digizone Việt Nam, Đồng Hồ Hải Triều, Jobkey. Tên Jobke từ nguồn đã được sửa thành Jobkey trong dữ liệu project ngày 08/10/2026. Chỉ sử dụng content; không lấy thiết kế, animation hoặc rating. |
 | Logo phản hồi | `D:\InterData\thue-vps\public\images\skin\customer` | Sao chép nguyên bản 8 logo được khai báo trong feedback đang dùng, đóng gói tại `/images/testimonials/`. Dùng đúng tỷ lệ, không gán logo thành chân dung khách hàng. Các portrait từ bố cục cũ không còn hiển thị trong section này. |
 | Báo chí | `D:\InterData\thue-vps\components\partners.js` và `public\images\skin\news` | Chọn bài VnExpress, Thanh Niên, VTV; giữ title, thumbnail, URL. Không coi bài báo là endorsement. |
 | Trường học | `D:\InterData\home\components\free-hosting\infine-slider.tsx` và `public\assets\logo` | 7 logo, giữ màu và tỷ lệ. Intro không bổ sung phạm vi hợp tác. |
@@ -55,9 +55,11 @@ Bằng chứng: `artifacts/qa-results.json`, `artifacts/link-check.json`, `artif
 3. **Chiến dịch:** duyệt tính hiệu lực và các điều kiện/giá có sẵn trong artwork trước khi cho phép public. Hiện cả hai campaign là pending.
 4. **Tài sản:** duyệt quyền dùng quote, portrait, logo trường, tên trường và phạm vi quan hệ. Có nguồn local không đồng nghĩa đã xác minh độc lập hoặc có approval mới.
 5. **Ảnh thực tế:** ảnh minh họa stock đã có; chưa có ảnh facility InterData được xác nhận cho brief này. Có thể thay bằng tài sản datacenter đã duyệt.
-6. **Đích giải pháp:** chưa có URL riêng được xác nhận cho Proxmox, Kubernetes, S3. Header/footer đến anchor thật trên homepage, CTA đến contact. Không tự tạo product page.
+6. **Đích giải pháp:** chưa có URL riêng được xác nhận cho Private Network, Proxmox / CEPH, Kubernetes, VMware, S3. Header/footer đến anchor thật trên homepage, CTA đến contact. Không tự tạo product page.
 7. **Tích hợp:** CTA dùng trang contact chính thức và hotline/email đã đối chiếu. Không có form/backend/analytics mới; không kiểm thử việc gửi form trên trang contact bên ngoài.
 8. **Tài khoản:** đã xác nhận hai trang đích qua Chrome. Chưa kiểm thử gửi form, đăng nhập thành công hoặc tạo tài khoản; đó là chức năng của hệ thống hỗ trợ hiện hữu, ngoài phạm vi homepage.
+
+Danh sách 5 giải pháp được cập nhật theo yêu cầu demo ngày 08/10/2026. Mô tả Proxmox / CEPH tham chiếu [tài liệu Proxmox VE](https://pve.proxmox.com/pve-docs/pve-admin-guide.pdf); mô tả ảo hóa VMware tham chiếu [VMware vSphere](https://www.vmware.com/products/cloud-infrastructure/vsphere). Các mô tả không bổ sung cam kết hiệu năng, cấu hình, giá hoặc bản quyền đi kèm.
 
 ## Bản review và bản public
 

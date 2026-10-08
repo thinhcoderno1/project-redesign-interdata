@@ -2,6 +2,21 @@ import { chromium, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import fs from "node:fs/promises";
 const base = process.env.TEST_BASE_URL || "http://localhost:3100";
+const expectedSolutions = [
+  {
+    id: "private-network",
+    name: "Triển khai Private Network",
+    cta: "Private Network",
+  },
+  {
+    id: "proxmox",
+    name: "Triển Khai Ảo Hóa Proxmox / CEPH",
+    cta: "Proxmox / CEPH",
+  },
+  { id: "kubernetes", name: "Triển khai Kubernetes (K8s)", cta: "Kubernetes" },
+  { id: "vmware", name: "Triển khai VMWare", cta: "VMware" },
+  { id: "s3", name: "Triển khai lưu trữ S3 Storage", cta: "S3 Storage" },
+];
 await fs.mkdir("artifacts", { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const results = [];
@@ -22,6 +37,30 @@ try {
     await page.evaluate(() => document.fonts.ready);
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page.locator("html")).toHaveAttribute("lang", "vi");
+    expect(await page.locator("#giai-phap h3").allTextContents()).toEqual(
+      expectedSolutions.map((solution) => solution.name),
+    );
+    await expect(page.locator("#solution-navigation a")).toHaveCount(5);
+    for (const solution of expectedSolutions) {
+      await expect(
+        page.locator(`#${solution.id}`).getByRole("link", {
+          name: `Trao đổi về ${solution.cta}`,
+          exact: true,
+        }),
+      ).toHaveAttribute("href", "https://interdata.vn/contact");
+      await expect(
+        page.locator(`#solution-navigation a[href="#${solution.id}"]`),
+      ).toHaveAttribute("href", `#${solution.id}`);
+      await expect(
+        page.locator("footer").getByRole("link", {
+          name: solution.name,
+          exact: true,
+        }),
+      ).toHaveAttribute("href", `#${solution.id}`);
+      await expect(
+        page.locator(`dialog a[href="#${solution.id}"]`),
+      ).toHaveAttribute("href", `#${solution.id}`);
+    }
     const audit = await page.evaluate(() => ({
       width: innerWidth,
       scrollWidth: document.documentElement.scrollWidth,
@@ -73,7 +112,10 @@ try {
       await page.getByRole("dialog").locator("summary").click();
       await page
         .getByRole("dialog")
-        .getByRole("link", { name: "Triển khai Proxmox" })
+        .getByRole("link", {
+          name: "Triển Khai Ảo Hóa Proxmox / CEPH",
+          exact: true,
+        })
         .click();
       await expect(page.getByRole("dialog")).not.toBeVisible();
       await expect(page).toHaveURL(/#proxmox$/);
@@ -105,7 +147,13 @@ try {
       await expect(toggle).toBeFocused();
       await expect(toggle).toHaveAttribute("aria-expanded", "false");
       await toggle.click();
-      await page.locator("#solution-navigation a").nth(1).click();
+      await page
+        .locator("#solution-navigation")
+        .getByRole("link", {
+          name: "Triển khai Kubernetes (K8s)",
+          exact: true,
+        })
+        .click();
       await expect(page).toHaveURL(/#kubernetes$/);
       await expect
         .poll(() =>
