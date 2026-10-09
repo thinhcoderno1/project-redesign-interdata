@@ -6,11 +6,14 @@ export const reviewMode = process.env.NEXT_PUBLIC_CONTENT_MODE !== "public";
 export const showEditorialNotes = false;
 export const links = {
   vps: "https://interdata.vn/thue-vps/",
+  // Matches the trial CTA in the source project's components/header/menu.js.
+  trial: "https://interdata.vn/thue-vps/#pricing",
   cloud: "https://interdata.vn/cloud-server/",
   dedicated: "https://interdata.vn/vietnam-dedicated-server",
   colocation: "https://interdata.vn/vietnam-co-location",
   about: "https://interdata.vn/about-us",
   contact: "https://interdata.vn/contact",
+  careers: "https://interdata.vn/blog/tuyen-dung/",
   blog: "https://interdata.vn/blog/",
   promotion: "https://interdata.vn/canhme/",
   ticket: "https://support.interdata.vn/submitticket.php",
@@ -260,26 +263,142 @@ export const testimonials = [
     logoHeight: 55,
   },
 ];
+// Titles, links, photos and logos sourced from D:/InterData/thue-vps/components/partners.js.
 export const press = [
   {
     publication: "VnExpress",
     title: "InterData đưa giải pháp Việt ra thị trường quốc tế",
-    image: "/images/press-vnexpress.webp",
+    image: "/images/press/news.png",
+    logo: "/images/press/logo-news-1.png",
+    logoWidth: 149,
+    logoHeight: 28,
     href: "https://vnexpress.net/interdata-dua-giai-phap-viet-ra-thi-truong-quoc-te-4539197.html",
-  },
-  {
-    publication: "Thanh Niên",
-    title:
-      "InterData và VNPT hợp tác chiến lược và khai thác hạ tầng Datacenter",
-    image: "/images/press-thanhnien.webp",
-    href: "https://thanhnien.vn/interdata-va-vnpt-hop-tac-chien-luoc-va-khai-thac-ha-tang-datacenter-185240701161300605.htm",
   },
   {
     publication: "VTV",
     title:
       "GreenCloud hợp tác cùng InterData triển khai hạ tầng Server tại Việt Nam",
-    image: "/images/press-vtv.webp",
+    image: "/images/press/vtv.png",
+    logo: "/images/press/vtv.jpg",
+    logoWidth: 122,
+    logoHeight: 50,
     href: "https://vtv.vn/cong-nghe/greencloud-hop-tac-cung-interdata-trien-khai-ha-tang-server-tai-viet-nam-20230411104845847.htm",
+  },
+  {
+    publication: "Thanh Niên",
+    title:
+      "InterData và VNPT hợp tác chiến lược và khai thác hạ tầng Datacenter",
+    image: "/images/press/news-1.png",
+    logo: "/images/press/logo-news.png",
+    logoWidth: 133,
+    logoHeight: 32,
+    href: "https://thanhnien.vn/interdata-va-vnpt-hop-tac-chien-luoc-va-khai-thac-ha-tang-datacenter-185240701161300605.htm",
+  },
+  {
+    publication: "Dân trí",
+    title: "InterData ra mắt gói Cloud Server Network Port 10Gbps tại Việt Nam",
+    image: "/images/press/nhansu.webp",
+    logo: "/images/press/bao-dien-tu-dan-tri.png",
+    logoWidth: 396,
+    logoHeight: 117,
+    href: "https://dantri.com.vn/suc-manh-so/interdata-ra-mat-goi-cloud-server-network-port-10gbps-tai-viet-nam-20221123162831826.htm",
+  },
+  {
+    publication: "VietNamNet",
+    title:
+      "InterData hợp tác VNPT khai thác hạ tầng Datacenter và các dịch vụ thế mạnh",
+    image: "/images/press/vnpt.jpg",
+    logo: "/images/press/bao-vietnamnet.png",
+    logoWidth: 338,
+    logoHeight: 141,
+    href: "https://vietnamnet.vn/interdata-hop-tac-vnpt-khai-thac-ha-tang-datacenter-va-cac-dich-vu-the-manh-2301215.html",
+  },
+  {
+    publication: "VTC News",
+    title: "InterData hợp tác cùng EZTech phát triển hạ tầng server cloud GPU",
+    image: "/images/press/24h.jpg",
+    logo: "/images/press/LOGO-vtc.png",
+    logoWidth: 600,
+    logoHeight: 264,
+    href: "https://vtcnews.vn/interdata-hop-tac-cung-eztech-phat-trien-ha-tang-server-cloud-gpu-ar872150.html",
+  },
+  {
+    publication: "24h",
+    title:
+      "InterData và EZTech ký kết thỏa thuận hợp tác chiến lược cung cấp giải pháp hạ tầng Datacenter",
+    image: "/images/press/24h.jpg",
+    logo: "/images/press/24hh.png",
+    logoWidth: 3840,
+    logoHeight: 2160,
+    href: "https://www.24h.com.vn/doanh-nghiep/interdata-va-eztech-ky-ket-thoa-thuan-hop-tac-chien-luoc-cung-cap-giai-phap-ha-tang-datacenter-c849a1569291.html",
+  },
+  {
+    publication: "CafeF",
+    title:
+      "InterData tặng miễn phí lưu trữ web NVMe dung lượng 6GB, tốc độ mạng 1Gbps",
+    image: "/images/press/news-2.png",
+    logo: "/images/press/logo-news-2.png",
+    logoWidth: 142,
+    logoHeight: 30,
+    href: "https://cafef.vn/interdata-tang-mien-phi-luu-tru-web-nvme-dung-luong-6gb-toc-do-mang-1gbps-20230223134836995.chn",
+  },
+  {
+    publication: "Tổ Quốc",
+    title:
+      "InterData tặng miễn phí lưu trữ web NVMe dung lượng 6GB, tốc độ mạng 1Gbps",
+    image: "/images/press/aChau.png",
+    logo: "/images/press/Toquoc.jpg",
+    logoWidth: 474,
+    logoHeight: 196,
+    href: "https://ttvn.toquoc.vn/interdata-tang-mien-phi-luu-tru-web-nvme-dung-luong-6gb-toc-do-mang-1gbps-2023022311353656.htm",
+  },
+  {
+    publication: "Vietnam.vn",
+    title:
+      "InterData hợp tác VNPT khai thác hạ tầng Datacenter và các dịch vụ thế mạnh",
+    image: "/images/press/vnpt.jpg",
+    logo: "/images/press/logo-bao-vietnam.png",
+    logoWidth: 300,
+    logoHeight: 121,
+    href: "https://www.vietnam.vn/interdata-hop-tac-vnpt-khai-thac-ha-tang-datacenter-va-cac-dich-vu-the-manh/",
+  },
+  {
+    publication: "Thế Giới Kinh Doanh",
+    title:
+      "InterData tặng miễn phí lưu trữ web NVMe dung lượng 6GB, tốc độ mạng 1Gbps",
+    image: "/images/press/aChau.png",
+    logo: "/images/press/THE_GIOI_KINH_DOANH_cbc2b.png",
+    logoWidth: 583,
+    logoHeight: 135,
+    href: "https://thegioikinhdoanh.vn/hi-tech/interdata-tang-mien-phi-luu-tru-web-nvme-dung-luong-6gb-toc-do-mang-1gbps.html",
+  },
+  {
+    publication: "Báo An Giang",
+    title: "VPS InterData: Giải pháp máy chủ ảo tối ưu hiệu suất và chi phí",
+    image: "/images/press/baoangiang.png",
+    logo: "/images/press/logobag.png",
+    logoWidth: 300,
+    logoHeight: 106,
+    href: "https://baoangiang.com.vn/vps-interdata-giai-phap-may-chu-ao-toi-uu-hieu-suat-va-chi-phi-a475417.html",
+  },
+  {
+    publication: "Báo Hà Tĩnh",
+    title:
+      "Thuê VPS tại InterData: Giải pháp tối ưu hạ tầng online cho doanh nghiệp",
+    image: "/images/press/nhansu.webp",
+    logo: "/images/press/bao-ha-tinh.png",
+    logoWidth: 960,
+    logoHeight: 538,
+    href: "https://baohatinh.vn/thue-vps-tai-interdata-giai-phap-toi-uu-ha-tang-online-cho-doanh-nghiep-post304939.html",
+  },
+  {
+    publication: "Báo Lâm Đồng",
+    title: "Lễ ký kết MOU giữa InterData và Trường Đại học Yersin Đà Lạt",
+    image: "/images/press/lamdong1.jpg",
+    logo: "/images/press/lamdong.png",
+    logoWidth: 598,
+    logoHeight: 138,
+    href: "https://baolamdong.vn/thong-tin-can-biet/202405/le-ky-ket-mou-giua-interdata-va-truong-dai-hoc-yersin-da-lat-b180e1a/",
   },
 ];
 export const partners = [
@@ -316,74 +435,90 @@ export const campaigns: {
 export const needs = [
   {
     id: "website",
-    name: "Website & Bán hàng",
+    name: "Website & ứng dụng",
     icon: "globe",
-    title: "Hạ tầng cho website và cửa hàng trực tuyến",
+    title: "Chọn VPS hoặc Cloud Server cho website và ứng dụng",
     description:
-      "Từ website doanh nghiệp đến cửa hàng có nhiều lượt truy cập, chọn tài nguyên theo nền tảng và mức tải thực tế.",
-    recommendations: ["VPS", "Cloud Server"],
-    reason:
-      "VPS cho môi trường quản trị riêng. Cân nhắc Cloud Server khi cần kế hoạch mở rộng tài nguyên.",
-    checks: [
-      "Nền tảng website và số website",
-      "Lượt truy cập vào giờ cao điểm",
-      "Dung lượng dữ liệu và người quản trị",
+      "Vận hành website doanh nghiệp, cửa hàng trực tuyến, API hoặc hệ thống nội bộ. Chọn môi trường máy chủ theo phần mềm, hệ điều hành và mức tải dự kiến.",
+    recommendations: [
+      "VPS AMD",
+      "VPS Platinum",
+      "VPS Linux",
+      "VPS Gold",
+      "AMD Cloud Gen 3",
+      "Intel Platinum Cloud Gen 2",
     ],
-    cta: "Xem dịch vụ VPS",
+    reason:
+      "Đối chiếu các dòng VPS và Cloud Server theo CPU, RAM, dung lượng lưu trữ và yêu cầu vận hành. Lựa chọn cấu hình dựa trên ứng dụng thực tế và kế hoạch tăng trưởng.",
+    checks: [
+      "Mã nguồn, hệ điều hành và số website / ứng dụng",
+      "Lượt truy cập hoặc số người dùng vào giờ cao điểm",
+      "CPU, RAM, dung lượng và lịch sao lưu dự kiến",
+    ],
+    cta: "Xem các dòng VPS",
     href: links.vps,
+    secondaryCta: "Xem Cloud Server",
+    secondaryHref: links.cloud,
   },
   {
     id: "app",
-    name: "Ứng dụng & Self-host",
+    name: "Tự động hóa & AI",
     icon: "code",
-    title: "Một môi trường chủ động cho ứng dụng của bạn",
+    title: "Chạy workflow n8n và ứng dụng EzyPlatform",
     description:
-      "Chạy API, công cụ nội bộ, n8n hoặc ứng dụng tự quản lý với tài nguyên dành cho cả ứng dụng và cơ sở dữ liệu.",
-    recommendations: ["VPS", "Cloud Server"],
+      "Self-host n8n để kết nối ứng dụng và tự động hóa tác vụ; hoặc triển khai ứng dụng xây dựng cùng AI trên nền tảng EzyPlatform.",
+    recommendations: ["VPS n8n", "VPS Vibe Coding"],
     reason:
-      "Chọn theo runtime, RAM thực dùng và dữ liệu. Dự trù tài nguyên cho log, backup và môi trường thử nghiệm.",
+      "VPS n8n dành cho các workflow tự động hóa. VPS Vibe Coding chỉ hỗ trợ mã nguồn EzyPlatform; cần xác định đúng nền tảng ứng dụng trước khi chọn dịch vụ.",
     checks: [
-      "Runtime và số ứng dụng",
-      "Database, volume và lịch sao lưu",
-      "Mức tải đồng thời dự kiến",
+      "Nền tảng sử dụng: n8n hay mã nguồn EzyPlatform",
+      "Số workflow, lịch chạy và ứng dụng cần kết nối",
+      "Tài nguyên, dữ liệu cần lưu và người quản trị",
     ],
-    cta: "Khám phá Cloud Server",
-    href: links.cloud,
+    cta: "Xem VPS n8n",
+    href: "https://interdata.vn/vps-n8n/",
+    secondaryCta: "Xem VPS Vibe Coding",
+    secondaryHref: "https://interdata.vn/vps-vibe-coding/",
   },
   {
     id: "virtual",
-    name: "Ảo hóa & container",
+    name: "Ảo hóa & mạng riêng",
     icon: "layers",
-    title: "Tổ chức máy ảo và cụm ứng dụng",
+    title: "Triển khai máy ảo, container và kết nối nội bộ",
     description:
-      "Xây dựng môi trường ảo hóa hoặc container theo kiến trúc của hệ thống và năng lực vận hành của đội ngũ.",
-    recommendations: ["Thuê Máy Chủ", "Proxmox", "Kubernetes (K8s)"],
-    reason:
-      "Máy chủ vật lý cho phần cứng riêng; Proxmox cho máy ảo, Kubernetes cho điều phối container. Không phải workload nào cũng cần một cụm.",
-    checks: [
-      "Số máy ảo hoặc container",
-      "Yêu cầu dự phòng và lưu trữ",
-      "Đội ngũ chịu trách nhiệm vận hành",
+      "Tổ chức môi trường nhiều máy ảo, triển khai cụm ứng dụng container hoặc kết nối các máy chủ qua mạng riêng. Phương án cần phù hợp với kiến trúc và đội ngũ vận hành.",
+    recommendations: [
+      "Proxmox / CEPH",
+      "VMware",
+      "Kubernetes (K8s)",
+      "Private Network",
     ],
-    cta: "Trao đổi phương án triển khai",
+    reason:
+      "Proxmox / CEPH và VMware phục vụ môi trường máy ảo; Kubernetes điều phối ứng dụng container; Private Network tổ chức kết nối nội bộ. Làm rõ nhu cầu lưu trữ, bản quyền và quản trị trước khi triển khai.",
+    checks: [
+      "Số máy ảo / container và sơ đồ kết nối",
+      "Tài nguyên, lưu trữ và yêu cầu dự phòng",
+      "Bản quyền phần mềm và đội ngũ quản trị",
+    ],
+    cta: "Tư vấn ảo hóa & mạng riêng",
     href: links.contact,
   },
   {
     id: "storage",
-    name: "Lưu trữ dữ liệu",
+    name: "Máy chủ & lưu trữ",
     icon: "harddrive",
-    title: "Chọn nơi lưu trữ theo cách dữ liệu được sử dụng",
+    title: "Thuê phần cứng, đặt thiết bị hoặc lưu trữ tệp",
     description:
-      "Tệp ứng dụng, ảnh, dữ liệu dài hạn và bản sao lưu có yêu cầu lưu trữ khác nhau.",
-    recommendations: ["S3 Storage", "Chỗ Đặt Máy Chủ"],
+      "Thuê máy chủ vật lý riêng, đặt thiết bị bạn sở hữu tại datacenter hoặc lưu trữ tệp và bản sao lưu. Chọn dịch vụ theo tài sản sẵn có và cách dữ liệu được sử dụng.",
+    recommendations: ["Thuê Máy Chủ", "Chỗ Đặt Máy Chủ", "S3 Storage"],
     reason:
-      "S3 cho dữ liệu dạng đối tượng. Chỗ đặt máy chủ dành cho thiết bị lưu trữ bạn sở hữu. Xác nhận tích hợp, truy cập và chi phí truyền dữ liệu.",
+      "Thuê Máy Chủ khi cần phần cứng riêng; Chỗ Đặt Máy Chủ khi đã có thiết bị. S3 Storage lưu dữ liệu dạng đối tượng cho ứng dụng, hình ảnh và bản sao lưu. Mỗi lựa chọn có yêu cầu vận hành và truy cập khác nhau.",
     checks: [
-      "Dung lượng hiện tại và mức tăng trưởng",
-      "Tần suất đọc / ghi, tải xuống",
-      "Thời gian lưu và yêu cầu khôi phục",
+      "Thiết bị sẵn có hoặc cấu hình máy chủ cần thuê",
+      "Kết nối mạng; dung lượng và tần suất truy cập tệp",
+      "Phạm vi quản trị, sao lưu và yêu cầu khôi phục",
     ],
-    cta: "Tư vấn phương án lưu trữ",
+    cta: "Tư vấn máy chủ & lưu trữ",
     href: links.contact,
   },
 ] as const;

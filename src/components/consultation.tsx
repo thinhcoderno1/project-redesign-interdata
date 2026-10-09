@@ -6,15 +6,20 @@ export function Consultation() {
   const [active, setActive] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const need = needs[active];
+  const secondaryHref =
+    "secondaryHref" in need ? need.secondaryHref : links.contact;
+  const secondaryCta =
+    "secondaryCta" in need ? need.secondaryCta : "Trao đổi với InterData";
   return (
     <section id="nhu-cau" className="consultation section">
       <div className="container">
         <span className="eyebrow">BẠN CẦN HẠ TẦNG CHO VIỆC GÌ?</span>
         <div className="section-heading">
-          <h2>Bắt đầu từ bài toán của bạn</h2>
+          <h2>Chọn hạ tầng theo nhu cầu triển khai</h2>
           <p>
-            Chọn nhu cầu gần nhất. Cấu hình cụ thể sẽ được trao đổi theo hệ
-            thống bạn đang vận hành.
+            Chọn nhu cầu gần nhất để xem gợi ý VPS, Cloud Server, máy chủ và
+            giải pháp triển khai phù hợp. Cấu hình cụ thể sẽ được trao đổi theo
+            hệ thống của bạn.
           </p>
         </div>
         <div className="consultation-layout">
@@ -89,8 +94,8 @@ export function Consultation() {
                 <Icon name="arrow" />
               </a>
               {need.href !== links.contact && (
-                <a className="text-link" href={links.contact}>
-                  Trao đổi với InterData <Icon name="external" />
+                <a className="text-link" href={secondaryHref}>
+                  {secondaryCta} <Icon name="external" />
                 </a>
               )}
             </div>

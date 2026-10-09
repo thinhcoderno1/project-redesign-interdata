@@ -1,6 +1,7 @@
 .section {
   position: relative;
   isolation: isolate;
+  container-type: inline-size;
 }
 
 .section::before {
@@ -21,6 +22,7 @@
   position: relative;
   z-index: 1;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 36px;
 }
 
@@ -47,101 +49,9 @@
   margin-top: 16px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 20px;
-}
-
-.card {
-  grid-column: span 2;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  gap: 18px;
-  padding: 24px;
-  background: var(--brand-card);
-  border: 1px solid var(--border-on-dark);
-  border-radius: 12px;
-  transition:
-    transform 0.24s cubic-bezier(0.2, 0.7, 0.3, 1),
-    border-color 0.15s;
-}
-
-.card:nth-child(4) {
-  grid-column: 2 / span 2;
-}
-
-.card:nth-child(5) {
-  grid-column: 4 / span 2;
-}
-
-.card:hover,
-.card:focus-within {
-  border-color: var(--text-on-dark-secondary);
-}
-
-.cardTop {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.icon {
-  width: 46px;
-  height: 46px;
-  flex-shrink: 0;
-  border: 1px solid var(--border-on-dark);
-  border-radius: 8px;
-  display: grid;
-  place-items: center;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.cardTop h3 {
-  min-width: 0;
-  flex: 1;
-  font-size: 21px;
-  line-height: 1.4;
-}
-
-.content p {
-  font-size: var(--font-content);
-  line-height: 1.8;
-  margin-top: 0;
-  margin-bottom: 18px;
-}
-
-.content > a {
-  align-self: flex-start;
-  margin-top: auto;
-  min-height: 44px;
-  font-size: var(--font-content-ui);
-}
-
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .card:hover {
-    transform: scale(1.025);
-    z-index: 1;
-  }
-}
-
 @media (max-width: 1199px) {
   .intro {
     gap: 32px;
-  }
-
-  .card {
-    padding: 22px;
-  }
-
-  .cardTop h3 {
-    font-size: 20px;
   }
 }
 
@@ -153,16 +63,6 @@
 
   .introDetail {
     max-width: 720px;
-  }
-
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .card,
-  .card:nth-child(4),
-  .card:nth-child(5) {
-    grid-column: auto;
   }
 }
 
@@ -178,15 +78,5 @@
 
   .intro h2 {
     font-size: 30px;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .card {
-    padding: 22px;
-    gap: 16px;
   }
 }

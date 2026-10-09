@@ -1,0 +1,144 @@
+.section {
+  background: linear-gradient(180deg, #fff 0%, #f7f9fd 100%);
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 52px;
+}
+
+.heading p {
+  margin-top: 16px;
+  font-size: var(--font-content);
+}
+
+.ecosystem {
+  --globe-width: clamp(340px, 40vw, 500px);
+  --logo-width: clamp(110px, 11.4vw, 144px);
+  --arc-inset: clamp(60px, 7vw, 100px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--globe-width) minmax(0, 1fr);
+  grid-template-areas: "left globe right";
+  align-items: center;
+}
+
+.globe {
+  grid-area: globe;
+  align-self: center;
+  pointer-events: none;
+}
+
+.globe img {
+  width: 100%;
+  height: auto;
+}
+
+.logos {
+  display: grid;
+  grid-template-columns: repeat(2, var(--logo-width));
+  grid-template-rows: repeat(5, 76px);
+  gap: 18px 12px;
+}
+
+.left {
+  grid-area: left;
+  justify-self: start;
+  --arc-direction: 1;
+}
+
+.right {
+  grid-area: right;
+  justify-self: end;
+  --arc-direction: -1;
+}
+
+.tile {
+  grid-row: var(--orbit-row);
+  grid-column: var(--orbit-column);
+  transform: translateX(
+    calc(var(--arc-direction) * var(--arc-inset) * var(--orbit-offset))
+  );
+  height: 76px;
+  padding: 12px 16px;
+  border: 1px solid #e5eaf2;
+  border-radius: 8px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgb(23 32 51 / 2%);
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.wordmark img {
+  height: auto;
+}
+
+.compact img {
+  width: 48px;
+  height: 48px;
+}
+
+.padded img {
+  transform: scale(1.35);
+}
+
+.inverse {
+  background: var(--brand-strong);
+  border-color: var(--brand-strong);
+}
+
+@media (max-width: 1023px) {
+  .heading {
+    margin-bottom: 24px;
+  }
+  .ecosystem {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: "globe globe" "left right";
+    gap: 32px;
+  }
+  .globe {
+    width: 360px;
+    max-width: 100%;
+    justify-self: center;
+  }
+  .logos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    gap: 12px;
+    width: 100%;
+  }
+  .tile {
+    grid-row: auto;
+    grid-column: auto;
+    transform: none;
+    height: 86px;
+  }
+  .wordmark img {
+    max-width: 140px;
+  }
+}
+
+@media (max-width: 640px) {
+  .heading p {
+    font-size: 16px;
+  }
+  .ecosystem {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "globe" "left" "right";
+    gap: 28px;
+  }
+  .globe {
+    width: 280px;
+    margin-block: -8px;
+  }
+  .tile {
+    height: 80px;
+  }
+}

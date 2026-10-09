@@ -1,0 +1,263 @@
+.card {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr);
+  align-items: center;
+  gap: 32px;
+  min-height: 400px;
+  padding: 40px 56px 40px 32px;
+  border-radius: 24px;
+  background: linear-gradient(115deg, #075ff3 0%, #0043ec 42%, #092581 100%);
+  color: #fff;
+  overflow: hidden;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 640px;
+  height: 640px;
+  right: -440px;
+  top: -160px;
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 60px rgb(255 255 255 / 3%),
+    0 0 0 120px rgb(255 255 255 / 3%);
+}
+
+.visual {
+  position: relative;
+  min-width: 0;
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  margin-block: -40px;
+}
+
+.orbit {
+  position: absolute;
+  width: 86%;
+  aspect-ratio: 1;
+  border: 1px solid rgb(255 255 255 / 26%);
+  border-radius: 50%;
+  transform: rotate(-20deg);
+  background: radial-gradient(
+    ellipse at center,
+    rgb(166 218 255 / 16%),
+    transparent 68%
+  );
+}
+
+.illustration {
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-width: 380px;
+  align-self: end;
+}
+
+.visualIcon {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgb(255 255 255 / 42%);
+  border-radius: 14px;
+  background: #1266dd;
+  color: #fff;
+  box-shadow: 0 8px 24px rgb(3 22 119 / 12%);
+  transform: rotate(-8deg);
+}
+
+.visualIcon svg {
+  width: 26px;
+  height: 26px;
+  transform: rotate(8deg);
+}
+
+.cloud {
+  left: 3%;
+  top: 17%;
+}
+.support {
+  right: 4%;
+  top: 9%;
+}
+.network {
+  left: 4%;
+  bottom: 12%;
+}
+
+.content {
+  position: relative;
+  padding-block: 8px;
+}
+
+.eyebrow {
+  display: block;
+  color: #dceaff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.content h2 {
+  max-width: 640px;
+  font-size: clamp(28px, 2.5vw, 38px);
+  line-height: 1.35;
+  color: #fff;
+}
+
+.content p {
+  max-width: 570px;
+  margin-top: 20px;
+  color: #e4edff;
+  font-size: var(--font-content-lead);
+  line-height: 1.8;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  min-height: 54px;
+  margin-top: 28px;
+  padding: 14px 24px;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--brand-strong);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  transition:
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.button:hover {
+  background: #e8f0ff;
+  box-shadow: 0 6px 20px rgb(3 22 119 / 18%);
+}
+
+.button:focus-visible {
+  outline-color: #fff;
+  outline-offset: 5px;
+}
+
+@media (max-width: 1199px) {
+  .card {
+    padding: 36px 36px 36px 20px;
+    gap: 24px;
+  }
+  .visualIcon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+  .visual {
+    margin-block: -36px;
+  }
+  .content h2 {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 959px) {
+  .card {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    padding: 32px 28px 32px 12px;
+    gap: 12px;
+  }
+  .content h2 {
+    font-size: 28px;
+  }
+  .content p {
+    font-size: 17px;
+  }
+  .illustration {
+    max-width: 300px;
+    align-self: center;
+  }
+  .visual {
+    margin-block: 0;
+  }
+  .visualIcon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+  }
+  .visualIcon svg {
+    width: 22px;
+    height: 22px;
+  }
+  .cloud {
+    left: 0;
+    top: 28%;
+  }
+  .support {
+    right: 0;
+    top: 23%;
+  }
+  .network {
+    left: 2%;
+    bottom: 24%;
+  }
+}
+
+@media (max-width: 639px) {
+  .card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    min-height: 0;
+    padding: 24px;
+    border-radius: 18px;
+  }
+  .visual {
+    width: 100%;
+    max-width: 280px;
+    justify-self: center;
+  }
+  .illustration {
+    margin-block: -8px;
+  }
+  .cloud {
+    top: 16%;
+  }
+  .support {
+    top: 9%;
+  }
+  .network {
+    bottom: 12%;
+  }
+  .content {
+    padding: 0;
+  }
+  .eyebrow {
+    font-size: 11px;
+    margin-bottom: 12px;
+  }
+  .content h2 {
+    font-size: 28px;
+  }
+  .content p {
+    margin-top: 16px;
+  }
+  .button {
+    width: 100%;
+    margin-top: 24px;
+    padding-inline: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+}

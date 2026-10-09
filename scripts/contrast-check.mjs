@@ -23,6 +23,11 @@ const pairs = [
   ["Footer secondary", "#CBD5F7", "#031677", 4.5],
   ["Control border", "#7D899D", "#FFFFFF", 3],
   ["Error", "#A9222A", "#FFF3F3", 4.5],
+  ["Hero trial CTA hover", "#FFFFFF", "#0036C4", 4.5],
+  // Check both endpoints of the blue glow / neutral photo blend.
+  ["Hero title / blue glow", "#FFFFFF", "#0043EC", 4.5],
+  ["Hero description / blue glow", "#E2E8F0", "#0043EC", 4.5],
+  ["Hero application / blue glow (large text)", "#8FC5FF", "#0043EC", 3],
 ];
 const records = pairs.map(([name, a, b, minimum]) => ({
   name,
@@ -31,10 +36,12 @@ const records = pairs.map(([name, a, b, minimum]) => ({
 }));
 for (const [photo, samples] of [
   [
-    "public/images/hero-datacenter-aisle.webp",
+    "public/images/solutions/datacenter-aisle.webp",
     [
-      ["Hero title", "#031677", 0.72, "#FFFFFF"],
-      ["Hero description", "#031677", 0.72, "#CBD5F7"],
+      // The gradient's lightest opacity bounds every responsive crop.
+      ["Hero title", "#08111F", 0.64, "#FFFFFF"],
+      ["Hero application (large text)", "#08111F", 0.64, "#8FC5FF", 3],
+      ["Hero description", "#08111F", 0.64, "#E2E8F0"],
     ],
   ],
   // Mobile has the lightest overlay behind text (88%); desktop/tablet start at 90%.
@@ -50,7 +57,7 @@ for (const [photo, samples] of [
     .removeAlpha()
     .raw()
     .toBuffer({ resolveWithObject: true });
-  for (const [name, overlay, alpha, foreground] of samples) {
+  for (const [name, overlay, alpha, foreground, minimum = 4.5] of samples) {
     const overlayRgb = rgb(overlay);
     let worst = Infinity;
     for (let i = 0; i < data.length; i += info.channels) {
@@ -62,7 +69,7 @@ for (const [photo, samples] of [
     records.push({
       name,
       contrast: worst,
-      minimum: 4.5,
+      minimum,
       method:
         "Every pixel of the actual photo composited with the CSS overlay; conservative bound for all responsive crops.",
     });

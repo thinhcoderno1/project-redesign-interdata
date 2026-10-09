@@ -67,9 +67,9 @@ export default function ContentReview() {
         công bố. Các ảnh chân dung cần xác nhận đúng người.
       </p>
       <p>
-        Hero: ảnh chụp lối đi giữa hai dãy rack từ PxHere (CC0). Section hạ
-        tầng: ảnh Viettel-IDC.jpg do người dùng cung cấp. Các ảnh này chưa phải
-        ảnh cơ sở InterData đã xác minh.
+        Hero: ảnh datacenter-aisle.webp do người dùng cung cấp. Section hạ tầng:
+        ảnh Viettel-IDC.jpg do người dùng cung cấp. Các ảnh này chưa phải ảnh cơ
+        sở InterData đã xác minh.
       </p>
       <h2>Đường dẫn và tích hợp</h2>
       <p>

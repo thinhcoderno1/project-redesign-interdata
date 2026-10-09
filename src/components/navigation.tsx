@@ -3,7 +3,121 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { links, solutions } from "@/data/content";
+import {
+  cloudCatalog,
+  vpsCatalog,
+  type CatalogService,
+} from "@/data/service-catalog";
 import { Icon } from "./icon";
+import { TopbarMenu } from "./topbar-menu";
+
+const serviceMenus = [
+  { id: "vps", name: "Thuê VPS", href: links.vps, items: vpsCatalog },
+  { id: "cloud", name: "Cloud Server", href: links.cloud, items: cloudCatalog },
+];
+
+function ServiceSubmenu({
+  id,
+  name,
+  href,
+  items,
+}: {
+  id: string;
+  name: string;
+  href: string;
+  items: CatalogService[];
+}) {
+  const [open, setOpen] = useState(false);
+  const container = useRef<HTMLDivElement>(null);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+    },
+    [],
+  );
+
+  useEffect(() => {
+    const closeOutside = (event: PointerEvent) => {
+      if (!container.current?.contains(event.target as Node)) setOpen(false);
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && open) {
+        setOpen(false);
+        toggle.current?.focus();
+      }
+    };
+    document.addEventListener("pointerdown", closeOutside);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", closeOutside);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [open]);
+
+  return (
+    <div
+      className="service-menu"
+      ref={container}
+      data-open={open || undefined}
+      onPointerEnter={(event) => {
+        if (
+          event.pointerType !== "mouse" ||
+          !window.matchMedia("(hover: hover) and (pointer: fine)").matches
+        )
+          return;
+        if (closeTimer.current) clearTimeout(closeTimer.current);
+        setOpen(true);
+      }}
+      onPointerLeave={(event) => {
+        if (event.pointerType !== "mouse") return;
+        if (closeTimer.current) clearTimeout(closeTimer.current);
+        closeTimer.current = setTimeout(() => {
+          // Keep keyboard focus visible when the pointer leaves the submenu.
+          if (!container.current?.contains(document.activeElement))
+            setOpen(false);
+        }, 150);
+      }}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node))
+          setOpen(false);
+      }}
+    >
+      <a href={href} className="service-parent">
+        {name}
+      </a>
+      <button
+        type="button"
+        ref={toggle}
+        aria-label={`Mở submenu ${name}`}
+        aria-expanded={open}
+        aria-controls={`${id}-service-navigation`}
+        onClick={() => setOpen(!open)}
+      >
+        <Icon name="down" />
+      </button>
+      <div
+        id={`${id}-service-navigation`}
+        className="dropdown service-dropdown"
+        hidden={!open}
+      >
+        {items.map((service) => (
+          <a
+            key={service.id}
+            href={service.href}
+            onClick={() => setOpen(false)}
+          >
+            <Icon name={service.icon} />
+            <span>{service.name}</span>
+            <Icon name="arrow" />
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function Navigation() {
   const header = useRef<HTMLElement>(null);
@@ -13,6 +127,13 @@ export function Navigation() {
   const trigger = useRef<HTMLButtonElement>(null);
   const menu = useRef<HTMLDivElement>(null);
   const solutionTrigger = useRef<HTMLButtonElement>(null);
+  const solutionCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (solutionCloseTimer.current) clearTimeout(solutionCloseTimer.current);
+    },
+    [],
+  );
   useEffect(() => {
     const element = header.current;
     if (!element) return;
@@ -76,17 +197,32 @@ export function Navigation() {
       </a>
       <div className="utility">
         <div className="container utility-inner">
-          <span>Hạ tầng máy chủ cho doanh nghiệp Việt</span>
-          <div>
+          <nav className="utility-links" aria-label="Thông tin InterData">
+            <TopbarMenu
+              id="about-topbar-navigation"
+              label="Về chúng tôi"
+              items={[
+                { name: "Giới thiệu", href: links.about },
+                { name: "Liên hệ", href: links.contact },
+              ]}
+            />
+            <a href={links.careers}>Tuyển Dụng</a>
+            <a href={links.contact}>Hợp tác</a>
+          </nav>
+          <nav className="utility-links" aria-label="Tài khoản và hỗ trợ">
+            <TopbarMenu
+              id="account-topbar-navigation"
+              label="Tài khoản"
+              items={[
+                { name: "Đăng ký", href: links.register },
+                { name: "Đăng nhập", href: links.login },
+              ]}
+            />
             <a href={links.ticket}>
               <Icon name="ticket" />
-              Gửi ticket
+              Gửi yêu cầu hỗ trợ
             </a>
-            <a href={links.register}>Đăng ký</a>
-            <a href={links.login}>
-              Đăng nhập <Icon name="external" />
-            </a>
-          </div>
+          </nav>
         </div>
       </div>
       <div className="container nav-row">
@@ -109,14 +245,32 @@ export function Navigation() {
           >
             <Icon name="home" />
           </Link>
-          {mainLinks.slice(0, 2).map((l) => (
-            <a href={l.href} key={l.name}>
-              {l.name}
-            </a>
+          {serviceMenus.map((service) => (
+            <ServiceSubmenu key={service.id} {...service} />
           ))}
           <div
             className="solution-menu"
             ref={menu}
+            data-open={solutionsOpen || undefined}
+            onPointerEnter={(event) => {
+              if (
+                event.pointerType !== "mouse" ||
+                !window.matchMedia("(hover: hover) and (pointer: fine)").matches
+              )
+                return;
+              if (solutionCloseTimer.current)
+                clearTimeout(solutionCloseTimer.current);
+              setSolutionsOpen(true);
+            }}
+            onPointerLeave={(event) => {
+              if (event.pointerType !== "mouse") return;
+              if (solutionCloseTimer.current)
+                clearTimeout(solutionCloseTimer.current);
+              solutionCloseTimer.current = setTimeout(() => {
+                if (!menu.current?.contains(document.activeElement))
+                  setSolutionsOpen(false);
+              }, 150);
+            }}
             onBlur={(e) => {
               if (!e.currentTarget.contains(e.relatedTarget as Node))
                 setSolutionsOpen(false);
@@ -155,17 +309,23 @@ export function Navigation() {
             </a>
           ))}
         </nav>
-        <button
-          ref={trigger}
-          className="mobile-trigger"
-          aria-label="Mở điều hướng"
-          aria-haspopup="dialog"
-          aria-controls="mobile-navigation"
-          aria-expanded={mobileOpen}
-          onClick={openDrawer}
-        >
-          <Icon name="menu" />
-        </button>
+        <div className="nav-actions">
+          <a className="nav-promotion" href={links.promotion}>
+            <Icon name="gift" />
+            <span>Ưu đãi</span>
+          </a>
+          <button
+            ref={trigger}
+            className="mobile-trigger"
+            aria-label="Mở điều hướng"
+            aria-haspopup="dialog"
+            aria-controls="mobile-navigation"
+            aria-expanded={mobileOpen}
+            onClick={openDrawer}
+          >
+            <Icon name="menu" />
+          </button>
+        </div>
       </div>
       <dialog
         id="mobile-navigation"
@@ -207,10 +367,20 @@ export function Navigation() {
           </div>
           <nav aria-label="Điều hướng trên điện thoại">
             <Link href="/">Trang chủ</Link>
-            {mainLinks.slice(0, 2).map((l) => (
-              <a key={l.name} href={l.href}>
-                {l.name}
-              </a>
+            {serviceMenus.map((service) => (
+              <details key={service.id} className="mobile-service-menu">
+                <summary>
+                  {service.name} <Icon name="down" />
+                </summary>
+                <a href={service.href} onClick={closeDrawer}>
+                  {service.id === "vps" ? "Xem tất cả VPS" : "Xem Cloud Server"}
+                </a>
+                {service.items.map((item) => (
+                  <a key={item.id} href={item.href} onClick={closeDrawer}>
+                    {item.name}
+                  </a>
+                ))}
+              </details>
             ))}
             <details>
               <summary>

@@ -1,5 +1,12 @@
 [
   {
+    "source": "D:/InterData-Redesign-Project/Project-Website-InterData/public/images/solutions/datacenter-aisle.webp",
+    "asset": "/images/solutions/datacenter-aisle.webp",
+    "width": 1280,
+    "height": 448,
+    "note": "User-supplied file selected for the hero on 2026-10-09; used unchanged. No external author or license inferred."
+  },
+  {
     "source": "C:/Users/interdigi 03/Downloads/KLVN/BlogPost/Viettel-IDC.jpg",
     "asset": "/images/viettel-idc.jpg",
     "width": 2000,
@@ -25,7 +32,7 @@
     "height": 2136,
     "license": "CC0 1.0",
     "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-    "note": "Stock photograph of a central aisle between two server rack rows; used only in the hero. Source and license checked 2026-10-07."
+    "note": "Previous hero photograph, replaced on 2026-10-09. Source and license checked 2026-10-07."
   },
   {
     "source": "D:/InterData-Project-News-Website-2026/public/images/logo.webp",

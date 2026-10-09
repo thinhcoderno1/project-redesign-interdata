@@ -42,12 +42,10 @@ try {
     );
     await expect(page.locator("#solution-navigation a")).toHaveCount(5);
     for (const solution of expectedSolutions) {
-      await expect(
-        page.locator(`#${solution.id}`).getByRole("link", {
-          name: `Trao đổi về ${solution.cta}`,
-          exact: true,
-        }),
-      ).toHaveAttribute("href", "https://interdata.vn/contact");
+      await expect(page.locator(`#${solution.id} a`)).toHaveAttribute(
+        "href",
+        "https://interdata.vn/contact",
+      );
       await expect(
         page.locator(`#solution-navigation a[href="#${solution.id}"]`),
       ).toHaveAttribute("href", `#${solution.id}`);
@@ -94,7 +92,23 @@ try {
       path: `artifacts/home-${width}-full.png`,
       fullPage: true,
     });
-    if (width < 960) {
+    const serviceMenus = await Promise.all(
+      [
+        { id: "vps", name: "Thuê VPS", group: "dich-vu-vps", count: 6 },
+        { id: "cloud", name: "Cloud Server", group: "dich-vu-cloud", count: 2 },
+      ].map(async (menu) => ({
+        ...menu,
+        items: await page
+          .locator(`#${menu.group} [data-catalog-service]`)
+          .evaluateAll((cards) =>
+            cards.map((card) => ({
+              name: card.querySelector("h3").textContent.trim(),
+              href: card.querySelector("a").getAttribute("href"),
+            })),
+          ),
+      })),
+    );
+    if (width < 1100) {
       const trigger = page.getByRole("button", { name: "Mở điều hướng" });
       await trigger.click();
       await expect(page.getByRole("dialog")).toBeVisible();
@@ -109,7 +123,49 @@ try {
       await expect(page.getByRole("dialog")).not.toBeVisible();
       await expect(trigger).toBeFocused();
       await trigger.click();
-      await page.getByRole("dialog").locator("summary").click();
+      for (const menu of serviceMenus) {
+        const group = page
+          .getByRole("dialog")
+          .locator(".mobile-service-menu")
+          .filter({ has: page.locator("summary", { hasText: menu.name }) });
+        const summary = group.locator("summary");
+        await summary.focus();
+        await page.keyboard.press("Enter");
+        await expect(group).toHaveAttribute("open", "");
+        await expect(group.getByRole("link")).toHaveCount(menu.count + 1);
+        expect(
+          await group.locator("a").evaluateAll((anchors) =>
+            anchors.slice(1).map((a) => ({
+              name: a.textContent.trim(),
+              href: a.getAttribute("href"),
+            })),
+          ),
+        ).toEqual(menu.items);
+        await page.screenshot({
+          path: `artifacts/home-${width}-${menu.id}-drawer.png`,
+        });
+        const drawerAudit = await new AxeBuilder({ page })
+          .include("#mobile-navigation")
+          .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+          .analyze();
+        expect(drawerAudit.violations).toEqual([]);
+        await group.getByRole("link").last().focus();
+        await page.keyboard.press("Tab");
+        expect(
+          await page.evaluate(
+            () => !!document.activeElement?.closest("dialog"),
+          ),
+        ).toBe(true);
+        await summary.click();
+        await expect(group).not.toHaveAttribute("open", "");
+      }
+      await page.screenshot({
+        path: `artifacts/home-${width}-service-drawer.png`,
+      });
+      await page
+        .getByRole("dialog")
+        .locator("summary", { hasText: "Giải Pháp" })
+        .click();
       await page
         .getByRole("dialog")
         .getByRole("link", {
@@ -132,6 +188,89 @@ try {
         .toBe(true);
     } else {
       await page.evaluate(() => window.scrollTo(0, 0));
+      for (const menu of serviceMenus) {
+        const serviceToggle = page.getByRole("button", {
+          name: `Mở submenu ${menu.name}`,
+          exact: true,
+        });
+        const submenu = page.locator(`#${menu.id}-service-navigation`);
+        await expect(submenu).toBeHidden();
+        await serviceToggle.focus();
+        await page.keyboard.press("Enter");
+        await expect(serviceToggle).toHaveAttribute("aria-expanded", "true");
+        await expect(submenu.getByRole("link")).toHaveCount(menu.count);
+        expect(
+          await submenu.locator("a").evaluateAll((anchors) =>
+            anchors.map((a) => ({
+              name: a.textContent.trim(),
+              href: a.getAttribute("href"),
+            })),
+          ),
+        ).toEqual(menu.items);
+        const bounds = await submenu.boundingBox();
+        expect(bounds.x).toBeGreaterThanOrEqual(0);
+        expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
+        await page.keyboard.press("Tab");
+        await expect(submenu.getByRole("link").first()).toBeFocused();
+        await page.keyboard.press("Escape");
+        await expect(serviceToggle).toBeFocused();
+        await expect(submenu).toBeHidden();
+        await page.locator(".hero").click({ position: { x: 8, y: 180 } });
+        const hub = page.locator(".desktop-nav").getByRole("link", {
+          name: menu.name,
+          exact: true,
+        });
+        await hub.hover();
+        await expect(serviceToggle).toHaveAttribute("aria-expanded", "true");
+        const hubBounds = await hub.boundingBox();
+        // Cross the visual gap slowly, so a premature close cannot go unnoticed.
+        await page.mouse.move(
+          hubBounds.x + hubBounds.width / 2,
+          hubBounds.y + hubBounds.height + 6,
+        );
+        await page.waitForTimeout(250);
+        await expect(submenu).toBeVisible();
+        await submenu.getByRole("link").first().hover();
+        await page.waitForTimeout(250);
+        await expect(submenu).toBeVisible();
+        await page.screenshot({
+          path: `artifacts/home-${width}-${menu.id}-submenu.png`,
+        });
+        const menuAudit = await new AxeBuilder({ page })
+          .include(".site-header")
+          .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+          .analyze();
+        expect(menuAudit.violations).toEqual([]);
+        await page.locator(".hero").hover({ position: { x: 8, y: 180 } });
+        await expect(submenu).toBeHidden();
+        await hub.hover();
+        await expect(submenu).toBeVisible();
+        await submenu.getByRole("link").first().focus();
+        await page.locator(".hero").hover({ position: { x: 8, y: 180 } });
+        await page.waitForTimeout(250);
+        await expect(submenu).toBeVisible();
+        await submenu.getByRole("link").last().focus();
+        await page.keyboard.press("Tab");
+        await expect(submenu).toBeHidden();
+        await hub.hover();
+        await expect(submenu).toBeVisible();
+        await page.locator(".hero").click({ position: { x: 8, y: 180 } });
+        await expect(submenu).toBeHidden();
+      }
+      const vpsToggle = page.getByRole("button", {
+        name: "Mở submenu Thuê VPS",
+        exact: true,
+      });
+      const cloudToggle = page.getByRole("button", {
+        name: "Mở submenu Cloud Server",
+        exact: true,
+      });
+      await page.locator(".desktop-nav .service-parent").first().hover();
+      await expect(vpsToggle).toHaveAttribute("aria-expanded", "true");
+      await page.locator(".desktop-nav .service-parent").nth(1).hover();
+      await expect(vpsToggle).toHaveAttribute("aria-expanded", "false");
+      await expect(cloudToggle).toHaveAttribute("aria-expanded", "true");
+      await page.keyboard.press("Escape");
       const toggle = page.getByRole("button", {
         name: "Giải Pháp",
         exact: true,
@@ -146,7 +285,32 @@ try {
       await page.keyboard.press("Escape");
       await expect(toggle).toBeFocused();
       await expect(toggle).toHaveAttribute("aria-expanded", "false");
-      await toggle.click();
+      await page.locator(".hero").click({ position: { x: 8, y: 180 } });
+      await toggle.hover();
+      const solutionSubmenu = page.locator("#solution-navigation");
+      await expect(solutionSubmenu).toBeVisible();
+      const solutionHubBounds = await toggle.boundingBox();
+      await page.mouse.move(
+        solutionHubBounds.x + solutionHubBounds.width / 2,
+        solutionHubBounds.y + solutionHubBounds.height + 6,
+      );
+      await page.waitForTimeout(250);
+      await expect(solutionSubmenu).toBeVisible();
+      await solutionSubmenu.getByRole("link").first().hover();
+      await page.waitForTimeout(250);
+      await expect(solutionSubmenu).toBeVisible();
+      await page.screenshot({
+        path: `artifacts/home-${width}-solutions-submenu.png`,
+      });
+      await page.locator(".hero").hover({ position: { x: 8, y: 180 } });
+      await expect(solutionSubmenu).toBeHidden();
+      await toggle.hover();
+      await expect(solutionSubmenu).toBeVisible();
+      await page.locator(".hero").hover({ position: { x: 8, y: 180 } });
+      await page.waitForTimeout(50);
+      await toggle.hover();
+      await page.waitForTimeout(250);
+      await expect(solutionSubmenu).toBeVisible();
       await page
         .locator("#solution-navigation")
         .getByRole("link", {
@@ -168,33 +332,36 @@ try {
         .toBe(true);
       await expect(toggle).toHaveAttribute("aria-expanded", "false");
       await page.evaluate(() => window.scrollTo(0, 0));
-      await toggle.click();
-      await page.locator("h1").click();
+      await toggle.hover();
+      await expect(solutionSubmenu).toBeVisible();
+      // Click outside the centered dropdown, which can cover the hero title.
+      await page.locator(".hero").click({ position: { x: 8, y: 180 } });
       await expect(toggle).toHaveAttribute("aria-expanded", "false");
     }
-    for (const tab of await page.getByRole("tab").all()) {
+    const needs = page.locator("#nhu-cau");
+    for (const tab of await needs.getByRole("tab").all()) {
       await tab.click();
       await expect(tab).toHaveAttribute("aria-selected", "true");
       const id = await tab.getAttribute("id");
-      await expect(page.getByRole("tabpanel")).toHaveAttribute(
+      await expect(needs.getByRole("tabpanel")).toHaveAttribute(
         "aria-labelledby",
         id,
       );
       await expect(
-        page.getByRole("tabpanel").getByRole("link").first(),
+        needs.getByRole("tabpanel").getByRole("link").first(),
       ).toHaveAttribute("href", /^https:\/\/interdata.vn\//);
     }
-    await page.getByRole("tab").first().focus();
+    await needs.getByRole("tab").first().focus();
     await page.keyboard.press("End");
-    await expect(page.getByRole("tab").last()).toBeFocused();
+    await expect(needs.getByRole("tab").last()).toBeFocused();
     await page.keyboard.press("Home");
-    await expect(page.getByRole("tab").first()).toBeFocused();
+    await expect(needs.getByRole("tab").first()).toBeFocused();
     await page.keyboard.press("ArrowDown");
-    await expect(page.getByRole("tab").nth(1)).toHaveAttribute(
+    await expect(needs.getByRole("tab").nth(1)).toHaveAttribute(
       "aria-selected",
       "true",
     );
-    await page.getByRole("tab").first().click();
+    await needs.getByRole("tab").first().click();
     await page.locator("#nhu-cau").scrollIntoViewIfNeeded();
     await page.screenshot({ path: `artifacts/home-${width}-consultation.png` });
     const a11y = await new AxeBuilder({ page })

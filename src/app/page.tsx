@@ -2,12 +2,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { Navigation } from "@/components/navigation";
 import { Consultation } from "@/components/consultation";
+import { ConsultationCta } from "@/components/consultation-cta";
 import { Icon } from "@/components/icon";
 import { WorldMap } from "@/components/world-map";
 import { TestimonialCarousel } from "@/components/testimonial-carousel";
 import { ParallaxBackground } from "@/components/parallax-background";
+import { HeroHeading } from "@/components/hero-heading";
 import { InfrastructureServices } from "@/components/infrastructure-services";
 import solutionStyles from "@/components/solutions.module.css";
+import { SolutionsCarousel } from "@/components/solutions-carousel";
+import { PressCarousel } from "@/components/press-carousel";
+import { TechnologyPartners } from "@/components/technology-partners";
 import {
   articles,
   claims,
@@ -78,7 +83,7 @@ export default function Home() {
           <div className="hero">
             <ParallaxBackground className="hero-background">
               <Image
-                src="/images/hero-datacenter-aisle.webp"
+                src="/images/solutions/datacenter-aisle.webp"
                 alt=""
                 fill
                 priority
@@ -92,30 +97,25 @@ export default function Home() {
                 <Icon name="network" />
                 HẠ TẦNG CHO HỆ THỐNG CỦA BẠN
               </span>
-              <h1 id="hero-title">
-                VPS, Cloud Server
-                <br />
-                và hạ tầng máy chủ
-                <br className="mobile-break" /> tại Việt Nam
-              </h1>
+              <HeroHeading />
               <p>
                 Từ một website đến hệ thống doanh nghiệp.
                 <br className="desktop-break" /> Chọn tài nguyên và cách triển
                 khai phù hợp cùng InterData.
               </p>
               <div className="hero-actions">
-                <a href={links.about} className="button hero-primary">
-                  About Us <Icon name="arrow" />
-                </a>
-                <a href={links.contact} className="button hero-secondary">
-                  Liên hệ <Icon name="external" />
+                <a href={links.trial} className="button hero-trial">
+                  <span className="hero-trial-icon" aria-hidden="true">
+                    <Icon name="external" />
+                  </span>
+                  <span className="hero-trial-label">Dùng thử miễn phí</span>
                 </a>
               </div>
               <ClaimNote />
             </div>
             {showEditorialNotes && (
               <span className="photo-credit">
-                Ảnh minh họa datacenter · PxHere / CC0
+                Ảnh minh họa datacenter · Tệp người dùng cung cấp
               </span>
             )}
           </div>
@@ -166,24 +166,7 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <div className={solutionStyles.grid}>
-              {solutions.map((s) => (
-                <article id={s.id} className={solutionStyles.card} key={s.id}>
-                  <div className={solutionStyles.cardTop}>
-                    <div className={solutionStyles.icon}>
-                      <Icon name={s.icon} />
-                    </div>
-                    <h3>{s.name}</h3>
-                  </div>
-                  <div className={solutionStyles.content}>
-                    <p>{s.description}</p>
-                    <a className="text-link" href={links.contact}>
-                      Trao đổi về {s.shortName} <Icon name="external" />
-                    </a>
-                  </div>
-                </article>
-              ))}
-            </div>
+            <SolutionsCarousel />
           </div>
         </section>
         <section id="nang-luc" className="capacity section">
@@ -231,33 +214,7 @@ export default function Home() {
               title="Báo Chí Nói Gì Về InterData?"
               description="Các bài viết về hoạt động, công nghệ và hợp tác của InterData. Nội dung do từng cơ quan báo chí xuất bản."
             />
-            <div className="press-grid">
-              {press.map((p) => (
-                <article key={p.href} className="press-article">
-                  <a
-                    href={p.href}
-                    className="press-image"
-                    tabIndex={-1}
-                    aria-hidden="true"
-                  >
-                    <Image
-                      src={p.image}
-                      alt=""
-                      width={720}
-                      height={440}
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  </a>
-                  <span className="publication">{p.publication}</span>
-                  <h3>
-                    <a href={p.href}>{p.title}</a>
-                  </h3>
-                  <a className="text-link" href={p.href}>
-                    Đọc trên {p.publication} <Icon name="external" />
-                  </a>
-                </article>
-              ))}
-            </div>
+            <PressCarousel items={press} />
           </div>
         </section>
         <section id="doi-tac" className="education section">
@@ -285,7 +242,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <Consultation />
+        <TechnologyPartners />
         <section id="ha-tang" className="infrastructure dark section">
           <ParallaxBackground className="infra-background">
             <Image
@@ -331,6 +288,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <Consultation />
+        <ConsultationCta />
         <section id="tai-nguyen" className="resources section">
           <div className="container">
             <SectionHeading
@@ -384,26 +343,6 @@ export default function Home() {
                 Xem tin khuyến mãi và điều kiện áp dụng <Icon name="arrow" />
               </a>
             </div>
-          </div>
-        </section>
-        <section id="lien-he" className="final-section container">
-          <div className="final-cta">
-            <div>
-              <span className="eyebrow">TRAO ĐỔI CÙNG INTERDATA</span>
-              <h2>
-                Cấu hình phù hợp bắt đầu
-                <br />
-                từ một bài toán rõ ràng.
-              </h2>
-              <p>
-                Cho chúng tôi biết ứng dụng, mức tải và kế hoạch của bạn.
-                <br className="desktop-break" /> Cùng xác định dịch vụ và phương
-                án triển khai tiếp theo.
-              </p>
-            </div>
-            <a className="button primary" href={links.contact}>
-              Liên hệ tư vấn <Icon name="arrow" />
-            </a>
           </div>
         </section>
       </main>

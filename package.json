@@ -10,7 +10,9 @@
     "typecheck": "tsc --noEmit",
     "test:ui": "node scripts/verify-ui.mjs",
     "test:parallax": "node scripts/verify-parallax.mjs",
+    "test:hero-heading": "node scripts/verify-hero-heading.mjs",
     "test:testimonials": "node scripts/verify-testimonials.mjs",
+    "test:press": "node scripts/verify-press.mjs",
     "test:links": "node scripts/verify-links.mjs"
   },
   "dependencies": {

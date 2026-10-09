@@ -1,0 +1,264 @@
+.track {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  border-radius: 22px;
+  padding-block: 12px 20px;
+}
+
+.carousel[data-enhanced="true"] .track {
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.carousel[data-enhanced="true"] .track::-webkit-scrollbar {
+  display: none;
+}
+
+.track[data-dragging="true"] {
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
+}
+
+.slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  scroll-snap-align: start;
+}
+
+.card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.card:hover,
+.card:focus-within {
+  border-color: var(--brand-primary);
+  box-shadow: 0 14px 32px rgb(0 67 236 / 10%);
+}
+
+.link {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  color: var(--text-primary);
+}
+
+.link:focus-visible {
+  outline: 3px solid var(--focus-light);
+  outline-offset: -5px;
+  border-radius: 21px;
+}
+
+.visual {
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 16 / 9;
+  background: #e8ebf2;
+}
+
+.photo {
+  object-fit: cover;
+}
+
+.visual::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 0;
+  background: linear-gradient(transparent, rgb(12 18 37 / 48%));
+  pointer-events: none;
+}
+
+.logo {
+  position: absolute;
+  z-index: 1;
+  left: 16px;
+  bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 126px;
+  height: 36px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgb(12 18 37 / 16%);
+}
+
+.logo img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 188px;
+  padding: 22px 24px 20px;
+}
+
+.body h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.55;
+  letter-spacing: -0.02em;
+}
+
+.readMore {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 26px;
+  color: var(--brand-primary);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.readMore svg {
+  width: 18px;
+  height: 18px;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  visibility: hidden;
+}
+
+.carousel[data-enhanced="true"] .controls {
+  visibility: visible;
+}
+
+.count {
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+
+.pagination,
+.arrows {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pagination button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.pagination button span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-control);
+}
+
+.pagination button[aria-current="true"] span {
+  width: 20px;
+  border-radius: 8px;
+  background: var(--brand-primary);
+}
+
+.arrows {
+  gap: 10px;
+  justify-self: end;
+}
+
+.arrows button {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  color: var(--brand-primary);
+  background: var(--surface-canvas);
+  border: 1px solid var(--border-control);
+  border-radius: 50%;
+}
+
+.arrows button:hover:not(:disabled) {
+  background: var(--brand-subtle);
+  border-color: var(--brand-primary);
+}
+
+.arrows button:disabled {
+  color: var(--text-muted);
+  border-color: var(--border-default);
+  cursor: default;
+}
+
+@media (max-width: 959px) {
+  .slide {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 639px) {
+  .slide {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .body {
+    min-height: 188px;
+    padding: 22px;
+  }
+
+  .controls {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .pagination {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2px;
+    max-width: 100%;
+  }
+
+  .pagination button {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+}
