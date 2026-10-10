@@ -56,8 +56,16 @@ try {
     const page = await context.newPage();
     const errors = [];
     page.on("pageerror", (error) => errors.push(error.message));
-    await page.goto(base, { waitUntil: "networkidle" });
+    await page.goto(base, { waitUntil: "domcontentloaded" });
     await page.evaluate(() => document.fonts.ready);
+    await expect(page.locator(".hero .parallax-background")).toHaveAttribute(
+      "data-parallax-active",
+      "true",
+    );
+    await expect(page.locator("#ha-tang .parallax-background")).toHaveAttribute(
+      "data-parallax-active",
+      "true",
+    );
     await page.evaluate(() => {
       document.documentElement.style.scrollBehavior = "auto";
     });
@@ -143,7 +151,7 @@ try {
   }
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
-  await page.goto(base, { waitUntil: "networkidle" });
+  await page.goto(base, { waitUntil: "domcontentloaded" });
   for (const selector of [".hero", "#ha-tang"]) {
     const value = await measure(page, selector);
     expect(value.photo).toEqual(value.section);

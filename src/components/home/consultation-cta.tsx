@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { links } from "@/data/content";
-import { Icon } from "./icon";
+import { Icon } from "@/components/ui/icon";
 import styles from "./consultation-cta.module.css";
 
 export function ConsultationCta() {

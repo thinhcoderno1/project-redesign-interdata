@@ -1,0 +1,95 @@
+{
+  "checkedOn": "2026-10-10",
+  "images": [
+    {
+      "name": "workshop-group",
+      "source": "https://interdata.vn/blog/wp-content/uploads/2025/02/InterData-chao-don-sinh-vien-FPT-Polytechnic-Ho-Chi-Minh-tham-quan-doanh-nghiep.png",
+      "article": "https://interdata.vn/blog/interdata-chao-don-sinh-vien-truong-cao-dang-fpt-polytechnic-ho-chi-minh/",
+      "alt": "InterData chào đón sinh viên FPT Polytechnic Hồ Chí Minh tham quan doanh nghiệp",
+      "width": 1600,
+      "height": 1200,
+      "asset": "/images/about/workshop-group.webp",
+      "bytes": 321290
+    },
+    {
+      "name": "workshop-speaker",
+      "source": "https://interdata.vn/blog/wp-content/uploads/2025/02/Anh-Le-Nguyen-Dinh-Nguyen-chia-se-tai-buoi-workshop.png",
+      "article": "https://interdata.vn/blog/interdata-chao-don-sinh-vien-truong-cao-dang-fpt-polytechnic-ho-chi-minh/",
+      "alt": "Anh Lê Nguyễn Đình Nguyên chia sẻ tại buổi workshop",
+      "width": 1600,
+      "height": 902,
+      "asset": "/images/about/workshop-speaker.webp",
+      "bytes": 165460
+    },
+    {
+      "name": "server-tour",
+      "source": "https://interdata.vn/blog/wp-content/uploads/2025/02/Sinh-vien-tham-quan-truc-tiep-server.png",
+      "article": "https://interdata.vn/blog/interdata-chao-don-sinh-vien-truong-cao-dang-fpt-polytechnic-ho-chi-minh/",
+      "alt": "Sinh viên tham quan trực tiếp server",
+      "width": 1600,
+      "height": 902,
+      "asset": "/images/about/server-tour.webp",
+      "bytes": 134742
+    },
+    {
+      "name": "fit-team",
+      "source": "https://interdata.vn/blog/wp-content/uploads/2026/03/Nhan-su-InterData-tai-FIT-Career-Day-2026-1024x768.jpg",
+      "article": "https://interdata.vn/blog/fit-career-day-2026-ket-noi-nhan-tai-kien-tao-tuong-lai/",
+      "alt": "Nhân sự InterData tại FIT Career Day 2026",
+      "width": 1024,
+      "height": 768,
+      "asset": "/images/about/fit-team.webp",
+      "bytes": 67702
+    },
+    {
+      "name": "fit-booth",
+      "source": "https://interdata.vn/blog/wp-content/uploads/2026/03/InterData-tai-FIT-Career-Day-1024x683.jpg",
+      "article": "https://interdata.vn/blog/fit-career-day-2026-ket-noi-nhan-tai-kien-tao-tuong-lai/",
+      "alt": "InterData tại FIT Career Day",
+      "width": 1024,
+      "height": 683,
+      "asset": "/images/about/fit-booth.webp",
+      "bytes": 65510
+    },
+    {
+      "name": "uef-signing",
+      "source": "https://interdata.vn/blog/wp-content/uploads/2026/03/Le-ky-ket-MOU-giua-InterData-va-UEF-1024x683.jpg",
+      "article": "https://interdata.vn/blog/fit-career-day-2026-ket-noi-nhan-tai-kien-tao-tuong-lai/",
+      "alt": "Lễ ký kết MOU giữa InterData và UEF",
+      "width": 1024,
+      "height": 683,
+      "asset": "/images/about/uef-signing.webp",
+      "bytes": 54778
+    },
+    {
+      "name": "vnpt-signing",
+      "source": "https://interdata.vn/blog/wp-content/uploads/2024/07/Ong-Ngo-Dai-Nhan-Giam-Doc-dieu-hanh-Inter-Group-va-ong-Le-Chi-Thanh-Pho-Giam-Doc-Phong-Khach-Hang-Doanh-Nghiep-3-VNPT-VinaPhone-Thanh-pho-Ho-Chi-Minh-ky-ket-doi-tac-chien-luoc.jpeg",
+      "article": "https://interdata.vn/blog/interdata-hop-tac-chien-luoc-cung-vnpt/",
+      "alt": "Ông Ngô Đại Nhân Giám Đốc điều hành Inter Group và ông Lê Chí Thanh Phó Giám Đốc Phòng Khách Hàng Doanh Nghiệp 3 - VNPT VinaPhone Thành phố Hồ Chí Minh ký kết đối tác chiến lược. ",
+      "width": 1280,
+      "height": 1012,
+      "asset": "/images/about/vnpt-signing.webp",
+      "bytes": 196228
+    },
+    {
+      "name": "vnpt-datacenter",
+      "source": "https://interdata.vn/blog/wp-content/uploads/2024/07/Hai-ben-chup-anh-luu-niem-tai-Datacenter-142-Dien-Bien-Phu-TP-HCM-1024x768.jpg",
+      "article": "https://interdata.vn/blog/interdata-hop-tac-chien-luoc-cung-vnpt/",
+      "alt": "Hai bên chụp ảnh lưu niệm tại Datacenter 142 Điện Biên Phủ - TP HCM",
+      "width": 1024,
+      "height": 768,
+      "asset": "/images/about/vnpt-datacenter.webp",
+      "bytes": 103744
+    },
+    {
+      "name": "yersin-signing",
+      "source": "https://interdata.vn/blog/wp-content/uploads/2024/05/Inter-Group-ky-ket-hop-tac-MOU-voi-Truong-Dai-hoc-Yersin-scaled.jpg",
+      "article": "https://interdata.vn/blog/le-ky-ket-mou-interdata-va-dai-hoc-yersin/",
+      "alt": "Công ty Cổ phần Inter Group ký kết hợp tác MOU với Trường Đại học Yersin Đà Lạt",
+      "width": 1600,
+      "height": 1066,
+      "asset": "/images/about/yersin-signing.webp",
+      "bytes": 131114
+    }
+  ]
+}

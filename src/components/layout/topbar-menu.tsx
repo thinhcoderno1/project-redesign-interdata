@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Icon } from "./icon";
+import { Icon } from "@/components/ui/icon";
+import Link from "next/link";
 
 export function TopbarMenu({
   id,
@@ -80,11 +81,21 @@ export function TopbarMenu({
         {label} <Icon name="down" />
       </button>
       <div id={id} className="utility-dropdown" hidden={!open}>
-        {items.map((item) => (
-          <a key={item.name} href={item.href} onClick={() => setOpen(false)}>
-            {item.name}
-          </a>
-        ))}
+        {items.map((item) =>
+          item.href.startsWith("/") ? (
+            <Link
+              key={item.name}
+              href={item.href}
+              onClick={() => setOpen(false)}
+            >
+              {item.name}
+            </Link>
+          ) : (
+            <a key={item.name} href={item.href} onClick={() => setOpen(false)}>
+              {item.name}
+            </a>
+          ),
+        )}
       </div>
     </div>
   );

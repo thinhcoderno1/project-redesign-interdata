@@ -1,45 +1,22 @@
+import Image from "next/image";
 import { services } from "@/data/content";
 import {
   cloudCatalog,
   vpsCatalog,
   type CatalogService,
 } from "@/data/service-catalog";
-import { Icon } from "./icon";
+import { Icon } from "@/components/ui/icon";
 import styles from "./infrastructure-services.module.css";
 
-const priceFormat = new Intl.NumberFormat("vi-VN");
-
-function ServiceCardIcon() {
+function ServiceArtwork({ serviceId }: { serviceId: string }) {
   return (
-    <span className={styles.icon} aria-hidden="true">
-      <svg viewBox="0 0 52 52" fill="none">
-        <path d="M5 39 25 29l22 11-20 11L5 39Z" fill="#dceaff" />
-        <path d="m5 35 20-10 22 11-20 11L5 35Z" fill="#98c3ff" />
-        <path d="M5 35v4l22 12v-4L5 35Z" fill="#74adff" />
-        <path d="m27 47 20-11v4L27 51v-4Z" fill="#1875ee" />
-        <path d="m14 9 15-7 15 8-15 8-15-9Z" fill="#eaf3ff" />
-        <path d="M14 9v26l15 8V18L14 9Z" fill="#c6deff" />
-        <path d="m29 18 15-8v25l-15 8V18Z" fill="#1681ff" />
-        <path d="m18 9 11-5 10 6-10 5-11-6Z" fill="#b6d6ff" />
-        <path
-          d="m17 16 9 5m-9 1 9 5m-9 1 9 5"
-          stroke="#75aaff"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-        <path
-          d="m33 20 7-4m-7 10 7-4m-7 10 7-4"
-          stroke="#bfe1ff"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-        <path
-          d="m17 33 3 2m2-1 4 2"
-          stroke="#fff"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-      </svg>
+    <span className={styles.artwork} aria-hidden="true">
+      <Image
+        src={`/images/services-3d/${serviceId}.webp`}
+        alt=""
+        fill
+        sizes="(max-width: 639px) 240px, (max-width: 1023px) 260px, 360px"
+      />
     </span>
   );
 }
@@ -47,28 +24,14 @@ function ServiceCardIcon() {
 function ProductCard({ service }: { service: CatalogService }) {
   return (
     <article className={styles.card} data-catalog-service={service.id}>
+      <ServiceArtwork serviceId={service.id} />
       <div className={styles.cardTop}>
-        <ServiceCardIcon />
         <div className={styles.heading}>
           <span className={styles.platform}>{service.platform}</span>
           <h3>{service.name}</h3>
         </div>
       </div>
       <p className={styles.description}>{service.description}</p>
-      <div className={styles.priceBlock}>
-        <div className={styles.priceLine}>
-          <span className={styles.priceLabel}>
-            {service.id === "vps-n8n" ? "Gói tham khảo" : "Giá từ"}
-          </span>
-          <p className={styles.price}>
-            <strong>
-              {priceFormat.format(service.price)}
-              <span>đ</span>
-            </strong>
-            <span>/{service.period}</span>
-          </p>
-        </div>
-      </div>
       <a
         href={service.href}
         className={`button ${styles.button}`}
@@ -157,8 +120,8 @@ export function InfrastructureServices() {
                 key={service.id}
                 data-catalog-service={service.id}
               >
+                <ServiceArtwork serviceId={service.id} />
                 <div className={styles.cardTop}>
-                  <ServiceCardIcon />
                   <div className={styles.heading}>
                     <span className={styles.platform}>{service.type}</span>
                     <h3>
@@ -169,14 +132,6 @@ export function InfrastructureServices() {
                   </div>
                 </div>
                 <p className={styles.description}>{service.description}</p>
-                <ul className={styles.features}>
-                  {service.features.map((feature) => (
-                    <li key={feature}>
-                      <Icon name="check" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
                 <a className={`button ${styles.button}`} href={service.href}>
                   {service.cta}
                   <Icon name="arrow" />

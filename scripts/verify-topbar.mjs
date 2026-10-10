@@ -10,8 +10,8 @@ const menus = [
     name: "Về chúng tôi",
     id: "about-topbar-navigation",
     items: [
-      ["Giới thiệu", "https://interdata.vn/about-us"],
-      ["Liên hệ", "https://interdata.vn/contact"],
+      ["Giới thiệu", "/gioi-thieu/"],
+      ["Liên hệ", "/lien-he/"],
     ],
   },
   {
@@ -37,7 +37,16 @@ try {
     const page = await context.newPage();
     const errors = [];
     page.on("pageerror", (error) => errors.push(error.message));
-    await page.goto(base, { waitUntil: "networkidle" });
+    await page.goto(base, { waitUntil: "domcontentloaded" });
+    await expect
+      .poll(() =>
+        page.evaluate(() =>
+          document.documentElement.style.getPropertyValue(
+            "--site-header-height",
+          ),
+        ),
+      )
+      .not.toBe("");
     await page.evaluate(() => document.fonts.ready);
     const utility = page.locator(".utility");
     const left = utility.getByRole("navigation", {
@@ -59,7 +68,7 @@ try {
     ).toHaveAttribute("href", "https://interdata.vn/blog/tuyen-dung/");
     await expect(
       left.getByRole("link", { name: "Hợp tác", exact: true }),
-    ).toHaveAttribute("href", "https://interdata.vn/contact");
+    ).toHaveAttribute("href", "/lien-he/");
     await expect(
       right.getByRole("link", { name: "Gửi yêu cầu hỗ trợ", exact: true }),
     ).toHaveAttribute("href", "https://support.interdata.vn/submitticket.php");

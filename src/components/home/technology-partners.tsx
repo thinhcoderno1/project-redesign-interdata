@@ -8,8 +8,8 @@ const partners = technologyPartnerGroups.flatMap<Partner>((group) => [
   ...group.partners,
 ]);
 const sides = [
-  { side: "left", partners: partners.slice(0, 9), rows: [2, 2, 2, 1, 2] },
-  { side: "right", partners: partners.slice(9), rows: [2, 1, 1, 1, 2] },
+  { side: "left", partners: partners.slice(0, 10), rows: [2, 2, 2, 2, 2] },
+  { side: "right", partners: partners.slice(10, 20), rows: [2, 2, 2, 2, 2] },
 ] as const;
 
 function placePartners(side: (typeof sides)[number]) {
@@ -19,7 +19,7 @@ function placePartners(side: (typeof sides)[number]) {
     Array.from({ length: count }, (_, column) => ({
       partner: side.partners[index++],
       row: row + 1,
-      column: count === 1 && side.side === "left" ? 2 : column + 1,
+      column: column + 1,
       offset: curve[row],
     })),
   );
@@ -35,9 +35,7 @@ export function TechnologyPartners() {
       <div className="container">
         <div className={styles.heading}>
           <span className="eyebrow">HỆ SINH THÁI CÔNG NGHỆ</span>
-          <h2 id="technology-partners-title">
-            Kết nối cùng các đối tác công nghệ
-          </h2>
+          <h2 id="technology-partners-title">Đối Tác Công Nghệ</h2>
           <p>Kết nối công nghệ, nền tảng và hạ tầng cùng InterData.</p>
         </div>
         <div className={styles.ecosystem}>
@@ -54,7 +52,7 @@ export function TechnologyPartners() {
             <ul
               key={side.side}
               className={`${styles.logos} ${styles[side.side]}`}
-              aria-label={`Đối tác ${side.side === "left" ? "bên trái" : "bên phải"} địa cầu`}
+              aria-label={`Logo công nghệ ${side.side === "left" ? "bên trái" : "bên phải"} địa cầu`}
             >
               {placePartners(side).map(({ partner, row, column, offset }) => (
                 <li

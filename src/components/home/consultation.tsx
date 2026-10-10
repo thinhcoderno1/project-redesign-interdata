@@ -1,7 +1,9 @@
 "use client";
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { needs, links } from "@/data/content";
-import { Icon } from "./icon";
+import { Icon } from "@/components/ui/icon";
+import styles from "./consultation.module.css";
 export function Consultation() {
   const [active, setActive] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -66,8 +68,17 @@ export function Consultation() {
             id="need-panel"
             aria-labelledby={`tab-${need.id}`}
             tabIndex={0}
-            className="need-panel"
+            className={`need-panel ${styles.panel}`}
           >
+            <div className={styles.artwork} aria-hidden="true">
+              <Image
+                key={need.id}
+                src={`/images/needs/${need.id}-3d.webp`}
+                alt=""
+                fill
+                sizes="(max-width: 639px) 270px, (max-width: 1099px) 340px, 480px"
+              />
+            </div>
             <span className="panel-label">GỢI Ý CHO NHU CẦU CỦA BẠN</span>
             <h3>{need.title}</h3>
             <p>{need.description}</p>

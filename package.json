@@ -13,9 +13,16 @@
     "test:hero-heading": "node scripts/verify-hero-heading.mjs",
     "test:testimonials": "node scripts/verify-testimonials.mjs",
     "test:press": "node scripts/verify-press.mjs",
-    "test:links": "node scripts/verify-links.mjs"
+    "test:promotions": "node scripts/verify-promotions.mjs",
+    "test:links": "node scripts/verify-links.mjs",
+    "test:resources:data": "node scripts/verify-resource-data.mjs",
+    "test:resources": "node scripts/verify-resources.mjs",
+    "test:layout": "node scripts/verify-shared-layout.mjs",
+    "test:about": "node scripts/verify-about.mjs",
+    "test:contact": "node scripts/verify-contact.mjs"
   },
   "dependencies": {
+    "entities": "8.1.0",
     "lucide-react": "1.52.0",
     "next": "16.3.8",
     "react": "19.3.0",

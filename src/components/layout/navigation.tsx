@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { links, solutions } from "@/data/content";
 import {
@@ -8,22 +9,47 @@ import {
   vpsCatalog,
   type CatalogService,
 } from "@/data/service-catalog";
-import { Icon } from "./icon";
+import { Icon } from "@/components/ui/icon";
 import { TopbarMenu } from "./topbar-menu";
 
 const serviceMenus = [
-  { id: "vps", name: "Thuê VPS", href: links.vps, items: vpsCatalog },
-  { id: "cloud", name: "Cloud Server", href: links.cloud, items: cloudCatalog },
+  {
+    id: "vps",
+    name: "Thuê VPS",
+    tag: "Đề xuất",
+    href: links.vps,
+    items: vpsCatalog,
+  },
+  {
+    id: "cloud",
+    name: "Cloud Server",
+    tag: "Nổi bật",
+    href: links.cloud,
+    items: cloudCatalog,
+  },
 ];
+
+function NavigationLabel({ name, tag }: { name: string; tag: string }) {
+  return (
+    <span className="nav-item-label">
+      <span className="nav-item-tag" aria-hidden="true">
+        {tag}
+      </span>
+      {name}
+    </span>
+  );
+}
 
 function ServiceSubmenu({
   id,
   name,
+  tag,
   href,
   items,
 }: {
   id: string;
   name: string;
+  tag: string;
   href: string;
   items: CatalogService[];
 }) {
@@ -86,7 +112,7 @@ function ServiceSubmenu({
       }}
     >
       <a href={href} className="service-parent">
-        {name}
+        <NavigationLabel name={name} tag={tag} />
       </a>
       <button
         type="button"
@@ -120,6 +146,9 @@ function ServiceSubmenu({
 }
 
 export function Navigation() {
+  const pathname = usePathname();
+  const homeSectionHref = (section: string) =>
+    `${pathname === "/" ? "" : "/"}#${section}`;
   const header = useRef<HTMLElement>(null);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -241,7 +270,7 @@ export function Navigation() {
             href="/"
             aria-label="Trang chủ"
             className="home-link"
-            aria-current="page"
+            aria-current={pathname === "/" ? "page" : undefined}
           >
             <Icon name="home" />
           </Link>
@@ -282,7 +311,8 @@ export function Navigation() {
               aria-controls="solution-navigation"
               onClick={() => setSolutionsOpen(!solutionsOpen)}
             >
-              Giải Pháp <Icon name="down" />
+              <NavigationLabel name="Giải Pháp" tag="Mới" />
+              <Icon name="down" />
             </button>
             <div
               id="solution-navigation"
@@ -293,7 +323,7 @@ export function Navigation() {
               {solutions.map((s) => (
                 <a
                   key={s.id}
-                  href={`#${s.id}`}
+                  href={homeSectionHref(s.id)}
                   onClick={() => setSolutionsOpen(false)}
                 >
                   <Icon name={s.icon} />
@@ -370,7 +400,8 @@ export function Navigation() {
             {serviceMenus.map((service) => (
               <details key={service.id} className="mobile-service-menu">
                 <summary>
-                  {service.name} <Icon name="down" />
+                  <NavigationLabel name={service.name} tag={service.tag} />
+                  <Icon name="down" />
                 </summary>
                 <a href={service.href} onClick={closeDrawer}>
                   {service.id === "vps" ? "Xem tất cả VPS" : "Xem Cloud Server"}
@@ -384,10 +415,15 @@ export function Navigation() {
             ))}
             <details>
               <summary>
-                Giải Pháp <Icon name="down" />
+                <NavigationLabel name="Giải Pháp" tag="Mới" />
+                <Icon name="down" />
               </summary>
               {solutions.map((s) => (
-                <a key={s.id} href={`#${s.id}`} onClick={closeDrawer}>
+                <a
+                  key={s.id}
+                  href={homeSectionHref(s.id)}
+                  onClick={closeDrawer}
+                >
                   {s.name}
                 </a>
               ))}

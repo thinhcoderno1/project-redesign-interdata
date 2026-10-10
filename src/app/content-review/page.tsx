@@ -74,9 +74,10 @@ export default function ContentReview() {
       <h2>Đường dẫn và tích hợp</h2>
       <p>
         Các giải pháp chưa có trang đích được xác nhận: điều hướng đến section
-        homepage, CTA đến <a href={links.contact}>trang liên hệ chính thức</a>.
-        Không tạo form hoặc mô phỏng gửi thành công. Bản này không có backend,
-        analytics hay đăng nhập riêng.
+        homepage, CTA đến <a href={links.contact}>trang Liên hệ</a>. Trang Liên
+        hệ có công cụ soạn email; người dùng xem lại và gửi trong ứng dụng email
+        của mình. Không mô phỏng gửi thành công. Bản này không có backend tiếp
+        nhận yêu cầu, analytics hay đăng nhập riêng.
       </p>
       <h2>Chế độ xuất bản</h2>
       <p>

@@ -1,0 +1,140 @@
+.carousel {
+  min-width: 0;
+}
+.stage {
+  position: relative;
+  min-width: 0;
+  transition: transform 240ms ease;
+}
+.viewport {
+  border-radius: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+.track {
+  display: flex;
+  transition: transform 450ms ease;
+}
+.slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  scroll-snap-align: start;
+}
+.carousel[data-enhanced] .viewport {
+  overflow: clip;
+  scroll-snap-type: none;
+  touch-action: pan-y pinch-zoom;
+}
+.banner {
+  display: block;
+}
+.banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2048 / 432;
+  object-fit: contain;
+}
+.banner:focus-visible {
+  outline: 3px solid var(--brand-primary);
+  outline-offset: -4px;
+}
+.controls {
+  display: none;
+  margin-top: 12px;
+}
+.carousel[data-enhanced] .controls {
+  display: flex;
+  justify-content: center;
+}
+.pagination {
+  display: flex;
+  gap: 2px;
+}
+.pagination button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+}
+.pagination button span {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--text-secondary);
+  transition:
+    width 180ms ease,
+    background-color 180ms ease;
+}
+.pagination [aria-current="true"] span {
+  width: 24px;
+  background: var(--brand-primary);
+}
+.arrows {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  left: 12px;
+  display: none;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.carousel[data-enhanced] .arrows {
+  display: flex;
+}
+.arrows button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border-default);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 94%);
+  box-shadow: 0 2px 8px rgb(3 22 119 / 12%);
+  color: var(--brand-strong);
+  cursor: pointer;
+  pointer-events: auto;
+}
+.arrows button:hover {
+  border-color: var(--brand-primary);
+  background: var(--brand-subtle);
+}
+.carousel button:focus-visible {
+  outline: 3px solid var(--brand-primary);
+  outline-offset: 3px;
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .stage:hover {
+    transform: translateY(-4px);
+  }
+}
+@media (max-width: 639px) {
+  .viewport {
+    border-radius: 8px;
+  }
+  .pagination {
+    gap: 0;
+  }
+  .pagination button {
+    width: 26px;
+  }
+  .arrows {
+    right: 8px;
+    left: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .track,
+  .pagination button span {
+    transition: none;
+  }
+}

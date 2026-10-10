@@ -33,7 +33,20 @@ try {
       if (r.status() >= 400 && r.url().startsWith(base))
         errors.push(`${r.status()} ${r.url()}`);
     });
-    await page.goto(base, { waitUntil: "networkidle" });
+    await page.goto(base, { waitUntil: "domcontentloaded" });
+    await expect
+      .poll(() =>
+        page.evaluate(() =>
+          document.documentElement.style.getPropertyValue(
+            "--site-header-height",
+          ),
+        ),
+      )
+      .not.toBe("");
+    await expect(page.locator(".testimonial-carousel")).toHaveAttribute(
+      "data-enhanced",
+      "true",
+    );
     await page.evaluate(() => document.fonts.ready);
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page.locator("html")).toHaveAttribute("lang", "vi");
@@ -44,7 +57,7 @@ try {
     for (const solution of expectedSolutions) {
       await expect(page.locator(`#${solution.id} a`)).toHaveAttribute(
         "href",
-        "https://interdata.vn/contact",
+        "/lien-he/",
       );
       await expect(
         page.locator(`#solution-navigation a[href="#${solution.id}"]`),
@@ -349,7 +362,7 @@ try {
       );
       await expect(
         needs.getByRole("tabpanel").getByRole("link").first(),
-      ).toHaveAttribute("href", /^https:\/\/interdata.vn\//);
+      ).toHaveAttribute("href", /^(https:\/\/interdata\.vn\/|\/lien-he\/$)/);
     }
     await needs.getByRole("tab").first().focus();
     await page.keyboard.press("End");

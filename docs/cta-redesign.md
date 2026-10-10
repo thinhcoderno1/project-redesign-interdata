@@ -10,7 +10,7 @@ Thiết kế tham khảo nguyên tắc bố cục của ảnh Vietnix do ngườ
 - Minh họa tạo bằng built-in `image_gen`, thông qua skill imagegen; không dùng CLI fallback.
 - Nhân vật minh họa trang trí, không đại diện cho một nhân viên hoặc danh tính có thật. `alt` rỗng, visual `aria-hidden` để tránh lặp nội dung.
 - WebP được mã hóa từ kết quả PNG, giữ alpha. Bản PNG gốc được giữ tại thư mục generated_images của Codex.
-- CSS module: `src/components/consultation-cta.module.css`; component: `src/components/consultation-cta.tsx`.
+- CSS module: `src/components/home/consultation-cta.module.css`; component: `src/components/home/consultation-cta.tsx`.
 
 ## Prompt cuối cùng
 

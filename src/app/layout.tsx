@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { FloatingContact } from "@/components/layout/floating-contact";
 import "./fonts.css";
 import "./globals.css";
 export const metadata: Metadata = {
@@ -15,7 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="vi">
-      <body>{children}</body>
+      <body id="dau-trang">
+        {children}
+        <FloatingContact />
+      </body>
     </html>
   );
 }

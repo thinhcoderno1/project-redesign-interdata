@@ -9,7 +9,7 @@ import {
   useState,
   type PointerEvent,
 } from "react";
-import { Icon } from "@/components/icon";
+import { Icon } from "@/components/ui/icon";
 import { links, solutions } from "@/data/content";
 import styles from "./solutions-slider.module.css";
 
@@ -42,7 +42,6 @@ function CardContent({ index, preview }: { index: number; preview: boolean }) {
         style={{ objectPosition: backgrounds[index].position }}
         draggable={false}
       />
-      <div className={styles.overlay} aria-hidden="true" />
       <div className={styles.content}>
         {preview ? (
           <span className={styles.title}>{solution.name}</span>

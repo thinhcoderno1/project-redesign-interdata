@@ -7,7 +7,7 @@ npm install
 npm run dev
 ```
 
-Preview: http://localhost:3100. Báo cáo nội dung: http://localhost:3100/content-review.
+Preview: http://localhost:3100. Trang Giới thiệu: http://localhost:3100/gioi-thieu/. Trang Liên hệ: http://localhost:3100/lien-he/. Báo cáo nội dung: http://localhost:3100/content-review/.
 
 ```powershell
 npm run lint
@@ -15,6 +15,8 @@ npm run typecheck
 npm run build
 npm run start
 npm run test:ui
+npm run test:about
+npm run test:contact
 npm run test:parallax
 npm run test:testimonials
 npm run test:links
@@ -27,8 +29,17 @@ Section phản hồi có 8 feedback từ `D:\InterData\thue-vps\components\testi
 
 - `src/data/content.ts`: dịch vụ, giải pháp, phản hồi, báo chí, trường học, CTA và trạng thái duyệt.
 - `src/data/articles.json`: tiêu đề, ảnh, URL và ngày xuất bản lấy từ WordPress API chính thức; trang không gọi API khi tải.
-- `src/components`: điều hướng, selector tư vấn, icon và bản đồ trang trí.
-- `src/app/globals.css`: semantic color tokens, layout và responsive states.
+- `src/app/(website)/(home)/page.tsx`: route homepage `/`, metadata và thời gian cập nhật.
+- `src/app/(website)/layout.tsx`: header/footer chung cho homepage và các trang con.
+- `src/components/home`: nội dung, section và CSS riêng của homepage.
+- `src/components/about`: nội dung và CSS riêng của trang Giới thiệu.
+- `docs/about-page.md`: nội dung, nguồn ảnh và kiểm tra trang Giới thiệu.
+- `src/components/contact`: trang Liên hệ, bản đồ văn phòng và công cụ soạn email.
+- `docs/contact-page.md`: nguồn thông tin, hành vi Google Maps và phạm vi tiếp nhận yêu cầu.
+- `src/components/layout`: điều hướng, footer và widget liên hệ nổi.
+- `src/components/ui`: icon và thành phần tái sử dụng.
+- `src/app/globals.css`: semantic color tokens, UI nền tảng và style dùng chung.
+- `docs/project-structure.md`: cấu trúc thư mục và cách thêm trang con.
 - `docs/asset-manifest.json`: nguồn từng tài sản và kích thước ảnh đã nén.
 - `docs/IMPLEMENTATION-HANDOFF.md`: kết quả kiểm tra và các mục cần xác nhận.
 

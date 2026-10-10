@@ -1,29 +1,28 @@
+import homeStyles from "./home.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import { Navigation } from "@/components/navigation";
-import { Consultation } from "@/components/consultation";
-import { ConsultationCta } from "@/components/consultation-cta";
-import { Icon } from "@/components/icon";
-import { WorldMap } from "@/components/world-map";
-import { TestimonialCarousel } from "@/components/testimonial-carousel";
-import { ParallaxBackground } from "@/components/parallax-background";
-import { HeroHeading } from "@/components/hero-heading";
-import { InfrastructureServices } from "@/components/infrastructure-services";
-import solutionStyles from "@/components/solutions.module.css";
-import { SolutionsCarousel } from "@/components/solutions-carousel";
-import { PressCarousel } from "@/components/press-carousel";
-import { TechnologyPartners } from "@/components/technology-partners";
+import { Consultation } from "@/components/home/consultation";
+import { ConsultationCta } from "@/components/home/consultation-cta";
+import { Icon } from "@/components/ui/icon";
+import { WorldMap } from "@/components/home/world-map";
+import { TestimonialCarousel } from "@/components/home/testimonial-carousel";
+import { ParallaxBackground } from "@/components/ui/parallax-background";
+import { HeroHeading } from "@/components/home/hero-heading";
+import { InfrastructureServices } from "@/components/home/infrastructure-services";
+import solutionStyles from "@/components/home/solutions.module.css";
+import { SolutionsCarousel } from "@/components/home/solutions-carousel";
+import { PressCarousel } from "@/components/home/press-carousel";
+import { TechnologyPartners } from "@/components/home/technology-partners";
+import { PromotionCarousel } from "@/components/home/promotion-carousel";
+import { KnowledgeResources } from "@/components/home/knowledge-resources";
 import {
-  articles,
   claims,
   infrastructure,
   links,
   partners,
   press,
   reviewMode,
-  services,
   showEditorialNotes,
-  solutions,
   testimonials,
 } from "@/data/content";
 
@@ -66,7 +65,7 @@ function ClaimNote() {
     </p>
   ) : null;
 }
-export default function Home() {
+export function HomePage() {
   const visibleClaims = claims.filter(
     (c) => reviewMode || c.status === "approved",
   );
@@ -76,9 +75,7 @@ export default function Home() {
   const capacityClaim = visibleClaims.find((c) => c.id === "business");
   return (
     <>
-      <div id="trang-chu" aria-hidden="true" />
-      <Navigation />
-      <main id="noi-dung">
+      <main id="noi-dung" className={homeStyles.home}>
         <section className="hero-shell" aria-labelledby="hero-title">
           <div className="hero">
             <ParallaxBackground className="hero-background">
@@ -135,15 +132,7 @@ export default function Home() {
               ))}
             </ul>
           )}
-          <a className="promotion-artwork" href={links.promotion}>
-            <Image
-              src="/images/banner-khuyen-mai.jpg"
-              width={2048}
-              height={432}
-              alt="Săn ưu đãi VPS / Cloud Server – tối ưu đến 80% chi phí"
-              sizes="(max-width: 639px) calc(100vw - 40px), (max-width: 1199px) calc(100vw - 64px), (max-width: 1343px) calc(100vw - 96px), 1248px"
-            />
-          </a>
+          <PromotionCarousel href={links.promotion} />
         </section>
         <InfrastructureServices />
         <section
@@ -290,132 +279,8 @@ export default function Home() {
         </section>
         <Consultation />
         <ConsultationCta />
-        <section id="tai-nguyen" className="resources section">
-          <div className="container">
-            <SectionHeading
-              eyebrow="KIẾN THỨC & TIN TỨC"
-              title="Hiểu hạ tầng. Chủ động triển khai."
-              href={links.blog}
-              linkText="Khám phá blog"
-            />
-            <div className="resource-layout">
-              {articles.map((a, i) => (
-                <article
-                  key={a.href}
-                  className={i === 0 ? "resource-feature" : "resource-row"}
-                >
-                  {a.image && (
-                    <a href={a.href} tabIndex={-1} aria-hidden="true">
-                      <Image
-                        src={a.image}
-                        alt=""
-                        width={960}
-                        height={540}
-                        sizes={
-                          i === 0
-                            ? "(max-width: 768px) 100vw, 50vw"
-                            : "(max-width: 640px) 96px, 180px"
-                        }
-                      />
-                    </a>
-                  )}
-                  <div>
-                    <span className="article-category">{a.category}</span>
-                    <h3>
-                      <a href={a.href}>{a.title}</a>
-                    </h3>
-                    {i === 0 && (
-                      <p>
-                        Những thông số cần đối chiếu trước khi chọn tài nguyên
-                        cho hệ thống của bạn.
-                      </p>
-                    )}
-                    <a href={a.href} className="text-link">
-                      Đọc bài viết <Icon name="arrow" />
-                    </a>
-                  </div>
-                </article>
-              ))}
-            </div>
-            <div className="resource-bottom">
-              <p>Đang tìm chương trình ưu đãi cho dịch vụ?</p>
-              <a href={links.promotion} className="text-link">
-                Xem tin khuyến mãi và điều kiện áp dụng <Icon name="arrow" />
-              </a>
-            </div>
-          </div>
-        </section>
+        <KnowledgeResources />
       </main>
-      <footer className="footer dark">
-        <div className="container">
-          <div className="footer-grid">
-            <div className="footer-company">
-              <Link href="/" className="footer-logo">
-                <Image
-                  src="/images/logo.webp"
-                  alt="InterData"
-                  width={500}
-                  height={174}
-                  sizes="180px"
-                />
-              </Link>
-              <p>CÔNG TY CỔ PHẦN INTER GROUP</p>
-              <address>
-                240 Nguyễn Đình Chính,
-                <br />
-                P. Phú Nhuận, TP. Hồ Chí Minh
-              </address>
-              <a href="tel:1900636822">1900 636 822</a>
-              <a href="mailto:info@interdata.vn">info@interdata.vn</a>
-              <span>MST: 0316918910</span>
-            </div>
-            <div>
-              <h2>Dịch vụ</h2>
-              {services.map((s) => (
-                <a key={s.id} href={s.href}>
-                  {s.name}
-                </a>
-              ))}
-            </div>
-            <div>
-              <h2>Giải pháp</h2>
-              {solutions.map((s) => (
-                <a key={s.id} href={`#${s.id}`}>
-                  {s.name}
-                </a>
-              ))}
-            </div>
-            <div>
-              <h2>Về InterData</h2>
-              <a href={links.about}>Giới thiệu</a>
-              <a href={links.blog}>Blog & Tin tức</a>
-              <a href={links.promotion}>Khuyến mãi</a>
-              <a href={links.contact}>Liên hệ</a>
-            </div>
-            <div>
-              <h2>Hỗ trợ & Tài khoản</h2>
-              <a href={links.ticket}>Gửi ticket</a>
-              <a href={links.register}>Đăng ký</a>
-              <a href={links.login}>Đăng nhập</a>
-              <a href={links.sla}>Cam kết dịch vụ</a>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <span>© 2026 InterData</span>
-            <div>
-              <a href={links.privacy}>Chính sách bảo mật</a>
-              <a href={links.terms}>Điều khoản sử dụng</a>
-              <a href="#trang-chu">Về đầu trang ↑</a>
-            </div>
-          </div>
-          {reviewMode && showEditorialNotes && (
-            <div className="review-footer">
-              Bản thiết kế để duyệt nội dung ·{" "}
-              <a href="/content-review">Các mục cần xác nhận</a>
-            </div>
-          )}
-        </div>
-      </footer>
     </>
   );
 }

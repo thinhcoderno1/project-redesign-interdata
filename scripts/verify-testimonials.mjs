@@ -72,7 +72,8 @@ try {
     const page = await context.newPage();
     const errors = [];
     page.on("pageerror", (error) => errors.push(error.message));
-    await page.goto(base, { waitUntil: "networkidle" });
+    await page.goto(base, { waitUntil: "domcontentloaded" });
+    await page.evaluate(() => document.fonts.ready);
     const track = page.locator(".testimonial-track");
     const slides = track.locator(".testimonial-slide");
     const cards = track.locator(".testimonial-card");
@@ -319,7 +320,8 @@ try {
     reducedMotion: "reduce",
   });
   const staticPage = await staticContext.newPage();
-  await staticPage.goto(base, { waitUntil: "networkidle" });
+  await staticPage.goto(base, { waitUntil: "domcontentloaded" });
+  await staticPage.evaluate(() => document.fonts.ready);
   await expect(staticPage.locator(".testimonial-slide")).toHaveCount(
     expectedGroups.length,
   );

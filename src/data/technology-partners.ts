@@ -21,6 +21,18 @@ export const technologyPartnerGroups = [
     ],
   },
   {
+    id: "container-orchestration-demo",
+    name: "Điều phối container — minh họa demo",
+    partners: [
+      {
+        name: "Kubernetes",
+        asset: "kubernetes.svg",
+        shape: "wide",
+        demo: true,
+      },
+    ],
+  },
+  {
     id: "platforms",
     name: "Hệ điều hành & nền tảng",
     partners: [
@@ -37,6 +49,25 @@ export const technologyPartnerGroups = [
       { name: "VNPT", asset: "vnpt.png", shape: "padded" },
       { name: "GreenCloud", asset: "greencloud.png", shape: "inverse" },
       { name: "AWS", asset: "aws.svg", shape: "wide" },
+    ],
+  },
+  {
+    id: "cloud-native-demo",
+    name: "Cloud Native & vận hành — minh họa demo",
+    partners: [
+      {
+        name: "Prometheus",
+        asset: "prometheus.svg",
+        shape: "wide",
+        demo: true,
+      },
+      { name: "Helm", asset: "helm.svg", shape: "wide", demo: true },
+      {
+        name: "containerd",
+        asset: "containerd.svg",
+        shape: "wide",
+        demo: true,
+      },
     ],
   },
 ] as const;

@@ -189,7 +189,7 @@ try {
     const page = await context.newPage();
     const errors = [];
     page.on("pageerror", (error) => errors.push(error.message));
-    await page.goto(base, { waitUntil: "networkidle" });
+    await page.goto(base, { waitUntil: "domcontentloaded" });
     await page.evaluate(() => document.fonts.ready);
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page.locator(".hero-application[data-active]")).toHaveText(
@@ -252,7 +252,7 @@ try {
     });
     const page = await context.newPage();
     await page.clock.install();
-    await page.goto(base, { waitUntil: "networkidle" });
+    await page.goto(base, { waitUntil: "domcontentloaded" });
     await page.evaluate(() => document.fonts.ready);
     const heading = page.locator(".hero-heading");
     const active = page.locator(".hero-application[data-active]");
@@ -337,7 +337,7 @@ try {
       viewport: { width, height: 960 },
     });
     const page = await context.newPage();
-    await page.goto(base);
+    await page.goto(base, { waitUntil: "domcontentloaded" });
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page.locator(".hero-application[data-active]")).toHaveText(
       applications[0],

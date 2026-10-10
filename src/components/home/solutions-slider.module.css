@@ -127,9 +127,9 @@
   display: flex;
 }
 .carousel[data-enhanced] .panel {
-  opacity: 0.4;
+  opacity: 0.45;
   transform: scale(0.94);
-  filter: saturate(0.65) blur(1px);
+  filter: saturate(0.75) blur(1px);
   transition:
     opacity 0.25s ease,
     transform 0.25s ease,
@@ -145,8 +145,8 @@
   isolation: isolate;
   width: 100%;
   min-width: 0;
-  min-height: 460px;
-  padding-top: 140px;
+  min-height: 560px;
+  padding-top: 240px;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -157,22 +157,30 @@
   object-fit: cover;
   z-index: -2;
 }
-.overlay {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(90deg, rgb(3 14 32 / 30%), transparent 90%),
-    linear-gradient(
-      180deg,
-      rgb(3 14 32 / 12%) 0%,
-      rgb(3 14 32 / 78%) 42%,
-      #030e20 100%
-    );
-}
 .content {
+  position: relative;
+  isolation: isolate;
   width: 100%;
   padding: 42px;
+}
+/* A long fade approaches the text without a visible bright/dark seam. */
+.content::before {
+  content: "";
+  position: absolute;
+  inset: -150px 0 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 0,
+    rgb(3 14 32 / 3%) 45px,
+    rgb(3 14 32 / 12%) 90px,
+    rgb(3 14 32 / 30%) 120px,
+    rgb(3 14 32 / 52%) 150px,
+    rgb(3 14 32 / 76%) 190px,
+    rgb(3 14 32 / 90%) 245px,
+    rgb(3 14 32 / 97%) 100%
+  );
 }
 .content h3,
 .title {
@@ -247,7 +255,7 @@
     gap: 24px;
   }
   .card {
-    min-height: 460px;
+    min-height: 560px;
   }
   .content {
     padding: 32px;
@@ -304,8 +312,8 @@
     gap: 12px;
   }
   .card {
-    min-height: 540px;
-    padding-top: 120px;
+    min-height: 620px;
+    padding-top: 220px;
     border-radius: 18px;
   }
   .content {
