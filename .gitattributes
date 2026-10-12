@@ -1,0 +1,2 @@
+# Keep company-supplied legal documents byte-for-byte, including their newlines.
+content/legal/*.md -text

@@ -5,9 +5,9 @@ export const reviewMode = process.env.NEXT_PUBLIC_CONTENT_MODE !== "public";
 // Toggle homepage editorial annotations without changing content approval filters.
 export const showEditorialNotes = false;
 export const links = {
-  vps: "https://interdata.vn/thue-vps/",
+  vps: "/thue-vps/",
   // Matches the trial CTA in the source project's components/header/menu.js.
-  trial: "https://interdata.vn/thue-vps/#pricing",
+  trial: "/thue-vps/#pricing",
   cloud: "https://interdata.vn/cloud-server/",
   dedicated: "https://interdata.vn/vietnam-dedicated-server",
   colocation: "https://interdata.vn/vietnam-co-location",
@@ -19,9 +19,9 @@ export const links = {
   ticket: "https://support.interdata.vn/submitticket.php",
   register: "https://support.interdata.vn/register.php",
   login: "https://support.interdata.vn/index.php?rp=/login",
-  privacy: "https://interdata.vn/privacy-policy",
-  terms: "https://interdata.vn/terms-and-condition",
-  sla: "https://interdata.vn/service-level-agreement",
+  privacy: "/chinh-sach-bao-mat/",
+  terms: "/dieu-khoan-su-dung-dich-vu/",
+  sla: "/cam-ket-chat-luong-dich-vu/",
 };
 export const claims: {
   id: string;

@@ -1,0 +1,586 @@
+﻿import Image from "next/image";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Check,
+  Code2,
+  Cpu,
+  Database,
+  Globe2,
+  HardDrive,
+  Headphones,
+  KeyRound,
+  Network,
+  Server,
+  Workflow,
+  type LucideIcon,
+} from "lucide-react";
+import { CustomerProof } from "@/components/shared/customer-proof";
+import { ParallaxBackground } from "@/components/ui/parallax-background";
+import { amdFaq } from "@/data/vps-amd";
+import { links } from "@/data/content";
+import vpsContent from "@/data/vps-content.json";
+import { formatVnd, type VpsProduct } from "@/data/vps-pricing";
+import { AmdPricing } from "./amd-pricing";
+import styles from "./amd.module.css";
+
+const serviceFeatures: { icon: LucideIcon; title: string; text: string }[] = [
+  { icon: Cpu, title: "CPU AMD EPYC", text: "Nền tảng dành cho máy chủ" },
+  {
+    icon: HardDrive,
+    title: "SSD NVMe Gen 4",
+    text: "Lưu trữ theo cấu hình gói",
+  },
+  {
+    icon: Network,
+    title: "Kết nối theo nhu cầu",
+    text: "Cổng mạng và băng thông rõ ràng",
+  },
+  {
+    icon: KeyRound,
+    title: "Toàn quyền root",
+    text: "Chủ động cài đặt phần mềm",
+  },
+  {
+    icon: Headphones,
+    title: "Hỗ trợ qua ticket",
+    text: "Theo dõi yêu cầu trên cổng khách hàng",
+  },
+];
+const applications: {
+  icon: LucideIcon;
+  title: string;
+  text: string;
+  image: string;
+}[] = [
+  {
+    icon: Globe2,
+    title: "Website & App",
+    text: "Môi trường riêng cho WordPress, cửa hàng trực tuyến và ứng dụng web của bạn.",
+    image: "/images/solutions/giai-phap-private-cloud.jpg",
+  },
+  {
+    icon: Code2,
+    title: "Lập trình & DevOps",
+    text: "Triển khai API, container hoặc staging; chủ động cấu hình runtime và dịch vụ.",
+    image: "/images/solutions/giai-phap-kubernetes.jpg",
+  },
+  {
+    icon: Database,
+    title: "Cơ sở dữ liệu",
+    text: "Chọn RAM và lưu trữ theo dữ liệu, mức truy vấn và nhu cầu sao lưu.",
+    image: "/images/solutions/giai-phap-s3-storage.jpg",
+  },
+  {
+    icon: Workflow,
+    title: "Tác vụ tự động",
+    text: "Chạy workflow và tác vụ nền với tài nguyên phù hợp số tiến trình đồng thời.",
+    image: "/images/solutions/giai-phap-proxmox-ceph.jpg",
+  },
+  {
+    icon: Server,
+    title: "Hệ thống nội bộ",
+    text: "Tổ chức môi trường cho CRM, ERP và phần mềm doanh nghiệp theo yêu cầu triển khai.",
+    image: "/images/solutions/giai-phap-vmware.jpg",
+  },
+];
+
+export function AmdPage({ products }: { products: VpsProduct[] | null }) {
+  const monthly =
+    products
+      ?.map((p) => Number(p.pricing.VND.monthly))
+      .filter((p) => Number.isFinite(p) && p > 0) || [];
+  const startingPrice = monthly.length ? Math.min(...monthly) : null;
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "VPS AMD InterData",
+    serviceType: "Máy chủ ảo VPS AMD",
+    url: "https://interdata.vn/vps-amd/",
+    provider: {
+      "@type": "Organization",
+      name: "InterData",
+      url: "https://interdata.vn/",
+    },
+  };
+  return (
+    <main id="noi-dung" className={styles.page}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
+        }}
+      />
+      <section
+        className={`hero-shell ${styles.hero} dark`}
+        aria-labelledby="amd-title"
+      >
+        <ParallaxBackground
+          className={`hero-background ${styles.heroBackground}`}
+        >
+          <Image
+            src="/images/solutions/datacenter-aisle.webp"
+            alt=""
+            fill
+            loading="eager"
+            fetchPriority="high"
+            sizes="100vw"
+            className={styles.backgroundPhoto}
+          />
+        </ParallaxBackground>
+        <div className={styles.heroOverlay} />
+        <div className={`container ${styles.heroContainer}`}>
+          <nav className={styles.breadcrumb} aria-label="Đường dẫn trang">
+            <Link href="/">Trang chủ</Link>
+            <span aria-hidden="true">/</span>
+            <Link href="/thue-vps/">Thuê VPS</Link>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">VPS AMD</span>
+          </nav>
+          <div className={styles.heroGrid}>
+            <div className={`hero-content ${styles.heroCopy}`}>
+              <span className={styles.darkEyebrow}>
+                VPS AMD · NỀN TẢNG EPYC
+              </span>
+              <h1 id="amd-title">
+                VPS <span>AMD</span>
+              </h1>
+              <p className={styles.heroLead}>
+                CPU AMD EPYC.
+                <br />
+                Lưu trữ SSD NVMe Gen 4.
+              </p>
+              <p className={styles.heroDescription}>
+                Tài nguyên riêng cho website, ứng dụng và hệ thống của bạn. Chọn
+                cấu hình phù hợp, chủ động môi trường triển khai và quản trị
+                VPS.
+              </p>
+              <div className={styles.actions}>
+                <a href="#bang-gia" className="button primary">
+                  Xem bảng giá VPS AMD{" "}
+                  <ArrowRight size={18} aria-hidden="true" />
+                </a>
+                <Link
+                  href={links.contact}
+                  className={`button ${styles.darkButton}`}
+                >
+                  Tư vấn cấu hình
+                </Link>
+              </div>
+              {startingPrice !== null && (
+                <p className={styles.startingPrice}>
+                  Từ <strong>{formatVnd(startingPrice)}</strong> / tháng{" "}
+                  <span>· Cấu hình theo từng gói</span>
+                </p>
+              )}
+            </div>
+            <div className={styles.heroArtwork}>
+              <div className={styles.chipGlow} aria-hidden="true" />
+              <Image
+                src="/images/vps-amd/epyc-chip.webp"
+                alt="Minh họa bộ xử lý AMD EPYC"
+                width={1920}
+                height={1491}
+                loading="eager"
+                sizes="(max-width: 639px) 80vw, (max-width: 1023px) 46vw, 450px"
+                className={styles.heroChip}
+              />
+            </div>
+            <ul className={styles.heroFeatureList}>
+              {serviceFeatures.map(({ icon: Icon, title, text }) => (
+                <li key={title}>
+                  <Icon size={24} aria-hidden="true" />
+                  <div>
+                    <strong>{title}</strong>
+                    <span>{text}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <ul className={styles.heroTicks}>
+            {[
+              "Tài nguyên theo từng gói",
+              "Quyền quản trị riêng",
+              "Lựa chọn chu kỳ thanh toán",
+              "Hỗ trợ qua cổng khách hàng",
+            ].map((text) => (
+              <li key={text}>
+                <Check size={15} aria-hidden="true" />
+                <span>{text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+      <div className={styles.factStrip} aria-label="Nền tảng dịch vụ VPS AMD">
+        <div className={`container ${styles.factGrid}`}>
+          {[
+            [Cpu, "AMD EPYC", "Nền tảng xử lý"],
+            [HardDrive, "NVMe Gen 4", "Lưu trữ SSD"],
+            [KeyRound, "Full root", "Quyền quản trị VPS"],
+            [Headphones, "Ticket", "Kênh hỗ trợ kỹ thuật"],
+          ].map(([icon, value, text]) => {
+            const Icon = icon as LucideIcon;
+            return (
+              <div key={String(value)}>
+                <Icon size={28} aria-hidden="true" />
+                <div>
+                  <strong>{String(value)}</strong>
+                  <span>{String(text)}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <AmdPricing initialProducts={products} />
+
+      <section
+        id="nen-tang"
+        className={`${styles.performance} dark`}
+        aria-labelledby="amd-hardware-title"
+      >
+        <Image
+          src="/images/solutions/datacenter-aisle.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className={styles.backgroundPhoto}
+        />
+        <div className={styles.performanceOverlay} />
+        <div className={`container ${styles.performanceGrid}`}>
+          <div className={styles.performanceCopy}>
+            <span className={styles.darkEyebrow}>NỀN TẢNG XỬ LÝ</span>
+            <h2 id="amd-hardware-title">
+              CPU AMD EPYC
+              <br />
+              cho môi trường của bạn
+            </h2>
+            <p>
+              EPYC 7763 là CPU dành cho máy chủ, với 64 nhân, 128 luồng và hỗ
+              trợ PCIe 4.0. VPS được cấp số vCPU, RAM và lưu trữ theo từng gói.
+            </p>
+            <dl className={styles.cpuStats}>
+              <div>
+                <dt>Nhân vật lý</dt>
+                <dd>64</dd>
+              </div>
+              <div>
+                <dt>Luồng xử lý</dt>
+                <dd>128</dd>
+              </div>
+              <div>
+                <dt>Boost tối đa</dt>
+                <dd>
+                  3,5 <span>GHz</span>
+                </dd>
+              </div>
+            </dl>
+            <p className={styles.performanceNote}>
+              Thông số CPU vật lý EPYC 7763, không phải tài nguyên của mỗi VPS.
+              Model CPU thực tế cần được xác nhận theo gói khi đăng ký.
+            </p>
+            <a
+              className="text-link"
+              href="https://www.amd.com/en/products/processors/server/epyc/7003-series/amd-epyc-7763.html"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Thông số từ AMD <ArrowRight size={17} aria-hidden="true" />
+            </a>
+          </div>
+          <div className={styles.performanceArtwork}>
+            <Image
+              src="/images/vps-amd/epyc-chip.webp"
+              alt="Minh họa CPU AMD EPYC trên nền tảng máy chủ"
+              width={1920}
+              height={1491}
+              sizes="(max-width: 959px) 70vw, 440px"
+            />
+          </div>
+          <div className={styles.performanceFeatures}>
+            {[
+              {
+                icon: Cpu,
+                title: "PCIe 4.0",
+                text: "Chuẩn kết nối của CPU EPYC 7763",
+              },
+              {
+                icon: HardDrive,
+                title: "Lưu trữ NVMe",
+                text: "Dung lượng SSD được ghi rõ theo gói",
+              },
+              {
+                icon: Network,
+                title: "Kết nối minh bạch",
+                text: "Kiểm tra cổng mạng và lưu lượng riêng",
+              },
+              {
+                icon: KeyRound,
+                title: "Môi trường riêng",
+                text: "Tự cài đặt và cấu hình ứng dụng",
+              },
+            ].map(({ icon: Icon, title, text }) => (
+              <div key={title}>
+                <Icon size={25} aria-hidden="true" />
+                <div>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="ung-dung"
+        className={styles.section}
+        aria-labelledby="amd-uses-title"
+      >
+        <div className="container">
+          <div className={styles.sectionHeading}>
+            <span className={styles.lightEyebrow}>
+              PHÙ HỢP VỚI NHIỀU NHU CẦU
+            </span>
+            <h2 id="amd-uses-title">VPS AMD cho dự án của bạn</h2>
+            <p>
+              Từ website đến hệ thống nội bộ. Chọn tài nguyên theo ứng dụng, dữ
+              liệu và mức tải thực tế.
+            </p>
+          </div>
+          <div className={styles.applicationGrid}>
+            {applications.map(({ icon: Icon, title, text, image }) => (
+              <article className={styles.applicationCard} key={title}>
+                <div className={styles.applicationImage}>
+                  <Image
+                    src={image}
+                    alt={`Minh họa ${title}`}
+                    fill
+                    sizes="(max-width: 639px) 90vw, (max-width: 959px) 44vw, 240px"
+                  />
+                </div>
+                <div className={styles.applicationBody}>
+                  <span className={styles.applicationIcon}>
+                    <Icon size={22} aria-hidden="true" />
+                  </span>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+          <p className={styles.applicationNote}>
+            Cần GPU, phần mềm đặc thù hoặc tài nguyên vật lý riêng?{" "}
+            <Link href={links.contact}>
+              Trao đổi yêu cầu trước khi chọn gói{" "}
+              <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      <section
+        id="so-sanh"
+        className={`${styles.section} ${styles.comparisonSection}`}
+        aria-labelledby="amd-comparison-title"
+      >
+        <div className={`container ${styles.comparisonLayout}`}>
+          <div className={styles.sectionHeading}>
+            <span className={styles.lightEyebrow}>
+              CHỌN MÔI TRƯỜNG TRIỂN KHAI
+            </span>
+            <h2 id="amd-comparison-title">Khi nào nên chọn VPS AMD?</h2>
+            <p>
+              Khi ứng dụng cần tài nguyên được phân bổ riêng và quyền tùy chỉnh
+              hệ điều hành. Nếu chỉ cần website nhỏ với ít yêu cầu cấu hình,
+              Shared Hosting cũng là lựa chọn để cân nhắc.
+            </p>
+            <Link href={links.vps} className="text-link">
+              Tìm hiểu thêm về các dòng VPS{" "}
+              <ArrowRight size={17} aria-hidden="true" />
+            </Link>
+          </div>
+          <div
+            className={styles.tableScroll}
+            role="region"
+            aria-label="So sánh VPS và Shared Hosting"
+            tabIndex={0}
+          >
+            <table>
+              <caption>So sánh mô hình VPS và Shared Hosting</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Tiêu chí</th>
+                  <th scope="col">VPS AMD</th>
+                  <th scope="col">Shared Hosting</th>
+                </tr>
+              </thead>
+              <tbody>
+                {vpsContent.learning.comparisonRows.map((row) => (
+                  <tr key={row.criterion}>
+                    <th scope="row">{row.criterion}</th>
+                    <td>{row.vps}</td>
+                    <td>{row.hosting}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="ha-tang-vps-amd"
+        className={`${styles.infrastructure} dark`}
+        aria-labelledby="amd-infrastructure-title"
+      >
+        <Image
+          src="/images/viettel-idc.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className={styles.backgroundPhoto}
+        />
+        <div className={styles.infrastructureOverlay} />
+        <div className={`container ${styles.infrastructureGrid}`}>
+          <div className={styles.infrastructureCopy}>
+            <span className={styles.darkEyebrow}>HẠ TẦNG PHÍA SAU DỊCH VỤ</span>
+            <h2 id="amd-infrastructure-title">
+              Hạ tầng máy chủ
+              <br />
+              tại Việt Nam
+            </h2>
+            <p>
+              Vận hành website và ứng dụng trên môi trường VPS riêng. Cùng
+              InterData xác định vị trí triển khai, nhu cầu kết nối và kế hoạch
+              quản trị phù hợp với hệ thống của bạn.
+            </p>
+            <ul>
+              {[
+                "Cấu hình tài nguyên theo gói",
+                "Quyền truy cập quản trị riêng",
+                "Kế hoạch sao lưu và khôi phục",
+                "Hỗ trợ qua cổng khách hàng",
+              ].map((text) => (
+                <li key={text}>
+                  <Check size={17} aria-hidden="true" />
+                  {text}
+                </li>
+              ))}
+            </ul>
+            <Link href={links.sla} className="text-link">
+              Xem cam kết chất lượng dịch vụ{" "}
+              <ArrowRight size={17} aria-hidden="true" />
+            </Link>
+          </div>
+          <div className={styles.setupPanel}>
+            <span className={styles.panelLabel}>BẮT ĐẦU VỚI VPS AMD</span>
+            <h3>Từ cấu hình đến triển khai</h3>
+            <ol>
+              {[
+                {
+                  title: "Chọn gói & chu kỳ",
+                  text: "Đối chiếu vCPU, RAM, lưu trữ và băng thông với ứng dụng.",
+                },
+                {
+                  title: "Đăng ký & xác nhận",
+                  text: "Chọn hệ điều hành, kiểm tra tùy chọn và hóa đơn trước khi thanh toán.",
+                },
+                {
+                  title: "Nhận VPS & triển khai",
+                  text: "Nhận thông tin qua email, cấu hình truy cập an toàn và cài đặt ứng dụng.",
+                },
+              ].map((item, index) => (
+                <li key={item.title}>
+                  <span>0{index + 1}</span>
+                  <div>
+                    <strong>{item.title}</strong>
+                    <p>{item.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <p className={styles.setupNote}>
+              Trước khi chạy chính thức: cập nhật hệ điều hành, cấu hình SSH
+              key, giới hạn cổng truy cập và kiểm tra bản sao lưu.
+            </p>
+          </div>
+        </div>
+        <span className={styles.photoCaption}>Ảnh minh họa datacenter</span>
+      </section>
+      <CustomerProof />
+      <section
+        id="cau-hoi"
+        className={styles.section}
+        aria-labelledby="amd-faq-title"
+      >
+        <div className="container">
+          <div className={styles.faqHeading}>
+            <div className={styles.sectionHeading}>
+              <span className={styles.lightEyebrow}>CÂU HỎI THƯỜNG GẶP</span>
+              <h2 id="amd-faq-title">Giải đáp thắc mắc về VPS AMD</h2>
+              <p>
+                Cấu hình, quyền quản trị và những điều cần kiểm tra trước khi
+                triển khai.
+              </p>
+            </div>
+            <a className="text-link" href={links.ticket}>
+              Gửi yêu cầu hỗ trợ <ArrowRight size={17} aria-hidden="true" />
+            </a>
+          </div>
+          <div className={styles.faqList}>
+            {amdFaq.map((item) => (
+              <details key={item.question}>
+                <summary>
+                  {item.question}
+                  <span aria-hidden="true">+</span>
+                </summary>
+                <p>{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section
+        className={`${styles.finalCta} dark`}
+        aria-labelledby="amd-cta-title"
+      >
+        <Image
+          src="/images/solutions/datacenter-aisle.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className={styles.backgroundPhoto}
+        />
+        <div className={styles.ctaOverlay} />
+        <div className={`container ${styles.ctaLayout}`}>
+          <div>
+            <span className={styles.darkEyebrow}>SẴN SÀNG TRIỂN KHAI?</span>
+            <h2 id="amd-cta-title">
+              Chọn VPS AMD
+              <br />
+              cho dự án tiếp theo của bạn
+            </h2>
+            <p>
+              Xem cấu hình và bảng giá, hoặc trao đổi yêu cầu cùng đội ngũ
+              InterData.
+            </p>
+          </div>
+          <div className={styles.actions}>
+            <a className="button primary" href="#bang-gia">
+              Chọn gói VPS AMD <ArrowRight size={18} aria-hidden="true" />
+            </a>
+            <Link
+              className={`button ${styles.darkButton}`}
+              href={links.contact}
+            >
+              Liên hệ tư vấn
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}

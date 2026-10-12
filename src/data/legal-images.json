@@ -1,0 +1,44 @@
+[
+  {
+    "source": "https://interdata.vn/assets/payment/image001.png",
+    "path": "/images/legal/vnpay/image001.png",
+    "width": 1330,
+    "height": 785,
+    "sha256": "4868a1425dce643d490af62c1118bb9885adb90f3b809039fee0ffaef8ad3365"
+  },
+  {
+    "source": "https://interdata.vn/assets/payment/image003.png",
+    "path": "/images/legal/vnpay/image003.png",
+    "width": 1380,
+    "height": 521,
+    "sha256": "aeb26174f83b0aff225521e2e9303f7d3cddf2ac2a5f5fd0824eba094945db5c"
+  },
+  {
+    "source": "https://interdata.vn/assets/payment/image005.png",
+    "path": "/images/legal/vnpay/image005.png",
+    "width": 850,
+    "height": 103,
+    "sha256": "8ad0b8341c46184dbf42b6620fb842ee47566447c00bcc5dc5f9eff913a1f7bb"
+  },
+  {
+    "source": "https://interdata.vn/assets/payment/image007.png",
+    "path": "/images/legal/vnpay/image007.png",
+    "width": 806,
+    "height": 648,
+    "sha256": "cca09661b5a031cdecbb0790c4452bb168dbcbe345ce895c8a3aa3498c5029ae"
+  },
+  {
+    "source": "https://interdata.vn/assets/payment/image009.png",
+    "path": "/images/legal/vnpay/image009.png",
+    "width": 1442,
+    "height": 668,
+    "sha256": "21f476df384f2c1517d9c824395763f305362cbd22ada5ed7a05a72c54135ab7"
+  },
+  {
+    "source": "https://interdata.vn/assets/payment/image011.png",
+    "path": "/images/legal/vnpay/image011.png",
+    "width": 1380,
+    "height": 468,
+    "sha256": "8ceb7950505606e8d1d12fca9048ccc77ade398569bdc5fdcdc20e8fa0ebbbfc"
+  }
+]

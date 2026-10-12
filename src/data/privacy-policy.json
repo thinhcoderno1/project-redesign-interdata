@@ -1,0 +1,277 @@
+{
+  "title": "Chính sách bảo mật",
+  "blocks": [
+    {
+      "text": "InterData cam kết tôn trọng và bảo vệ quyền riêng tư cũng như dữ liệu cá nhân của khách hàng khi sử dụng dịch vụ của chúng tôi.",
+      "type": "paragraph"
+    },
+    {
+      "text": "Chính sách bảo mật này giải thích cách InterData thu thập, sử dụng, lưu trữ và bảo vệ thông tin của bạn trong quá trình cung cấp dịch vụ.",
+      "type": "paragraph"
+    },
+    {
+      "text": "Bằng việc đăng ký hoặc sử dụng dịch vụ của InterData, bạn xác nhận đã đọc, hiểu và đồng ý với các nội dung trong chính sách này.",
+      "type": "paragraph"
+    },
+    {
+      "text": "1. Thu thập thông tin cá nhân",
+      "type": "h2"
+    },
+    {
+      "text": "InterData có thể thu thập các loại thông tin sau:",
+      "type": "paragraph"
+    },
+    {
+      "text": "1.1 Thông tin bạn cung cấp trực tiếp",
+      "type": "h3"
+    },
+    {
+      "items": [
+        "Thông tin tài khoản: Họ tên, Email, số điện thoại, địa chỉ liên hệ, ...",
+        "Thông tin doanh nghiệp (nếu có): Tên công ty, mã số thuế, địa chỉ đăng ký kinh doanh, ...",
+        "Thông tin tên miền: Theo yêu cầu của cơ quan quản lý tên miền như VNNIC hoặc ICANN",
+        "Thông tin thanh toán: Thông tin phục vụ xuất hóa đơn và giao dịch, phương thức thanh toán"
+      ],
+      "type": "list"
+    },
+    {
+      "text": "1.2 Thông tin được thu thập tự động",
+      "type": "h3"
+    },
+    {
+      "items": [
+        "Thông tin thiết bị: Loại thiết bị, hệ điều hành, trình duyệt",
+        "Thông tin truy cập: Địa chỉ IP, thời gian truy cập, trang đã xem, thao tác trên website",
+        "Cookie và công nghệ theo dõi: Nhằm cải thiện trải nghiệm người dùng và hiệu suất hệ thống",
+        "Thông tin sản phẩm dịch vụ bạn đang sử dụng (Cấu hình, Thời gian sử dụng,...)"
+      ],
+      "type": "list"
+    },
+    {
+      "text": "2. Mục Đích Sử Dụng Thông Tin",
+      "type": "h2"
+    },
+    {
+      "text": "Toàn bộ thông tin cá nhân InterData thu thập được từ khách hàng chỉ sử dụng trong nội bộ công ty và phục vụ cho một hoặc tất cả những mục đích sau đây:",
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        "Cung cấp và quản lý dịch vụ: Đăng ký, kích hoạt, duy trì và gia hạn dịch vụ",
+        "Chăm sóc khách hàng: Tiếp nhận và xử lý yêu cầu hỗ trợ",
+        "Thanh toán và kế toán: Xử lý giao dịch, xuất hóa đơn",
+        "Đảm bảo an ninh: Phát hiện và ngăn chặn hành vi gian lận, lạm dụng hoặc truy cập trái phép",
+        "Thông báo dịch vụ: Gửi thông tin về bảo trì, nâng cấp, gia hạn hoặc thay đổi quan trọng",
+        "Cải thiện chất lượng: Phân tích dữ liệu để tối ưu trải nghiệm người dùng",
+        "Tuân thủ pháp luật: Thực hiện nghĩa vụ theo yêu cầu của cơ quan nhà nước có thẩm quyền"
+      ],
+      "type": "list"
+    },
+    {
+      "text": "3. Chia Sẻ Thông Tin",
+      "type": "h2"
+    },
+    {
+      "text": "InterData không bán, trao đổi hoặc cho thuê thông tin cá nhân của khách hàng.",
+      "type": "paragraph"
+    },
+    {
+      "text": "Thông tin chỉ được chia sẻ trong các trường hợp sau:",
+      "type": "paragraph"
+    },
+    {
+      "text": "3.1 Với đối tác cung cấp dịch vụ",
+      "type": "h3"
+    },
+    {
+      "items": [
+        "Cơ quan quản lý tên miền theo quy định",
+        "Cổng thanh toán để xử lý giao dịch",
+        "Nhà cung cấp chứng chỉ SSL",
+        "Đối tác kỹ thuật phục vụ vận hành hệ thống",
+        "Tất cả các đối tác đều phải tuân thủ cam kết bảo mật dữ liệu."
+      ],
+      "type": "list"
+    },
+    {
+      "text": "3.2 Theo yêu cầu pháp lý",
+      "type": "h3"
+    },
+    {
+      "text": "Chúng tôi có thể cung cấp thông tin khi:",
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        "Có yêu cầu từ cơ quan nhà nước có thẩm quyền",
+        "Cần bảo vệ quyền và lợi ích hợp pháp của InterData",
+        "Có tình huống khẩn cấp liên quan đến an toàn người dùng hoặc cộng đồng"
+      ],
+      "type": "list"
+    },
+    {
+      "text": "4. Bảo Mật Thông Tin",
+      "type": "h2"
+    },
+    {
+      "text": "InterData áp dụng các biện pháp bảo mật nghiêm ngặt nhằm bảo vệ dữ liệu khách hàng.",
+      "type": "paragraph"
+    },
+    {
+      "text": "4.1 Biện pháp kỹ thuật",
+      "type": "h3"
+    },
+    {
+      "items": [
+        "Mã hóa SSL/TLS đối với toàn bộ dữ liệu truyền tải",
+        "Mã hóa dữ liệu nhạy cảm khi lưu trữ",
+        "Hệ thống tường lửa và bảo mật nhiều lớp",
+        "Giám sát an ninh 24/7",
+        "Sao lưu dữ liệu định kỳ"
+      ],
+      "type": "list"
+    },
+    {
+      "text": "4.2 Biện pháp tổ chức",
+      "type": "h3"
+    },
+    {
+      "items": [
+        "Phân quyền truy cập theo vai trò",
+        "Đào tạo nhân viên về bảo mật và bảo vệ dữ liệu",
+        "Kiểm tra bảo mật định kỳ",
+        "Quy trình xử lý và phản ứng sự cố bảo mật"
+      ],
+      "type": "list"
+    },
+    {
+      "text": "5. Cookie và Công Nghệ Theo Dõi",
+      "type": "h2"
+    },
+    {
+      "text": "InterData sử dụng cookie nhằm:",
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        "Cookie cần thiết: Duy trì phiên đăng nhập và bảo mật hệ thống",
+        "Cookie phân tích: Thu thập số liệu thống kê truy cập",
+        "Cookie chức năng: Ghi nhớ tùy chọn người dùng"
+      ],
+      "type": "list"
+    },
+    {
+      "text": "Quản lý cookie:",
+      "type": "paragraph"
+    },
+    {
+      "text": "Bạn có thể điều chỉnh hoặc tắt cookie trong cài đặt trình duyệt. Tuy nhiên, việc vô hiệu hóa cookie có thể ảnh hưởng đến một số tính năng của dịch vụ.",
+      "type": "paragraph"
+    },
+    {
+      "text": "6. Quyền Và Nghĩa Vụ Của Khách Hàng",
+      "type": "h2"
+    },
+    {
+      "text": "6.1 Quyền Của Bạn Đối Với Thông Tin Cá Nhân",
+      "type": "h3"
+    },
+    {
+      "text": "InterData tôn trọng và đảm bảo các quyền của bạn theo quy định pháp luật liên quan đến bảo vệ dữ liệu cá nhân. Trừ trường hợp pháp luật có quy định khác, bạn có các quyền sau:",
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        "Quyền được biết: Bạn có quyền được biết thông tin về hoạt động thu thập, xử lý và sử dụng dữ liệu cá nhân của mình.",
+        "Quyền đồng ý và rút lại sự đồng ý: Bạn có quyền đồng ý, không đồng ý hoặc rút lại sự đồng ý đối với việc xử lý thông tin cá nhân của mình vào bất kỳ thời điểm nào, trừ trường hợp pháp luật có quy định khác.",
+        "Quyền truy cập và chỉnh sửa: Bạn có quyền yêu cầu truy cập để xem, cập nhật hoặc yêu cầu chỉnh sửa thông tin cá nhân khi phát hiện thông tin chưa chính xác hoặc chưa đầy đủ.",
+        "Quyền yêu cầu xóa dữ liệu: Bạn có quyền yêu cầu InterData xóa thông tin cá nhân của mình trong phạm vi pháp luật cho phép.",
+        "Quyền hạn chế hoặc phản đối xử lý: Bạn có quyền yêu cầu hạn chế hoặc phản đối việc xử lý dữ liệu cá nhân trong một số trường hợp theo quy định pháp luật.",
+        "Quyền yêu cầu cung cấp dữ liệu: Bạn có quyền yêu cầu InterData cung cấp bản sao dữ liệu cá nhân của mình.",
+        "Quyền khiếu nại, tố cáo, khởi kiện: Bạn có quyền thực hiện các biện pháp pháp lý theo quy định nếu cho rằng quyền và lợi ích hợp pháp của mình bị xâm phạm.",
+        "Quyền yêu cầu bồi thường thiệt hại: Trong trường hợp InterData vi phạm quy định về bảo vệ dữ liệu cá nhân gây thiệt hại thực tế, bạn có quyền yêu cầu bồi thường theo quy định pháp luật, trừ khi các bên có thỏa thuận khác hoặc pháp luật có quy định khác.",
+        "Các quyền khác theo quy định của pháp luật hiện hành."
+      ],
+      "type": "list"
+    },
+    {
+      "text": "6.2 Nghĩa Vụ Của Bạn Đối Với Thông Tin Cá Nhân",
+      "type": "h3"
+    },
+    {
+      "text": "Để đảm bảo an toàn dữ liệu và tuân thủ quy định pháp luật, bạn có các nghĩa vụ sau:",
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        "Tuân thủ quy định pháp luật và chính sách của InterData liên quan đến việc cung cấp, xử lý và bảo vệ thông tin cá nhân.",
+        "Cung cấp thông tin chính xác, đầy đủ và không gây nhầm lẫn khi đăng ký hoặc sử dụng dịch vụ. Bạn có trách nhiệm cập nhật kịp thời nếu thông tin có sự thay đổi, sai lệch, thiếu sót hoặc đã lỗi thời.",
+        "Phối hợp xử lý sự cố bảo mật trong trường hợp phát sinh vấn đề liên quan đến thông tin cá nhân, bao gồm việc hợp tác với InterData, cơ quan nhà nước có thẩm quyền hoặc bên thứ ba liên quan (nếu cần).",
+        "Thông báo và đảm bảo sự đồng ý nếu bạn cung cấp thông tin cá nhân của người khác cho InterData. Bạn cần đảm bảo rằng chủ thể dữ liệu đã được thông báo về việc chia sẻ thông tin và biết cách truy cập Chính sách Bảo mật này.",
+        "Chủ động bảo vệ thông tin cá nhân của mình, bao gồm việc bảo mật tài khoản, mật khẩu, thiết bị truy cập và các thông tin xác thực khác. Nếu phát hiện bất kỳ dấu hiệu sai sót, rò rỉ hoặc xâm phạm dữ liệu, bạn cần thông báo ngay cho InterData để được hỗ trợ kịp thời.",
+        "Chịu trách nhiệm đối với dữ liệu và nội dung do mình cung cấp trên hệ thống. Trong trường hợp thông tin cá nhân bị rò rỉ hoặc xâm phạm do lỗi từ phía bạn, bạn sẽ tự chịu trách nhiệm theo quy định pháp luật.",
+        "Thường xuyên cập nhật các chính sách và quy định của InterData, vì các nội dung này có thể được điều chỉnh theo từng thời điểm. InterData sẽ thông báo qua website hoặc các kênh liên lạc chính thức khi có thay đổi quan trọng.",
+        "Tôn trọng và bảo vệ thông tin cá nhân của người khác, không thu thập, sử dụng hoặc chia sẻ trái phép.",
+        "Thực hiện các nghĩa vụ khác theo quy định của pháp luật hiện hành."
+      ],
+      "type": "list"
+    },
+    {
+      "text": "7. Thời Gian Lưu Trữ Dữ Liệu",
+      "type": "h2"
+    },
+    {
+      "text": "InterData lưu trữ thông tin:",
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        "Trong suốt thời gian bạn sử dụng dịch vụ",
+        "Sau khi chấm dứt dịch vụ theo thời hạn cần thiết để tuân thủ pháp luật và giải quyết tranh chấp",
+        "Thông tin tên miền theo quy định của cơ quan quản lý",
+        "Sau thời hạn lưu trữ, dữ liệu sẽ được xóa an toàn hoặc ẩn danh hóa."
+      ],
+      "type": "list"
+    },
+    {
+      "text": "8. Thay Đổi Chính Sách",
+      "type": "h2"
+    },
+    {
+      "text": "InterData có thể cập nhật chính sách bảo mật theo thời gian nhằm phù hợp với quy định pháp luật và hoạt động kinh doanh.",
+      "type": "paragraph"
+    },
+    {
+      "text": "Khi có thay đổi quan trọng, chúng tôi sẽ:",
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        "Thông báo trên website",
+        "Gửi email đến khách hàng (nếu cần)",
+        "Việc tiếp tục sử dụng dịch vụ sau khi chính sách được cập nhật đồng nghĩa với việc bạn đồng ý với các nội dung thay đổi."
+      ],
+      "type": "list"
+    },
+    {
+      "text": "9. Thông Tin Liên Hệ",
+      "type": "h2"
+    },
+    {
+      "text": "Nếu có bất kỳ câu hỏi hoặc yêu cầu nào liên quan đến chính sách bảo mật, vui lòng liên hệ:",
+      "type": "paragraph"
+    },
+    {
+      "items": [
+        "Gọi đến Hotline 1900636822",
+        "Gửi email đến địa chỉ: [info@interdata.vn](mailto:info@interdata.vn)",
+        "Gửi Đơn yêu cầu/khiếu nại qua bưu điện: 211 Đường số 5, Khu đô thị Lakeview City, P. Bình Trưng, TP. Hồ Chí Minh"
+      ],
+      "type": "list"
+    },
+    {
+      "text": "Chúng tôi sẽ phản hồi trong thời gian sớm nhất, tối đa 72 giờ làm việc.",
+      "type": "paragraph"
+    }
+  ]
+}

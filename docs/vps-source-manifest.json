@@ -1,0 +1,320 @@
+{
+  "sourceProject": "D:/InterData/thue-vps",
+  "files": [
+    {
+      "file": "lib/content-visibility.js",
+      "sha256": "4cc376e7c2c024bebc8dbb1db056ab66166109a3ec88d0e01299725404bfc048"
+    },
+    {
+      "file": "lib/pricing-visibility.js",
+      "sha256": "a63c6cd9c26941ba37dd997bf9c46f7c1cc63d2e96d84fd87cf895154c8601f6"
+    },
+    {
+      "file": "components/header/index.js",
+      "sha256": "aad32162ab04cffa1d106385ec5d16e2a4daa91c6baec1045ded74cc3e67c8fa"
+    },
+    {
+      "file": "components/landing-sections.js",
+      "sha256": "7b8b8ef06d2513ba0e438642e5151ee2d038bf0812ed054e0aea9d355841bf15"
+    },
+    {
+      "file": "components/vps-type.js",
+      "sha256": "69f6141b1b592b5b7a514e28c36dc308bacf2a3e11203555c8976ac73a30e23e"
+    },
+    {
+      "file": "components/testimonials-2.jsx",
+      "sha256": "2786cc1c7ab08614aaf685268edfd8db885a8fe1f6fdd3fb0fead9c206689f9e"
+    },
+    {
+      "file": "components/partners.js",
+      "sha256": "90d978b3416d4c9c01292af83f3d4a6c603a3e5f44fb32e861c89cf024d38df1"
+    },
+    {
+      "file": "components/data/faqs.js",
+      "sha256": "ea0529ecf574357dbd3ee3960db2b42c2f6b96b18181b1f638e3200d6758599b"
+    },
+    {
+      "file": "components/faq.js",
+      "sha256": "0930e56b1648cc0a3429d6eb99338544bda824e8fe87ebcde4ae8777d4b557b4"
+    },
+    {
+      "file": "components/cta-section.jsx",
+      "sha256": "f1d578cf2b3b9965d7666479c328d0355fa6b9911b8a3f0fb4f26d97c487426f"
+    },
+    {
+      "file": "components/vps-learning-section.jsx",
+      "sha256": "0bbccc6e1f88a7863cec113025c32b293935b5c474bbca4426f53b318958bd83"
+    },
+    {
+      "file": "components/pricing/index.js",
+      "sha256": "67b9174fd7377c33d4442017eb8f3ac4c4bf96c59b38bfe19d89b9e9ff8fb0a9"
+    },
+    {
+      "file": "components/pricing/services.js",
+      "sha256": "68996a7dd47684b585a348d17a8d1b6657daebe6e38d767ae3b214982f073690"
+    },
+    {
+      "file": "components/hot-deals-client.jsx",
+      "sha256": "c0291af30472fe4ab4db2247c9b8e22a74db00d9f13a3cdb39e155c750565d60"
+    },
+    {
+      "file": "components/data/hot-deals-original-prices.js",
+      "sha256": "7455059c06d232fb29e02f0c999ca31007244580a51d05cabb6510b6643df1ec"
+    },
+    {
+      "file": "app/page.js",
+      "sha256": "d10122cdc6c3fbe64d8f0d8eb359a07c9149057f1795ecfbdc224a3b1f72235a"
+    },
+    {
+      "file": "app/menu.json",
+      "sha256": "baae55e85acda1e2f60c201c2e657ffb1831f1a24a208ce3feb8902bcde77365"
+    }
+  ],
+  "assets": [
+    {
+      "source": "public/assets/images/hero-datacenter.jpg",
+      "target": "public/images/vps/assets/images/hero-datacenter.jpg",
+      "sha256": "343a33ad889731b6025a2fc560b206de08e357c29e22a55dba5d80c318076a9a"
+    },
+    {
+      "source": "public/brands/one-click/n8n.png",
+      "target": "public/images/vps/brands/one-click/n8n.png",
+      "sha256": "69655687755e22d1ce1695e31fab9aa6c9b8f4aa7924dfbddc6a747ef3b832a4"
+    },
+    {
+      "source": "public/brands/one-click/openclaw.png",
+      "target": "public/images/vps/brands/one-click/openclaw.png",
+      "sha256": "a0b8c44dac433e1c20d91eb015be2e0bd15f066117c1b73fc2680151d3bfcf6f"
+    },
+    {
+      "source": "public/brands/one-click/ezyplatform.png",
+      "target": "public/images/vps/brands/one-click/ezyplatform.png",
+      "sha256": "91f0c63478e00392f950bf39a9b198bcb915725b4397a5631d7a46e418ed7906"
+    },
+    {
+      "source": "public/brands/one-click/wptangtoc.png",
+      "target": "public/images/vps/brands/one-click/wptangtoc.png",
+      "sha256": "9674c678822b298d059167f834f3179ab28ff4127f0b94997fefcc8b17e670dd"
+    },
+    {
+      "source": "public/brands/operating-systems/ubuntu.svg",
+      "target": "public/images/vps/brands/operating-systems/ubuntu.svg",
+      "sha256": "af8ddf6c709f61d1b7ac00d5417cf389ad23db2258f0776e0c7854f37105caed"
+    },
+    {
+      "source": "public/brands/operating-systems/centos.svg",
+      "target": "public/images/vps/brands/operating-systems/centos.svg",
+      "sha256": "b54c6ad8e100208fd0ade26633abd996c9d979b19c13c1b91caf48b49ed8c8d2"
+    },
+    {
+      "source": "public/brands/operating-systems/debian.svg",
+      "target": "public/images/vps/brands/operating-systems/debian.svg",
+      "sha256": "09b14c9813a322b58b11aa5390fb1a2b4e9bfd02868321482f1a19534a66ec54"
+    },
+    {
+      "source": "public/brands/operating-systems/almalinux.svg",
+      "target": "public/images/vps/brands/operating-systems/almalinux.svg",
+      "sha256": "bc82554bde812764d0c9a919ed57d1848111cbba48a65d49fb5aa4b82d82f99b"
+    },
+    {
+      "source": "public/brands/operating-systems/webuzo.png",
+      "target": "public/images/vps/brands/operating-systems/webuzo.png",
+      "sha256": "64f7677c4340794aaf0e753e083ac186641118794286557d58da84ca8259214f"
+    },
+    {
+      "source": "public/brands/operating-systems/fedora.svg",
+      "target": "public/images/vps/brands/operating-systems/fedora.svg",
+      "sha256": "a82984dbe775e1c973ca5d0e78c908ed0730ee6c4deab903b630721644d109d6"
+    },
+    {
+      "source": "public/benchmarks/benchmark-amd-server-1.jpg",
+      "target": "public/images/vps/benchmarks/benchmark-amd-server-1.jpg",
+      "sha256": "0013d28e3ff88c129b7472a5980a73cc12988f6ef69af06cbf168bbf24fe731b"
+    },
+    {
+      "source": "public/benchmarks/benchmark-amd-server-2.jpg",
+      "target": "public/images/vps/benchmarks/benchmark-amd-server-2.jpg",
+      "sha256": "753d698dd7dad21001f27425e0b2bfe2215b28c0482b8377d851ecd1ccdddbfb"
+    },
+    {
+      "source": "public/benchmarks/benchmark-amd-server-3.jpg",
+      "target": "public/images/vps/benchmarks/benchmark-amd-server-3.jpg",
+      "sha256": "2e0087db5373709378974d341cdbefd5b0547b16a4b6d8e14f59f6279bf2eb8a"
+    },
+    {
+      "source": "public/benchmarks/benchmark-intel-vps-1.jpg",
+      "target": "public/images/vps/benchmarks/benchmark-intel-vps-1.jpg",
+      "sha256": "72e1f11da67f17a79f9e10501ba9dc7ebe32d601996110872b44a810b0cfeaac"
+    },
+    {
+      "source": "public/benchmarks/benchmark-intel-vps-2.jpg",
+      "target": "public/images/vps/benchmarks/benchmark-intel-vps-2.jpg",
+      "sha256": "a8dce63f735bfba4602467528dca3962572bd5a8711b1d8ffbb9ddd6c4f4faf2"
+    },
+    {
+      "source": "public/benchmarks/benchmark-intel-vps-3.jpg",
+      "target": "public/images/vps/benchmarks/benchmark-intel-vps-3.jpg",
+      "sha256": "bc812900a7474d7485b127fb0d8ac43cedccbd9aadbd5e7620dbca6c3a41dcdf"
+    },
+    {
+      "source": "public/images/skin/customer/logo-seoviet.png",
+      "target": "public/images/vps/images/skin/customer/logo-seoviet.png",
+      "sha256": "0412d339203f2b8a8e9d03177edb73f94d10a6c0dd3e490e0b5844f5ddb338f5"
+    },
+    {
+      "source": "public/images/skin/customer/logo-realdev.png",
+      "target": "public/images/vps/images/skin/customer/logo-realdev.png",
+      "sha256": "382f010cb2c51050ec999b90f3b41a52d98d6e083fa2f9e4f4424a03e6a35f1d"
+    },
+    {
+      "source": "public/images/skin/customer/balico.png",
+      "target": "public/images/vps/images/skin/customer/balico.png",
+      "sha256": "9b29f7adcfc4fb951ba70f43c84a94af41fedd1b5bacaf4ea3cd0b936257652d"
+    },
+    {
+      "source": "public/images/skin/customer/logo-themewpgiare-truongphong.png",
+      "target": "public/images/vps/images/skin/customer/logo-themewpgiare-truongphong.png",
+      "sha256": "26d08baa5360bd649ad8f7fb831e9033555c2ec9d6966fe4a25d25aad8f7768f"
+    },
+    {
+      "source": "public/images/skin/customer/logo-umix-vietnam.png",
+      "target": "public/images/vps/images/skin/customer/logo-umix-vietnam.png",
+      "sha256": "32e713c808aacdd8ee37902e7c63f07187d8b8af662f768d18fa837a07a9810b"
+    },
+    {
+      "source": "public/images/skin/customer/logo-digizone-vietnam.png",
+      "target": "public/images/vps/images/skin/customer/logo-digizone-vietnam.png",
+      "sha256": "7313c62975c210bc059be8bee0006cc3077b047bdd3f1c4ae836214b5cd8909f"
+    },
+    {
+      "source": "public/images/skin/customer/logo-donghohaitrieu.png",
+      "target": "public/images/vps/images/skin/customer/logo-donghohaitrieu.png",
+      "sha256": "683199c3ef4f54a3fb322fe2f3c0e0e6c7ee50405114e0c62fa81c80e02ec75c"
+    },
+    {
+      "source": "public/images/skin/customer/logo-jobkey.png",
+      "target": "public/images/vps/images/skin/customer/logo-jobkey.png",
+      "sha256": "cfdf39feb36a4255d23b933d447a3328c41e6fb498410776184d3bc67dcc584e"
+    },
+    {
+      "source": "public/images/skin/news/baoangiang.png",
+      "target": "public/images/vps/images/skin/news/baoangiang.png",
+      "sha256": "a9ff58dade661a763144e87b6ed212ed2d8850a100eca692888ab26dc9ba50b5"
+    },
+    {
+      "source": "public/images/skin/news/logobag.png",
+      "target": "public/images/vps/images/skin/news/logobag.png",
+      "sha256": "78539ffffe86f341b609d9a217cbfd149f47d4474253a3457d3612ee3d27248a"
+    },
+    {
+      "source": "public/images/skin/news/nhansu.webp",
+      "target": "public/images/vps/images/skin/news/nhansu.webp",
+      "sha256": "b03c0614d39a9518b032f38e9bd4c005a38c1b9a7ff0312a1daafc484e46fe95"
+    },
+    {
+      "source": "public/images/skin/news/bao-ha-tinh.png",
+      "target": "public/images/vps/images/skin/news/bao-ha-tinh.png",
+      "sha256": "0a3cda74a343a3808d771e078576c13cf6e284ad0b1c631cb81a343a34ac5459"
+    },
+    {
+      "source": "public/images/skin/news/news.png",
+      "target": "public/images/vps/images/skin/news/news.png",
+      "sha256": "a4b45de14659578f889e891c5e81fb9e11e0cf51340e67522b87352f55e9f9eb"
+    },
+    {
+      "source": "public/images/skin/news/logo-news-1.png",
+      "target": "public/images/vps/images/skin/news/logo-news-1.png",
+      "sha256": "4638312d76675e98c29bb2b13a4f4f6bac0247a292082fabd64a11f84d07f279"
+    },
+    {
+      "source": "public/images/skin/news/news-1.png",
+      "target": "public/images/vps/images/skin/news/news-1.png",
+      "sha256": "a8b24980dc04abfc37fad487d1802912d144fd35451727d483b25abcb9a1a93d"
+    },
+    {
+      "source": "public/images/skin/news/logo-news.png",
+      "target": "public/images/vps/images/skin/news/logo-news.png",
+      "sha256": "f5a23d6db50e173efeb17836feab4ffaf58d7eb8f870339164141443ed1cdb10"
+    },
+    {
+      "source": "public/images/skin/news/news-2.png",
+      "target": "public/images/vps/images/skin/news/news-2.png",
+      "sha256": "2669e2792164a68fbffd63af712aa632de7cec1caf0b608a52ebce1d48e8f73f"
+    },
+    {
+      "source": "public/images/skin/news/logo-news-2.png",
+      "target": "public/images/vps/images/skin/news/logo-news-2.png",
+      "sha256": "5ef93c18d8698ef9e88841cb25d623c54f08d3b54564ab9850445eaeb9e3f421"
+    },
+    {
+      "source": "public/images/skin/news/vtv.png",
+      "target": "public/images/vps/images/skin/news/vtv.png",
+      "sha256": "907202f0ac99698ac69f92ffb8ecf1d9a607a262aabe88a8385421831ef6c505"
+    },
+    {
+      "source": "public/images/skin/news/vtv.jpg",
+      "target": "public/images/vps/images/skin/news/vtv.jpg",
+      "sha256": "ca988c57316d063f096bab0d77aafd16ffe20f755749566e86af2b26d6a7ae2c"
+    },
+    {
+      "source": "public/images/skin/news/aChau.png",
+      "target": "public/images/vps/images/skin/news/aChau.png",
+      "sha256": "e4b76ba18eae735bc5eee18d7e596678e5841c083857a4ffd9c7735279e70ca6"
+    },
+    {
+      "source": "public/images/skin/news/THE_GIOI_KINH_DOANH_cbc2b.png",
+      "target": "public/images/vps/images/skin/news/THE_GIOI_KINH_DOANH_cbc2b.png",
+      "sha256": "382005c6e9fa492ff4d0e41c682f3ab13d22ba5564809379ca2f04b03240b1e3"
+    },
+    {
+      "source": "public/images/skin/news/bao-dien-tu-dan-tri.png",
+      "target": "public/images/vps/images/skin/news/bao-dien-tu-dan-tri.png",
+      "sha256": "29ac3f3d4810174d1e1beb6bb6b357c83665afafab0cfbfe552550ddd5f4c759"
+    },
+    {
+      "source": "public/images/skin/news/24h.jpg",
+      "target": "public/images/vps/images/skin/news/24h.jpg",
+      "sha256": "884cf05f371b5805664cc6c4c97eadff49f1b45f3fa386cdf764f78108cbdbf3"
+    },
+    {
+      "source": "public/images/skin/news/24hh.png",
+      "target": "public/images/vps/images/skin/news/24hh.png",
+      "sha256": "506be92b7077c3c16541f22e0d52d96044e46670afb08fdff3d22be38bd0c853"
+    },
+    {
+      "source": "public/images/skin/news/vnpt.jpg",
+      "target": "public/images/vps/images/skin/news/vnpt.jpg",
+      "sha256": "0fa5ab72957f9db4754e00b8b36121c2bbe525d7e45afae9cc5ead5b516561b9"
+    },
+    {
+      "source": "public/images/skin/news/bao-vietnamnet.png",
+      "target": "public/images/vps/images/skin/news/bao-vietnamnet.png",
+      "sha256": "1947247016ba5b570d569ba43d9b499c04905820db8938897441ae3d08e0277c"
+    },
+    {
+      "source": "public/images/skin/news/Toquoc.jpg",
+      "target": "public/images/vps/images/skin/news/Toquoc.jpg",
+      "sha256": "94d101ea99e5e6d9426535a926f78fdbd16532551406ee9eaa141cbb9313ff88"
+    },
+    {
+      "source": "public/images/skin/news/lamdong1.jpg",
+      "target": "public/images/vps/images/skin/news/lamdong1.jpg",
+      "sha256": "afdcabdc03f3684fd67fdfb95e8867e138f3195b4b4eb4f90691b30d7cc819da"
+    },
+    {
+      "source": "public/images/skin/news/lamdong.png",
+      "target": "public/images/vps/images/skin/news/lamdong.png",
+      "sha256": "c49eff0f6ffeb2526e6275ce7a06de34d3b29c9c4ac3aea254a3f88830fe793f"
+    },
+    {
+      "source": "public/images/skin/news/LOGO-vtc.png",
+      "target": "public/images/vps/images/skin/news/LOGO-vtc.png",
+      "sha256": "5ca4d927f990b7ddfcbee67518d8e63e8a414a4bfc80fe1ee53dd401b9868dd5"
+    },
+    {
+      "source": "public/images/skin/news/logo-bao-vietnam.png",
+      "target": "public/images/vps/images/skin/news/logo-bao-vietnam.png",
+      "sha256": "8c6c68fb5518a56c489d97997808cff9d5f940d1612301a0e62bf53c1e3c3f03"
+    }
+  ]
+}

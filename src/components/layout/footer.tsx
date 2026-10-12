@@ -8,6 +8,8 @@ import {
   solutions,
 } from "@/data/content";
 import { HomeSectionLink } from "./home-section-link";
+import { legalDocuments } from "@/data/legal-documents";
+import styles from "./footer.module.css";
 
 export function Footer() {
   return (
@@ -65,11 +67,20 @@ export function Footer() {
             <a href={links.sla}>Cam kết dịch vụ</a>
           </div>
         </div>
+        <nav className={styles.policies} aria-label="Chính sách & Điều khoản">
+          <h2>Chính sách & Điều khoản</h2>
+          <div>
+            <Link href={links.privacy}>Chính sách bảo mật</Link>
+            {legalDocuments.map((document) => (
+              <Link key={document.slug} href={`/${document.slug}/`}>
+                {document.label}
+              </Link>
+            ))}
+          </div>
+        </nav>
         <div className="footer-bottom">
           <span>© 2026 InterData</span>
           <div>
-            <a href={links.privacy}>Chính sách bảo mật</a>
-            <a href={links.terms}>Điều khoản sử dụng</a>
             <a href="#trang-chu">Về đầu trang ↑</a>
           </div>
         </div>

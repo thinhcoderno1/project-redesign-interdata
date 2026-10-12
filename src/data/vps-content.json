@@ -1,0 +1,1161 @@
+{
+  "metadata": {
+    "title": "Thuê VPS Việt Nam Giá Rẻ - Hiệu Năng Mạnh - Ổn Định Cao",
+    "description": "Thuê VPS tại Việt Nam giá rẻ với NVMe U.2 Gen 4, CPU AMD EPYC/Intel Xeon và hỗ trợ kỹ thuật 24/7. Xem bảng giá thuê VPS, so sánh cấu hình và chọn gói phù hợp."
+  },
+  "hero": {
+    "ticks": ["CPU đời mới", "NVMe U.2", "Uptime 99.9%", "Support 24/7"],
+    "proof": [
+      {
+        "value": "12+",
+        "label": "năm kinh nghiệm"
+      },
+      {
+        "value": "100.000+",
+        "label": "Khách hàng"
+      },
+      {
+        "value": "1000+",
+        "label": "Máy chủ"
+      }
+    ],
+    "blocks": [
+      {
+        "function": "Header",
+        "tag": "span",
+        "text": "Tiết Kiệm Đến 80%"
+      },
+      {
+        "function": "Header",
+        "tag": "h1",
+        "text": "Thuê VPS Việt Nam"
+      },
+      {
+        "function": "Header",
+        "tag": "p",
+        "text": "Hiệu Năng Cao - Ổn Định 24/7"
+      },
+      {
+        "function": "Header",
+        "tag": "p",
+        "text": "Khởi chạy website, ứng dụng và hệ thống riêng trên hạ tầng VPS tại Việt Nam. Chọn đúng cấu hình, quản trị chủ động và luôn có kỹ thuật hỗ trợ khi cần."
+      },
+      {
+        "function": "Header",
+        "tag": "a",
+        "text": "Xem Bảng Giá"
+      },
+      {
+        "function": "Header",
+        "tag": "a",
+        "text": "Chat Với Tư Vấn Viên"
+      }
+    ],
+    "background": "/images/vps/assets/images/hero-datacenter.jpg"
+  },
+  "landing": {
+    "infrastructure": [
+      {
+        "icon": "Cpu",
+        "title": "CPU máy chủ đời mới",
+        "text": "Kết hợp AMD EPYC và Intel Xeon để đáp ứng nhiều nhóm workload."
+      },
+      {
+        "icon": "Database",
+        "title": "NVMe U.2 Gen 4",
+        "text": "Lưu trữ doanh nghiệp tối ưu cho website, database và tác vụ đọc ghi thường xuyên."
+      },
+      {
+        "icon": "Network",
+        "title": "Kết nối đến 1 Gbps",
+        "text": "Nhiều mức Network Port để chọn theo lưu lượng và loại ứng dụng."
+      },
+      {
+        "icon": "Globe2",
+        "title": "Datacenter Việt Nam",
+        "text": "Hạ tầng trong nước giúp giảm quãng đường truyền tới người dùng Việt Nam."
+      }
+    ],
+    "reasons": [
+      {
+        "icon": "Gauge",
+        "title": "Vận hành ổn định",
+        "text": "SLA uptime 99,9% cho các hệ thống cần duy trì kết nối liên tục."
+      },
+      {
+        "icon": "ShieldCheck",
+        "title": "Bảo vệ hạ tầng",
+        "text": "Firewall cơ bản hỗ trợ giảm thiểu các luồng truy cập bất thường."
+      },
+      {
+        "icon": "KeyRound",
+        "title": "Toàn quyền quản trị",
+        "text": "Full root access để tự cài ứng dụng và cấu hình môi trường."
+      },
+      {
+        "icon": "Headphones",
+        "title": "Hỗ trợ 24/7",
+        "text": "Đội ngũ kỹ thuật tiếp nhận yêu cầu khi quá trình vận hành phát sinh vấn đề."
+      },
+      {
+        "icon": "CloudCog",
+        "title": "Quản lý thuận tiện",
+        "text": "Chủ động theo dõi, reboot và cài lại hệ điều hành từ trang quản trị."
+      },
+      {
+        "icon": "Layers3",
+        "title": "Nâng cấp theo nhu cầu",
+        "text": "Mở rộng CPU, RAM hoặc dung lượng khi website và ứng dụng tăng tải."
+      }
+    ],
+    "apps": [
+      {
+        "name": "n8n",
+        "label": "Automation",
+        "logo": "/images/vps/brands/one-click/n8n.png",
+        "text": "Tự động hóa workflow, webhook và kết nối API."
+      },
+      {
+        "name": "OpenClaw",
+        "label": "AI Workspace",
+        "logo": "/images/vps/brands/one-click/openclaw.png",
+        "text": "Triển khai môi trường làm việc AI riêng trên VPS."
+      },
+      {
+        "name": "EzyPlatform",
+        "label": "AI Development",
+        "logo": "/images/vps/brands/one-click/ezyplatform.png",
+        "text": "Nền tảng phát triển ứng dụng AI."
+      },
+      {
+        "name": "WPTangToc",
+        "label": "WordPress",
+        "logo": "/images/vps/brands/one-click/wptangtoc.png",
+        "text": "Cài stack WordPress đã tối ưu để bắt đầu nhanh hơn."
+      }
+    ],
+    "operatingSystems": [
+      {
+        "name": "Ubuntu",
+        "logo": "/images/vps/brands/operating-systems/ubuntu.svg"
+      },
+      {
+        "name": "CentOS",
+        "logo": "/images/vps/brands/operating-systems/centos.svg"
+      },
+      {
+        "name": "Debian",
+        "logo": "/images/vps/brands/operating-systems/debian.svg"
+      },
+      {
+        "name": "AlmaLinux",
+        "logo": "/images/vps/brands/operating-systems/almalinux.svg"
+      },
+      {
+        "name": "Webuzo",
+        "logo": "/images/vps/brands/operating-systems/webuzo.png"
+      },
+      {
+        "name": "Fedora",
+        "logo": "/images/vps/brands/operating-systems/fedora.svg"
+      }
+    ],
+    "useCases": [
+      {
+        "icon": "Globe2",
+        "title": "Website và WordPress",
+        "text": "Chạy website doanh nghiệp, blog, landing page hoặc nhiều website trên một VPS."
+      },
+      {
+        "icon": "Code2",
+        "title": "Môi trường phát triển",
+        "text": "Tạo server cho Node.js, Python, PHP, Git, staging và quy trình CI/CD."
+      },
+      {
+        "icon": "ShoppingCart",
+        "title": "E-commerce",
+        "text": "Dành tài nguyên riêng cho WooCommerce, hệ thống bán hàng và database."
+      },
+      {
+        "icon": "Workflow",
+        "title": "Automation và API",
+        "text": "Vận hành n8n, bot, webhook, API service và tác vụ chạy theo lịch."
+      },
+      {
+        "icon": "Database",
+        "title": "Database riêng",
+        "text": "Triển khai MySQL, PostgreSQL hoặc kho dữ liệu cần quyền cấu hình sâu."
+      },
+      {
+        "icon": "Wrench",
+        "title": "Dịch vụ nền và tác vụ định kỳ",
+        "text": "Chạy worker, cron job, hàng đợi tác vụ hoặc công cụ quản trị trên môi trường Linux."
+      }
+    ],
+    "process": [
+      {
+        "number": "01",
+        "title": "Chọn dòng VPS",
+        "text": "Đối chiếu CPU, RAM, dung lượng, Network Port và hệ điều hành với workload."
+      },
+      {
+        "number": "02",
+        "title": "Chọn cấu hình và chu kỳ",
+        "text": "Kiểm tra tổng chi phí theo tháng, năm hoặc chu kỳ ưu đãi trước khi thanh toán."
+      },
+      {
+        "number": "03",
+        "title": "Hoàn tất đăng ký",
+        "text": "Điền thông tin, chọn hệ điều hành và hoàn tất thanh toán trên hệ thống InterData."
+      },
+      {
+        "number": "04",
+        "title": "Nhận VPS và triển khai",
+        "text": "Nhận thông tin quản trị qua email, đăng nhập và bắt đầu cài ứng dụng."
+      }
+    ],
+    "benchmarkGroups": [
+      {
+        "id": "amd",
+        "title": "Benchmark AMD Server",
+        "note": "Lưu ý: Đây là benchmark trên Server.",
+        "images": [
+          {
+            "src": "/images/vps/benchmarks/benchmark-amd-server-1.jpg",
+            "width": 906,
+            "height": 823,
+            "label": "AMD Server · Ảnh 1",
+            "alt": "Benchmark AMD Server 1 - thông tin hệ thống và tốc độ đọc ghi",
+            "metrics": [
+              "AMD EPYC thế hệ mới, phù hợp với workload cần nhiều nhân xử lý.",
+              "Lưu trữ NVMe U.2 tốc độ cao.",
+              "DD benchmark: trung bình 1.5 GB/s."
+            ]
+          },
+          {
+            "src": "/images/vps/benchmarks/benchmark-amd-server-2.jpg",
+            "width": 961,
+            "height": 837,
+            "label": "AMD Server · Ảnh 2",
+            "alt": "Benchmark AMD Server 2 - Fio, IOPS, Ioping và Speedtest",
+            "metrics": [
+              "IOPing latency: khoảng 20µs.",
+              "Speedtest download: lên đến khoảng 9 Gbps.",
+              "Speedtest upload: lên đến khoảng 2 Gbps."
+            ]
+          },
+          {
+            "src": "/images/vps/benchmarks/benchmark-amd-server-3.jpg",
+            "width": 1074,
+            "height": 787,
+            "label": "AMD Server · Ảnh 3",
+            "alt": "Benchmark AMD Server 3 - kết quả Speedtest nhiều vị trí",
+            "metrics": [
+              "Ping nội địa: khoảng 1–21ms, tùy điểm đo và nhà mạng.",
+              "Download/Upload: đối chiếu tốc độ tới từng điểm Speedtest trong ảnh."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "intel",
+        "title": "Benchmark Máy Chủ Ảo Intel",
+        "note": "Lưu ý: Đây là benchmark trên máy chủ ảo.",
+        "images": [
+          {
+            "src": "/images/vps/benchmarks/benchmark-intel-vps-1.jpg",
+            "width": 733,
+            "height": 563,
+            "label": "Máy Chủ Ảo Intel · Ảnh 1",
+            "alt": "Benchmark Máy Chủ Ảo Intel 1 - thông tin hệ thống",
+            "metrics": [
+              "CPU Intel Xeon Platinum hiệu năng mạnh mẽ.",
+              "Lưu trữ NVMe U.2 tốc độ cao.",
+              "Thông tin RAM, Disk và LoadAverage thể hiện tài nguyên ở thời điểm đo."
+            ]
+          },
+          {
+            "src": "/images/vps/benchmarks/benchmark-intel-vps-2.jpg",
+            "width": 722,
+            "height": 568,
+            "label": "Máy Chủ Ảo Intel · Ảnh 2",
+            "alt": "Benchmark Máy Chủ Ảo Intel 2 - tốc độ đọc ghi, IOPS và Ioping",
+            "metrics": [
+              "DD benchmark: trung bình khoảng 300–400 MB/s.",
+              "IOPing latency: khoảng 200µs.",
+              "Fio/IOPS: hiệu suất đọc ghi với các kích thước block khác nhau."
+            ]
+          },
+          {
+            "src": "/images/vps/benchmarks/benchmark-intel-vps-3.jpg",
+            "width": 852,
+            "height": 718,
+            "label": "Máy Chủ Ảo Intel · Ảnh 3",
+            "alt": "Benchmark Máy Chủ Ảo Intel 3 - kết quả Speedtest nhiều vị trí",
+            "metrics": [
+              "Speedtest nội địa: download/upload khoảng 300 Mbps.",
+              "Ping nội địa: khoảng 1–22ms, tùy điểm đo và nhà mạng."
+            ]
+          }
+        ]
+      }
+    ],
+    "headers": {
+      "Infrastructure": {
+        "eyebrow": "Phần cứng và kết nối",
+        "title": "Hạ Tầng VPS Việt Nam Cho Website Và Ứng Dụng",
+        "text": "Hiệu năng VPS là kết quả của cả CPU, hệ thống lưu trữ, đường truyền và vị trí đặt máy chủ.",
+        "id": "infrastructure-title"
+      },
+      "WhyInterData": {
+        "eyebrow": "Chọn InterData",
+        "title": "Vì Sao Nên Thuê VPS Tại InterData?",
+        "text": "Tập trung vào những yếu tố tác động trực tiếp đến khả năng triển khai, quản trị và duy trì dịch vụ.",
+        "id": "why-interdata-title"
+      },
+      "OneClickApps": {
+        "eyebrow": "Khởi tạo nhanh theo nhu cầu",
+        "title": "Triển Khai Môi Trường Bạn Cần Trong 1 Click",
+        "text": "Chọn hệ điều hành hoặc ứng dụng cài sẵn để bắt đầu triển khai nhanh hơn trên VPS.",
+        "id": "one-click-title"
+      },
+      "UseCases": {
+        "eyebrow": "Ứng dụng thực tế",
+        "title": "VPS Dùng Để Làm Gì?",
+        "text": "VPS phù hợp khi bạn cần tài nguyên riêng, quyền cấu hình sâu hoặc môi trường luôn hoạt động trên Internet.",
+        "id": "use-cases-title"
+      },
+      "GettingStarted": {
+        "eyebrow": "Quy trình rõ ràng",
+        "title": "Chỉ Vài Bước Từ Đăng Ký Đến Bắt Đầu Sử Dụng",
+        "text": "Chuẩn bị trước workload và hệ điều hành giúp bạn chọn gói nhanh hơn, tránh mua thiếu hoặc dư tài nguyên.",
+        "id": "getting-started-title"
+      }
+    },
+    "blocks": [
+      {
+        "function": "VpsDefinition",
+        "tag": "span",
+        "text": "Nền tảng cần biết trước khi triển khai"
+      },
+      {
+        "function": "VpsDefinition",
+        "tag": "h2",
+        "text": "Thuê VPS Là Gì?"
+      },
+      {
+        "function": "VpsDefinition",
+        "tag": "p",
+        "text": "Thuê VPS là hình thức thuê một máy chủ ảo với CPU, RAM, dung lượng lưu trữ và hệ điều hành theo gói tài nguyên bạn lựa chọn. Sau khi dịch vụ được kích hoạt, bạn có một môi trường riêng để triển khai website, ứng dụng, cơ sở dữ liệu hoặc các tác vụ vận hành nội bộ."
+      },
+      {
+        "function": "VpsDefinition",
+        "tag": "p",
+        "text": "Bạn có thể chủ động cài phần mềm, cấu hình môi trường và theo dõi tài nguyên trong quá trình sử dụng. Dịch vụ phù hợp khi website hoặc ứng dụng cần hiệu năng ổn định, quyền quản trị cao hơn Shared Hosting và khả năng nâng cấp khi nhu cầu tăng lên."
+      },
+      {
+        "function": "OneClickApps",
+        "tag": "button",
+        "text": "Hệ điều hành"
+      },
+      {
+        "function": "OneClickApps",
+        "tag": "button",
+        "text": "1-Click Applications"
+      },
+      {
+        "function": "OneClickApps",
+        "tag": "p",
+        "text": "Hệ điều hành"
+      },
+      {
+        "function": "OneClickApps",
+        "tag": "p",
+        "text": "Sẵn sàng cài đặt khi khởi tạo VPS."
+      },
+      {
+        "function": "Performance",
+        "tag": "span",
+        "text": "Đo trên workload thực tế"
+      },
+      {
+        "function": "Performance",
+        "tag": "h2",
+        "text": "Hiệu Suất Máy Chủ Tại InterData"
+      },
+      {
+        "function": "Performance",
+        "tag": "p",
+        "text": "Benchmark giúp kiểm tra tốc độ lưu trữ, CPU và đường truyền trong điều kiện cụ thể. Hãy đối chiếu cùng loại workload bạn dự định vận hành."
+      },
+      {
+        "function": "Performance",
+        "tag": "p",
+        "text": "Lưu ý: Các chỉ số benchmark được đo trong môi trường ảo hóa nên sẽ có chênh lệch so với benchmark trực tiếp trên máy chủ vật lý."
+      },
+      {
+        "function": "GettingStarted",
+        "tag": "a",
+        "text": "Xem cấu hình và bảng giá"
+      }
+    ],
+    "definitionCards": [
+      [
+        "Chọn gói theo nhu cầu",
+        "Xác định CPU, RAM, ổ NVMe và băng thông phù hợp với dự án của bạn."
+      ],
+      [
+        "Nhận môi trường riêng",
+        "Sau khi kích hoạt, bạn có IP riêng và không gian để cài đặt phần mềm cần thiết."
+      ],
+      [
+        "Quản trị và nâng cấp",
+        "Tự vận hành dịch vụ, sau đó nâng cấu hình khi lượng truy cập hoặc tác vụ tăng lên."
+      ]
+    ],
+    "benchmarkChecklist": [
+      "Đọc đúng đơn vị và cấu hình thử nghiệm",
+      "Đo nhiều lần ở các thời điểm khác nhau",
+      "Không dùng một chỉ số để kết luận toàn bộ hiệu năng"
+    ]
+  },
+  "comparison": {
+    "rows": [
+      {
+        "criteria": "Ổ cứng",
+        "amd": "NVMe U.2 Gen 4",
+        "platinum": "NVMe U.2 Gen 4",
+        "gold": "NVMe U.2 Gen 4",
+        "linux": "NVMe U.2 Gen 4",
+        "windows": "NVMe U.2 Gen 4"
+      },
+      {
+        "criteria": "CPU",
+        "amd": "AMD EPYC Gen 2/3",
+        "platinum": "Intel Platinum Gen 2/3",
+        "gold": "Intel Xeon Gold",
+        "linux": "Intel Xeon Gold",
+        "windows": "Intel Xeon Gold"
+      },
+      {
+        "criteria": "Ioping Latency",
+        "amd": "Khoảng 200 µs",
+        "platinum": "Khoảng 200 µs",
+        "gold": "Khoảng 200 µs",
+        "linux": "Khoảng 200 µs",
+        "windows": "Khoảng 200 µs"
+      },
+      {
+        "criteria": "Tốc độ truyền tải",
+        "amd": "1 Gbps Network Port",
+        "platinum": "300 Mbps Network Port",
+        "gold": "1 Gbps Network Port",
+        "linux": "100 Mbps Network Port",
+        "windows": "100 Mbps Network Port"
+      },
+      {
+        "criteria": "Băng thông hàng tháng",
+        "amd": "800 GB – 20 TB tùy gói",
+        "platinum": "Không giới hạn",
+        "gold": "800 GB – 10 TB tùy gói",
+        "linux": "Không giới hạn",
+        "windows": "Không giới hạn"
+      },
+      {
+        "criteria": "IPv4 riêng",
+        "amd": "01 IPv4",
+        "platinum": "01 IPv4",
+        "gold": "01 IPv4",
+        "linux": "01 IPv4",
+        "windows": "01 IPv4"
+      },
+      {
+        "criteria": "Backup định kỳ",
+        "amd": "Hàng tuần, giữ 2 bản",
+        "platinum": "Hàng tuần, giữ 2 bản",
+        "gold": "Hàng tuần, giữ 2 bản",
+        "linux": "Hàng tuần, giữ 2 bản",
+        "windows": "Hàng tuần, giữ 2 bản"
+      }
+    ],
+    "columns": [
+      {
+        "key": "amd",
+        "label": "VPS AMD"
+      },
+      {
+        "key": "platinum",
+        "label": "VPS Platinum"
+      },
+      {
+        "key": "gold",
+        "label": "VPS Gold"
+      },
+      {
+        "key": "linux",
+        "label": "VPS Linux",
+        "featured": true
+      }
+    ],
+    "blocks": [
+      {
+        "function": "VpsComparison",
+        "tag": "span",
+        "text": "Chọn đúng dòng VPS"
+      },
+      {
+        "function": "VpsComparison",
+        "tag": "h2",
+        "text": "So Sánh Các Dòng VPS Việt Nam Tại InterData"
+      },
+      {
+        "function": "VpsComparison",
+        "tag": "p",
+        "text": "So sánh nhanh nền tảng phần cứng, đường truyền và chính sách tài nguyên trước khi chọn gói."
+      },
+      {
+        "function": "VpsComparison",
+        "tag": "p",
+        "text": "Ioping latency là mức tham chiếu trong điều kiện đo phù hợp; kết quả thực tế thay đổi theo tải hệ thống và cấu hình."
+      }
+    ]
+  },
+  "testimonials": {
+    "items": [
+      {
+        "name": "Lê Minh Hưng",
+        "company": "SEO Việt",
+        "logo": "/images/vps/images/skin/customer/logo-seoviet.png",
+        "content": "Sau 1 thời gian trải nghiệm và đã sử dụng dịch vụ của InterData thì Hưng đánh giá chất lượng dịch vụ khá là tốt. Hưng cũng dùng dịch vụ rất nhiều bên ở Việt Nam rồi thì thấy dịch vụ không thua kém bất kể bên nào, nhiều khi còn nhỉnh hơn các bên. Hệ thống ổn định, đặc biệt giá thành tốt hơn so với các bên trên thị trường. Mong muốn của Hưng cũng như tất cả khách hàng là InterData sẽ duy trì sự ổn định bền vững ở hiện tại và tương lai."
+      },
+      {
+        "name": "Vĩnh Minh Đạo",
+        "company": "RealDev",
+        "logo": "/images/vps/images/skin/customer/logo-realdev.png",
+        "content": "Với tư cách là đơn vị sử dụng trực tiếp và cung cấp dịch vụ website đến khách hàng toàn quốc, mình đã sử dụng dịch vụ của các đơn vị cung cấp VPS, Hosting, Dedicate từ trong nước đến nước ngoài. Sau khi sử dụng dịch vụ VPS tại InterData, mình rất ấn tượng với cấu hình chuẩn chỉnh và giá trị thực tế của dịch vụ. Mình đánh giá rất cao thái độ cầu thị của toàn thể công ty InterData và chất lượng sản phẩm dịch vụ."
+      },
+      {
+        "name": "Trịnh Bảo",
+        "company": "BALICO",
+        "logo": "/images/vps/images/skin/customer/balico.png",
+        "content": "Mình thấy khá hài lòng với dịch vụ Cloud AMD của InterData. Website chạy ổn định, hiệu suất và các tính năng đều đáp ứng tốt nhu cầu của mình. Có lúc cũng gặp vài trục trặc nhỏ, nhưng đội ngũ kỹ thuật xử lý rất nhanh và nhiệt tình. Nhìn chung, dùng dịch vụ của InterData mình cảm thấy rất yên tâm."
+      },
+      {
+        "name": "Trường Phong",
+        "company": "Công ty TNHH Giải pháp Công nghệ Trường Phong",
+        "logo": "/images/vps/images/skin/customer/logo-themewpgiare-truongphong.png",
+        "content": "Từ lúc chuyển qua dùng VPS của InterData, mình thấy website chạy mượt hơn hẳn, hiếm khi gặp lỗi. Đội ngũ hỗ trợ cũng rất chuyên nghiệp, lúc nào cần là phản hồi liền. Hiện tại thì mình hoàn toàn hài lòng với dịch vụ này."
+      },
+      {
+        "name": "Thắng Nguyễn",
+        "company": "UMIX Việt Nam",
+        "logo": "/images/vps/images/skin/customer/logo-umix-vietnam.png",
+        "content": "Tôi đã chuyển website Umix sang chạy ở InterData, điều tôi hài lòng nhất chính là sự nhiệt tình của các nhân viên, hỗ trợ mọi vấn đề một cách nhanh chóng ngay cả lúc nửa đêm."
+      },
+      {
+        "name": "Trần Mạnh Hùng",
+        "company": "Digizone Việt Nam",
+        "logo": "/images/vps/images/skin/customer/logo-digizone-vietnam.png",
+        "content": "Bên mình là Agency về thiết kế web và Ads nên rất chú trọng về tính ổn định, bảo mật của VPS, Hosting để đảm bảo chất lượng dịch vụ với khách hàng. Từ khi dùng dịch vụ của InterData thì mình thấy hạ tầng mạnh, cập nhật các dòng cấu hình server mới, tốc độ kết nối nhanh và đội ngũ hỗ trợ nhiệt tình. Mình tin tưởng vào chất lượng dịch vụ của InterData sẽ luôn đảm bảo ổn định và bảo mật cao."
+      },
+      {
+        "name": "Đặng Hải Triều",
+        "company": "Đồng Hồ Hải Triều",
+        "logo": "/images/vps/images/skin/customer/logo-donghohaitrieu.png",
+        "content": "Chất lượng dịch vụ rất tốt! Đội ngũ hỗ trợ mau chóng, phối hợp nhịp nhàng để hỗ trợ mấy ca khó. Linh hoạt xử lý mấy tình huống ngoài phạm vi trách nhiệm luôn. Rất tuyệt vời."
+      },
+      {
+        "name": "Tạ Quốc Khánh",
+        "company": "Công ty Cổ phần Jobke",
+        "logo": "/images/vps/images/skin/customer/logo-jobkey.png",
+        "content": "Đội ngũ hỗ trợ kỹ thuật nhiệt tình và nhanh chóng. Tôi sẽ giới thiệu thêm cho bạn bè và đối tác của mình về dịch vụ của InterData trong thời gian tới."
+      }
+    ],
+    "ratings": [
+      {
+        "platform": "Google",
+        "score": "4.3",
+        "href": "https://maps.app.goo.gl/A7GAGdvTqqbjYhmu6"
+      },
+      {
+        "platform": "Facebook",
+        "score": "5.0",
+        "href": "https://www.facebook.com/interdata.com.vn/reviews"
+      },
+      {
+        "platform": "HostAdvice",
+        "score": "5.0",
+        "href": "https://hostadvice.com/hosting-company/inter-group-joint-stock-company-reviews/"
+      }
+    ],
+    "blocks": [
+      {
+        "function": "Testimonials",
+        "tag": "span",
+        "text": "Đánh giá thực tế"
+      },
+      {
+        "function": "Testimonials",
+        "tag": "h2",
+        "text": "Khách hàng nói gì về InterData?"
+      },
+      {
+        "function": "Testimonials",
+        "tag": "p",
+        "text": "Trải nghiệm từ doanh nghiệp và đội ngũ đang vận hành website trên hạ tầng InterData."
+      }
+    ]
+  },
+  "press": {
+    "items": [
+      {
+        "href": "https://baoangiang.com.vn/vps-interdata-giai-phap-may-chu-ao-toi-uu-hieu-suat-va-chi-phi-a475417.html",
+        "thumb": "/images/vps/images/skin/news/baoangiang.png",
+        "partnerLogo": "/images/vps/images/skin/news/logobag.png",
+        "title": "VPS InterData: Giải pháp máy chủ ảo tối ưu hiệu suất và chi phí"
+      },
+      {
+        "href": "https://baohatinh.vn/thue-vps-tai-interdata-giai-phap-toi-uu-ha-tang-online-cho-doanh-nghiep-post304939.html",
+        "thumb": "/images/vps/images/skin/news/nhansu.webp",
+        "partnerLogo": "/images/vps/images/skin/news/bao-ha-tinh.png",
+        "title": "Thuê VPS tại InterData: Giải pháp tối ưu hạ tầng online cho doanh nghiệp"
+      },
+      {
+        "href": "https://vnexpress.net/interdata-dua-giai-phap-viet-ra-thi-truong-quoc-te-4539197.html",
+        "thumb": "/images/vps/images/skin/news/news.png",
+        "partnerLogo": "/images/vps/images/skin/news/logo-news-1.png",
+        "title": "InterData đưa giải pháp Việt ra thị trường quốc tế"
+      },
+      {
+        "href": "https://thanhnien.vn/interdata-va-vnpt-hop-tac-chien-luoc-va-khai-thac-ha-tang-datacenter-185240701161300605.htm",
+        "thumb": "/images/vps/images/skin/news/news-1.png",
+        "partnerLogo": "/images/vps/images/skin/news/logo-news.png",
+        "title": "InterData và VNPT hợp tác chiến lược và khai thác hạ tầng Datacenter"
+      },
+      {
+        "href": "https://cafef.vn/interdata-tang-mien-phi-luu-tru-web-nvme-dung-luong-6gb-toc-do-mang-1gbps-20230223134836995.chn",
+        "thumb": "/images/vps/images/skin/news/news-2.png",
+        "partnerLogo": "/images/vps/images/skin/news/logo-news-2.png",
+        "title": "InterData tặng miễn phí lưu trữ web NVMe dung lượng 6GB, tốc độ mạng 1Gbps"
+      },
+      {
+        "href": "https://vtv.vn/cong-nghe/greencloud-hop-tac-cung-interdata-trien-khai-ha-tang-server-tai-viet-nam-20230411104845847.htm",
+        "thumb": "/images/vps/images/skin/news/vtv.png",
+        "partnerLogo": "/images/vps/images/skin/news/vtv.jpg",
+        "title": "GreenCloud hợp tác cùng InterData triển khai hạ tầng Server tại Việt Nam"
+      },
+      {
+        "href": "https://thegioikinhdoanh.vn/hi-tech/interdata-tang-mien-phi-luu-tru-web-nvme-dung-luong-6gb-toc-do-mang-1gbps.html",
+        "thumb": "/images/vps/images/skin/news/aChau.png",
+        "partnerLogo": "/images/vps/images/skin/news/THE_GIOI_KINH_DOANH_cbc2b.png",
+        "title": "InterData tặng miễn phí lưu trữ web NVMe dung lượng 6GB, tốc độ mạng 1Gbps"
+      },
+      {
+        "href": "https://dantri.com.vn/suc-manh-so/interdata-ra-mat-goi-cloud-server-network-port-10gbps-tai-viet-nam-20221123162831826.htm",
+        "thumb": "/images/vps/images/skin/news/nhansu.webp",
+        "partnerLogo": "/images/vps/images/skin/news/bao-dien-tu-dan-tri.png",
+        "title": "InterData ra mắt gói Cloud Server Network Port 10Gbps tại Việt Nam"
+      },
+      {
+        "href": "https://www.24h.com.vn/doanh-nghiep/interdata-va-eztech-ky-ket-thoa-thuan-hop-tac-chien-luoc-cung-cap-giai-phap-ha-tang-datacenter-c849a1569291.html",
+        "thumb": "/images/vps/images/skin/news/24h.jpg",
+        "partnerLogo": "/images/vps/images/skin/news/24hh.png",
+        "title": "InterData và EZTech ký kết thỏa thuận hợp tác chiến lược cung cấp giải pháp hạ tầng Datacenter"
+      },
+      {
+        "href": "https://vietnamnet.vn/interdata-hop-tac-vnpt-khai-thac-ha-tang-datacenter-va-cac-dich-vu-the-manh-2301215.html",
+        "thumb": "/images/vps/images/skin/news/vnpt.jpg",
+        "partnerLogo": "/images/vps/images/skin/news/bao-vietnamnet.png",
+        "title": "InterData hợp tác VNPT khai thác hạ tầng Datacenter và các dịch vụ thế mạnh"
+      },
+      {
+        "href": "https://ttvn.toquoc.vn/interdata-tang-mien-phi-luu-tru-web-nvme-dung-luong-6gb-toc-do-mang-1gbps-2023022311353656.htm",
+        "thumb": "/images/vps/images/skin/news/aChau.png",
+        "partnerLogo": "/images/vps/images/skin/news/Toquoc.jpg",
+        "title": "InterData tặng miễn phí lưu trữ web NVMe dung lượng 6GB, tốc độ mạng 1Gbps"
+      },
+      {
+        "href": "https://baolamdong.vn/thong-tin-can-biet/202405/le-ky-ket-mou-giua-interdata-va-truong-dai-hoc-yersin-da-lat-b180e1a/",
+        "thumb": "/images/vps/images/skin/news/lamdong1.jpg",
+        "partnerLogo": "/images/vps/images/skin/news/lamdong.png",
+        "title": "Lễ ký kết MOU giữa InterData và Trường Đại học Yersin Đà Lạt"
+      },
+      {
+        "href": "https://vtcnews.vn/interdata-hop-tac-cung-eztech-phat-trien-ha-tang-server-cloud-gpu-ar872150.html",
+        "thumb": "/images/vps/images/skin/news/24h.jpg",
+        "partnerLogo": "/images/vps/images/skin/news/LOGO-vtc.png",
+        "title": "InterData hợp tác cùng EZTech phát triển hạ tầng server cloud GPU"
+      },
+      {
+        "href": "https://www.vietnam.vn/interdata-hop-tac-vnpt-khai-thac-ha-tang-datacenter-va-cac-dich-vu-the-manh/",
+        "thumb": "/images/vps/images/skin/news/vnpt.jpg",
+        "partnerLogo": "/images/vps/images/skin/news/logo-bao-vietnam.png",
+        "title": "InterData hợp tác VNPT khai thác hạ tầng Datacenter và các dịch vụ thế mạnh"
+      }
+    ],
+    "blocks": [
+      {
+        "function": "Partners",
+        "tag": "span",
+        "text": "Dấu ấn truyền thông"
+      },
+      {
+        "function": "Partners",
+        "tag": "h2",
+        "text": "Báo chí nói gì về InterData"
+      },
+      {
+        "function": "Partners",
+        "tag": "p",
+        "text": "Các dấu mốc về hạ tầng, công nghệ và hợp tác của InterData được ghi nhận trên nhiều kênh báo chí."
+      }
+    ]
+  },
+  "faq": {
+    "items": [
+      {
+        "question": "1. Tôi có thể thanh toán theo tháng hay bắt buộc phải đăng ký dài hạn?",
+        "answer": "InterData hỗ trợ <strong>thanh toán linh hoạt theo tháng</strong> — không bắt buộc cam kết dài hạn. Ngoài ra, Quý khách có thể chọn chu kỳ 3 tháng, 6 tháng hoặc 12 tháng để nhận mức giá ưu đãi hơn. Hoàn toàn chủ động, không bị ràng buộc hợp đồng dài."
+      },
+      {
+        "question": "2. Chương trình dùng thử miễn phí hoạt động như thế nào?",
+        "answer": "Đối với chương trình dùng thử <strong>5 ngày miễn phí</strong>, <strong>ngay sau khi quá hạn thanh toán dịch vụ</strong>, tất cả những dữ liệu được lưu trữ trên máy chủ này và các bản sao lưu (backup) sẽ bị xóa. Quý khách nên chủ động sao lưu dữ liệu quan trọng, xem Điều khoản sử dụng hoặc <a href=\"https://www.facebook.com/interdata.com.vn/\" target=\"_blank\" rel=\"noopener noreferrer\">inbox fanpage InterData</a> để được tư vấn chi tiết."
+      },
+      {
+        "question": "3. Quy trình yêu cầu hoàn tiền tại InterData như thế nào?",
+        "answer": "Quy trình gồm 3 bước: (1) Gửi Ticket từ email đăng ký dịch vụ, nêu rõ lý do và thông tin dịch vụ cần hoàn; (2) InterData xác nhận trong <strong>1-5 ngày làm việc</strong> (không tính thứ 7, CN, ngày lễ); (3) Hoàn tiền vào tài khoản tại <strong>support.interdata.vn</strong> trong vòng <strong>30 ngày kể từ ngày nhận yêu cầu</strong>. Số dư có thể dùng để đăng ký bất kỳ dịch vụ nào khác tại InterData."
+      },
+      {
+        "question": "4. Server của InterData đặt ở đâu? Có ảnh hưởng đến tốc độ website không?",
+        "answer": "Toàn bộ hạ tầng VPS của InterData được đặt tại <strong>Datacenter trong nước (TP. Hồ Chí Minh và Hà Nội)</strong>, đảm bảo độ trễ (latency) cực thấp cho người dùng tại Việt Nam. Đây là lợi thế lớn so với VPS quốc tế — tốc độ tải trang nhanh hơn, ổn định hơn và có lợi cho SEO Google Việt Nam."
+      },
+      {
+        "question": "5. Sự khác biệt giữa ổ cứng NVMe U.2 tại InterData và SSD thông thường là gì?",
+        "answer": "Ổ cứng Enterprise NVMe U.2 mang lại tốc độ đọc/ghi dữ liệu và <strong>chỉ số IOPS cao gấp nhiều lần</strong> so với SSD chuẩn SATA thông thường. Nó giúp giảm tối đa độ trễ (latency), tăng tốc truy xuất Database và xử lý lượng truy cập lớn (High Traffic) vô cùng mượt mà."
+      },
+      {
+        "question": "6. Băng thông (Bandwidth) của gói VPS có giới hạn không?",
+        "answer": "Các gói VPS tại InterData được trang bị đường truyền tốc độ cao với <strong>lưu lượng băng thông lớn</strong> (từ 800GB/tháng đến không giới hạn tùy gói dịch vụ). Nếu dùng hết lưu lượng tốc độ cao, hệ thống có thể hạ băng thông theo chính sách hoặc Quý Khách có thể nâng cấp thêm để duy trì tốc độ."
+      },
+      {
+        "question": "7. Một gói VPS giá rẻ cấu hình cơ bản có thể chạy được bao nhiêu website?",
+        "answer": "Không có giới hạn cụ thể về số lượng website Quý Khách có thể chạy trên 1 VPS. Điều này phụ thuộc hoàn toàn vào lưu lượng truy cập (Traffic), mã nguồn nặng hay nhẹ và cách tối ưu máy chủ. Với gói cấu hình thấp, Quý Khách vẫn có thể <strong>chạy ổn định từ 2-5 website</strong> doanh nghiệp hoặc blog cơ bản."
+      },
+      {
+        "question": "8. Tôi có được cung cấp địa chỉ IP riêng khi thuê VPS không?",
+        "answer": "Có. Mỗi gói VPS tại InterData khi khởi tạo sẽ đi kèm <strong>01 địa chỉ IPv4 công khai (Public IP)</strong> — có thể truy cập trực tiếp từ internet. InterData cam kết đây là các IP \"sạch\", không nằm trong Blacklist, rất an toàn để SEO hoặc làm Email Marketing. Bạn cũng có thể mua thêm IPv4 hoặc IPv6 nếu có nhu cầu."
+      },
+      {
+        "question": "9. Máy chủ ảo (VPS) giá rẻ tại InterData có được hỗ trợ chống tấn công DDoS không?",
+        "answer": "Hệ thống hạ tầng mạng của InterData được trang bị sẵn hệ thống <strong>Firewall ở mức cơ bản 10Gbps</strong> giúp hạn chế và lọc các cuộc tấn công mạng thông thường. Đối với các dự án cần bảo mật cao, chúng tôi khuyến nghị Quý khách nên chủ động trang bị thêm các giải pháp chống DDoS chuyên sâu chuyên nghiệp."
+      },
+      {
+        "question": "10. Tôi nên chọn hệ điều hành Linux nào cho VPS?",
+        "answer": "Ubuntu phù hợp với người mới và có hệ sinh thái tài liệu lớn; Debian ưu tiên sự ổn định; AlmaLinux phù hợp với môi trường quen hệ sinh thái RHEL. Quý khách nên chọn theo yêu cầu của ứng dụng, control panel và phiên bản runtime cần triển khai."
+      },
+      {
+        "question": "11. Sau khi thanh toán, tôi phải chờ bao lâu để nhận được thông tin VPS?",
+        "answer": "Hệ thống của InterData được tự động hóa 100%. Ngay sau khi thanh toán thành công, dịch vụ VPS của Quý khách sẽ được <strong>tự động khởi tạo (Auto-Provisioning)</strong>. Thông tin đăng nhập (IP, User, Password) sẽ được gửi đến Email đăng ký của Quý Khách chỉ trong vòng 1 đến 3 phút."
+      },
+      {
+        "question": "12. Tôi đang dùng Hosting ở nơi khác, InterData có hỗ trợ chuyển dữ liệu (Migration) không?",
+        "answer": "Có. Đội ngũ kỹ thuật của InterData hỗ trợ <strong>chuyển dữ liệu (Website, Database) hoàn toàn miễn phí</strong> và an toàn từ nhà cung cấp cũ về hệ thống VPS của chúng tôi. Quá trình này được thực hiện chuyên nghiệp, đảm bảo không làm gián đoạn (Zero Downtime) hoạt động của website."
+      },
+      {
+        "question": "13. Thuê VPS tại InterData có được cung cấp quyền quản trị cao nhất không?",
+        "answer": "Có. Các gói VPS được cấp <strong>quyền Root</strong>, cho phép Quý khách toàn quyền cài đặt phần mềm và tùy chỉnh cấu hình Linux theo nhu cầu riêng."
+      },
+      {
+        "question": "14. Tôi có thể tự cài lại hệ điều hành (Rebuild OS) cho gói VPS được không?",
+        "answer": "Được. Thông qua trang quản trị (Client Portal) của InterData, Quý khách có thể <strong>chủ động cài lại hệ điều hành Linux</strong> như Ubuntu, CentOS, Debian hoặc AlmaLinux bằng tính năng Rebuild 1-click mà không cần liên hệ kỹ thuật hỗ trợ."
+      },
+      {
+        "question": "15. Các gói VPS tại InterData có hỗ trợ cài đặt Control Panel quản lý không?",
+        "answer": "Có. Hệ thống hỗ trợ <strong>cài đặt tự động đa dạng các Control Panel</strong> phổ biến nhất hiện nay như: cPanel, DirectAdmin, CyberPanel, aaPanel, FastPanel... hoặc các script tối ưu như WPtangtoc. Việc cài đặt hoàn toàn tự động ngay khi khởi tạo VPS."
+      },
+      {
+        "question": "16. Dữ liệu trên VPS có được sao lưu (Backup) tự động không?",
+        "answer": "Để đảm bảo an toàn tuyệt đối cho dữ liệu, InterData khuyến nghị Quý khách chủ động sao lưu dữ liệu thông qua các công cụ trên Control Panel. Bên cạnh đó, InterData cũng thực hiện <strong>Auto-Backup định kỳ</strong> hàng tuần (1 lần/tuần), sao lưu 2 bản gần nhất."
+      },
+      {
+        "question": "17. Khi dự án phát triển, tôi có thể nâng cấp cấu hình VPS đang dùng lên cao hơn không?",
+        "answer": "Hoàn toàn có thể. Việc <strong>nâng cấp (Scale-up) cấu hình</strong> như CPU, RAM, Ổ cứng... được thực hiện rất dễ dàng và nhanh chóng thông qua trang quản trị. Quá trình này không làm mất dữ liệu hiện tại, máy chủ chỉ cần khởi động lại trong 1-2 phút để nhận cấu hình mới."
+      },
+      {
+        "question": "18. Nếu tôi không cần cấu hình cao nữa, tôi có thể hạ cấp (Downgrade) gói VPS không?",
+        "answer": "Về mặt kỹ thuật, việc <strong>hạ cấp RAM và CPU có thể thực hiện được</strong>. Tuy nhiên, việc hạ dung lượng ổ cứng (Disk Space) không khả thi do rủi ro mất mát dữ liệu phân vùng. Do đó, chúng tôi khuyên Quý Khách nên bắt đầu với gói cấu hình phù hợp và nâng cấp (Upgrade) dần khi có nhu cầu."
+      },
+      {
+        "question": "19. Đội ngũ kỹ thuật của InterData hỗ trợ qua các kênh nào?",
+        "answer": "Chúng tôi <strong>hỗ trợ kỹ thuật 24/7/365</strong> kể cả Lễ, Tết thông qua Hệ thống Ticket (Gửi yêu cầu hỗ trợ) trên trang quản lý khách hàng, Livechat trực tuyến, Hotline và Fanpage. Mọi vấn đề liên quan đến hạ tầng máy chủ đều được tiếp nhận và xử lý nhanh chóng."
+      },
+      {
+        "question": "20. Tôi có thể thanh toán dịch vụ thuê VPS qua những hình thức nào?",
+        "answer": "InterData hỗ trợ rất nhiều phương thức thanh toán linh hoạt và an toàn như: <strong>Chuyển khoản ngân hàng (Internet Banking), Thẻ tín dụng/ghi nợ (Visa/Mastercard)</strong>, Ví điện tử (Momo, VNPay...) và thanh toán qua cổng PayPal."
+      }
+    ],
+    "blocks": [
+      {
+        "function": "Component",
+        "tag": "span",
+        "text": "Hỗ trợ trước khi chọn"
+      },
+      {
+        "function": "Component",
+        "tag": "h2",
+        "text": "Câu Hỏi Thường Gặp Trước Khi Thuê VPS"
+      },
+      {
+        "function": "Component",
+        "tag": "p",
+        "text": "Những thông tin cần xác nhận về thanh toán, vận hành, nâng cấp và hỗ trợ kỹ thuật."
+      }
+    ]
+  },
+  "cta": {
+    "blocks": [
+      {
+        "function": "CtaSection",
+        "tag": "span",
+        "text": "Minh họa"
+      },
+      {
+        "function": "CtaSection",
+        "tag": "p",
+        "text": "$ ssh root@your-vps-ip"
+      },
+      {
+        "function": "CtaSection",
+        "tag": "p",
+        "text": "Authenticating with public key..."
+      },
+      {
+        "function": "CtaSection",
+        "tag": "p",
+        "text": "Connected to InterData VPS"
+      },
+      {
+        "function": "CtaSection",
+        "tag": "p",
+        "text": "root@vps:~# uptime"
+      },
+      {
+        "function": "CtaSection",
+        "tag": "p",
+        "text": "up 27 days, 4:18, load average: 0.08, 0.12, 0.09"
+      },
+      {
+        "function": "CtaSection",
+        "tag": "p",
+        "text": "root@vps:~# free -h"
+      },
+      {
+        "function": "CtaSection",
+        "tag": "p",
+        "text": "Mem: 15Gi Used: 3.2Gi Available: 11Gi"
+      },
+      {
+        "function": "CtaSection",
+        "tag": "p",
+        "text": "root@vps:~# df -h /"
+      },
+      {
+        "function": "CtaSection",
+        "tag": "p",
+        "text": "/dev/nvme0n1p1 180G 32G 148G 18%"
+      },
+      {
+        "function": "CtaSection",
+        "tag": "p",
+        "text": "root@vps:~#"
+      },
+      {
+        "function": "CtaSection",
+        "tag": "span",
+        "text": "Bắt đầu với InterData"
+      },
+      {
+        "function": "CtaSection",
+        "tag": "h2",
+        "text": "CHỌN CẤU HÌNH VPS PHÙ HỢP ĐỂ TRIỂN KHAI"
+      },
+      {
+        "function": "CtaSection",
+        "tag": "p",
+        "text": "Cần mua VPS cho website, ứng dụng hoặc tác vụ nội bộ? Xem bảng giá thuê VPS và đối chiếu tài nguyên trước khi đăng ký, hoặc trao đổi trực tiếp với đội ngũ InterData để chọn cấu hình phù hợp."
+      },
+      {
+        "function": "CtaSection",
+        "tag": "a",
+        "text": "Xem bảng giá"
+      },
+      {
+        "function": "CtaSection",
+        "tag": "a",
+        "text": "Chat với tư vấn viên"
+      }
+    ]
+  },
+  "learning": {
+    "resources": [
+      {
+        "icon": "Cpu",
+        "term": "vCPU",
+        "description": "Tài nguyên xử lý được cấp cho VPS. Số vCPU và hiệu năng từng nhân ảnh hưởng trực tiếp đến web server, tác vụ nền và khả năng xử lý đồng thời."
+      },
+      {
+        "icon": "Database",
+        "term": "RAM",
+        "description": "Bộ nhớ dành cho hệ điều hành, ứng dụng và bộ nhớ đệm. Thiếu RAM có thể khiến máy dùng swap, phản hồi chậm hoặc dừng tiến trình."
+      },
+      {
+        "icon": "HardDrive",
+        "term": "SSD NVMe",
+        "description": "Nơi lưu hệ điều hành, mã nguồn và cơ sở dữ liệu. Độ trễ cùng IOPS thường quan trọng hơn dung lượng khi workload đọc ghi liên tục."
+      },
+      {
+        "icon": "Network",
+        "term": "Network Port và bandwidth",
+        "description": "Network Port thể hiện tốc độ kết nối tối đa; bandwidth là lượng dữ liệu truyền tải. Hai khái niệm này cần được kiểm tra riêng."
+      },
+      {
+        "icon": "KeyRound",
+        "term": "Địa chỉ IP và quyền quản trị",
+        "description": "IP giúp VPS giao tiếp qua mạng. Quyền root trên Linux cho phép cài đặt ứng dụng và cấu hình hệ thống theo nhu cầu."
+      },
+      {
+        "icon": "Server",
+        "term": "Hệ điều hành",
+        "description": "Các bản phân phối Linux như Ubuntu, Debian và AlmaLinux phù hợp với nhiều web stack, dịch vụ mã nguồn mở và quy trình tự động hóa."
+      }
+    ],
+    "comparisonRows": [
+      {
+        "criterion": "Mô hình tài nguyên",
+        "hosting": "Nhiều website dùng chung môi trường hosting",
+        "vps": "Máy ảo có tài nguyên được phân bổ riêng",
+        "cloud": "Tài nguyên ảo hóa trên nền tảng cloud",
+        "dedicated": "Toàn bộ máy chủ vật lý dành cho một khách hàng"
+      },
+      {
+        "criterion": "Quyền kiểm soát",
+        "hosting": "Giới hạn theo control panel",
+        "vps": "Có toàn quyền root trên hệ điều hành Linux",
+        "cloud": "Quản trị linh hoạt qua console và API",
+        "dedicated": "Kiểm soát sâu phần mềm và phần cứng thuê"
+      },
+      {
+        "criterion": "Khả năng mở rộng",
+        "hosting": "Theo giới hạn gói hosting",
+        "vps": "Nâng CPU, RAM hoặc dung lượng theo nhà cung cấp",
+        "cloud": "Thường linh hoạt theo tài nguyên và mô hình triển khai",
+        "dedicated": "Nâng cấp có thể cần thay đổi phần cứng"
+      },
+      {
+        "criterion": "Phù hợp khi",
+        "hosting": "Website nhỏ, ít yêu cầu cấu hình",
+        "vps": "Cần tài nguyên riêng và quyền tùy chỉnh",
+        "cloud": "Cần mở rộng linh hoạt hoặc kiến trúc nhiều dịch vụ",
+        "dedicated": "Workload lớn, cần tài nguyên vật lý độc lập"
+      }
+    ],
+    "workloads": [
+      {
+        "title": "Website, WordPress và thương mại điện tử",
+        "text": "Ưu tiên RAM, tốc độ lưu trữ, khả năng backup và tài nguyên dự phòng cho các đợt tăng truy cập. Không nên chọn gói chỉ dựa vào số website."
+      },
+      {
+        "title": "Database và ứng dụng nghiệp vụ",
+        "text": "Quan sát dung lượng dữ liệu, working set trong RAM, số kết nối và tần suất đọc ghi. Cơ sở dữ liệu cần phương án sao lưu tách khỏi VPS."
+      },
+      {
+        "title": "API, Node.js, Python, bot và automation",
+        "text": "Đối chiếu số tiến trình, tác vụ chạy song song, mức sử dụng CPU liên tục và lưu lượng mạng. Môi trường staging nên tách khỏi production khi dự án đủ lớn."
+      },
+      {
+        "title": "Container, worker và tác vụ nền",
+        "text": "Ước lượng RAM cho container, giới hạn tài nguyên từng dịch vụ và tách log khỏi dữ liệu ứng dụng. Chỉ mở cổng truy cập từ nguồn thực sự cần thiết."
+      }
+    ],
+    "operationsChecklist": [
+      "Cập nhật hệ điều hành, web server, runtime và thư viện theo lịch.",
+      "Ưu tiên SSH key; giới hạn đăng nhập root và mật khẩu khi điều kiện cho phép.",
+      "Chỉ mở các cổng cần thiết bằng firewall và phân quyền theo nguyên tắc tối thiểu.",
+      "Bật HTTPS/TLS cho website, API và bảng điều khiển có dữ liệu nhạy cảm.",
+      "Tạo backup định kỳ, kiểm tra khả năng khôi phục và lưu ít nhất một bản ngoài VPS.",
+      "Theo dõi CPU, RAM, swap, dung lượng đĩa, độ trễ, log và tình trạng dịch vụ."
+    ],
+    "blocks": [
+      {
+        "function": "VpsLearningSection",
+        "tag": "span",
+        "text": "Kiến thức nền tảng"
+      },
+      {
+        "function": "VpsLearningSection",
+        "tag": "h2",
+        "text": "Tìm Hiểu Về VPS"
+      },
+      {
+        "function": "VpsLearningSection",
+        "tag": "p",
+        "text": "VPS (Virtual Private Server) là máy chủ ảo có hệ điều hành và tài nguyên được phân bổ riêng trên một máy chủ vật lý. Mô hình này phù hợp khi website hoặc ứng dụng cần nhiều quyền kiểm soát hơn shared hosting nhưng chưa cần thuê toàn bộ máy chủ vật lý."
+      },
+      {
+        "function": "VpsLearningSection",
+        "tag": "h3",
+        "text": "VPS hoạt động như thế nào?"
+      },
+      {
+        "function": "VpsLearningSection",
+        "tag": "p",
+        "text": "Lớp ảo hóa, thường gọi là hypervisor, chia tài nguyên của máy chủ vật lý thành nhiều máy ảo độc lập. Mỗi VPS có vCPU, RAM, ổ lưu trữ, giao diện mạng và hệ điều hành riêng để chạy dịch vụ."
+      },
+      {
+        "function": "VpsLearningSection",
+        "tag": "p",
+        "text": "Sự tách biệt giúp một VPS có môi trường quản trị riêng, nhưng không thay thế các biện pháp bảo mật và sao lưu. Người vận hành vẫn cần cập nhật phần mềm, kiểm soát truy cập và theo dõi tài nguyên trong suốt vòng đời dịch vụ."
+      },
+      {
+        "function": "VpsLearningSection",
+        "tag": "h3",
+        "text": "VPS khác gì Shared Hosting, Cloud Server và Dedicated Server?"
+      },
+      {
+        "function": "VpsLearningSection",
+        "tag": "p",
+        "text": "Không có mô hình nào tốt nhất cho mọi dự án. Sự khác biệt nằm ở cách cấp tài nguyên, quyền quản trị, khả năng mở rộng và mức độ vận hành mà người dùng phải đảm nhiệm."
+      },
+      {
+        "function": "VpsLearningSection",
+        "tag": "h3",
+        "text": "Chọn cấu hình VPS theo workload"
+      },
+      {
+        "function": "VpsLearningSection",
+        "tag": "p",
+        "text": "Hãy bắt đầu từ ứng dụng thực tế, dữ liệu và mức tải dự kiến thay vì chỉ so sánh số CPU hoặc RAM giữa các gói."
+      },
+      {
+        "function": "VpsLearningSection",
+        "tag": "h3",
+        "text": "Checklist vận hành VPS an toàn"
+      },
+      {
+        "function": "VpsLearningSection",
+        "tag": "h3",
+        "text": "Khi nào nên nâng cấp VPS?"
+      },
+      {
+        "function": "VpsLearningSection",
+        "tag": "p",
+        "text": "Nên xem xét nâng cấp khi CPU thường xuyên ở mức cao, RAM thiếu dẫn đến swap hoặc OOM, dung lượng đĩa gần đầy, I/O tăng đột biến hay thời gian phản hồi xấu đi trong cùng một workload. Hãy đo nhiều thời điểm và kiểm tra log trước khi kết luận nguyên nhân là thiếu tài nguyên."
+      }
+    ]
+  },
+  "pricing": {
+    "services": [
+      {
+        "gid": 67,
+        "label": "VPS AMD",
+        "href": "https://interdata.vn/vps-amd/"
+      },
+      {
+        "gid": 29,
+        "label": "VPS PLATINUM",
+        "href": "https://interdata.vn/platinum/"
+      },
+      {
+        "gid": 101,
+        "label": "VPS PLATINUM - VIETTEL",
+        "href": "https://support.interdata.vn/index.php?rp=/store/vps-platinum-viettel-hcm"
+      },
+      {
+        "gid": 20,
+        "label": "VPS GOLD",
+        "href": "https://interdata.vn/vps-gold-enterprise-1gbps"
+      },
+      {
+        "gid": 3,
+        "label": "VPS LINUX",
+        "href": "https://interdata.vn/vps-linux"
+      }
+    ],
+    "defaultGid": 3,
+    "blocks": [
+      {
+        "function": "PricingSection",
+        "tag": "h2",
+        "text": "Bảng Giá Thuê VPS 2026"
+      },
+      {
+        "function": "PricingSection",
+        "tag": "p",
+        "text": "Chọn dòng VPS theo hệ điều hành, loại CPU và lưu lượng. Giá được lấy trực tiếp từ hệ thống để bạn kiểm tra cấu hình trước khi đăng ký."
+      }
+    ]
+  },
+  "hotDeals": {
+    "originalPrices": {
+      "INTER PLATINUM 1": {
+        "annually": 3093600,
+        "biennially": 5896800,
+        "triennially": 8409600
+      },
+      "INTER PLATINUM 2": {
+        "annually": 7908000,
+        "biennially": 15144000,
+        "triennially": 21708000
+      },
+      "INTER PLATINUM 3": {
+        "annually": 15132000,
+        "biennially": 28776000,
+        "triennially": 40932000
+      }
+    },
+    "cycles": [
+      {
+        "key": "annually",
+        "label": "1 năm",
+        "years": 1
+      },
+      {
+        "key": "biennially",
+        "label": "2 năm",
+        "years": 2
+      },
+      {
+        "key": "triennially",
+        "label": "3 năm",
+        "years": 3
+      }
+    ],
+    "blocks": [
+      {
+        "function": "HotDealsClient",
+        "tag": "span",
+        "text": "Hot Deals 2026"
+      },
+      {
+        "function": "HotDealsClient",
+        "tag": "h2",
+        "text": "Hot Deals VPS Platinum 2026"
+      },
+      {
+        "function": "HotDealsClient",
+        "tag": "p",
+        "text": "Gói VPS hiệu năng cao dành cho developer và doanh nghiệp. Giá và cấu hình được cập nhật trực tiếp từ hệ thống InterData."
+      },
+      {
+        "function": "HotDealsClient",
+        "tag": "span",
+        "text": "Phổ biến"
+      },
+      {
+        "function": "HotDealsClient",
+        "tag": "span",
+        "text": "Gia hạn không đổi giá"
+      }
+    ]
+  }
+}

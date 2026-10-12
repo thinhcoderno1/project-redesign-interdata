@@ -7,6 +7,21 @@ const config: NextConfig = {
     return [
       { source: "/about-us/", destination: "/gioi-thieu/", permanent: true },
       { source: "/contact/", destination: "/lien-he/", permanent: true },
+      {
+        source: "/privacy-policy/",
+        destination: "/chinh-sach-bao-mat/",
+        permanent: true,
+      },
+      {
+        source: "/terms-and-condition/",
+        destination: "/dieu-khoan-su-dung-dich-vu/",
+        permanent: true,
+      },
+      {
+        source: "/service-level-agreement/",
+        destination: "/cam-ket-chat-luong-dich-vu/",
+        permanent: true,
+      },
     ];
   },
   images: {

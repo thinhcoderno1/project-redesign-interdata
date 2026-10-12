@@ -5,13 +5,12 @@ import { Consultation } from "@/components/home/consultation";
 import { ConsultationCta } from "@/components/home/consultation-cta";
 import { Icon } from "@/components/ui/icon";
 import { WorldMap } from "@/components/home/world-map";
-import { TestimonialCarousel } from "@/components/home/testimonial-carousel";
+import { CustomerProof } from "@/components/shared/customer-proof";
 import { ParallaxBackground } from "@/components/ui/parallax-background";
 import { HeroHeading } from "@/components/home/hero-heading";
 import { InfrastructureServices } from "@/components/home/infrastructure-services";
 import solutionStyles from "@/components/home/solutions.module.css";
 import { SolutionsCarousel } from "@/components/home/solutions-carousel";
-import { PressCarousel } from "@/components/home/press-carousel";
 import { TechnologyPartners } from "@/components/home/technology-partners";
 import { PromotionCarousel } from "@/components/home/promotion-carousel";
 import { KnowledgeResources } from "@/components/home/knowledge-resources";
@@ -20,41 +19,10 @@ import {
   infrastructure,
   links,
   partners,
-  press,
   reviewMode,
   showEditorialNotes,
-  testimonials,
 } from "@/data/content";
 
-function SectionHeading({
-  eyebrow,
-  title,
-  description,
-  href,
-  linkText,
-}: {
-  eyebrow?: string;
-  title: string;
-  description?: string;
-  href?: string;
-  linkText?: string;
-}) {
-  return (
-    <div className="section-heading">
-      <div>
-        {eyebrow && <span className="eyebrow">{eyebrow}</span>}
-        <h2>{title}</h2>
-        {description && <p>{description}</p>}
-      </div>
-      {href && (
-        <a className="text-link" href={href}>
-          {linkText}
-          <Icon name="arrow" />
-        </a>
-      )}
-    </div>
-  );
-}
 function ClaimNote() {
   return reviewMode && showEditorialNotes ? (
     <p className="review-note">
@@ -186,26 +154,7 @@ export function HomePage() {
             <ClaimNote />
           </div>
         </section>
-        <section id="khach-hang" className="feedback section">
-          <div className="container">
-            <SectionHeading
-              eyebrow="GÓC NHÌN TỪ KHÁCH HÀNG"
-              title="Câu Chuyện Thành Công Cùng InterData"
-              description="Những chia sẻ về trải nghiệm sử dụng dịch vụ và làm việc với đội ngũ hỗ trợ."
-            />
-            <TestimonialCarousel items={testimonials} />
-          </div>
-        </section>
-        <section id="bao-chi" className="press section">
-          <div className="container">
-            <SectionHeading
-              eyebrow="INTERDATA TRÊN BÁO CHÍ"
-              title="Báo Chí Nói Gì Về InterData?"
-              description="Các bài viết về hoạt động, công nghệ và hợp tác của InterData. Nội dung do từng cơ quan báo chí xuất bản."
-            />
-            <PressCarousel items={press} />
-          </div>
-        </section>
+        <CustomerProof />
         <section id="doi-tac" className="education section">
           <div className="container">
             <div className="education-heading">

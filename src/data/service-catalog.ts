@@ -21,7 +21,7 @@ export const vpsCatalog: CatalogService[] = [
     icon: "cpu",
     description:
       "Máy chủ ảo trên nền tảng AMD EPYC để vận hành website, ứng dụng và môi trường riêng.",
-    href: "https://interdata.vn/vps-amd/",
+    href: "/vps-amd/",
     price: 150000,
     period: "tháng",
     priceNote: "VPS AMD · Plan 1",
