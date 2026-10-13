@@ -105,17 +105,47 @@ try {
   const local = await localResponse.json();
   expect(local.products).toEqual(normalized);
   const allButton = page.getByRole("button", {
-    name: /Xem tất cả.*gói VPS AMD/,
+    name: "Xem tất cả các gói VPS AMD",
+    exact: true,
   });
+  await expect(page.locator("[id^='amd-filter-']")).toHaveCount(0);
+  await expect(
+    page.locator("#bang-gia").getByText("AMD EPYC / NVMe", { exact: true }),
+  ).toHaveCount(0);
+  await expect(page.locator("#bang-gia [class*='billingNote']")).toHaveCount(0);
+  const popular = normalized.find((product) => product.slug === "plan-3");
+  assert(popular);
+  const popularCard = page.locator("[data-popular='true']");
+  await expect(popularCard).toHaveCount(1);
+  await expect(popularCard).toHaveAttribute("data-pid", String(popular.pid));
+  await expect(
+    popularCard.getByText("Phổ biến", { exact: true }),
+  ).toBeVisible();
+  await expect(popularCard.locator(".lucide-crown")).toHaveCount(1);
+  const benefits = page.getByRole("list", { name: "Tiện ích VPS AMD" });
+  await expect(benefits.locator("h3")).toHaveText([
+    "Hỗ trợ 24/7",
+    "Triển khai nhanh",
+    "Bảo mật toàn diện",
+    "Dễ dàng nâng cấp",
+  ]);
+  await expect(benefits.locator("p")).toHaveText([
+    "Luôn sẵn sàng hỗ trợ bạn",
+    "Kích hoạt chỉ trong vài phút",
+    "Chống DDoS, Backup định kỳ",
+    "Linh hoạt theo nhu cầu sử dụng",
+  ]);
   await expect(page.locator("[data-pid]")).toHaveCount(
     Math.min(4, normalized.length),
   );
   await allButton.click();
   await expect(page.locator("[data-pid]")).toHaveCount(normalized.length);
   for (const cycle of cycles) {
-    await page
-      .getByLabel("Chu kỳ thanh toán", { exact: true })
-      .selectOption(cycle);
+    await page.locator(`#amd-cycle-${cycle}`).click();
+    await expect(page.locator(`#amd-cycle-${cycle}`)).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
     for (const product of normalized) {
       const card = page.locator(`[data-pid="${product.pid}"]`);
       await expect(card.locator("h3")).toHaveText(product.name);
@@ -137,65 +167,44 @@ try {
       );
     }
   }
-  await page
-    .getByLabel("Chu kỳ thanh toán", { exact: true })
-    .selectOption("monthly");
+  await page.locator("#amd-cycle-monthly").click();
   await page.getByRole("button", { name: "Thu gọn bảng giá" }).click();
-  for (const [name, minimum, maximum] of [
-    ["1–2 vCPU", 1, 2],
-    ["3–8 vCPU", 3, 8],
-    ["Từ 10 vCPU", 10, Infinity],
-  ]) {
-    await page.getByRole("tab", { name, exact: true }).click();
-    await expect(page.getByRole("tab", { name, exact: true })).toHaveAttribute(
-      "aria-selected",
-      "true",
-    );
-    const expected = normalized.filter((product) => {
-      const cores = Number(product.description.match(/(\d+)\s*vCPU/i)?.[1]);
-      return cores >= minimum && cores <= maximum;
-    });
-    await expect(page.locator("[data-pid]")).toHaveCount(
-      Math.min(4, expected.length),
-    );
-    expect(
-      await page
-        .locator("[data-pid]")
-        .evaluateAll((nodes) => nodes.map((node) => Number(node.dataset.pid))),
-    ).toEqual(expected.slice(0, 4).map((product) => product.pid));
-    if (expected.length > 4) {
-      await page
-        .getByRole("button", { name: /Xem tất cả.*gói VPS AMD/ })
-        .click();
-      await expect(page.locator("[data-pid]")).toHaveCount(expected.length);
-    }
-  }
-  const firstTab = page.getByRole("tab", {
-    name: "Tất cả cấu hình",
-    exact: true,
-  });
-  await firstTab.click();
-  await firstTab.focus();
-  await page.keyboard.press("End");
+  const monthlyTab = page.locator("#amd-cycle-monthly");
+  const quarterlyTab = page.locator("#amd-cycle-quarterly");
+  const lastCycleTab = page.locator("#amd-cycle-triennially");
   await expect(
-    page.getByRole("tab", { name: "Từ 10 vCPU", exact: true }),
-  ).toBeFocused();
-  await page.keyboard.press("Home");
-  await expect(firstTab).toBeFocused();
+    page
+      .getByRole("tablist", { name: "Chu kỳ thanh toán", exact: true })
+      .getByRole("tab"),
+  ).toHaveCount(6);
+  await monthlyTab.focus();
   await page.keyboard.press("ArrowRight");
-  await expect(
-    page.getByRole("tab", { name: "1–2 vCPU", exact: true }),
-  ).toBeFocused();
+  await expect(quarterlyTab).toBeFocused();
+  await expect(quarterlyTab).toHaveAttribute("aria-selected", "true");
+  await page.keyboard.press("End");
+  await expect(lastCycleTab).toBeFocused();
+  await expect(lastCycleTab).toHaveAttribute("aria-selected", "true");
+  await page.keyboard.press("ArrowRight");
+  await expect(monthlyTab).toBeFocused();
   await page.keyboard.press("ArrowLeft");
-  await expect(firstTab).toHaveAttribute("aria-selected", "true");
-  await page.getByLabel("Chu kỳ thanh toán", { exact: true }).focus();
-  await page.keyboard.press("ArrowDown");
-  await expect(
-    page.getByLabel("Chu kỳ thanh toán", { exact: true }),
-  ).toHaveValue("quarterly");
-  await page
-    .getByLabel("Chu kỳ thanh toán", { exact: true })
-    .selectOption("monthly");
+  await expect(lastCycleTab).toBeFocused();
+  await page.keyboard.press("Home");
+  await expect(monthlyTab).toBeFocused();
+  await expect(monthlyTab).toHaveAttribute("aria-selected", "true");
+  await expect(monthlyTab).toHaveAttribute("tabindex", "0");
+  await expect(quarterlyTab).toHaveAttribute("tabindex", "-1");
+
+  // Billing changes preserve expansion and the full API order.
+  await allButton.click();
+  await quarterlyTab.click();
+  await expect(page.locator("[data-pid]")).toHaveCount(normalized.length);
+  expect(
+    await page
+      .locator("[data-pid]")
+      .evaluateAll((nodes) => nodes.map((node) => Number(node.dataset.pid))),
+  ).toEqual(normalized.map((product) => product.pid));
+  await monthlyTab.click();
+  await page.locator("#bang-gia button[aria-expanded]").click();
   const faq = page.locator("#cau-hoi details").first();
   await faq.locator("summary").focus();
   await page.keyboard.press("Enter");
@@ -234,15 +243,36 @@ try {
   }
   for (const width of [320, 390, 768, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 1000 });
+    const billing = page.getByRole("tablist", {
+      name: "Chu kỳ thanh toán",
+      exact: true,
+    });
+    await expect(billing.getByRole("tab")).toHaveCount(6);
+    for (const tab of await billing.getByRole("tab").all()) {
+      const bounds = await tab.boundingBox();
+      expect(bounds.x).toBeGreaterThanOrEqual(0);
+      expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
+      expect(bounds.height).toBeGreaterThanOrEqual(44);
+    }
+    const cards = await page.locator("[data-pid]").evaluateAll((nodes) =>
+      nodes.map((node) => ({
+        top: node.getBoundingClientRect().top,
+        buttonBottom: node.querySelector("a").getBoundingClientRect().bottom,
+      })),
+    );
+    if (width >= 1200) {
+      expect(new Set(cards.map((card) => card.top)).size).toBe(1);
+      expect(
+        Math.max(...cards.map((card) => card.buttonBottom)) -
+          Math.min(...cards.map((card) => card.buttonBottom)),
+      ).toBeLessThan(1);
+    }
     const heroLayout = await page.evaluate(() => {
       const hero = document
         .querySelector(".hero-shell")
         .getBoundingClientRect();
-      const lists = document.querySelectorAll(".hero-shell ul");
-      const ticks = lists[lists.length - 1].getBoundingClientRect();
-      const price = document
-        .querySelector(".hero-content strong")
-        .closest("p")
+      const copy = document
+        .querySelector(".hero-content")
         .getBoundingClientRect();
       const pricingTitle = document
         .querySelector("#amd-pricing-title")
@@ -251,13 +281,16 @@ try {
         x: hero.x,
         width: hero.width,
         viewport: innerWidth,
-        priceGap: ticks.top - price.bottom,
+        copyInsideHero: copy.top >= hero.top && copy.bottom <= hero.bottom,
         pricingGap: pricingTitle.top - hero.bottom,
       };
     });
     expect(heroLayout.x).toBe(0);
     expect(heroLayout.width).toBe(heroLayout.viewport);
-    expect(heroLayout.priceGap).toBeGreaterThan(20);
+    expect(heroLayout.copyInsideHero).toBe(true);
+    await expect(page.locator(".hero-shell ul")).toHaveCount(0);
+    await expect(page.locator(".hero-content strong")).toHaveCount(0);
+    await expect(page.locator(".hero-content .button")).toHaveCount(2);
     expect(heroLayout.pricingGap).toBeGreaterThan(20);
     await page.evaluate(async () => {
       await document.fonts.ready;
@@ -320,16 +353,25 @@ try {
   });
   const motionPage = await motion.newPage();
   await motionPage.goto(`${base}/vps-amd/`, { waitUntil: "networkidle" });
+  const moreLabel = motionPage.locator(
+    "#bang-gia button[aria-expanded] > span",
+  );
+  await expect(moreLabel).toHaveCSS("animation-iteration-count", "infinite");
+  const motionAnimation = await moreLabel.evaluate(
+    (node) => node.getAnimations().length > 0,
+  );
+  expect(motionAnimation).toBe(true);
   await expect(motionPage.locator(".hero-background")).toHaveAttribute(
     "data-parallax-active",
     "true",
   );
   await motionPage.emulateMedia({ reducedMotion: "reduce" });
+  await expect(moreLabel).toHaveCSS("animation-name", "none");
   await expect(motionPage.locator(".hero-background")).not.toHaveAttribute(
     "data-parallax-active",
   );
   await motionPage
-    .getByRole("link", { name: "Xem bảng giá VPS AMD", exact: true })
+    .getByRole("link", { name: "Dùng thử miễn phí", exact: true })
     .click();
   await expect(motionPage).toHaveURL(`${base}/vps-amd/#bang-gia`);
   await expect(motionPage.locator("#amd-pricing-title")).toBeInViewport();
@@ -399,7 +441,7 @@ try {
         passed: true,
         products: normalized.length,
         billingCycles: 6,
-        vcpuFilters: true,
+        vcpuFilterRemoved: true,
         liveApi: true,
         sharedProof: true,
         noJavaScript: true,
@@ -415,7 +457,7 @@ try {
       passed: true,
       products: normalized.length,
       cycles: 6,
-      vcpuFilters: true,
+      vcpuFilterRemoved: true,
       viewports: 6,
       sharedProof: true,
       retryRecovery: true,

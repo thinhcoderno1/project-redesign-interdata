@@ -2,6 +2,8 @@
 import Link from "next/link";
 import {
   ArrowRight,
+  ArrowUpRight,
+  Bot,
   Check,
   Code2,
   Cpu,
@@ -11,8 +13,7 @@ import {
   Headphones,
   KeyRound,
   Network,
-  Server,
-  Workflow,
+  Video,
   type LucideIcon,
 } from "lucide-react";
 import { CustomerProof } from "@/components/shared/customer-proof";
@@ -20,77 +21,62 @@ import { ParallaxBackground } from "@/components/ui/parallax-background";
 import { amdFaq } from "@/data/vps-amd";
 import { links } from "@/data/content";
 import vpsContent from "@/data/vps-content.json";
-import { formatVnd, type VpsProduct } from "@/data/vps-pricing";
+import type { VpsProduct } from "@/data/vps-pricing";
 import { AmdPricing } from "./amd-pricing";
 import styles from "./amd.module.css";
 
-const serviceFeatures: { icon: LucideIcon; title: string; text: string }[] = [
-  { icon: Cpu, title: "CPU AMD EPYC", text: "Nền tảng dành cho máy chủ" },
-  {
-    icon: HardDrive,
-    title: "SSD NVMe Gen 4",
-    text: "Lưu trữ theo cấu hình gói",
-  },
-  {
-    icon: Network,
-    title: "Kết nối theo nhu cầu",
-    text: "Cổng mạng và băng thông rõ ràng",
-  },
-  {
-    icon: KeyRound,
-    title: "Toàn quyền root",
-    text: "Chủ động cài đặt phần mềm",
-  },
-  {
-    icon: Headphones,
-    title: "Hỗ trợ qua ticket",
-    text: "Theo dõi yêu cầu trên cổng khách hàng",
-  },
-];
 const applications: {
   icon: LucideIcon;
   title: string;
   text: string;
   image: string;
+  tone: string;
 }[] = [
   {
     icon: Globe2,
-    title: "Website & App",
-    text: "Môi trường riêng cho WordPress, cửa hàng trực tuyến và ứng dụng web của bạn.",
-    image: "/images/solutions/giai-phap-private-cloud.jpg",
+    title: "Website & Landing Page",
+    text: "Triển khai website, WordPress và landing page bán hàng. Chọn cấu hình theo lượng truy cập thực tế.",
+    image: "/images/vps-amd/usecase-website-v4.webp",
+    tone: "blue",
   },
   {
     icon: Code2,
-    title: "Lập trình & DevOps",
+    title: "Lập trình & Phát triển",
     text: "Triển khai API, container hoặc staging; chủ động cấu hình runtime và dịch vụ.",
-    image: "/images/solutions/giai-phap-kubernetes.jpg",
+    image: "/images/vps-amd/usecase-development-v4.webp",
+    tone: "green",
+  },
+  {
+    icon: Video,
+    title: "Streaming & Media",
+    text: "Chạy dịch vụ media và phân phối nội dung. Đối chiếu băng thông, lưu trữ và mức tải trước khi triển khai.",
+    image: "/images/vps-amd/usecase-media-v4.webp",
+    tone: "red",
   },
   {
     icon: Database,
-    title: "Cơ sở dữ liệu",
-    text: "Chọn RAM và lưu trữ theo dữ liệu, mức truy vấn và nhu cầu sao lưu.",
-    image: "/images/solutions/giai-phap-s3-storage.jpg",
+    title: "Ứng dụng & Cơ sở dữ liệu",
+    text: "Vận hành CRM, ERP, API và database. Chọn RAM, vCPU và lưu trữ theo dữ liệu và mức truy vấn.",
+    image: "/images/vps-amd/usecase-database-v4.webp",
+    tone: "purple",
   },
   {
-    icon: Workflow,
-    title: "Tác vụ tự động",
-    text: "Chạy workflow và tác vụ nền với tài nguyên phù hợp số tiến trình đồng thời.",
-    image: "/images/solutions/giai-phap-proxmox-ceph.jpg",
+    icon: Bot,
+    title: "AI Agent",
+    text: "Chạy AI Agent, workflow và tác vụ nền; kết nối mô hình qua API, quản lý công cụ và lịch thực thi.",
+    image: "/images/vps-amd/usecase-agent-v4.webp",
+    tone: "amber",
   },
   {
-    icon: Server,
-    title: "Hệ thống nội bộ",
-    text: "Tổ chức môi trường cho CRM, ERP và phần mềm doanh nghiệp theo yêu cầu triển khai.",
-    image: "/images/solutions/giai-phap-vmware.jpg",
+    icon: HardDrive,
+    title: "Lưu trữ & Sao lưu dữ liệu",
+    text: "Tổ chức kho dữ liệu và tác vụ backup. Lập lịch sao lưu, theo dõi dung lượng và kiểm tra khôi phục.",
+    image: "/images/vps-amd/usecase-backup-v4.webp",
+    tone: "cyan",
   },
 ];
 
 export function AmdPage({ products }: { products: VpsProduct[] | null }) {
-  const monthly =
-    products
-      ?.map((p) => Number(p.pricing.VND.monthly))
-      .filter((p) => Number.isFinite(p) && p > 0) || [];
-  const startingPrice = monthly.length ? Math.min(...monthly) : null;
   const schema = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -119,7 +105,7 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
           className={`hero-background ${styles.heroBackground}`}
         >
           <Image
-            src="/images/solutions/datacenter-aisle.webp"
+            src="/images/vps-amd/hero-enterprise-epyc-v3.webp"
             alt=""
             fill
             loading="eager"
@@ -156,9 +142,14 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
                 VPS.
               </p>
               <div className={styles.actions}>
-                <a href="#bang-gia" className="button primary">
-                  Xem bảng giá VPS AMD{" "}
-                  <ArrowRight size={18} aria-hidden="true" />
+                <a
+                  href="#bang-gia"
+                  className={`button ${styles.heroTrialButton}`}
+                >
+                  <span className={styles.heroTrialIcon} aria-hidden="true">
+                    <ArrowUpRight size={20} strokeWidth={1.8} />
+                  </span>
+                  <span>Dùng thử miễn phí</span>
                 </a>
                 <Link
                   href={links.contact}
@@ -167,50 +158,16 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
                   Tư vấn cấu hình
                 </Link>
               </div>
-              {startingPrice !== null && (
-                <p className={styles.startingPrice}>
-                  Từ <strong>{formatVnd(startingPrice)}</strong> / tháng{" "}
-                  <span>· Cấu hình theo từng gói</span>
-                </p>
-              )}
             </div>
-            <div className={styles.heroArtwork}>
-              <div className={styles.chipGlow} aria-hidden="true" />
+            <div className={styles.heroScene} aria-hidden="true">
               <Image
-                src="/images/vps-amd/epyc-chip.webp"
-                alt="Minh họa bộ xử lý AMD EPYC"
-                width={1920}
-                height={1491}
-                loading="eager"
-                sizes="(max-width: 639px) 80vw, (max-width: 1023px) 46vw, 450px"
-                className={styles.heroChip}
+                src="/images/vps-amd/hero-enterprise-epyc-v3.webp"
+                alt=""
+                fill
+                sizes="(max-width: 639px) 100vw, 1px"
               />
             </div>
-            <ul className={styles.heroFeatureList}>
-              {serviceFeatures.map(({ icon: Icon, title, text }) => (
-                <li key={title}>
-                  <Icon size={24} aria-hidden="true" />
-                  <div>
-                    <strong>{title}</strong>
-                    <span>{text}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
           </div>
-          <ul className={styles.heroTicks}>
-            {[
-              "Tài nguyên theo từng gói",
-              "Quyền quản trị riêng",
-              "Lựa chọn chu kỳ thanh toán",
-              "Hỗ trợ qua cổng khách hàng",
-            ].map((text) => (
-              <li key={text}>
-                <Check size={15} aria-hidden="true" />
-                <span>{text}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
       <div className={styles.factStrip} aria-label="Nền tảng dịch vụ VPS AMD">
@@ -241,13 +198,14 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
         className={`${styles.performance} dark`}
         aria-labelledby="amd-hardware-title"
       >
-        <Image
-          src="/images/solutions/datacenter-aisle.webp"
-          alt=""
-          fill
-          sizes="100vw"
-          className={styles.backgroundPhoto}
-        />
+        <div className={styles.performanceArtwork} aria-hidden="true">
+          <Image
+            src="/images/vps-amd/platform-epyc-7003-amd.webp"
+            alt=""
+            fill
+            sizes="(max-width: 959px) 1px, 60vw"
+          />
+        </div>
         <div className={styles.performanceOverlay} />
         <div className={`container ${styles.performanceGrid}`}>
           <div className={styles.performanceCopy}>
@@ -290,13 +248,12 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
               Thông số từ AMD <ArrowRight size={17} aria-hidden="true" />
             </a>
           </div>
-          <div className={styles.performanceArtwork}>
+          <div className={styles.performanceScene} aria-hidden="true">
             <Image
-              src="/images/vps-amd/epyc-chip.webp"
-              alt="Minh họa CPU AMD EPYC trên nền tảng máy chủ"
-              width={1920}
-              height={1491}
-              sizes="(max-width: 959px) 70vw, 440px"
+              src="/images/vps-amd/platform-epyc-7003-amd.webp"
+              alt=""
+              fill
+              sizes="(max-width: 959px) 100vw, 1px"
             />
           </div>
           <div className={styles.performanceFeatures}>
@@ -336,40 +293,78 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
 
       <section
         id="ung-dung"
-        className={styles.section}
+        className={`${styles.section} ${styles.applicationsSection}`}
         aria-labelledby="amd-uses-title"
       >
         <div className="container">
-          <div className={styles.sectionHeading}>
+          <div
+            className={`${styles.sectionHeading} ${styles.applicationHeading}`}
+          >
             <span className={styles.lightEyebrow}>
               PHÙ HỢP VỚI NHIỀU NHU CẦU
             </span>
-            <h2 id="amd-uses-title">VPS AMD cho dự án của bạn</h2>
+            <h2 id="amd-uses-title">
+              <span>VPS AMD</span> phù hợp cho mọi nhu cầu
+            </h2>
             <p>
-              Từ website đến hệ thống nội bộ. Chọn tài nguyên theo ứng dụng, dữ
-              liệu và mức tải thực tế.
+              Từ website, ứng dụng đến AI Agent. Chọn môi trường triển khai và
+              tài nguyên phù hợp với dự án của bạn.
             </p>
           </div>
           <div className={styles.applicationGrid}>
-            {applications.map(({ icon: Icon, title, text, image }) => (
-              <article className={styles.applicationCard} key={title}>
-                <div className={styles.applicationImage}>
-                  <Image
-                    src={image}
-                    alt={`Minh họa ${title}`}
-                    fill
-                    sizes="(max-width: 639px) 90vw, (max-width: 959px) 44vw, 240px"
-                  />
-                </div>
-                <div className={styles.applicationBody}>
-                  <span className={styles.applicationIcon}>
-                    <Icon size={22} aria-hidden="true" />
-                  </span>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
-                </div>
-              </article>
-            ))}
+            <div className={styles.applicationCenter} aria-hidden="true">
+              <svg
+                className={styles.applicationConnections}
+                viewBox="0 0 280 660"
+                preserveAspectRatio="none"
+              >
+                <path d="M0 110 H28 Q44 110 44 126 V270 Q44 330 140 330 M0 330 H140 M0 550 H28 Q44 550 44 534 V390 Q44 330 140 330 M280 110 H252 Q236 110 236 126 V270 Q236 330 140 330 M280 330 H140 M280 550 H252 Q236 550 236 534 V390 Q236 330 140 330" />
+              </svg>
+              <div className={styles.applicationCenterImage}>
+                <Image
+                  src="/images/vps-amd/usecase-amd-center-v5.webp"
+                  alt=""
+                  fill
+                  sizes="(max-width: 639px) 260px, (max-width: 1199px) 300px, 480px"
+                />
+              </div>
+            </div>
+            {applications.map(
+              ({ icon: Icon, title, text, image, tone }, index) => (
+                <article
+                  className={styles.applicationCard}
+                  key={title}
+                  data-side={index < 3 ? "left" : "right"}
+                  data-row={(index % 3) + 1}
+                  data-tone={tone}
+                >
+                  <div className={styles.applicationImage}>
+                    <Image
+                      src={image}
+                      alt={`Minh họa ${title}`}
+                      fill
+                      sizes="(max-width: 639px) 120px, (max-width: 959px) 150px, 110px"
+                    />
+                  </div>
+                  <div className={styles.applicationBody}>
+                    <div className={styles.applicationTitle}>
+                      <span className={styles.applicationIcon}>
+                        <Icon size={24} aria-hidden="true" />
+                      </span>
+                      <h3>{title}</h3>
+                    </div>
+                    <p>{text}</p>
+                    <a
+                      href="#bang-gia"
+                      className={styles.applicationArrow}
+                      aria-label={`Xem bảng giá VPS AMD cho ${title}`}
+                    >
+                      <ArrowRight size={18} aria-hidden="true" />
+                    </a>
+                  </div>
+                </article>
+              ),
+            )}
           </div>
           <p className={styles.applicationNote}>
             Cần GPU, phần mềm đặc thù hoặc tài nguyên vật lý riêng?{" "}
@@ -437,7 +432,7 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
         aria-labelledby="amd-infrastructure-title"
       >
         <Image
-          src="/images/viettel-idc.jpg"
+          src="/images/vps-amd/infrastructure-datacenter-v2.webp"
           alt=""
           fill
           sizes="100vw"
@@ -548,7 +543,7 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
         aria-labelledby="amd-cta-title"
       >
         <Image
-          src="/images/solutions/datacenter-aisle.webp"
+          src="/images/vps-amd/cta-server-aisle-v2.webp"
           alt=""
           fill
           sizes="100vw"

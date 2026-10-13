@@ -1,0 +1,60 @@
+{
+  "created": "2026-10-13",
+  "purpose": "New VPS AMD illustrations inspired by the user reference. Not photographs of actual InterData infrastructure.",
+  "assets": [
+    {
+      "name": "hero-server-epyc-v2",
+      "prompt": "Use case: ads-marketing. Create a brand new ultra-wide website hero background, landscape 3:1, for InterData VPS AMD matching the user's supplied screenshot. Premium cinematic photorealistic 3D scene of a deep navy server-room aisle, black server racks and electric cyan blue LED lights. A large silver AMD EPYC processor is physically integrated into a luminous motherboard pedestal at about 66% across the frame, realistic perspective, tilted upright slightly back, circuit traces connecting to servers. Exact black text on chip: \"AMD EPYC\". Left 43% has dark uncluttered server racks with very low contrast, suitable for white HTML headline overlay. Rightmost 18% remains darker suitable for feature cards. Sharp detailed hardware, restrained glowing cyan highlights, glossy metallic surfaces, same visual atmosphere as the reference hero. The chip and server environment are ONE seamless image with coherent lighting, reflections and perspective. No website layout, no buttons, no headings, no text other than chip label, no watermarks. Background fills edge to edge, opaque.",
+      "tool": "image_gen",
+      "destination": "public/images/vps-amd/hero-server-epyc-v2.webp"
+    },
+    {
+      "name": "performance-epyc-board-v3",
+      "prompt": "Use case: ads-marketing. Create a new ultra-wide landscape 3:1 photorealistic 3D website background for the CPU AMD EPYC section of a VPS AMD landing page, resembling the CPU banner of user-provided website reference. Composition is critical: the ENTIRE silver AMD EPYC chip and its socket must fit between 47% and 72% of image width, chip center at 60%, chip width about 21% of full image, never larger. It must be completely readable unobstructed. Oblique top-down cinematic view of an intricate black motherboard with electric blue circuit traces and heatsinks. Exact black label on the chip \"AMD EPYC\". Chip physically integrated into board as ONE scene. Left 40% nearly black navy negative space for white website copy, rightmost 25% dark low contrast board suitable for HTML features overlay. No prominent hardware in the rightmost 25%. Attractive glowing blue circuitry in center, sharp refined metal, navy and cobalt, no purple. Wide environmental composition, NOT a zoomed close-up. No website layout, no buttons, no additional words, no watermark. Opaque edge-to-edge backdrop.",
+      "tool": "image_gen",
+      "destination": "public/images/vps-amd/performance-epyc-board-v3.webp"
+    },
+    {
+      "name": "infrastructure-datacenter-v2",
+      "prompt": "Use case: ads-marketing. Create a new ultra-wide 3:1 landscape website background inspired by user screenshot Data Center section. Premium photorealistic modern data center interior, a clean glass-fronted facility in center-right, black server racks on right, architectural ceiling panels receding in perspective, restrained electric cyan LED light strips, glossy dark floor reflections, dark navy color grade. Left 42% deep navy darkness with only subtle facility detail for white HTML copy, building and corridor focal point between 48% and 75%, right edge dark for content card overlay. Architectural realism, cinematic corporate infrastructure photo, no people. Generic illustrative facility, do not invent a specific real InterData facility or certification. No text, no logos, no Tier III sign, no badges, no watermarks, no UI. Opaque full background.",
+      "tool": "image_gen",
+      "destination": "public/images/vps-amd/infrastructure-datacenter-v2.webp"
+    },
+    {
+      "name": "cta-server-aisle-v2",
+      "prompt": "Use case: ads-marketing. Create a new ultra-wide 3:1 website CTA background similar to bottom banner of user's VPS AMD reference. Photorealistic cinematic server aisle, tall dark black server racks both sides, strong deep blue and electric cyan linear lighting receding toward vanishing point at 70% width, glossy floor with blue reflections. Left 46% almost black navy with subtle rack details suitable for readable white website headline, brighter server aisle center-right, last 20% lower contrast for HTML buttons. No CPU chip in this image. Clean premium corporate infrastructure visual, not fantasy. No words, no logos, no watermark, no web interface, no UI elements. Opaque edge-to-edge.",
+      "tool": "image_gen",
+      "destination": "public/images/vps-amd/cta-server-aisle-v2.webp"
+    },
+    {
+      "name": "application-web-v2",
+      "prompt": "Use case: ads-marketing. Create one new landscape 3:2 website application-card illustration, cinematic photorealistic premium technology scene matching the five blue thumbnails in user-supplied VPS AMD screenshot. Deep navy black, electric blue and cyan, crisp hardware details, clear single focal point filling frame, no UI card borders, no website layout, no watermark, no logos, no people, no legible text. Opaque image. A modern open laptop on dark desk, tilted three-quarter view, screen showing a dark website admin dashboard with blue layout blocks and small server-status charts, screen bright and sharp, server-room background softly blurred. Similar composition to first thumbnail in reference.",
+      "tool": "image_gen",
+      "destination": "public/images/vps-amd/application-web-v2.webp"
+    },
+    {
+      "name": "application-devops-v2",
+      "prompt": "Use case: ads-marketing. Create one new landscape 3:2 website application-card illustration, cinematic photorealistic premium technology scene matching the five blue thumbnails in user-supplied VPS AMD screenshot. Deep navy black, electric blue and cyan, crisp hardware details, clear single focal point filling frame, no UI card borders, no website layout, no watermark, no logos, no people, no legible text. Opaque image. Close-up of a computer monitor with code editor, abstract blue syntax lines and terminal panels, laptop keyboard at bottom, dark developer environment. Code must be illustrative and unreadable. Similar composition to second code thumbnail in reference.",
+      "tool": "image_gen",
+      "destination": "public/images/vps-amd/application-devops-v2.webp"
+    },
+    {
+      "name": "application-database-v2",
+      "prompt": "Use case: ads-marketing. Create one new landscape 3:2 website application-card illustration, cinematic photorealistic premium technology scene matching the five blue thumbnails in user-supplied VPS AMD screenshot. Deep navy black, electric blue and cyan, crisp hardware details, clear single focal point filling frame, no UI card borders, no website layout, no watermark, no logos, no people, no legible text. Opaque image. Macro oblique view of a metallic database storage module integrated onto an intricate black motherboard, three concentric cylinder layers with blue luminous rings, cyan circuit traces surrounding it. Technical storage illustration with no text. Similar visual treatment to AI chip thumbnail in reference, but depicting database storage for the existing database use case.",
+      "tool": "image_gen",
+      "destination": "public/images/vps-amd/application-database-v2.webp"
+    },
+    {
+      "name": "application-automation-v2",
+      "prompt": "Use case: ads-marketing. Create one new landscape 3:2 website application-card illustration, cinematic photorealistic premium technology scene matching the five blue thumbnails in user-supplied VPS AMD screenshot. Deep navy black, electric blue and cyan, crisp hardware details, clear single focal point filling frame, no UI card borders, no website layout, no watermark, no logos, no people, no legible text. Opaque image. Close-up dark laptop and softly glowing blue workflow diagram on its screen, connected process nodes and branching automation paths, sleek black hardware, cyan connections, subtle server racks blurred behind. Recognizable task automation visual matching the reference technology-card aesthetic.",
+      "tool": "image_gen",
+      "destination": "public/images/vps-amd/application-automation-v2.webp"
+    },
+    {
+      "name": "application-business-v2",
+      "prompt": "Use case: ads-marketing. Create one new landscape 3:2 website application-card illustration, cinematic photorealistic premium technology scene matching the five blue thumbnails in user-supplied VPS AMD screenshot. Deep navy black, electric blue and cyan, crisp hardware details, clear single focal point filling frame, no UI card borders, no website layout, no watermark, no logos, no people, no legible text. Opaque image. Modern laptop tilted three-quarter view, screen showing abstract business CRM dashboard with blue growth chart, table rows and analytics panels, luminous cyan edges, blurred server room background, no readable UI text. Similar composition to final enterprise laptop thumbnail in reference.",
+      "tool": "image_gen",
+      "destination": "public/images/vps-amd/application-business-v2.webp"
+    }
+  ]
+}

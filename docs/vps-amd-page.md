@@ -11,10 +11,13 @@ khách hàng, đánh giá hay cam kết trong ảnh là dữ liệu dịch vụ.
 
 Bố cục hiện tại:
 
-1. Hero nền datacenter, nội dung bên trái, ảnh CPU ở giữa và các tính năng bên phải.
+1. Hero tối giản: breadcrumb, nhãn, tiêu đề, mô tả và hai CTA bên trái;
+   chip AMD EPYC nằm trong ảnh nền máy chủ chân thực bên phải. Không còn
+   thẻ tính năng, dãy thông tin phụ hoặc giá khởi điểm trong Hero.
 2. Thanh thông tin nền tảng, thay các số liệu minh họa chưa xác nhận bằng AMD EPYC,
    NVMe Gen 4, quyền root và kênh ticket.
-3. Bảng giá có phần dẫn bên trái, bốn gói đầu bên phải; bộ lọc vCPU và chu kỳ thanh toán.
+3. Bảng giá truyền thống: tiêu đề/mô tả căn giữa ở trên, bộ lọc và chu kỳ ở dưới,
+   sau đó là bốn thẻ giá trải toàn chiều rộng (hai thẻ trên tablet, một thẻ trên mobile).
 4. Section nền ảnh về nền tảng AMD EPYC và thông số CPU vật lý.
 5. Năm thẻ ứng dụng có ảnh: Website & App, DevOps, cơ sở dữ liệu, tác vụ nền, hệ thống nội bộ.
 6. Bảng so sánh VPS và Shared Hosting, dùng `vps-content.json` → `learning.comparisonRows`.
@@ -26,20 +29,54 @@ CSS nằm trong `amd.module.css`; không sửa CSS/layout chung để làm theo 
 Dùng màu thương hiệu, màu chữ/border/surface của `globals.css`, font toàn site,
 button pill cùng phong cách project. Header/footer trong ảnh không được sao chép.
 
+### Màu nhấn của trang VPS AMD
+
+Xanh vẫn là màu chủ đạo của ảnh, tab, liên kết, giá và chi tiết kỹ thuật.
+Cam hổ phách dùng tiết chế cho CTA ở Hero/cuối trang, thẻ giá thứ hai,
+nhãn trên nền tối và vài chỉ dấu nhỏ. Nền bảng giá pha kem nhạt.
+Các token `--amd-accent-*` chỉ khai báo trong CSS module của VPS AMD;
+không đổi palette toàn site hoặc màu của Feedback/Báo chí dùng chung.
+
+| Vai trò | Màu |
+|---|---|
+| CTA cam, hover, active | `#FFB547`, `#FFC56C`, `#EFA12E` |
+| Chữ trên CTA | `#172033` |
+| Chữ nhấn trên nền sáng / nền nhãn | `#925008` / `#FFF3DF` |
+| Chữ nhấn trên nền tối / nền nhãn | `#FFCE87` / `#302619` |
+| Viền trang trí thẻ nhấn | `#D99A3B` |
+
+Các cặp chữ/nền mới kiểm tra đạt 4,5:1: CTA 9,26:1, hover 10,42:1,
+active 7,60:1, nhãn sáng 5,67:1 và nhãn tối 10,18:1.
+Focus tiếp tục dùng màu xanh trên nền sáng và trắng trên nền tối theo site.
+Không đổi hình ảnh, nội dung, cấu hình, giá, trạng thái lỗi hay hành vi tương tác.
+
 ## Nội dung và hình ảnh
 
 Thông tin cốt lõi tham khảo working tree `D:/InterData/vps-amd`, các file
 `app/page.js`, `Hero.jsx`, `Features.jsx`, `Benefit.jsx`, `Solution.jsx`,
 `Faq.jsx` và `Prices.jsx`. Nội dung được biên tập cho cấu trúc mới.
 
-- `public/skin/icon/cpu3d.png` → `public/images/vps-amd/epyc-chip.webp`:
-  ảnh AMD EPYC nền trong suốt, WebP quality 94, giữ 1920 × 1491 và alpha.
-- Hero/hiệu năng/CTA: `/images/solutions/datacenter-aisle.webp`, ảnh đã có trong homepage.
-- Hạ tầng: `/images/viettel-idc.jpg`, ảnh minh họa đã có trong project.
-- Thẻ ứng dụng: các ảnh `/images/solutions/giai-phap-*.jpg` có sẵn; là minh họa,
-  không thể hiện phần mềm/bản quyền được tặng kèm với gói VPS AMD.
+- Theo yêu cầu ngày 13/10/2026, tạo chín ảnh mới bằng công cụ `image_gen`:
+  `hero-server-epyc-v2.webp`, `performance-epyc-board-v3.webp`,
+  `infrastructure-datacenter-v2.webp`, `cta-server-aisle-v2.webp` và năm ảnh
+  `application-*-v2.webp`, lưu tại `public/images/vps-amd/`.
+- Hero và phần CPU có chip gắn trong toàn cảnh của ảnh nền; không còn ảnh CPU
+  trong suốt đặt chồng lên nền hoặc glow/drop-shadow cho chip riêng.
+  Mobile hiển thị cùng ảnh toàn cảnh trong vùng ảnh riêng giữa các hàng nội dung
+  để chip không bị cắt bởi nền dọc. Không tách chip khỏi môi trường xung quanh.
+- Các banner có tỷ lệ gần 3:1, WebP quality 88; ảnh ứng dụng 3:2,
+  rộng 1200px, WebP quality 86. Prompt đầy đủ: `docs/vps-amd-image-prompts.json`.
+- Ảnh là minh họa được tạo, không phải ảnh chụp hạ tầng thực tế InterData và
+  không chứng minh chứng nhận, hiệu năng hoặc quyền lợi phần mềm của gói VPS.
 - Các ảnh AMD cũ trong `public/images/vps-amd/` được giữ nguyên trên đĩa.
-- Không dùng ảnh screenshot mẫu để làm nền; không sinh ảnh mới hoặc sao chép CSS/component/font của project cũ.
+- Không dùng screenshot mẫu làm nền hoặc sao chép CSS/component/font của project cũ.
+
+Hero hiện dùng `hero-enterprise-epyc-v3.webp` thay cho `hero-server-epyc-v2.webp`.
+Ảnh mới tạo bằng `image_gen`: CPU đặt trong socket của server mở nắp,
+vật liệu kim loại/xám tự nhiên, ánh sáng trắng tiết chế và rack máy chủ mờ
+ở phía sau. Chip và môi trường là một ảnh thống nhất, không phải chip rời.
+Prompt: `docs/vps-amd-hero-image-prompt.json`. Mobile hiển thị toàn cảnh
+ngay dưới hai CTA; desktop dùng nền toàn chiều ngang. Các ảnh section khác giữ nguyên.
 
 Nguồn thông số CPU:
 https://www.amd.com/en/products/processors/server/epyc/7003-series/amd-epyc-7763.html
