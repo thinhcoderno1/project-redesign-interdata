@@ -1,0 +1,50 @@
+{
+  "tool": "image_gen.imagegen (built-in)",
+  "mode": "six independent generated assets using the supplied reference",
+  "reference": "C:/Users/interdigi 03/Downloads/KLVN/BlogPost/Đa dạng VPS InterData hiện đại.png",
+  "optimization": "WebP quality 92, alpha preserved",
+  "assets": [
+    {
+      "key": "amd",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a138ad-0e08-7402-9555-bac17748dc0f\\exec-46f92161-e267-4cde-9016-10c1a68a2c5f.png",
+      "asset": "public/images/vps/range-v3/amd.webp",
+      "dimensions": [768, 768],
+      "prompt": "Create ONE premium 3D icon illustration for the corresponding card in the supplied six-card VPS reference screenshot. Use the screenshot ONLY as style/composition reference. Output ONLY the isolated illustration, NOT a website, not a card, no typography other than any expressly permitted symbol. Square composition on a genuinely TRANSPARENT background with alpha. Match the clean polished reference: three compact server units stacked with small gaps, softly rounded corners, isometric three-quarter view, top visible, front facing lower-left, crisp edges, tiny LED details, soft studio light, subtle contact shadow. Object centered and completely visible, 12% transparent safety margin around its entire silhouette. No pedestal or long platform, no floor plane, no cables, no other UI. Consistent scale and visual style across this family. AMD service: three silver-gray server units with charcoal side panels, RED and warm orange edge lighting and tiny red front LEDs. Above the top unit, a dark graphite CPU chip tilted in perspective with the exact white text AMD and a small AMD arrow mark. Chip gives a warm red/orange glow underneath. Closely match the AMD illustration in the upper-left reference card. No other text."
+    },
+    {
+      "key": "platinum",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a138ad-0e08-7402-9555-bac17748dc0f\\exec-ddb5174c-7b46-442d-8eda-74ba6c0efcf6.png",
+      "asset": "public/images/vps/range-v3/platinum.webp",
+      "dimensions": [768, 768],
+      "prompt": "Create ONE premium 3D icon illustration for the corresponding card in the supplied six-card VPS reference screenshot. Use the screenshot ONLY as style/composition reference. Output ONLY the isolated illustration, NOT a website, not a card, no typography other than any expressly permitted symbol. Square composition on a genuinely TRANSPARENT background with alpha. Match the clean polished reference: three compact server units stacked with small gaps, softly rounded corners, isometric three-quarter view, top visible, front facing lower-left, crisp edges, tiny LED details, soft studio light, subtle contact shadow. Object centered and completely visible, 12% transparent safety margin around its entire silhouette. No pedestal or long platform, no floor plane, no cables, no other UI. Consistent scale and visual style across this family. Platinum service: three silver-white server units with cobalt blue sides, vivid BLUE edge lighting, small cyan LEDs. A glossy royal blue 3D crown sits centered on top, with 3 rounded points and small circular tips. Premium blue/silver palette. Closely match the crowned server illustration in the reference's upper-middle card. No text, no letters."
+    },
+    {
+      "key": "gold",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a138ad-0e08-7402-9555-bac17748dc0f\\exec-ecd4d8b5-95d6-4de2-bf0a-c99ec5d79e38.png",
+      "asset": "public/images/vps/range-v3/gold.webp",
+      "dimensions": [768, 768],
+      "prompt": "Create ONE premium 3D icon illustration for the corresponding card in the supplied six-card VPS reference screenshot. Use the screenshot ONLY as style/composition reference. Output ONLY the isolated illustration, NOT a website, not a card, no typography other than any expressly permitted symbol. Square composition on a genuinely TRANSPARENT background with alpha. Match the clean polished reference: three compact server units stacked with small gaps, softly rounded corners, isometric three-quarter view, top visible, front facing lower-left, crisp edges, tiny LED details, soft studio light, subtle contact shadow. Object centered and completely visible, 12% transparent safety margin around its entire silhouette. No pedestal or long platform, no floor plane, no cables, no other UI. Consistent scale and visual style across this family. Gold service: three warm ivory-silver server units with warm GOLD/amber edges and tiny yellow LED details. A shiny upright golden five-point 3D star rests on the top server. Cream, gold, restrained bronze side panels, delicate warm highlights. Closely match the star-topped server illustration in the upper-right reference card. No text, no letters."
+    },
+    {
+      "key": "linux",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a138ad-0e08-7402-9555-bac17748dc0f\\exec-6fc6987f-0dfc-4cf5-8603-2ac7f042cc8b.png",
+      "asset": "public/images/vps/range-v3/linux.webp",
+      "dimensions": [768, 768],
+      "prompt": "Create ONE premium 3D icon illustration for the corresponding card in the supplied six-card VPS reference screenshot. Use the screenshot ONLY as style/composition reference. Output ONLY the isolated illustration, NOT a website, not a card, no typography other than any expressly permitted symbol. Square composition on a genuinely TRANSPARENT background with alpha. Match the clean polished reference: three compact server units stacked with small gaps, softly rounded corners, isometric three-quarter view, top visible, front facing lower-left, crisp edges, tiny LED details, soft studio light, subtle contact shadow. Object centered and completely visible, 12% transparent safety margin around its entire silhouette. No pedestal or long platform, no floor plane, no cables, no other UI. Consistent scale and visual style across this family. Linux service: three compact silver-white server units with dark teal sides, subtle teal/green edge lighting and small green LEDs. Sitting on the upper server is the classic friendly Linux Tux penguin with black body, white belly, yellow-orange beak and feet. Penguin is clear and proportionate, no other accessories. Closely match the Linux illustration in the lower-left reference card. No text."
+    },
+    {
+      "key": "n8n",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a138ad-0e08-7402-9555-bac17748dc0f\\exec-f506b721-3561-403b-a2fb-4f9c611aff31.png",
+      "asset": "public/images/vps/range-v3/n8n.webp",
+      "dimensions": [768, 768],
+      "prompt": "Create ONE premium 3D icon illustration for the corresponding card in the supplied six-card VPS reference screenshot. Use the screenshot ONLY as style/composition reference. Output ONLY the isolated illustration, NOT a website, not a card, no typography other than any expressly permitted symbol. Square composition on a genuinely TRANSPARENT background with alpha. Match the clean polished reference: three compact server units stacked with small gaps, softly rounded corners, isometric three-quarter view, top visible, front facing lower-left, crisp edges, tiny LED details, soft studio light, subtle contact shadow. Object centered and completely visible, 12% transparent safety margin around its entire silhouette. No pedestal or long platform, no floor plane, no cables, no other UI. Consistent scale and visual style across this family. n8n automation service: three compact pearly white server units with soft lavender sides and vivid PURPLE/magenta edge lighting, tiny purple LEDs. The top surface has the exact small dark-blue label n8n. Floating just above it is a simple pink workflow symbol of five circular nodes linked by short pink connecting stems, like the n8n automation motif in the lower-middle reference. The nodes are three-dimensional glossy objects. Match the lower-middle reference closely. No other text."
+    },
+    {
+      "key": "vibe",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a138ad-0e08-7402-9555-bac17748dc0f\\exec-48239457-e73b-478b-bb2e-6b3ebbf45308.png",
+      "asset": "public/images/vps/range-v3/vibe.webp",
+      "dimensions": [768, 768],
+      "prompt": "Create ONE premium 3D icon illustration for the corresponding card in the supplied six-card VPS reference screenshot. Use the screenshot ONLY as style/composition reference. Output ONLY the isolated illustration, NOT a website, not a card, no typography other than any expressly permitted symbol. Square composition on a genuinely TRANSPARENT background with alpha. Match the clean polished reference: three compact server units stacked with small gaps, softly rounded corners, isometric three-quarter view, top visible, front facing lower-left, crisp edges, tiny LED details, soft studio light, subtle contact shadow. Object centered and completely visible, 12% transparent safety margin around its entire silhouette. No pedestal or long platform, no floor plane, no cables, no other UI. Consistent scale and visual style across this family. Vibe Coding service: three compact dark navy and cobalt-blue server units, vivid electric BLUE/cyan edge lighting, cyan tiny LED slots. Upright on top is one glossy blue round medallion with the exact white code symbol </> centered on it. Clean premium technical blue icon like the lower-right reference. No other text or letters."
+    }
+  ]
+}

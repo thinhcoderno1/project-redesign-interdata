@@ -129,13 +129,9 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
                 VPS AMD · NỀN TẢNG EPYC
               </span>
               <h1 id="amd-title">
-                VPS <span>AMD</span>
+                VPS <span>AMD EPYC</span>
               </h1>
-              <p className={styles.heroLead}>
-                CPU AMD EPYC.
-                <br />
-                Lưu trữ SSD NVMe Gen 4.
-              </p>
+              <p className={styles.heroSubheadline}>Hiệu Suất Bứt Phá</p>
               <p className={styles.heroDescription}>
                 Tài nguyên riêng cho website, ứng dụng và hệ thống của bạn. Chọn
                 cấu hình phù hợp, chủ động môi trường triển khai và quản trị

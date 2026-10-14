@@ -1,0 +1,10 @@
+{
+  "tool": "image_gen.imagegen (built-in)",
+  "mode": "generate with reference",
+  "reference": "C:/Users/interdigi 03/Downloads/KLVN/BlogPost/hero-section.png",
+  "asset": "public/images/vps/hero-vps-cloud-v2.webp",
+  "dimensions": [1536, 1024],
+  "optimization": "WebP quality 92; generated PNG retained in Codex generated_images",
+  "role": "Decorative server/cloud illustration; all headings, CTAs and information cards are HTML",
+  "prompt": "Create one finished website hero illustration asset, inspired VERY closely by the server artwork on the RIGHT HALF of the supplied reference screenshot. This is ONLY the illustration asset, NOT a website screenshot. Landscape 3:2 image, high resolution. Composition: center a single tall dark graphite-blue rack server tower with about 6 server drawers, cyan blue LEDs and thin neon edge lighting. Three-quarter view, front and right side visible. Behind the server a large luminous BLUE CLOUD silhouette with soft volumetric glow. Under the server, two thick stacked dark blue rectangular platform slabs with glowing cyan outlines, viewed in perspective, like the reference. Background solid deep navy #02132f shading to #031b40, subtle perspective circuit grid under the pedestal, small electric-blue circuit nodes near lower corners. Server centered horizontally at x=50%, occupies 55% width and 70% height; cloud occupies 65% width behind it. Keep a safe margin all around the cloud and platform. Polished premium 3D rendered commercial infrastructure illustration, saturated electric blue and cyan, high contrast, sharp detailed rack units. No white or silver machines. No people, no logos, no lettering, no text, no VPS text, no floating information cards, no side labels or icons, no webpage heading, no buttons, no navigation, no typography. Reproduce the reference's dark blue server/cloud/pedestal look as accurately as possible while excluding all text and surrounding UI."
+}

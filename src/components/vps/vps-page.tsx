@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { CustomerProof } from "@/components/shared/customer-proof";
-import Link from "next/link";
 import {
   Check,
   ArrowRight,
@@ -26,7 +25,10 @@ import content from "@/data/vps-content.json";
 import type { VpsPrices } from "@/data/vps-pricing";
 import { Pricing } from "./pricing";
 import { Environments } from "./environments";
+import { Infrastructure, ServiceRange, UseCases } from "./showcase";
 import styles from "./vps.module.css";
+import { VpsHero } from "./hero";
+import { VpsAdvantages } from "./advantages";
 
 type Block = { tag: string; text: string; function?: string };
 const icons: Record<string, LucideIcon> = {
@@ -193,195 +195,16 @@ export function VpsPage({ prices }: { prices: VpsPrices }) {
           __html: JSON.stringify(faqSchema).replace(/</g, "\\u003c"),
         }}
       />
-      <section className={`${styles.hero} dark`} aria-labelledby="vps-title">
-        <Image
-          src={content.hero.background}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className={styles.heroImage}
-        />
-        <div className={`container ${styles.heroContent}`}>
-          <nav className={styles.breadcrumb} aria-label="Đường dẫn trang">
-            <Link href="/">Trang chủ</Link>
-            <span aria-hidden="true">/</span>
-            <span aria-current="page">Thuê VPS</span>
-          </nav>
-          <div className={styles.heroCopy}>
-            <span className={styles.heroBadge}>
-              {copy(content.hero.blocks, "span")}
-            </span>
-            <h1 id="vps-title">{copy(content.hero.blocks, "h1")}</h1>
-            <p className={styles.heroLead}>{copy(content.hero.blocks, "p")}</p>
-            <p className={styles.heroDescription}>
-              {copy(content.hero.blocks, "p", 1)}
-            </p>
-            <div className={styles.actions}>
-              <a href="#pricing" className="button primary">
-                {copy(content.hero.blocks, "a")}
-                <ArrowRight size={18} aria-hidden="true" />
-              </a>
-              <a
-                href="https://www.facebook.com/interdata.com.vn/"
-                className={`button ${styles.heroSecondary}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {copy(content.hero.blocks, "a", 1)}
-              </a>
-            </div>
-            <ul className={styles.heroTicks}>
-              {content.hero.ticks.map((item) => (
-                <li key={item}>
-                  <Check size={17} aria-hidden="true" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <dl className={styles.proof}>
-            {content.hero.proof.map((item) => (
-              <div key={item.label}>
-                <dt>{item.label}</dt>
-                <dd>{item.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </section>
+      <VpsHero />
 
+      <VpsAdvantages />
+
+      <ServiceRange />
+      <UseCases />
       <Pricing initialPrices={prices} />
-
+      <Infrastructure />
       <section
-        className={`${styles.section} ${styles.subtle}`}
-        aria-labelledby="vps-comparison-title"
-      >
-        <div className="container">
-          <Heading
-            blocks={content.comparison.blocks}
-            id="vps-comparison-title"
-          />
-          <ComparisonTable
-            columns={content.comparison.columns}
-            rows={content.comparison.rows}
-            criterion="criteria"
-            label={copy(content.comparison.blocks, "h2")}
-          />
-          <p className={styles.note}>
-            {copy(content.comparison.blocks, "p", 1)}
-          </p>
-        </div>
-      </section>
-
-      <section
-        className={styles.section}
-        aria-labelledby="vps-definition-title"
-      >
-        <div className={`container ${styles.definition}`}>
-          <div>
-            <span className="eyebrow">{copy(definition, "span")}</span>
-            <h2 id="vps-definition-title">{copy(definition, "h2")}</h2>
-            <p>{copy(definition, "p")}</p>
-            <p>{copy(definition, "p", 1)}</p>
-          </div>
-          <div className={styles.definitionSteps}>
-            {content.landing.definitionCards.map(([title, text], index) => (
-              <article key={title}>
-                <span className={styles.step}>0{index + 1}</span>
-                <div>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section
-        className={`${styles.section} ${styles.subtle}`}
-        aria-labelledby={content.landing.headers.Infrastructure.id}
-      >
-        <div className="container">
-          <Heading {...content.landing.headers.Infrastructure} />
-          <Cards items={content.landing.infrastructure} four />
-        </div>
-      </section>
-      <section
-        className={styles.section}
-        aria-labelledby={content.landing.headers.WhyInterData.id}
-      >
-        <div className="container">
-          <Heading {...content.landing.headers.WhyInterData} />
-          <Cards items={content.landing.reasons} />
-        </div>
-      </section>
-
-      <Environments />
-
-      <section className={styles.section} aria-labelledby="performance-title">
-        <div className="container">
-          <Heading blocks={performance} id="performance-title" />
-          <ul className={styles.benchmarkChecklist}>
-            {content.landing.benchmarkChecklist.map((item) => (
-              <li key={item}>
-                <Check size={18} aria-hidden="true" />
-                {item}
-              </li>
-            ))}
-          </ul>
-          {content.landing.benchmarkGroups.map((group) => (
-            <div key={group.id} className={styles.benchmarkGroup}>
-              <h3>{group.title}</h3>
-              <div className={styles.benchmarks}>
-                {group.images.map((image) => (
-                  <figure key={image.src}>
-                    <a
-                      href={image.src}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Mở ảnh đầy đủ: ${image.label}`}
-                    >
-                      <Image
-                        src={image.src}
-                        alt={image.alt}
-                        width={image.width}
-                        height={image.height}
-                        sizes="(min-width: 1100px) 380px, (min-width: 768px) 44vw, 90vw"
-                      />
-                    </a>
-                    <figcaption>
-                      <ul>
-                        {image.metrics.map((metric) => (
-                          <li key={metric}>
-                            <Check size={16} aria-hidden="true" />
-                            <span>{metric}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </figcaption>
-                  </figure>
-                ))}
-              </div>
-              <p className={styles.note}>{group.note}</p>
-            </div>
-          ))}
-          <p className={styles.note}>{copy(performance, "p", 1)}</p>
-        </div>
-      </section>
-
-      <section
-        className={`${styles.section} ${styles.subtle}`}
-        aria-labelledby={content.landing.headers.UseCases.id}
-      >
-        <div className="container">
-          <Heading {...content.landing.headers.UseCases} />
-          <Cards items={content.landing.useCases} />
-        </div>
-      </section>
-      <section
-        className={styles.section}
+        className={`${styles.section} ${styles.process}`}
         aria-labelledby={content.landing.headers.GettingStarted.id}
       >
         <div className="container">
@@ -401,30 +224,139 @@ export function VpsPage({ prices }: { prices: VpsPrices }) {
         </div>
       </section>
 
+      <details className={styles.technicalDetails} id="vps-technical-details">
+        <summary className="container">
+          <span>
+            <strong>Cấu hình, hiệu năng và môi trường triển khai</strong>
+            <small>
+              So sánh các dòng VPS, xem benchmark và lựa chọn hệ điều hành
+            </small>
+          </span>
+          <ChevronMark />
+        </summary>
+
+        <section
+          className={`${styles.section} ${styles.subtle}`}
+          aria-labelledby="vps-comparison-title"
+        >
+          <div className="container">
+            <Heading
+              blocks={content.comparison.blocks}
+              id="vps-comparison-title"
+            />
+            <ComparisonTable
+              columns={content.comparison.columns}
+              rows={content.comparison.rows}
+              criterion="criteria"
+              label={copy(content.comparison.blocks, "h2")}
+            />
+            <p className={styles.note}>
+              {copy(content.comparison.blocks, "p", 1)}
+            </p>
+          </div>
+        </section>
+
+        <section
+          className={styles.section}
+          aria-labelledby="vps-definition-title"
+        >
+          <div className={`container ${styles.definition}`}>
+            <div>
+              <span className="eyebrow">{copy(definition, "span")}</span>
+              <h2 id="vps-definition-title">{copy(definition, "h2")}</h2>
+              <p>{copy(definition, "p")}</p>
+              <p>{copy(definition, "p", 1)}</p>
+            </div>
+            <div className={styles.definitionSteps}>
+              {content.landing.definitionCards.map(([title, text], index) => (
+                <article key={title}>
+                  <span className={styles.step}>0{index + 1}</span>
+                  <div>
+                    <h3>{title}</h3>
+                    <p>{text}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <Environments />
+
+        <section className={styles.section} aria-labelledby="performance-title">
+          <div className="container">
+            <Heading blocks={performance} id="performance-title" />
+            <ul className={styles.benchmarkChecklist}>
+              {content.landing.benchmarkChecklist.map((item) => (
+                <li key={item}>
+                  <Check size={18} aria-hidden="true" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            {content.landing.benchmarkGroups.map((group) => (
+              <div key={group.id} className={styles.benchmarkGroup}>
+                <h3>{group.title}</h3>
+                <div className={styles.benchmarks}>
+                  {group.images.map((image) => (
+                    <figure key={image.src}>
+                      <a
+                        href={image.src}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Mở ảnh đầy đủ: ${image.label}`}
+                      >
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          width={image.width}
+                          height={image.height}
+                          sizes="(min-width: 1100px) 380px, (min-width: 768px) 44vw, 90vw"
+                        />
+                      </a>
+                      <figcaption>
+                        <ul>
+                          {image.metrics.map((metric) => (
+                            <li key={metric}>
+                              <Check size={16} aria-hidden="true" />
+                              <span>{metric}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+                <p className={styles.note}>{group.note}</p>
+              </div>
+            ))}
+            <p className={styles.note}>{copy(performance, "p", 1)}</p>
+          </div>
+        </section>
+      </details>
+
       <CustomerProof />
 
       <section
         className={`${styles.section} ${styles.subtle}`}
         aria-labelledby="faq-title"
       >
-        <div className="container">
+        <div className={`container ${styles.faqLayout}`}>
           <Heading blocks={content.faq.blocks} id="faq-title" />
           <div className={styles.faqs}>
-            {[content.faq.items.slice(0, 10), content.faq.items.slice(10)].map(
-              (items, index) => (
-                <div key={index}>
-                  {items.map((item) => (
-                    <details className={styles.faq} key={item.question}>
-                      <summary>
-                        <h3>{item.question}</h3>
-                        <ChevronMark />
-                      </summary>
-                      <div dangerouslySetInnerHTML={{ __html: item.answer }} />
-                    </details>
-                  ))}
-                </div>
-              ),
-            )}
+            {content.faq.items.slice(0, 5).map((item) => (
+              <FaqItem key={item.question} item={item} />
+            ))}
+            <details className={styles.moreFaqs}>
+              <summary>
+                Xem tất cả {content.faq.items.length} câu hỏi <ChevronMark />
+              </summary>
+              <div>
+                {content.faq.items.slice(5).map((item) => (
+                  <FaqItem key={item.question} item={item} />
+                ))}
+              </div>
+            </details>
           </div>
         </div>
       </section>
@@ -433,14 +365,14 @@ export function VpsPage({ prices }: { prices: VpsPrices }) {
         className={`${styles.section} ${styles.cta} dark`}
         aria-labelledby="vps-cta-title"
       >
+        <Image
+          src={content.hero.background}
+          alt=""
+          fill
+          sizes="100vw"
+          className={styles.ctaPhoto}
+        />
         <div className={`container ${styles.ctaLayout}`}>
-          <div className={styles.terminal}>
-            <span className={styles.terminalLabel}>Minh họa</span>
-            <div className={styles.terminalDots} aria-hidden="true">
-              ● ● ●
-            </div>
-            <pre>{terminal.map((block) => block.text).join("\n")}</pre>
-          </div>
           <div>
             <span className="eyebrow">Bắt đầu với InterData</span>
             <h2 id="vps-cta-title">{copy(content.cta.blocks, "h2")}</h2>
@@ -465,6 +397,15 @@ export function VpsPage({ prices }: { prices: VpsPrices }) {
               </a>
             </div>
           </div>
+          <div className={styles.ctaVisual} aria-hidden="true">
+            <Image
+              src="/images/services-3d/cloud-platinum-gen2.webp"
+              alt=""
+              width={900}
+              height={600}
+              sizes="(min-width: 768px) 400px, 240px"
+            />
+          </div>
         </div>
       </section>
 
@@ -478,6 +419,13 @@ export function VpsPage({ prices }: { prices: VpsPrices }) {
               <ChevronMark />
             </summary>
             <div className={styles.learningContent} id="vps-learning-content">
+              <div className={styles.terminal}>
+                <span className={styles.terminalLabel}>Minh họa</span>
+                <div className={styles.terminalDots} aria-hidden="true">
+                  ● ● ●
+                </div>
+                <pre>{terminal.map((block) => block.text).join("\n")}</pre>
+              </div>
               <h3>{copy(learning, "h3")}</h3>
               <p>{copy(learning, "p", 1)}</p>
               <p>{copy(learning, "p", 2)}</p>
@@ -517,6 +465,18 @@ export function VpsPage({ prices }: { prices: VpsPrices }) {
         </div>
       </section>
     </main>
+  );
+}
+
+function FaqItem({ item }: { item: { question: string; answer: string } }) {
+  return (
+    <details className={styles.faq}>
+      <summary>
+        <h3>{item.question}</h3>
+        <ChevronMark />
+      </summary>
+      <div dangerouslySetInnerHTML={{ __html: item.answer }} />
+    </details>
   );
 }
 

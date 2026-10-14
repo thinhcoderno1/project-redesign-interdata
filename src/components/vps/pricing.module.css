@@ -1,0 +1,391 @@
+.pricingSection {
+  --brand-primary: #0043ec;
+  padding-block: 64px;
+  background: linear-gradient(135deg, #f1f6ff, #fff 48%, #edf4ff);
+}
+.pricingLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+}
+.pricingIntro {
+  max-width: 960px;
+  margin-inline: auto;
+  text-align: center;
+}
+.pricingSection .pricingIntro h2 {
+  font-size: clamp(30px, 2.8vw, 40px);
+  line-height: 1.35;
+}
+.eyebrow,
+.dealEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  margin-bottom: 14px;
+  border-radius: 999px;
+  background: var(--brand-subtle);
+  color: var(--brand-primary);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.pricingSection .pricingIntro > p {
+  max-width: 800px;
+  margin: 16px auto 0;
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--text-secondary);
+}
+.serviceTabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  padding: 6px;
+  border: 1px solid #cbd9f1;
+  border-radius: 999px;
+  background: #fff;
+}
+.serviceTabs button,
+.billingTabs button {
+  min-width: 0;
+  min-height: 48px;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 18px;
+  color: var(--text-primary);
+  background: transparent;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.serviceTabs button:hover,
+.billingTabs button:hover {
+  background: var(--brand-subtle);
+}
+.serviceTabs button[aria-selected="true"],
+.billingTabs button[aria-selected="true"] {
+  color: #fff;
+  background: var(--brand-primary);
+}
+.serviceTabs button:focus-visible,
+.billingTabs button:focus-visible {
+  outline: 3px solid var(--brand-primary);
+  outline-offset: -3px;
+}
+.pricingControls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 38px;
+}
+.billingControl {
+  width: min(100%, 680px);
+  text-align: center;
+}
+.cycleLabel {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+}
+.billingTabs {
+  display: grid;
+  grid-template-columns: repeat(var(--tab-count, 6), minmax(0, 1fr));
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid #cbd9f1;
+  border-radius: 999px;
+  background: #fff;
+}
+.billingTabs button {
+  padding: 10px 12px;
+  font-size: 16px;
+}
+.pricingSection .cycleNote {
+  margin-top: 10px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.planGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 30px 22px;
+}
+.dealGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.plan {
+  color: var(--text-primary);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 30px 26px 26px;
+  border: 1px solid #d5e2f9;
+  border-radius: 16px;
+  background: var(--surface-canvas);
+}
+.accentPlan {
+  border-color: #477dff;
+  box-shadow: 0 0 0 1px #477dff;
+  background: linear-gradient(160deg, #093a9e, #0046ce);
+  color: #fff;
+}
+.popularTag {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: #dc2626;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  white-space: nowrap;
+}
+.pricingSection .plan h3 {
+  font-size: 22px;
+  line-height: 1.45;
+  letter-spacing: -0.025em;
+}
+.planPrice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  margin: 24px 0;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e3ebf8;
+  color: var(--brand-primary);
+}
+.planPrice strong {
+  font-size: clamp(30px, 2.7vw, 38px);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+.planPrice > span {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+.planPrice strong.longPrice {
+  font-size: clamp(24px, 2vw, 30px);
+}
+.planPrice del {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+.accentPlan .planPrice del {
+  color: #e0eaff;
+}
+.accentPlan h3,
+.accentPlan .planPrice,
+.accentPlan .planPrice > span {
+  color: #fff;
+}
+.accentPlan .planPrice {
+  border-color: #ffffff3d;
+}
+.plan .planPrice > .renewal {
+  margin-top: 8px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: #17633d;
+  background: #edf8f1;
+  font-size: 12px;
+}
+.plan ul {
+  display: grid;
+  gap: 14px;
+  margin: 0 0 30px;
+  padding: 0;
+  list-style: none;
+}
+.plan li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 16px;
+  line-height: 1.7;
+}
+.plan li svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #59677f;
+}
+.accentPlan li,
+.accentPlan li svg {
+  color: #fff;
+}
+.pricingSection .plan .planButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  margin-top: auto;
+  padding: 12px 10px;
+  border: 1px solid var(--brand-primary);
+  border-radius: 999px;
+  font-size: 16px;
+}
+.outlineButton {
+  color: var(--brand-primary);
+  background: transparent;
+}
+.outlineButton:hover {
+  background: var(--brand-subtle);
+}
+.pricingSection .plan.accentPlan .planButton {
+  color: #0739a5;
+  background: #fff;
+  border-color: #fff;
+}
+.pricingSection .plan.accentPlan .planButton:hover {
+  background: #eaf1ff;
+  border-color: #eaf1ff;
+}
+.pricingSection .plan .planButton:focus-visible {
+  outline: 3px solid var(--brand-primary);
+  outline-offset: 4px;
+}
+.pricingSection .plan.accentPlan .planButton:focus-visible {
+  outline-color: #fff;
+}
+.center {
+  text-align: center;
+  margin-top: 24px;
+}
+.more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 0;
+  color: var(--brand-primary);
+  background: transparent;
+  font-size: 16px;
+  font-weight: 600;
+}
+.more:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.flipped {
+  transform: rotate(180deg);
+}
+.unavailable {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  padding: 40px 24px;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  text-align: center;
+  background: var(--surface-canvas);
+}
+.pricingSection .unavailable p {
+  color: var(--text-secondary);
+}
+.unavailable button:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+.noScript {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 20px;
+}
+.noScript a {
+  color: var(--brand-primary);
+  text-decoration: underline;
+}
+.hotDeals {
+  border-top: 1px solid #e0eaff;
+}
+@media (max-width: 1199px) {
+  .pricingLayout {
+    gap: 28px;
+  }
+  .planGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px 16px;
+  }
+  .plan {
+    padding: 24px;
+  }
+  .pricingSection .plan h3 {
+    font-size: 21px;
+  }
+  .planPrice strong {
+    font-size: 30px;
+  }
+  .serviceTabs {
+    border-radius: 24px;
+  }
+}
+@media (max-width: 959px) {
+  .pricingSection {
+    padding-block: 56px;
+  }
+  .pricingSection .pricingIntro h2 {
+    font-size: 32px;
+  }
+}
+@media (max-width: 639px) {
+  .pricingSection {
+    padding-block: 44px;
+  }
+  .pricingSection .pricingIntro h2 {
+    font-size: 30px;
+  }
+  .pricingSection .pricingIntro > p {
+    font-size: 16px;
+  }
+  .serviceTabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    border-radius: 18px;
+  }
+  .serviceTabs button {
+    font-size: 13px;
+    padding-inline: 8px;
+    white-space: normal;
+  }
+  .billingTabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-radius: 18px;
+  }
+  .billingTabs button {
+    font-size: 15px;
+    padding-inline: 8px;
+  }
+  .planGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+  }
+  .planPrice strong {
+    font-size: 34px;
+  }
+  .pricingSection .plan .planButton {
+    min-height: 50px;
+  }
+}

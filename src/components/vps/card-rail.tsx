@@ -67,10 +67,11 @@ export function CardRail({
         className={styles.rail}
         role="group"
         aria-label={label}
+        tabIndex={0}
       >
         {children}
       </div>
-      {count > 1 && (
+      {count > 1 && !(atStart && atEnd) && (
         <div className={styles.railControls}>
           <button
             type="button"

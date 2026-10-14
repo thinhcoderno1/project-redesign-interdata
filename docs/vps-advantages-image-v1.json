@@ -1,0 +1,8 @@
+{
+  "generator": "imagegen built-in",
+  "reference": "Lợi Thế VPS InterData Vượt Trội.png",
+  "prompt": "Create ONE standalone transparent-background website illustration, NOT a webpage or full UI. Reference is the central illustration in the supplied screenshot only. Recreate its subject and composition closely: premium clean isometric 3D cloud VPS infrastructure, three stacked rounded rectangular white/silver server units with deep blue front panels, small cyan LED lights, luminous blue glass platform/base beneath, a large soft light-blue cloud rising behind. A floating translucent shield/check tile on the left, translucent ascending bar-chart tile on right, and a small luminous glass plaque reading exactly 'VPS' in front of the base. Top server white lid has exact blue 'InterData' wordmark (plain italic text, no invented symbol). Palette white, pale icy blue, vivid electric azure with soft blue ambient glow; airy, bright, softly shaded polished product render, no dark background. Tall centered composition in a square canvas, entirety of cloud, servers and platform visible with safe margins, subtle soft shadows, transparent alpha outside subject. No other text, no statistics, no feature cards, no decorative page background, no side content. Illustration must read clearly at 380px width in a pale blue website section.",
+  "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a138ad-0e08-7402-9555-bac17748dc0f\\exec-d3a57fbc-89f3-41b3-bea9-7ef18b4db02f.png",
+  "target": "public/images/vps/advantages-server-v1.webp",
+  "transparent_background": true
+}

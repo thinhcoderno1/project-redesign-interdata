@@ -1,0 +1,11 @@
+{
+  "tool": "image_gen.imagegen (built-in)",
+  "mode": "generate with reference",
+  "reference": "C:/Users/interdigi 03/Downloads/KLVN/BlogPost/types-of-vps.png",
+  "asset": "public/images/vps/service-server-stack-v2.webp",
+  "dimensions": [768, 768],
+  "transparent": true,
+  "optimization": "WebP quality 92, alpha preserved",
+  "usage": "Shared server illustration with HTML/CSS hardware symbols for the five actual VPS services",
+  "prompt": "Create a single reusable 3D server-stack illustration asset for the five-card VPS service chooser in the supplied reference screenshot. Only one object, NOT a website or a card. Match the reference's blue server icons very closely: three compact separate horizontal rack server units stacked vertically with narrow gaps, soft rounded corners, glossy saturated cobalt-blue bodies, brighter azure-blue top panels, silver-cyan front slot details and tiny cyan indicator LEDs. Isometric three-quarter view with front facing lower-left and right side visible, top visible. Friendly premium commercial 3D icon, crisp edges, soft ambient occlusion, carefully shaped highlights, soft subtle contact shadow. Centered square composition, the entire stack visible with 10 percent clear margin. The stack occupies about 78 percent of the frame. Genuinely transparent background preserving alpha. No pedestal, no cables, no cloud, no CPU chip, no accessories, no surrounding badge, no text, no brand, no logos, no numbers, no watermark, no floor plane. Color palette azure #0078ff, cobalt #0058dc, deep blue #073580, with restrained white/cyan accents. Aim for the clean polished illustration style of the server icons in the attached screenshot, not a photorealistic server rack."
+}

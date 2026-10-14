@@ -65,14 +65,16 @@ function collect(value) {
     if (typeof item === "object") collect(item);
   }
 }
-collect(data.landing);
+// Use-case cards follow the approved six-category reference, checked below.
+collect({ ...data.landing, useCases: [] });
 collect(data.comparison);
 // Feedback and press now use shared homepage content, verified in verify-vps-amd.mjs.
 
 collect(data.faq);
 collect(data.cta);
 collect(data.learning);
-collect(data.hero.blocks);
+// The reference-led hero replaces the old promotional badge with service copy.
+collect(data.hero.blocks.filter((block) => block.tag !== "span"));
 collect(data.pricing.blocks);
 collect(data.hotDeals.blocks);
 required.push(
@@ -109,7 +111,9 @@ try {
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator("header.site-header")).toHaveCount(1);
   await expect(page.locator("footer.footer")).toHaveCount(1);
-  await expect(page.locator("h1")).toHaveText("Thuê VPS Việt Nam");
+  await expect(page.locator("h1")).toHaveText(
+    "Thuê VPS Hiệu năng cao cho mọi nhu cầu",
+  );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     "https://interdata.vn/thue-vps/",
@@ -150,6 +154,34 @@ try {
           .filter((href) => !document.getElementById(href.slice(1))),
       ),
   ).toEqual([]);
+  const services = page.locator('section[aria-labelledby="vps-range-title"]');
+  await expect(services.locator("article")).toHaveCount(6);
+  for (const service of data.pricing.services.filter(
+    (item) => item.gid !== 101,
+  ))
+    await expect(services.locator(`a[href="${service.href}"]`)).toHaveCount(1);
+  for (const href of [
+    "https://interdata.vn/vps-n8n/",
+    "https://interdata.vn/vps-vibe-coding/",
+  ])
+    await expect(services.locator(`a[href="${href}"]`)).toHaveCount(1);
+
+  const applications = page.locator(
+    'section[aria-labelledby="use-cases-title"]',
+  );
+  await expect(applications.locator("h3")).toHaveText([
+    "Lưu trữ Website & Ứng dụng",
+    "Phát triển & Kiểm thử phần mềm",
+    "Chạy cơ sở dữ liệu",
+    "Triển khai hệ thống doanh nghiệp",
+    "Làm việc và quản trị từ xa",
+    "Triển khai dịch vụ và công cụ khác",
+  ]);
+  await expect(applications.locator("article a")).toHaveCount(6);
+  for (const link of await applications.locator("article a").all())
+    expect(await link.getAttribute("href")).toMatch(
+      /^(https:\/\/interdata\.vn\/blog\/|\/lien-he\/)/,
+    );
 
   for (const asset of manifest.assets)
     expect(
@@ -218,9 +250,9 @@ try {
       (product) => !product.name.toLowerCase().includes("custom"),
     );
     await expect(panel.locator("article[data-pid]")).toHaveCount(
-      Math.min(6, products.length),
+      Math.min(4, products.length),
     );
-    if (products.length > 6)
+    if (products.length > 4)
       await panel
         .getByRole("button", { name: "Xem thêm", exact: true })
         .click();
@@ -234,24 +266,52 @@ try {
     ).toEqual(products.map((product) => product.pid));
     for (const product of products) {
       const card = panel.locator(`article[data-pid="${product.pid}"]`);
-      const monthly = Number(product.pricing.VND.monthly) > 0;
-      const price = product.pricing.VND[monthly ? "monthly" : "quarterly"];
-      const value = `${new Intl.NumberFormat("vi-VN").format(Number(price))}đ`;
-      await expect(card.locator("strong").first()).toHaveText(value);
-      await expect(
-        card.getByRole("link", { name: "Đăng ký", exact: true }),
-      ).toHaveAttribute("href", product.product_url);
       const description = compact(
         decodeHTML(
           product.description.replace(/<[^>]*>/g, "").replace(/\?/g, "\n"),
         ),
       );
       expect(compact(await card.locator("ul").textContent())).toBe(description);
-      expect(await card.textContent()).toContain(
-        monthly ? "/ tháng" : "/ 3 tháng",
-      );
     }
-    if (products.length > 6)
+    const standardCycles = [
+      ["monthly", "1 tháng"],
+      ["quarterly", "3 tháng"],
+      ["semiannually", "6 tháng"],
+      ["annually", "12 tháng"],
+      ["biennially", "24 tháng"],
+      ["triennially", "36 tháng"],
+    ];
+    for (const [cycle, label] of standardCycles) {
+      const offered = products.some(
+        (product) => Number(product.pricing.VND[cycle]) > 0,
+      );
+      const tab = page.locator(`#vps-cycle-${service.gid}-tab-${cycle}`);
+      await expect(tab).toHaveCount(offered ? 1 : 0);
+      if (!offered) continue;
+      await tab.click();
+      await expect(panel.locator(`#vps-plans-${service.gid}`)).toHaveAttribute(
+        "aria-labelledby",
+        `vps-cycle-${service.gid}-tab-${cycle}`,
+      );
+      for (const product of products) {
+        const card = panel.locator(`article[data-pid="${product.pid}"]`);
+        const price = product.pricing.VND[cycle];
+        const available = Number(price) > 0;
+        await expect(card.locator("strong").first()).toHaveText(
+          available
+            ? `${new Intl.NumberFormat("vi-VN").format(Number(price))}đ`
+            : "Liên hệ",
+        );
+        await expect(card.locator("a")).toHaveAttribute(
+          "href",
+          available
+            ? `${product.product_url}${product.product_url.includes("?") ? "&" : "?"}billingcycle=${cycle}`
+            : "/lien-he/",
+        );
+        expect(await card.textContent()).toContain(`/ ${label}`);
+      }
+    }
+    if (products.length > 4)
       await panel.getByRole("button", { name: "Thu gọn", exact: true }).click();
   }
   await page.locator("#vps-tab-3").click();
@@ -281,6 +341,7 @@ try {
     }
   }
   await page.locator("#hot-tab-annually").click();
+  await page.locator("#vps-technical-details > summary").click();
   await page.locator("#environment-tab-1").click();
   await expect(page.locator("#environment-panel-1 article")).toHaveCount(4);
   await expect(page.locator("#environment-panel-0")).toBeHidden();
@@ -295,6 +356,24 @@ try {
   await faq.locator("summary").click();
   await expect(faq).toHaveAttribute("open", "");
   await faq.locator("summary").click();
+  const moreFaqs = page.getByText(
+    `Xem tất cả ${data.faq.items.length} câu hỏi`,
+    { exact: false },
+  );
+  await moreFaqs.click();
+  const lastFaq = page
+    .locator("details")
+    .filter({
+      has: page.getByRole("heading", {
+        name: data.faq.items.at(-1).question,
+        exact: true,
+      }),
+    })
+    .last();
+  await lastFaq.locator("summary").click();
+  await expect(lastFaq.locator("div")).toBeVisible();
+  await lastFaq.locator("summary").click();
+  await moreFaqs.click();
   await page.getByText("Xem thêm nội dung", { exact: true }).click();
   await expect(page.locator("#vps-learning-content")).toBeVisible();
   await page.getByText("Thu gọn nội dung", { exact: true }).click();
@@ -306,15 +385,32 @@ try {
     expect(
       await page.evaluate(() => document.documentElement.scrollWidth),
     ).toBeLessThanOrEqual(width);
-    const image = page.locator("main section").first().locator("img");
+    const image = page.locator("main section").first().locator("img").first();
     await expect
       .poll(() =>
         image.evaluate((node) => node.complete && node.naturalWidth > 0),
       )
       .toBe(true);
-    const bounds = await image.boundingBox();
+    const bounds = await page.locator("main section").first().boundingBox();
     expect(bounds.x).toBe(0);
     expect(Math.round(bounds.width)).toBe(width);
+    if (width >= 1100) {
+      const badges = await page
+        .locator("main section")
+        .first()
+        .locator('[class*="visualCard"]')
+        .evaluateAll((nodes) =>
+          nodes.map((node) => {
+            const bounds = node.getBoundingClientRect();
+            return { left: bounds.left, right: bounds.right };
+          }),
+        );
+      expect(badges).toHaveLength(5);
+      for (const badge of badges) {
+        expect(badge.left).toBeGreaterThanOrEqual(0);
+        expect(badge.right).toBeLessThanOrEqual(width);
+      }
+    }
     const audit = await new AxeBuilder({ page }).analyze();
     expect(
       audit.violations.map(({ id, nodes }) => ({
@@ -332,19 +428,26 @@ try {
       await page.screenshot({ path: `${directory}/benchmark-${width}.png` });
     }
     if (width < 768) {
-      await page
-        .getByRole("button", { name: "VPS LINUX: sau", exact: true })
-        .click();
-      await expect
-        .poll(() =>
-          page
-            .getByRole("group", { name: "VPS LINUX", exact: true })
-            .evaluate((node) => node.scrollLeft),
-        )
-        .toBeGreaterThan(20);
-      await page
-        .getByRole("button", { name: "VPS LINUX: trước", exact: true })
-        .click();
+      const useCases = page.locator(
+        'section[aria-labelledby="use-cases-title"]',
+      );
+      await expect(useCases.locator("article")).toHaveCount(6);
+      const useCaseLinks = useCases.locator("article a");
+      await useCaseLinks.first().focus();
+      for (let index = 1; index < 6; index++) {
+        await page.keyboard.press("Tab");
+        await expect(useCaseLinks.nth(index)).toBeFocused();
+      }
+      // Pricing follows the AMD stacked mobile grid, with every card visible.
+      const planColumns = await page
+        .locator("#vps-plans-3 article")
+        .evaluateAll(
+          (nodes) =>
+            new Set(
+              nodes.map((node) => Math.round(node.getBoundingClientRect().x)),
+            ).size,
+        );
+      expect(planColumns).toBe(1);
     }
     results.push({ width, overflow: false, accessibilityViolations: 0 });
     console.log(`PASS viewport ${width}: layout, hero, accessibility`);
@@ -372,7 +475,7 @@ try {
   const plain = await plainContext.newPage();
   await plain.goto(`${base}/thue-vps/`);
   await expect(plain.locator("#vps-panel-3")).toBeVisible();
-  await expect(plain.locator("#vps-panel-3 article[data-pid]")).toHaveCount(6);
+  await expect(plain.locator("#vps-panel-3 article[data-pid]")).toHaveCount(4);
   await expect(
     plain.getByText(data.faq.items[0].question, { exact: true }),
   ).toBeVisible();
