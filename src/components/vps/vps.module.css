@@ -619,36 +619,6 @@
   font-weight: 700;
   flex-shrink: 0;
 }
-.process .card {
-  position: relative;
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  gap: 5px 15px;
-  padding: 0 22px 0 0;
-  border: 0;
-}
-.process .step {
-  grid-row: span 2;
-}
-.process .card h3 {
-  margin: 0;
-  font-size: 13px;
-}
-.process .card p {
-  margin: 0;
-  font-size: 12px;
-}
-.process .card:not(:last-child)::after {
-  content: "›";
-  position: absolute;
-  right: -8px;
-  top: 8px;
-  font-size: 28px;
-  color: #0054c9;
-}
-.process .center {
-  margin-top: 30px;
-}
 .technicalDetails {
   border-block: 1px solid #e0ebf7;
   background: #fff;
@@ -1096,9 +1066,6 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     row-gap: 30px;
   }
-  .process .card:nth-child(2)::after {
-    display: none;
-  }
   .faqLayout {
     gap: 30px;
     grid-template-columns: 1fr 1.5fr;
@@ -1285,12 +1252,6 @@
   .environmentGrid,
   .benchmarks {
     grid-template-columns: minmax(0, 1fr);
-  }
-  .process .card::after {
-    display: none;
-  }
-  .process .fourCards {
-    gap: 23px;
   }
   .card,
   .environment {

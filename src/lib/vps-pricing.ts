@@ -1,5 +1,6 @@
 import {
   pricingGids,
+  standardPricingGids,
   type BillingCycle,
   type VpsProduct,
   type VpsPrices,
@@ -67,10 +68,12 @@ export async function getVpsProducts(gid: number): Promise<VpsProduct[]> {
 }
 
 export async function getAllVpsPrices(): Promise<VpsPrices> {
-  const results = await Promise.allSettled(pricingGids.map(getVpsProducts));
+  const results = await Promise.allSettled(
+    standardPricingGids.map(getVpsProducts),
+  );
   return Object.fromEntries(
     results.map((result, index) => [
-      pricingGids[index],
+      standardPricingGids[index],
       result.status === "fulfilled" ? result.value : null,
     ]),
   );

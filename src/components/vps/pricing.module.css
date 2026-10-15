@@ -17,8 +17,7 @@
   font-size: clamp(30px, 2.8vw, 40px);
   line-height: 1.35;
 }
-.eyebrow,
-.dealEyebrow {
+.eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -118,9 +117,6 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 30px 22px;
 }
-.dealGrid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
 .plan {
   color: var(--text-primary);
   position: relative;
@@ -184,13 +180,6 @@
 .planPrice strong.longPrice {
   font-size: clamp(24px, 2vw, 30px);
 }
-.planPrice del {
-  color: var(--text-secondary);
-  font-size: 14px;
-}
-.accentPlan .planPrice del {
-  color: #e0eaff;
-}
 .accentPlan h3,
 .accentPlan .planPrice,
 .accentPlan .planPrice > span {
@@ -198,14 +187,6 @@
 }
 .accentPlan .planPrice {
   border-color: #ffffff3d;
-}
-.plan .planPrice > .renewal {
-  margin-top: 8px;
-  padding: 4px 8px;
-  border-radius: 6px;
-  color: #17633d;
-  background: #edf8f1;
-  font-size: 12px;
 }
 .plan ul {
   display: grid;
@@ -316,9 +297,6 @@
 .noScript a {
   color: var(--brand-primary);
   text-decoration: underline;
-}
-.hotDeals {
-  border-top: 1px solid #e0eaff;
 }
 @media (max-width: 1199px) {
   .pricingLayout {

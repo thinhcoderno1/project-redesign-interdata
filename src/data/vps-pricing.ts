@@ -18,10 +18,11 @@ export type VpsProduct = {
   pricing: { VND: Partial<Record<BillingCycle, string>> };
 };
 export type VpsPrices = Record<number, VpsProduct[] | null>;
-export const pricingGids = [
-  100,
-  ...content.pricing.services.map((service) => service.gid),
-];
+export const standardPricingGids = content.pricing.services.map(
+  (service) => service.gid,
+);
+// Keep the public API compatible; the service page loads only standard groups.
+export const pricingGids = [100, ...standardPricingGids];
 export const visibleProducts = (products: VpsProduct[]) =>
   products.filter((product) => !product.name.toLowerCase().includes("custom"));
 export const formatVnd = (value: string | number | undefined) => {

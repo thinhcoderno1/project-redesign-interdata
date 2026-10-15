@@ -203,26 +203,6 @@ export function VpsPage({ prices }: { prices: VpsPrices }) {
       <UseCases />
       <Pricing initialPrices={prices} />
       <Infrastructure />
-      <section
-        className={`${styles.section} ${styles.process}`}
-        aria-labelledby={content.landing.headers.GettingStarted.id}
-      >
-        <div className="container">
-          <Heading {...content.landing.headers.GettingStarted} />
-          <Cards items={content.landing.process} four />
-          <div className={styles.center}>
-            <a href="#pricing" className="button primary">
-              {copy(
-                content.landing.blocks.filter(
-                  (item) => item.function === "GettingStarted",
-                ),
-                "a",
-              )}
-              <ArrowRight size={17} aria-hidden="true" />
-            </a>
-          </div>
-        </div>
-      </section>
 
       <details className={styles.technicalDetails} id="vps-technical-details">
         <summary className="container">

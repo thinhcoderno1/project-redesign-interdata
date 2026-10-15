@@ -1,26 +1,40 @@
 .hero {
   position: relative;
-  padding-bottom: 28px;
-  background: linear-gradient(180deg, #f7faff, #f0f6ff);
 }
 .stage {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   color: #fff;
-  background: radial-gradient(
-    ellipse at 84% 42%,
-    #052354 0%,
-    #02132f 59%,
-    #031128 100%
+  background: #081522;
+}
+.backgroundImage {
+  z-index: -2;
+  object-fit: cover;
+  object-position: center 48%;
+}
+.stage::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    #051324fa 0%,
+    #051324f0 28%,
+    #051324d9 43%,
+    #05132470 60%,
+    #05132414 78%,
+    #0513240a 100%
   );
 }
 .container {
   position: relative;
   width: min(1248px, calc(100% - 96px));
-  min-height: 560px;
+  min-height: 520px;
   margin-inline: auto;
-  padding: 44px 0 56px;
+  padding: 44px 0 112px;
 }
 .breadcrumb {
   position: absolute;
@@ -129,143 +143,7 @@
   background: #103864;
   border-color: #4391d9;
 }
-.visual {
-  position: absolute;
-  z-index: 1;
-  left: 49%;
-  top: 16px;
-  width: 51%;
-  height: 530px;
-  pointer-events: none;
-}
-.serverImage {
-  position: absolute;
-  width: 118%;
-  max-width: none;
-  height: auto;
-  left: -8%;
-  top: -7px;
-  mask-image:
-    linear-gradient(90deg, transparent, #000 9%, #000 89%, transparent),
-    linear-gradient(0deg, transparent, #000 12%, #000 92%, transparent);
-  mask-composite: intersect;
-}
-.vpsPanel {
-  position: absolute;
-  left: 33%;
-  top: 47%;
-  width: 120px;
-  height: 100px;
-  display: grid;
-  place-items: center;
-  border: 2px solid #3dd5ff;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #05234bf2, #0059ab8a);
-  box-shadow:
-    0 0 20px #009cff55,
-    inset 0 0 22px #00a2ff28;
-  color: #fff;
-  font-size: 34px;
-  font-weight: 800;
-  text-shadow: 0 0 18px #007bff;
-  transform: perspective(600px) rotateY(-14deg) skewY(5deg);
-}
-.visualCard {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 164px;
-  min-height: 66px;
-  padding: 11px 12px;
-  border: 1px solid #2086ec;
-  border-left-color: #13b9ff;
-  border-radius: 14px;
-  background: linear-gradient(115deg, #07315ee0, #0e3985b8);
-  box-shadow:
-    0 8px 28px #00123640,
-    inset 0 0 22px #007bff13;
-  color: #9edaff;
-  transform: perspective(700px) rotateY(-12deg) skewY(6deg);
-}
-.visualCard svg {
-  width: 26px;
-  height: 26px;
-  flex-shrink: 0;
-  filter: drop-shadow(0 0 6px #007fff);
-}
-.visualCard strong {
-  display: block;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.5;
-}
-.visualCard small {
-  display: block;
-  color: #d0dff6;
-  font-size: 10px;
-  line-height: 1.5;
-  margin-top: 4px;
-}
-.cpu {
-  left: 0;
-  top: 19%;
-}
-.storage {
-  left: 0;
-  top: 36%;
-}
-.network {
-  left: 0;
-  top: 53%;
-}
-.security {
-  width: 178px;
-  right: 0;
-  top: 35%;
-}
-.scale {
-  width: 178px;
-  right: 0;
-  top: 52%;
-}
-.signals {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 20px;
-  width: min(720px, 70%);
-  margin: 28px 0 0;
-  padding: 0;
-  list-style: none;
-}
-.signals li {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  min-width: 0;
-}
-.signals svg {
-  flex-shrink: 0;
-  color: #1585ff;
-  margin-top: 1px;
-}
-.signals strong {
-  display: block;
-  color: #f0f5ff;
-  font-size: 13px;
-  line-height: 1.6;
-  font-weight: 600;
-}
-.signals small {
-  display: block;
-  color: #c1cee1;
-  font-size: 12px;
-  line-height: 1.65;
-  margin-top: 3px;
-}
+
 .benefitBar {
   position: relative;
   z-index: 3;
@@ -273,19 +151,19 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
   width: min(1248px, calc(100% - 96px));
-  margin: -21px auto 0;
-  padding: 22px 24px;
+  margin: -56px auto 0;
+  padding: 24px 28px;
   min-height: 112px;
   background: #fff;
   border: 1px solid #f0f5ff;
   border-radius: 18px;
-  box-shadow: 0 14px 40px #125ed505;
+  box-shadow: 0 14px 40px #125ed50d;
 }
 .benefit {
   display: flex;
   align-items: center;
-  gap: 13px;
-  padding-inline: 18px;
+  gap: 14px;
+  padding-inline: 16px;
   min-width: 0;
 }
 .benefit:first-child {
@@ -307,19 +185,14 @@
   color: #0075ff;
   background: #eef5ff;
 }
-.hero .benefit h2 {
-  font-size: 14px;
+.benefitBar .benefit h2 {
+  margin: 0;
+  font-size: 18px;
   line-height: 1.5;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.025em;
   text-wrap: initial;
   color: #0b1d3c;
-}
-.hero .benefit p {
-  color: #657793;
-  font-size: 12px;
-  line-height: 1.65;
-  margin-top: 5px;
 }
 .benefitIcon svg {
   width: 28px;
@@ -328,8 +201,8 @@
 @media (max-width: 1199px) {
   .container {
     width: calc(100% - 64px);
-    min-height: 540px;
-    padding-block: 40px 52px;
+    min-height: 500px;
+    padding-block: 40px 112px;
   }
   .copy {
     width: 54%;
@@ -341,79 +214,7 @@
     max-width: 480px;
     font-size: 14px;
   }
-  .visual {
-    left: 48%;
-    top: 35px;
-    width: 53%;
-    height: 500px;
-  }
-  .serverImage {
-    top: 60px;
-    width: 130%;
-    left: -15%;
-  }
-  .visualCard {
-    width: 145px;
-    min-height: 65px;
-    padding: 10px 11px;
-    gap: 9px;
-    border-radius: 11px;
-  }
-  .visualCard strong {
-    font-size: 11px;
-  }
-  .visualCard small {
-    font-size: 9px;
-  }
-  .visualCard svg {
-    width: 24px;
-    height: 24px;
-  }
-  .cpu {
-    left: -1%;
-    top: 19%;
-  }
-  .storage {
-    left: -1%;
-    top: 35%;
-  }
-  .network {
-    left: -1%;
-    top: 51%;
-  }
-  .security {
-    right: -2%;
-    top: 36%;
-  }
-  .scale {
-    right: -2%;
-    top: 52%;
-  }
-  .vpsPanel {
-    width: 100px;
-    height: 85px;
-    font-size: 32px;
-    left: 36%;
-    top: 49%;
-  }
-  .signals {
-    gap: 18px;
-    width: 80%;
-    margin-top: 34px;
-  }
-  .signals strong {
-    font-size: 12px;
-  }
-  .signals small {
-    font-size: 11px;
-  }
-  .signals li {
-    gap: 9px;
-  }
-  .signals svg {
-    width: 25px;
-    height: 25px;
-  }
+
   .hero .actions :global(.button) {
     min-height: 54px;
     padding: 13px 20px;
@@ -426,7 +227,10 @@
     min-width: 200px;
   }
   .benefitBar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 0;
     width: calc(100% - 64px);
+    margin-top: -56px;
     padding: 24px;
   }
   .benefit {
@@ -441,43 +245,25 @@
     width: 28px;
     height: 28px;
   }
-  .hero .benefit h2 {
-    font-size: 13px;
+  .benefit:nth-child(3) {
+    border-left: 0;
+    padding-left: 0;
   }
-  .hero .benefit p {
-    font-size: 11px;
+  .benefit:nth-child(2) {
+    padding-right: 0;
   }
 }
 @media (max-width: 899px) {
+  .backgroundImage {
+    object-position: 65% center;
+  }
+  .stage::after {
+    background: linear-gradient(90deg, #051324f5, #051324c9 65%, #0513248c);
+  }
   .copy {
     width: 100%;
   }
-  .visual {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: min(100%, 480px);
-    height: auto;
-    aspect-ratio: 1.5;
-    margin: 10px auto 0;
-  }
-  .visualCard {
-    display: none;
-  }
-  .serverImage {
-    top: -5%;
-    width: 110%;
-    left: -5%;
-  }
-  .vpsPanel {
-    left: 38%;
-    top: 44%;
-  }
-  .signals {
-    width: 100%;
-    max-width: 700px;
-    margin: 12px auto 0;
-  }
+
   .hero .description {
     max-width: 620px;
   }
@@ -492,21 +278,15 @@
   .benefit:nth-child(2) {
     padding-right: 0;
   }
-  .hero .benefit h2 {
-    font-size: 14px;
-  }
-  .hero .benefit p {
-    font-size: 12px;
-  }
 }
 @media (max-width: 599px) {
-  .hero {
-    padding-bottom: 24px;
+  .stage::after {
+    background: linear-gradient(90deg, #051324ed, #051324d9 55%, #051324b8);
   }
   .container {
     width: calc(100% - 40px);
     min-height: 0;
-    padding: 34px 0 52px;
+    padding: 34px 0 80px;
   }
   .copy {
     width: 100%;
@@ -553,51 +333,18 @@
   .secondary svg {
     display: none;
   }
-  .visual {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: min(100%, 380px);
-    height: auto;
-    aspect-ratio: 1.5;
-    margin: 13px auto 0;
-    opacity: 1;
-  }
-  .serverImage {
-    width: 110%;
-    left: -5%;
-    top: -2%;
-  }
-  .vpsPanel {
-    left: 38%;
-    top: 44%;
-    width: 77px;
-    height: 64px;
-    font-size: 25px;
-    border-radius: 8px;
-  }
-  .signals {
-    width: 100%;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 19px 15px;
-    margin-top: 2px;
-  }
-  .signals strong {
-    font-size: 12px;
-  }
-  .signals small {
-    font-size: 11px;
-  }
+
   .benefitBar {
     width: calc(100% - 40px);
-    padding: 20px 17px;
+    align-items: stretch;
+    padding: 20px 14px;
     border-radius: 17px;
     gap: 22px 0;
-    margin-top: -20px;
+    margin-top: -24px;
   }
   .benefit {
     padding-inline: 12px;
-    align-items: flex-start;
+    align-items: center;
     flex-direction: column;
     gap: 10px;
   }
@@ -609,12 +356,9 @@
     width: 25px;
     height: 25px;
   }
-  .hero .benefit h2 {
-    font-size: 12px;
-  }
-  .hero .benefit p {
-    font-size: 11px;
-    line-height: 1.7;
+  .benefitBar .benefit h2 {
+    font-size: 16px;
+    text-align: center;
   }
 }
 @media (max-width: 359px) {

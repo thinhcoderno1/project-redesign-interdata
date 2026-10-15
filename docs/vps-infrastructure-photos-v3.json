@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-15",
+  "method": "Sourced real photographs. No image generation or generative retouching.",
+  "processing": "Resize to maximum 1800px wide and encode WebP quality 88. CSS responsive crop and edge fade only.",
+  "images": [
+    {
+      "name": "cpu",
+      "source": "https://commons.wikimedia.org/wiki/File:EpycProcessor.jpg",
+      "download": "https://upload.wikimedia.org/wikipedia/commons/7/7d/EpycProcessor.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "author": "Raysonho @ Open Grid Scheduler / Grid Engine",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "asset": "public/images/vps/infrastructure-photo-v3/cpu.webp",
+      "note": "Real AMD EPYC photograph, generic hardware photo, not a claim that this exact engineering sample is installed at InterData.",
+      "width": 1800,
+      "height": 1350,
+      "sha256": "d4aaab2f8f63a48abd07a59fbadfa6cd350810a50fff7698d896660e44b7ca05"
+    },
+    {
+      "name": "storage",
+      "source": "https://commons.wikimedia.org/wiki/File:OCZ_Z6300_NVMe_flash_SSD,_U.2_(SFF-8639)_form-factor.jpg",
+      "download": "https://upload.wikimedia.org/wikipedia/commons/e/e2/OCZ_Z6300_NVMe_flash_SSD%2C_U.2_%28SFF-8639%29_form-factor.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "author": "Dmitry Nosachev",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "asset": "public/images/vps/infrastructure-photo-v3/storage.webp",
+      "note": "Real OCZ U.2 photograph used as a form-factor photo, not evidence of installed Gen 4 drive model. Source and CC BY-SA 4.0 attribution visible on image; displayed crop and WebP adaptation share the same license.",
+      "width": 1680,
+      "height": 962,
+      "sha256": "704ed809e6ec08f911fa5a4aec457602dd9d01245b85bfc77534b1ccd7cc1912"
+    },
+    {
+      "name": "network",
+      "source": "https://pxhere.com/en/photo/1610246",
+      "download": "https://c.pxhere.com/images/38/eb/942c8f4e3e446e6145ac588c0822-1610246.jpg!d",
+      "author": "ubayrak",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "asset": "public/images/vps/infrastructure-photo-v3/network.webp",
+      "note": "Real photograph of a network rack. Generic equipment photo, not an InterData rack or a bandwidth measurement.",
+      "width": 1200,
+      "height": 1600,
+      "sha256": "6bc75ee222ac85630c71abcc8b0985c8720ebb0d9c7bc2970f7fef7ef5b85b70"
+    },
+    {
+      "name": "datacenter",
+      "source": "public/images/viettel-idc.jpg",
+      "origin": "User-supplied C:/Users/interdigi 03/Downloads/KLVN/BlogPost/Viettel-IDC.jpg, recorded in docs/asset-manifest.json.",
+      "asset": "public/images/vps/infrastructure-photo-v3/datacenter.webp",
+      "note": "Existing user-supplied real Viettel IDC exterior photograph; no external author or license inferred.",
+      "width": 1800,
+      "height": 1200,
+      "sha256": "12a110cd06116eb0c925ab8b70d0e5c92217bc94017fd19c74b45b329f4340b5"
+    }
+  ]
+}

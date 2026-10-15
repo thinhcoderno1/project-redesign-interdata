@@ -1,40 +1,107 @@
+"use client";
+
 import Image from "next/image";
-import {
-  ArrowRight,
-  Box,
-  ChartNoAxesColumnIncreasing,
-  Code2,
-  Cpu,
-  Database,
-  Gem,
-  LayoutGrid,
-  Server,
-  Settings,
-  ShieldCheck,
-  Terminal,
-  Zap,
-} from "lucide-react";
+import { useRef, useState, useSyncExternalStore } from "react";
+import type { CSSProperties, KeyboardEvent, PointerEvent } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { vpsRangeServices } from "@/data/vps-service-range";
 import styles from "./service-range.module.css";
 
-const featureIcons = {
-  zap: Zap,
-  chart: ChartNoAxesColumnIncreasing,
-  settings: Settings,
-  gem: Gem,
-  server: Server,
-  shield: ShieldCheck,
-  cpu: Cpu,
-  database: Database,
-  grid: LayoutGrid,
-  terminal: Terminal,
-  code: Code2,
-  box: Box,
+const subscribe = () => () => {};
+const clientSnapshot = () => true;
+const serverSnapshot = () => false;
+const count = vpsRangeServices.length;
+const serviceBackgrounds: Record<
+  (typeof vpsRangeServices)[number]["id"],
+  string
+> = {
+  amd: "vps-amd.jpg",
+  platinum: "vps-platinum.jpg",
+  gold: "vps-gold.jpg",
+  linux: "vps-linux.jpg",
+  n8n: "vps-n8n.jpg",
+  vibe: "vps-vibe-coding.jpg",
 };
 
 export function ServiceRange() {
+  const enhanced = useSyncExternalStore(
+    subscribe,
+    clientSnapshot,
+    serverSnapshot,
+  );
+  const [active, setActive] = useState(0);
+  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+  const tabList = useRef<HTMLDivElement>(null);
+  const drag = useRef<{ x: number; y: number; pointer: number } | null>(null);
+
+  function select(index: number, focus = false) {
+    const next = (index + count) % count;
+    setActive(next);
+    const tab = tabs.current[next];
+    if (focus) tab?.focus({ preventScroll: true });
+    const list = tabList.current;
+    if (tab && list) {
+      const item = tab.getBoundingClientRect();
+      const bounds = list.getBoundingClientRect();
+      if (item.left < bounds.left || item.right > bounds.right) {
+        list.scrollTo({
+          left:
+            list.scrollLeft +
+            item.left -
+            bounds.left -
+            (bounds.width - item.width) / 2,
+          behavior: "instant",
+        });
+      }
+    }
+  }
+
+  function onTabKey(event: KeyboardEvent<HTMLButtonElement>, index: number) {
+    const target =
+      event.key === "ArrowRight"
+        ? index + 1
+        : event.key === "ArrowLeft"
+          ? index - 1
+          : event.key === "Home"
+            ? 0
+            : event.key === "End"
+              ? count - 1
+              : null;
+    if (target === null) return;
+    event.preventDefault();
+    select(target, true);
+  }
+
+  function onPointerDown(event: PointerEvent<HTMLDivElement>) {
+    if (
+      event.pointerType === "mouse" ||
+      (event.target as Element).closest("a,button")
+    )
+      return;
+    drag.current = {
+      x: event.clientX,
+      y: event.clientY,
+      pointer: event.pointerId,
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  }
+
+  function onPointerUp(event: PointerEvent<HTMLDivElement>) {
+    const start = drag.current;
+    drag.current = null;
+    if (!start || start.pointer !== event.pointerId) return;
+    const dx = event.clientX - start.x;
+    const dy = event.clientY - start.y;
+    if (Math.abs(dx) >= 50 && Math.abs(dx) > Math.abs(dy) * 1.3)
+      select(active + (dx < 0 ? 1 : -1));
+  }
+
   return (
-    <section className={styles.range} aria-labelledby="vps-range-title">
+    <section
+      className={styles.range}
+      aria-labelledby="vps-range-title"
+      aria-roledescription={enhanced ? "băng chuyền" : undefined}
+    >
       <div className={styles.container}>
         <div className={styles.heading}>
           <div className={styles.eyebrow}>
@@ -54,48 +121,104 @@ export function ServiceRange() {
             </span>
           </p>
         </div>
-        <div className={styles.grid}>
-          {vpsRangeServices.map((service) => (
-            <article
-              className={`${styles.card} ${styles[service.id]}`}
+        <div className={styles.controls} hidden={!enhanced}>
+          <button
+            type="button"
+            className={styles.arrow}
+            aria-label="Dòng VPS trước"
+            onClick={() => select(active - 1)}
+          >
+            <ChevronLeft size={22} aria-hidden="true" />
+          </button>
+          <div
+            className={styles.tabs}
+            role="tablist"
+            aria-label="Chọn dòng VPS · 6 dịch vụ"
+            ref={tabList}
+          >
+            {vpsRangeServices.map((service, index) => (
+              <button
+                key={service.id}
+                type="button"
+                role="tab"
+                id={`vps-range-tab-${service.id}`}
+                aria-selected={active === index}
+                aria-controls={`vps-range-panel-${service.id}`}
+                tabIndex={active === index ? 0 : -1}
+                ref={(element) => {
+                  tabs.current[index] = element;
+                }}
+                onClick={() => select(index)}
+                onKeyDown={(event) => onTabKey(event, index)}
+              >
+                VPS {service.name}
+              </button>
+            ))}
+          </div>
+          <button
+            type="button"
+            className={styles.arrow}
+            aria-label="Dòng VPS tiếp theo"
+            onClick={() => select(active + 1)}
+          >
+            <ChevronRight size={22} aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+      <div
+        className={styles.viewport}
+        data-enhanced={enhanced}
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+        onPointerCancel={() => {
+          drag.current = null;
+        }}
+      >
+        {vpsRangeServices.map((service, index) => {
+          let position = (index - active + count) % count;
+          if (position > count / 2) position -= count;
+          const selected = index === active;
+          return (
+            <div
               key={service.id}
-              data-vps-service={service.id}
+              className={styles.slide}
+              data-active={selected}
+              data-visible={Math.abs(position) <= 1}
+              id={`vps-range-panel-${service.id}`}
+              role={enhanced ? "tabpanel" : "group"}
+              aria-labelledby={
+                enhanced
+                  ? `vps-range-tab-${service.id}`
+                  : `vps-range-heading-${service.id}`
+              }
+              aria-hidden={enhanced && !selected ? true : undefined}
+              inert={enhanced && !selected}
+              style={{ "--position": position } as CSSProperties}
             >
-              <div className={styles.illustration}>
-                <Image
-                  src={`/images/vps/range-v3/${service.id}.webp`}
-                  alt={`Minh họa VPS ${service.name}`}
-                  width={768}
-                  height={768}
-                  sizes="(min-width: 1200px) 210px, (min-width: 900px) 180px, (min-width: 600px) 150px, 150px"
-                />
-              </div>
-              <div className={styles.cardLead}>
-                <span className={styles.label}>{service.label}</span>
-                <h3>
-                  VPS <span>{service.name}</span>
+              <Image
+                src={`/images/vps/range-slider-v1/${serviceBackgrounds[service.id]}`}
+                alt=""
+                fill
+                sizes="(min-width: 1000px) 840px, (min-width: 640px) calc(100vw - 128px), calc(100vw - 40px)"
+                className={styles.background}
+              />
+              <article
+                className={styles.slideContent}
+                data-vps-service={service.id}
+              >
+                <h3 id={`vps-range-heading-${service.id}`}>
+                  VPS {service.name}
                 </h3>
                 <p className={styles.description}>{service.description}</p>
-              </div>
-              <ul>
-                {service.features.map((feature) => {
-                  const Icon = featureIcons[feature.icon];
-                  return (
-                    <li key={feature.text}>
-                      <Icon size={19} strokeWidth={2.2} aria-hidden="true" />
-                      <span>{feature.text}</span>
-                    </li>
-                  );
-                })}
-              </ul>
-              <a className={styles.detailLink} href={service.href}>
-                Xem chi tiết
-                <ArrowRight size={17} aria-hidden="true" />
-                <span className={styles.srOnly}> VPS {service.name}</span>
-              </a>
-            </article>
-          ))}
-        </div>
+                <a className={styles.detailLink} href={service.href}>
+                  Xem chi tiết{" "}
+                  <span className={styles.srOnly}>VPS {service.name}</span>
+                  <ArrowRight size={18} aria-hidden="true" />
+                </a>
+              </article>
+            </div>
+          );
+        })}
       </div>
     </section>
   );

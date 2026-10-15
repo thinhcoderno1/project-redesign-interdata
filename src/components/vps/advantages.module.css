@@ -1,11 +1,14 @@
 .advantages {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
-  padding: 38px 0 32px;
+  display: flow-root;
   background:
     radial-gradient(ellipse at 50% 60%, #e5f3ff85, transparent 66%),
     linear-gradient(135deg, #f5faff, #f1f8ff 60%, #f7fbff);
+}
+.content {
+  overflow: hidden;
+  padding: 38px 0 32px;
 }
 .container {
   width: min(1248px, calc(100% - 96px));
@@ -74,23 +77,38 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 132%;
+  width: min(120%, 400px);
   aspect-ratio: 1;
-  border: 1px solid #cfeeffa8;
+  border: 1px dashed #69a9e799;
+  border-right: 2px solid #4397edb3;
   border-radius: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
+  background: radial-gradient(circle at 50% 4px, #3d95ed 0 3px, transparent 4px);
+  animation: orbit 36s linear infinite;
 }
 .visual::after {
-  width: 153%;
-  border-color: #dcf0ff80;
+  width: min(142%, 456px);
+  border: 1px solid #8abcf080;
+  border-top: 2px solid #529debab;
+  background: radial-gradient(circle at 50% calc(100% - 4px), #68a9eb 0 3px, transparent 4px);
+  animation-duration: 52s;
+  animation-direction: reverse;
 }
 .visual img {
   position: relative;
-  width: 125%;
-  max-width: none;
+  width: 102%;
+  max-width: 410px;
   height: auto;
   flex-shrink: 0;
+}
+@keyframes orbit {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .visual::before,
+  .visual::after { animation: none; }
 }
 .card {
   position: relative;
@@ -178,6 +196,24 @@
   font-size: 13px;
   line-height: 1.5;
 }
+@media (min-width: 1200px) {
+  .layout {
+    --arc-offset: clamp(12px, calc(22vw - 252px), 44px);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.28fr) minmax(0, 1fr);
+  }
+  .visual img {
+    /* Preserve the illustration size from the previous 1 / 1.06 / 1 layout. */
+    width: min(410px, calc(35.333vw - 48.05px));
+  }
+  .card:nth-child(2),
+  .card:nth-child(4) {
+    transform: translateX(var(--arc-offset));
+  }
+  .card:nth-child(5),
+  .card:nth-child(7) {
+    transform: translateX(calc(-1 * var(--arc-offset)));
+  }
+}
 @media (max-width: 1199px) {
   .container { width: calc(100% - 64px); }
   .layout { grid-template-columns: 1fr 0.85fr 1fr; gap: 15px; }
@@ -194,10 +230,10 @@
 }
 @media (max-width: 899px) {
   .layout { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto; }
-  .visual { grid-column: 1 / -1; grid-row: 1; height: 300px; }
-  .visual img { width: 350px; max-width: 100%; }
-  .visual::before { width: 380px; }
-  .visual::after { width: 440px; }
+  .visual { grid-column: 1 / -1; grid-row: 1; height: 340px; }
+  .visual img { width: 300px; max-width: 100%; }
+  .visual::before { width: 310px; }
+  .visual::after { width: 340px; }
   .card:nth-child(n) { grid-column: auto; grid-row: auto; }
   .highlights { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 0; }
   .highlights li { justify-content: flex-start; padding-inline: 24px; }
@@ -205,17 +241,17 @@
   .advantages .card p { font-size: 14px; }
 }
 @media (max-width: 639px) {
-  .advantages { padding: 30px 0; }
+  .content { padding: 30px 0; }
   .container { width: calc(100% - 40px); }
   .heading { margin-bottom: 18px; }
   .eyebrow { font-size: 11px; min-height: 31px; }
   .advantages .heading h2 { font-size: clamp(26px, 6.7vw, 32px); margin-block: 14px 10px; }
   .advantages .heading p { font-size: 14px; }
   .layout { grid-template-columns: minmax(0, 1fr); gap: 14px; }
-  .visual { grid-column: 1; height: 260px; }
-  .visual img { width: 300px; }
-  .visual::before { width: 300px; }
-  .visual::after { width: 350px; }
+  .visual { grid-column: 1; height: 280px; }
+  .visual img { width: 250px; max-width: 86%; }
+  .visual::before { width: min(96%, 250px); }
+  .visual::after { width: min(108%, 280px); }
   .card { padding: 19px 17px; border-radius: 16px; gap: 15px; }
   .icon { flex-basis: 46px; height: 46px; }
   .advantages .card h3 { font-size: 17px; }

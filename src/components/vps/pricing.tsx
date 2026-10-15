@@ -14,7 +14,6 @@ import {
   ChevronDown,
   Cpu,
   Crown,
-  Flame,
   Globe2,
   HardDrive,
   MemoryStick,
@@ -27,7 +26,7 @@ import {
   formatVnd,
   productSpecs,
   visibleProducts,
-  pricingGids,
+  standardPricingGids,
   type BillingCycle,
   type VpsPrices,
   type VpsProduct,
@@ -128,22 +127,15 @@ function ProductCard({
   index,
   cycle,
   period,
-  hot = false,
 }: {
   product: VpsProduct;
   index: number;
   cycle: BillingCycle;
   period: string;
-  hot?: boolean;
 }) {
   const price = { value: product.pricing.VND[cycle], period };
   const purchasable = Number(price.value) > 0;
-  const featured = index === (hot ? 1 : 2);
-  const originals = content.hotDeals.originalPrices as Record<
-    string,
-    Partial<Record<BillingCycle, number>>
-  >;
-  const original = cycle ? originals[product.name]?.[cycle] : undefined;
+  const featured = index === 2;
   return (
     <article
       className={`${styles.plan} ${featured ? styles.accentPlan : ""}`}
@@ -152,16 +144,11 @@ function ProductCard({
       {featured && (
         <span className={styles.popularTag}>
           <Crown size={16} aria-hidden="true" />
-          {hot ? "Phổ biến" : "Gói phổ biến"}
+          Gói phổ biến
         </span>
       )}
       <h3>{product.name}</h3>
       <div className={styles.planPrice}>
-        {hot && original && (
-          <del>
-            {formatVnd(original)} / {period}
-          </del>
-        )}
         <strong
           className={
             formatVnd(price.value).length > 10 ? styles.longPrice : undefined
@@ -170,10 +157,9 @@ function ProductCard({
           {purchasable ? formatVnd(price.value) : "Liên hệ"}
         </strong>
         <span className={styles.period}>/ {price.period}</span>
-        {hot && <span className={styles.renewal}>Gia hạn không đổi giá</span>}
       </div>
       <ul>
-        {productSpecs(product, hot).map((spec, specIndex) => {
+        {productSpecs(product).map((spec, specIndex) => {
           const Icon = specIcon(spec);
           return (
             <li key={`${specIndex}-${spec}`}>
@@ -186,15 +172,11 @@ function ProductCard({
       <a
         className={`button ${styles.planButton} ${featured ? "primary" : styles.outlineButton}`}
         href={purchasable ? checkoutUrl(product, cycle) : "/lien-he/"}
-        target={hot ? undefined : "_blank"}
+        target="_blank"
         rel="nofollow noopener noreferrer"
         title={product.name}
       >
-        {purchasable
-          ? hot
-            ? `Đăng ký ${period}`
-            : "Đăng ký"
-          : "Liên hệ tư vấn"}
+        {purchasable ? "Đăng ký" : "Liên hệ tư vấn"}
         <ArrowRight size={15} aria-hidden="true" />
       </a>
     </article>
@@ -289,24 +271,10 @@ export function Pricing({ initialPrices }: { initialPrices: VpsPrices }) {
   const [selected, setSelected] = useState(content.pricing.defaultGid);
   const [prices, setPrices] = useState(initialPrices);
   const [pending, setPending] = useState<number | null>(null);
-  const [cycle, setCycle] = useState<BillingCycle>(
-    (content.hotDeals.cycles.find((item) =>
-      prices[100]?.some(
-        (product) => Number(product.pricing.VND[item.key as BillingCycle]) > 0,
-      ),
-    )?.key as BillingCycle) || "annually",
-  );
-  const availableCycles = content.hotDeals.cycles.filter((item) =>
-    prices[100]?.some(
-      (product) => Number(product.pricing.VND[item.key as BillingCycle]) > 0,
-    ),
-  );
-  const selectedCycle =
-    availableCycles.find((item) => item.key === cycle) || availableCycles[0];
   useEffect(() => {
     const controller = new AbortController();
     let active = true;
-    const missing = pricingGids.filter((gid) => !initialPrices[gid]);
+    const missing = standardPricingGids.filter((gid) => !initialPrices[gid]);
     for (const gid of missing) {
       fetch(`/api/vps-pricing/?gid=${gid}`, { signal: controller.signal })
         .then(async (response) => {
@@ -341,11 +309,7 @@ export function Pricing({ initialPrices }: { initialPrices: VpsPrices }) {
   function unavailable(gid: number) {
     return (
       <div className={styles.unavailable} role="status">
-        <p>
-          {gid === 100
-            ? "Bảng giá Hot Deals đang được đồng bộ. Vui lòng tải lại trang hoặc liên hệ tư vấn để nhận cấu hình mới nhất."
-            : "Chưa tải được bảng giá. Vui lòng thử lại hoặc liên hệ tư vấn."}
-        </p>
+        <p>Chưa tải được bảng giá. Vui lòng thử lại hoặc liên hệ tư vấn.</p>
         <button
           type="button"
           className={styles.more}
@@ -413,74 +377,6 @@ export function Pricing({ initialPrices }: { initialPrices: VpsPrices }) {
               ))}
             </div>
           </noscript>
-        </div>
-      </section>
-      <section
-        className={`${styles.pricingSection} ${styles.hotDeals}`}
-        id="hot-deals"
-        aria-labelledby="hot-deals-title"
-      >
-        <div className={`container ${styles.pricingLayout}`}>
-          <div className={styles.pricingIntro}>
-            <span className={styles.dealEyebrow}>
-              <Flame size={15} aria-hidden="true" />
-              {
-                content.hotDeals.blocks.find((item) => item.tag === "span")
-                  ?.text
-              }
-            </span>
-            <h2 id="hot-deals-title">
-              {content.hotDeals.blocks.find((item) => item.tag === "h2")?.text}
-            </h2>
-            <p>
-              {content.hotDeals.blocks.find((item) => item.tag === "p")?.text}
-            </p>
-          </div>
-          {prices[100]?.length && selectedCycle ? (
-            <>
-              <div className={styles.pricingControls}>
-                <div className={styles.billingControl}>
-                  <span className={styles.cycleLabel}>Chu kỳ thanh toán</span>
-                  <TabButtons
-                    items={availableCycles}
-                    selected={selectedCycle.key}
-                    select={(key) => setCycle(key as BillingCycle)}
-                    label="Chọn chu kỳ Hot Deals"
-                    prefix="hot"
-                    cycles
-                  />
-                  <p className={styles.cycleNote}>
-                    Giá hiển thị là tổng tiền cho chu kỳ đã chọn.
-                  </p>
-                </div>
-              </div>
-              {availableCycles.map((item) => (
-                <div
-                  key={item.key}
-                  id={`hot-panel-${item.key}`}
-                  role="tabpanel"
-                  aria-labelledby={`hot-tab-${item.key}`}
-                  hidden={selectedCycle.key !== item.key}
-                  tabIndex={0}
-                >
-                  <div className={`${styles.planGrid} ${styles.dealGrid}`}>
-                    {prices[100]!.map((product, index) => (
-                      <ProductCard
-                        key={product.pid}
-                        product={product}
-                        index={index}
-                        cycle={item.key as BillingCycle}
-                        period={item.label}
-                        hot
-                      />
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </>
-          ) : (
-            unavailable(100)
-          )}
         </div>
       </section>
     </>

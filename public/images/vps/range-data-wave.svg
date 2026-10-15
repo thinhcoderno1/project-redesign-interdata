@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" fill="none">
+  <defs>
+    <linearGradient id="flow" x1="0" y1="140" x2="1000" y2="280" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3885ff" stop-opacity=".15"/>
+      <stop offset=".28" stop-color="#5abaff" stop-opacity=".65"/>
+      <stop offset=".62" stop-color="#71ceff" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#6b9fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g stroke="url(#flow)" stroke-width="1.2">
+    <path d="M-140 -80 C80 -80 100 280 340 280 S730 -120 1140 40"/>
+    <path d="M-140 -66 C80 -66 100 289 340 289 S730 -106 1140 54"/>
+    <path d="M-140 -52 C80 -52 100 298 340 298 S730 -92 1140 68"/>
+    <path d="M-140 -38 C80 -38 100 307 340 307 S730 -78 1140 82"/>
+    <path d="M-140 -24 C80 -24 100 316 340 316 S730 -64 1140 96"/>
+    <path d="M-140 -10 C80 -10 100 325 340 325 S730 -50 1140 110"/>
+    <path d="M-140 4 C80 4 100 334 340 334 S730 -36 1140 124"/>
+    <path d="M-140 18 C80 18 100 343 340 343 S730 -22 1140 138"/>
+    <path d="M-140 32 C80 32 100 352 340 352 S730 -8 1140 152"/>
+    <path d="M-140 46 C80 46 100 361 340 361 S730 6 1140 166"/>
+    <path d="M-140 60 C80 60 100 370 340 370 S730 20 1140 180"/>
+    <path d="M-140 74 C80 74 100 379 340 379 S730 34 1140 194"/>
+    <path d="M-140 88 C80 88 100 388 340 388 S730 48 1140 208"/>
+    <path d="M-140 102 C80 102 100 397 340 397 S730 62 1140 222"/>
+    <path d="M-140 116 C80 116 100 406 340 406 S730 76 1140 236"/>
+    <path d="M-140 130 C80 130 100 415 340 415 S730 90 1140 250"/>
+    <path d="M-140 144 C80 144 100 424 340 424 S730 104 1140 264"/>
+    <path d="M-140 158 C80 158 100 433 340 433 S730 118 1140 278"/>
+  </g>
+  <g fill="#7bcfff" opacity=".6">
+    <circle cx="340" cy="316" r="2.4"/>
+    <circle cx="340" cy="388" r="2"/>
+    <circle cx="169" cy="300" r="1.7"/>
+  </g>
+</svg>

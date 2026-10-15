@@ -1,0 +1,44 @@
+{
+  "tool": "image_gen.imagegen (built-in)",
+  "mode": "Four independent generations",
+  "role": "AI-generated photographic illustrations for the approved infrastructure refresh, not documentary photographs of actual InterData facilities.",
+  "processing": "WebP quality 90, max 1800px wide. Original PNGs retained. CSS edge masks only.",
+  "images": [
+    {
+      "id": "cpu",
+      "prompt": "Use case: photorealistic-natural. Create ONE finished ultra-wide 3:1 landscape photographic website asset, part of a coherent four-image enterprise VPS infrastructure series. It should look like a professionally photographed real data center hardware detail, with physically plausible mechanisms, refined realistic brushed steel, graphite cabinets and visible fine textures. Restrained studio-documentary photography, soft neutral-white key light, understated cobalt-blue reflected ambient light, natural shadows, realistic depth of field, no heavy color grading. Match a website with InterData navy #031677, card #102681, primary blue #0043EC. Keep far outer edges dark, uncluttered, fading visually toward navy; main physical subject must remain clear and naturally lit. No lettering, labels, logos, captions, frame, border, UI, graphics, neon beams, floating objects, holograms, giant fantasy chips, isometric view, vector artwork, glossy CGI, 3D render, blue glowing circuitry, map, or smoke. No people. Generic generated photographic illustration, not documentary evidence of InterData facilities. Strong horizontal composition with generous safe margins; main subject fits within central 70% of HEIGHT for shallow responsive crop. Subject: inside of an open professional 1U rackmount server during maintenance, medium-close elevated three-quarter camera angle, two normal rectangular aluminum CPU heatsinks with precise fine fins seated on a realistic motherboard, orderly banks of RAM DIMMs and black cooling fans. Clean engineering detail and authentic metal, tiny screws and connections. Main hardware focal point around 42% of image width, background soft racks; avoid giant exposed processor on a platform. Wide physical server housing across frame.",
+      "source": "C:/Users/interdigi 03/.codex/generated_images/01a13dc0-9f82-7a00-a9d3-d7d03a4cb47d/exec-2bad6843-7aa9-46e2-945b-f43eca79463a.png",
+      "asset": "public/images/vps/infrastructure-v4/cpu.webp",
+      "width": 1800,
+      "height": 600,
+      "sha256": "ce4bb22044feae8c9b0bd45fcefd354ba6a42fe558d46d25ded4a26c4ff00fd1"
+    },
+    {
+      "id": "storage",
+      "prompt": "Use case: photorealistic-natural. Create ONE finished ultra-wide 3:1 landscape photographic website asset, part of a coherent four-image enterprise VPS infrastructure series. It should look like a professionally photographed real data center hardware detail, with physically plausible mechanisms, refined realistic brushed steel, graphite cabinets and visible fine textures. Restrained studio-documentary photography, soft neutral-white key light, understated cobalt-blue reflected ambient light, natural shadows, realistic depth of field, no heavy color grading. Match a website with InterData navy #031677, card #102681, primary blue #0043EC. Keep far outer edges dark, uncluttered, fading visually toward navy; main physical subject must remain clear and naturally lit. No lettering, labels, logos, captions, frame, border, UI, graphics, neon beams, floating objects, holograms, giant fantasy chips, isometric view, vector artwork, glossy CGI, 3D render, blue glowing circuitry, map, or smoke. No people. Generic generated photographic illustration, not documentary evidence of InterData facilities. Strong horizontal composition with generous safe margins; main subject fits within central 70% of HEIGHT for shallow responsive crop. Subject: two real-world 2.5-inch enterprise U.2 NVMe SSDs in dark metal hot-swap carriers, one partly slid out from a rack server storage bay, the other seated in its bay. Plausible sturdy U.2 connector and carrier latch details, subtle drive status LEDs. Low oblique close-up with tactile perforated aluminum and graphite metal. Main storage hardware around 62% of image width, leftmost area dark clear. No M.2 memory sticks, no SATA plugs, no circuit-board fantasy.",
+      "source": "C:/Users/interdigi 03/.codex/generated_images/01a13dc0-9f82-7a00-a9d3-d7d03a4cb47d/exec-4dc9139e-c6fe-4953-9866-c21097bbe0be.png",
+      "asset": "public/images/vps/infrastructure-v4/storage.webp",
+      "width": 1800,
+      "height": 600,
+      "sha256": "735ba93e1aeba19eacfe4208e8cc94910cdb5ba55ab71431b78fdc1dc71987d6"
+    },
+    {
+      "id": "network",
+      "prompt": "Use case: photorealistic-natural. Create ONE finished ultra-wide 3:1 landscape photographic website asset, part of a coherent four-image enterprise VPS infrastructure series. It should look like a professionally photographed real data center hardware detail, with physically plausible mechanisms, refined realistic brushed steel, graphite cabinets and visible fine textures. Restrained studio-documentary photography, soft neutral-white key light, understated cobalt-blue reflected ambient light, natural shadows, realistic depth of field, no heavy color grading. Match a website with InterData navy #031677, card #102681, primary blue #0043EC. Keep far outer edges dark, uncluttered, fading visually toward navy; main physical subject must remain clear and naturally lit. No lettering, labels, logos, captions, frame, border, UI, graphics, neon beams, floating objects, holograms, giant fantasy chips, isometric view, vector artwork, glossy CGI, 3D render, blue glowing circuitry, map, or smoke. No people. Generic generated photographic illustration, not documentary evidence of InterData facilities. Strong horizontal composition with generous safe margins; main subject fits within central 70% of HEIGHT for shallow responsive crop. Subject: a neatly installed enterprise rack Ethernet network switch, normal RJ45 ports with orderly short blue patch cables, crisp connectors and tiny green activity LEDs. Real shallow depth of field, plausible cable organization and cabinet rails. Medium close-up from a modest side angle, main switch ports around 42% image width, blue cable curves create restrained natural lines. Background gently recedes into dark rack equipment. No luminous data trails or laser fibers.",
+      "source": "C:/Users/interdigi 03/.codex/generated_images/01a13dc0-9f82-7a00-a9d3-d7d03a4cb47d/exec-9555cd36-099d-41ff-89cf-7d1fb368389b.png",
+      "asset": "public/images/vps/infrastructure-v4/network.webp",
+      "width": 1800,
+      "height": 600,
+      "sha256": "981bd3b6f429152d98d663d8c6513473f511b22b649435df60f9ff5281884716"
+    },
+    {
+      "id": "datacenter",
+      "prompt": "Use case: photorealistic-natural. Create ONE finished ultra-wide 3:1 landscape photographic website asset, part of a coherent four-image enterprise VPS infrastructure series. It should look like a professionally photographed real data center hardware detail, with physically plausible mechanisms, refined realistic brushed steel, graphite cabinets and visible fine textures. Restrained studio-documentary photography, soft neutral-white key light, understated cobalt-blue reflected ambient light, natural shadows, realistic depth of field, no heavy color grading. Match a website with InterData navy #031677, card #102681, primary blue #0043EC. Keep far outer edges dark, uncluttered, fading visually toward navy; main physical subject must remain clear and naturally lit. No lettering, labels, logos, captions, frame, border, UI, graphics, neon beams, floating objects, holograms, giant fantasy chips, isometric view, vector artwork, glossy CGI, 3D render, blue glowing circuitry, map, or smoke. No people. Generic generated photographic illustration, not documentary evidence of InterData facilities. Strong horizontal composition with generous safe margins; main subject fits within central 70% of HEIGHT for shallow responsive crop. Subject: a pristine working enterprise data center aisle viewed slightly diagonally, full-height graphite server cabinets and glass/mesh doors, subtle normal status lights, neutral overhead strip lighting reflected softly on the clean raised floor. Focal rack detail around 62% image width, aisle perspective leads through center-right. Genuine architectural interior photography feel, sober enterprise setting, no people or identifiable location, no extra devices, no country map.",
+      "source": "C:/Users/interdigi 03/.codex/generated_images/01a13dc0-9f82-7a00-a9d3-d7d03a4cb47d/exec-3c3a0be8-ebf1-438d-b4c2-16c04978883e.png",
+      "asset": "public/images/vps/infrastructure-v4/datacenter.webp",
+      "width": 1800,
+      "height": 600,
+      "sha256": "49e73e2b85d7b9f2e65b46f6ea3098ab589b07b1b68c9a6ab60d5f34af35042e"
+    }
+  ]
+}

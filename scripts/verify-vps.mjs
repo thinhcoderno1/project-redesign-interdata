@@ -66,7 +66,18 @@ function collect(value) {
   }
 }
 // Use-case cards follow the approved six-category reference, checked below.
-collect({ ...data.landing, useCases: [] });
+// The getting-started section was removed from the visible page by request.
+const { GettingStarted: removedGettingStarted, ...visibleLandingHeaders } =
+  data.landing.headers;
+collect({
+  ...data.landing,
+  useCases: [],
+  process: [],
+  headers: visibleLandingHeaders,
+  blocks: data.landing.blocks.filter(
+    (block) => block.function !== "GettingStarted",
+  ),
+});
 collect(data.comparison);
 // Feedback and press now use shared homepage content, verified in verify-vps-amd.mjs.
 
@@ -76,9 +87,7 @@ collect(data.learning);
 // The reference-led hero replaces the old promotional badge with service copy.
 collect(data.hero.blocks.filter((block) => block.tag !== "span"));
 collect(data.pricing.blocks);
-collect(data.hotDeals.blocks);
 required.push(
-  ...data.hero.ticks,
   ...data.learning.operationsChecklist,
   ...data.landing.benchmarkChecklist,
   ...data.landing.definitionCards.flat(),
@@ -110,6 +119,7 @@ try {
   expect(response.status()).toBe(200);
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator("header.site-header")).toHaveCount(1);
+  await expect(page.locator(`#${removedGettingStarted.id}`)).toHaveCount(0);
   await expect(page.locator("footer.footer")).toHaveCount(1);
   await expect(page.locator("h1")).toHaveText(
     "Thuê VPS Hiệu năng cao cho mọi nhu cầu",
@@ -325,22 +335,11 @@ try {
   await page.keyboard.press("End");
   await expect(page.locator("#vps-tab-3")).toBeFocused();
 
-  for (const cycle of data.hotDeals.cycles) {
-    await page.locator(`#hot-tab-${cycle.key}`).click();
-    const panel = page.locator(`#hot-panel-${cycle.key}`);
-    for (const product of api[100]) {
-      const card = panel.locator(`article[data-pid="${product.pid}"]`);
-      await expect(card.locator("strong").first()).toHaveText(
-        `${new Intl.NumberFormat("vi-VN").format(Number(product.pricing.VND[cycle.key]))}đ`,
-      );
-      const url = new URL(await card.locator("a").getAttribute("href"));
-      expect(url.searchParams.get("billingcycle")).toBe(cycle.key);
-      expect(url.searchParams.get("rp")).toBe(
-        new URL(product.product_url).searchParams.get("rp"),
-      );
-    }
-  }
-  await page.locator("#hot-tab-annually").click();
+  await expect(
+    page.locator(
+      '#hot-deals, #hot-deals-title, [id^="hot-tab-"], [id^="hot-panel-"]',
+    ),
+  ).toHaveCount(0);
   await page.locator("#vps-technical-details > summary").click();
   await page.locator("#environment-tab-1").click();
   await expect(page.locator("#environment-panel-1 article")).toHaveCount(4);
@@ -394,23 +393,15 @@ try {
     const bounds = await page.locator("main section").first().boundingBox();
     expect(bounds.x).toBe(0);
     expect(Math.round(bounds.width)).toBe(width);
-    if (width >= 1100) {
-      const badges = await page
+    // The photographic hero replaces the floating cards and duplicate features.
+    await expect(
+      page
         .locator("main section")
         .first()
-        .locator('[class*="visualCard"]')
-        .evaluateAll((nodes) =>
-          nodes.map((node) => {
-            const bounds = node.getBoundingClientRect();
-            return { left: bounds.left, right: bounds.right };
-          }),
-        );
-      expect(badges).toHaveLength(5);
-      for (const badge of badges) {
-        expect(badge.left).toBeGreaterThanOrEqual(0);
-        expect(badge.right).toBeLessThanOrEqual(width);
-      }
-    }
+        .locator(
+          '[class*="visualCard"], [class*="signals"], [class*="vpsPanel"]',
+        ),
+    ).toHaveCount(0);
     const audit = await new AxeBuilder({ page }).analyze();
     expect(
       audit.violations.map(({ id, nodes }) => ({
@@ -474,6 +465,8 @@ try {
   const plainContext = await browser.newContext({ javaScriptEnabled: false });
   const plain = await plainContext.newPage();
   await plain.goto(`${base}/thue-vps/`);
+  await expect(plain.locator("#hot-deals, #hot-deals-title")).toHaveCount(0);
+  await expect(plain.locator(`#${removedGettingStarted.id}`)).toHaveCount(0);
   await expect(plain.locator("#vps-panel-3")).toBeVisible();
   await expect(plain.locator("#vps-panel-3 article[data-pid]")).toHaveCount(4);
   await expect(

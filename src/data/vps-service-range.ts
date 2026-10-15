@@ -81,7 +81,7 @@ export const vpsRangeServices = [
     label: "ỨNG DỤNG EZYPLATFORM",
     href: automation.secondaryHref,
     description:
-      "Triển khai ứng dụng xây dựng cùng AI trên EzyPlatform. Có sẵn template để thiết lập môi trường ban đầu.",
+      "Triển khai ứng dụng xây dựng cùng AI trên EzyPlatform. Chỉ hỗ trợ mã nguồn EzyPlatform.",
     features: [
       { icon: "code", text: "Chỉ hỗ trợ mã nguồn EzyPlatform" },
       { icon: "cpu", text: "Chọn template EzyPlatform khi tạo VPS" },

@@ -1,0 +1,10 @@
+{
+  "tool": "image_gen.imagegen (built-in)",
+  "mode": "generate",
+  "asset": "public/images/vps/hero-datacenter-photo-v3.webp",
+  "source": "C:/Users/interdigi 03/.codex/generated_images/01a13dc0-9f82-7a00-a9d3-d7d03a4cb47d/exec-38967bf9-8f4a-4081-8b20-f80699e89bcb.png",
+  "dimensions": [1672, 941],
+  "optimization": "WebP quality 88; 216182 bytes",
+  "role": "Decorative AI-generated photographic-style generic datacenter background; not a photograph of InterData facilities.",
+  "prompt": "Use case: photorealistic-natural. Asset type: wide photographic background for a corporate Vietnamese VPS hosting website hero. Create a highly believable professional architectural photograph of a contemporary operational data center. Landscape 16:9 composition, 2048x1152 if possible. At the right two thirds: real full-height matte graphite server racks with perforated steel cabinet doors, plausible rackmount compute equipment, tiny restrained green and amber status LEDs, real cable management mostly concealed inside the cabinets; orderly aisle with raised dark gray floor tiles and overhead neutral-white practical strip lighting, gently receding perspective. Left 40 percent: very dark unlit navy-gray wall and subtle out-of-focus architecture, low-detail negative space for HTML headline and buttons, no subject there. Camera at eye height, architectural 35mm lens, straight verticals, subtle natural lens response, crisp realistic metal texture, realistic indoor exposure, natural slightly cool white balance, understated navy charcoal and steel gray palette. No people. Premium enterprise infrastructure photography with quiet confidence, documentary realism, normal believable room scale. Avoid illustration, CGI, 3D render, floating server towers, clouds, platforms, neon blue outlines, artificial glow, holograms, graphic overlays, cyberpunk, oversaturated cyan lighting, exaggerated reflections, lens flares, icons, feature cards, typography, readable labels, logos, watermarks. No claims or branded site identification. This represents generic data-center infrastructure and must not imply any particular company facility."
+}

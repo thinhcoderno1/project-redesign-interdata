@@ -1,0 +1,32 @@
+{
+  "tool": "image_gen.imagegen (built-in)",
+  "reference": "c:/Users/interdigi 03/Downloads/KLVN/BlogPost/Hạ tầng VPS hiện đại tại Việt Nam.png",
+  "role": "New illustrative hardware scenes matching the supplied design reference. Not actual photographs of InterData facilities or evidence of certification.",
+  "optimization": "WebP quality 90, 1600px wide; original generated PNGs retained.",
+  "images": [
+    {
+      "id": "cpu",
+      "prompt": "Use case: stylized-concept. Asset: one isolated wide 3:1 landscape infrastructure illustration for the exact attached Vietnamese web section reference. Input image is a STYLE AND SUBJECT reference only, NOT an edit target. Generate only the requested single hardware scene; no web page, cards, text panels, typography, captions, numerals, logos or watermarks. Match the reference closely: premium metallic hardware in a deep midnight-blue datacenter environment, strong crisp electric blue/cyan edge lights and luminous data traces, glossy steel highlights, blue-black background. Wide horizontal crop with subject filling center 70%, full object visible and safe crop margins; realistic detailed metal but intentional high-end technical illustration like reference, no people. Dark edges blend into #03194a. Main subject: large square silver CPU seated on a motherboard, elevated three-quarter close-up, concentric metallic socket layers, blue luminous traces moving along motherboard to both sides. Exactly the CPU scene in row one of reference, but do not write CPU or any text on processor. Wide horizontal composition.",
+      "source": "C:/Users/interdigi 03/.codex/generated_images/01a13dc0-9f82-7a00-a9d3-d7d03a4cb47d/exec-ace3e24d-d9fc-41bb-b0bc-85a9bd96761b.png",
+      "asset": "public/images/vps/infrastructure-v2/cpu.webp"
+    },
+    {
+      "id": "storage",
+      "prompt": "Use case: stylized-concept. Asset: one isolated wide 3:1 landscape infrastructure illustration for the exact attached Vietnamese web section reference. Input image is a STYLE AND SUBJECT reference only, NOT an edit target. Generate only the requested single hardware scene; no web page, cards, text panels, typography, captions, numerals, logos or watermarks. Match the reference closely: premium metallic hardware in a deep midnight-blue datacenter environment, strong crisp electric blue/cyan edge lights and luminous data traces, glossy steel highlights, blue-black background. Wide horizontal crop with subject filling center 70%, full object visible and safe crop margins; realistic detailed metal but intentional high-end technical illustration like reference, no people. Dark edges blend into #03194a. Main subject: enterprise storage controller chip / NVMe hardware module on a server motherboard, wide rectangular brushed metal chip with blue glow below, viewed from elevated three-quarter angle, data trails running left to right. Match row two of reference. No text on chip, no decorative UI elements. Wide horizontal composition.",
+      "source": "C:/Users/interdigi 03/.codex/generated_images/01a13dc0-9f82-7a00-a9d3-d7d03a4cb47d/exec-e8e15385-220b-432b-b0e8-d0a2aca06dc9.png",
+      "asset": "public/images/vps/infrastructure-v2/storage.webp"
+    },
+    {
+      "id": "network",
+      "prompt": "Use case: stylized-concept. Asset: one isolated wide 3:1 landscape infrastructure illustration for the exact attached Vietnamese web section reference. Input image is a STYLE AND SUBJECT reference only, NOT an edit target. Generate only the requested single hardware scene; no web page, cards, text panels, typography, captions, numerals, logos or watermarks. Match the reference closely: premium metallic hardware in a deep midnight-blue datacenter environment, strong crisp electric blue/cyan edge lights and luminous data traces, glossy steel highlights, blue-black background. Wide horizontal crop with subject filling center 70%, full object visible and safe crop margins; realistic detailed metal but intentional high-end technical illustration like reference, no people. Dark edges blend into #03194a. Main subject: compact enterprise Ethernet switch at three-quarter angle with a row of realistic RJ45 ports, several connected cables and bright electric-blue data light trails flowing to the right foreground. Background dark server racks. Match row three of reference. No text or labels. Wide horizontal composition.",
+      "source": "C:/Users/interdigi 03/.codex/generated_images/01a13dc0-9f82-7a00-a9d3-d7d03a4cb47d/exec-12393537-2889-49fd-8dc5-d885a1e7b3a8.png",
+      "asset": "public/images/vps/infrastructure-v2/network.webp"
+    },
+    {
+      "id": "datacenter",
+      "prompt": "Use case: stylized-concept. Asset: one isolated wide 3:1 landscape infrastructure illustration for the exact attached Vietnamese web section reference. Input image is a STYLE AND SUBJECT reference only, NOT an edit target. Generate only the requested single hardware scene; no web page, cards, text panels, typography, captions, numerals, logos or watermarks. Match the reference closely: premium metallic hardware in a deep midnight-blue datacenter environment, strong crisp electric blue/cyan edge lights and luminous data traces, glossy steel highlights, blue-black background. Wide horizontal crop with subject filling center 70%, full object visible and safe crop margins; realistic detailed metal but intentional high-end technical illustration like reference, no people. Dark edges blend into #03194a. Main subject: an arc of tall dark blue datacenter server cabinets with a luminous outline silhouette of the country of Vietnam centered in front of them, delicate elliptical blue data rings around the racks. Match row four of reference. Correct elongated Vietnam mainland silhouette; no arbitrary continent, no labels or map claims. Wide horizontal composition.",
+      "source": "C:/Users/interdigi 03/.codex/generated_images/01a13dc0-9f82-7a00-a9d3-d7d03a4cb47d/exec-67c7a700-a266-435b-9f1b-ae531bfba8c7.png",
+      "asset": "public/images/vps/infrastructure-v2/datacenter.webp"
+    }
+  ]
+}
