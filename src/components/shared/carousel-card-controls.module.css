@@ -1,0 +1,49 @@
+.carousel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.carousel [data-carousel-track] {
+  grid-area: 1 / 1;
+  min-width: 0;
+  margin-inline: 24px;
+}
+.carousel [data-carousel-controls],
+.carousel [data-carousel-arrows] {
+  display: contents;
+}
+.carousel [data-carousel-pagination] {
+  grid-area: 2 / 1;
+  justify-self: center;
+  margin-top: 16px;
+}
+.carousel [data-carousel-arrows] button {
+  grid-area: 1 / 1;
+  align-self: center;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  box-shadow: var(--shadow-card);
+}
+.carousel [data-carousel-arrows] button:first-child {
+  justify-self: start;
+}
+.carousel [data-carousel-arrows] button:last-child {
+  justify-self: end;
+}
+@media (max-width: 639px) {
+  .carousel [data-carousel-track] {
+    margin-inline: 16px;
+  }
+  .carousel [data-carousel-arrows] button:first-child {
+    transform: translateX(-8px);
+  }
+  .carousel [data-carousel-arrows] button:last-child {
+    transform: translateX(8px);
+  }
+}
+@media (max-width: 359px) {
+  .carousel :global(.testimonial-card-top) {
+    flex-wrap: wrap;
+  }
+}

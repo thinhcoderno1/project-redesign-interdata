@@ -27,7 +27,7 @@ const measure = (page, selector) =>
       scrollY,
       section: rect(section),
       photo: rect(section.querySelector("img")),
-      content: rect(section.querySelector(".hero-content, .infra-content")),
+      content: rect(section.querySelector(".hero-content")),
     };
   });
 const covered = ({ section, photo }) => {
@@ -62,16 +62,14 @@ try {
       "data-parallax-active",
       "true",
     );
-    await expect(page.locator("#ha-tang .parallax-background")).toHaveAttribute(
-      "data-parallax-active",
-      "true",
-    );
+    // Infrastructure now uses the static alternating panels from /thue-vps/.
+    await expect(page.locator("#ha-tang .parallax-background")).toHaveCount(0);
     await page.evaluate(() => {
       document.documentElement.style.scrollBehavior = "auto";
     });
     const original = await content(page);
     const motions = [];
-    for (const selector of [".hero", "#ha-tang"]) {
+    for (const selector of [".hero"]) {
       const position = await page.locator(selector).evaluate((s) => ({
         top: s.getBoundingClientRect().top + scrollY,
         height: s.getBoundingClientRect().height,
@@ -104,7 +102,7 @@ try {
     }
     await page.emulateMedia({ reducedMotion: "reduce" });
     await settle(page);
-    for (const selector of [".hero", "#ha-tang"]) {
+    for (const selector of [".hero"]) {
       const value = await measure(page, selector);
       expect(value.photo).toEqual(value.section);
       await expect(page.locator(`${selector} .parallax-background`)).toHaveCSS(
@@ -152,7 +150,7 @@ try {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto(base, { waitUntil: "domcontentloaded" });
-  for (const selector of [".hero", "#ha-tang"]) {
+  for (const selector of [".hero"]) {
     const value = await measure(page, selector);
     expect(value.photo).toEqual(value.section);
     await expect(page.locator(`${selector} .parallax-background`)).toHaveCSS(

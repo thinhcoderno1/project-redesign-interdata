@@ -48,7 +48,7 @@
   border-radius: 30px;
   background: #22448752;
   color: #c5ddff;
-  font-size: 12px;
+  font-size: var(--vps-font-eyebrow);
   font-weight: 600;
   line-height: 1.6;
   letter-spacing: 0.04em;
@@ -56,8 +56,8 @@
 .range .heading h2 {
   margin: 14px 0 0;
   color: #fff;
-  font-size: clamp(28px, 2.8vw, 40px);
-  line-height: 1.25;
+  font-size: var(--vps-font-h2);
+  line-height: 1.35;
   font-weight: 800;
   letter-spacing: -0.035em;
   text-wrap: balance;
@@ -68,8 +68,8 @@
 .range .heading p {
   margin: 14px auto 0;
   color: #c5d4ed;
-  font-size: 16px;
-  line-height: 1.7;
+  font-size: var(--vps-font-lead);
+  line-height: 1.8;
 }
 .heading p > span {
   display: block;
@@ -116,7 +116,7 @@
   background: transparent;
   color: #e8efff;
   font: inherit;
-  font-size: 14px;
+  font-size: var(--vps-font-ui);
   font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
@@ -188,7 +188,7 @@
 .range .slide h3 {
   margin: 0;
   color: #fff;
-  font-size: 32px;
+  font-size: var(--vps-font-feature-title);
   font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.25;
@@ -197,8 +197,8 @@
   max-width: 690px;
   margin: 12px 0 0;
   color: #edf4ff;
-  font-size: 16px;
-  line-height: 1.65;
+  font-size: var(--vps-font-body);
+  line-height: 1.75;
 }
 .detailLink {
   display: inline-flex;
@@ -212,7 +212,7 @@
   border-radius: 10px;
   background: #0755ef;
   color: #fff;
-  font-size: 14px;
+  font-size: var(--vps-font-ui);
   font-weight: 600;
   line-height: 1.5;
 }
@@ -271,7 +271,7 @@
 }
 @media (max-width: 899px) {
   .range .heading h2 {
-    font-size: 32px;
+    font-size: var(--vps-font-h2);
   }
   .heading p > span {
     display: inline;
@@ -310,14 +310,14 @@
     margin-bottom: 24px;
   }
   .eyebrow > span {
-    font-size: 10px;
+    font-size: var(--vps-font-eyebrow);
   }
   .range .heading h2 {
-    font-size: clamp(25px, 6.7vw, 32px);
+    font-size: var(--vps-font-h2);
   }
   .range .heading p {
-    font-size: 14px;
-    line-height: 1.65;
+    font-size: var(--vps-font-lead);
+    line-height: 1.8;
   }
   .controls {
     gap: 8px;
@@ -332,7 +332,7 @@
     border-radius: 10px;
   }
   .tabs button {
-    font-size: 12px;
+    font-size: var(--vps-font-ui);
     min-height: 48px;
     padding: 10px 14px;
   }
@@ -350,11 +350,11 @@
     padding: 156px 22px 24px;
   }
   .range .slide h3 {
-    font-size: 28px;
+    font-size: var(--vps-font-feature-title);
   }
   .range .description {
-    font-size: 14px;
-    line-height: 1.7;
+    font-size: var(--vps-font-body);
+    line-height: 1.75;
   }
   .detailLink {
     margin-top: 22px;

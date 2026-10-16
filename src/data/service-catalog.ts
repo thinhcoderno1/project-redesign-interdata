@@ -33,7 +33,7 @@ export const vpsCatalog: CatalogService[] = [
     icon: "cpu",
     description:
       "Nền tảng Intel Xeon Platinum cho website, ứng dụng và hệ thống bạn muốn chủ động quản trị.",
-    href: "https://interdata.vn/platinum/",
+    href: "/vps-platinum/",
     price: 174000,
     period: "tháng",
     priceNote: "Platinum FPT · Plan 1",

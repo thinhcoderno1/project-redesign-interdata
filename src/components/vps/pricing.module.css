@@ -14,7 +14,7 @@
   text-align: center;
 }
 .pricingSection .pricingIntro h2 {
-  font-size: clamp(30px, 2.8vw, 40px);
+  font-size: var(--vps-font-h2);
   line-height: 1.35;
 }
 .eyebrow {
@@ -26,15 +26,15 @@
   border-radius: 999px;
   background: var(--brand-subtle);
   color: var(--brand-primary);
-  font-size: 12px;
+  font-size: var(--vps-font-eyebrow);
   font-weight: 600;
   letter-spacing: 0.04em;
 }
 .pricingSection .pricingIntro > p {
   max-width: 800px;
   margin: 16px auto 0;
-  font-size: 17px;
-  line-height: 1.85;
+  font-size: var(--vps-font-lead);
+  line-height: 1.8;
   color: var(--text-secondary);
 }
 .serviceTabs {
@@ -59,7 +59,7 @@
   padding: 10px 18px;
   color: var(--text-primary);
   background: transparent;
-  font-size: 15px;
+  font-size: var(--vps-font-ui);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -90,7 +90,7 @@
   display: block;
   margin-bottom: 10px;
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: var(--vps-font-small);
   font-weight: 500;
 }
 .billingTabs {
@@ -104,12 +104,12 @@
 }
 .billingTabs button {
   padding: 10px 12px;
-  font-size: 16px;
+  font-size: var(--vps-font-ui);
 }
 .pricingSection .cycleNote {
   margin-top: 10px;
   color: var(--text-secondary);
-  font-size: 13px;
+  font-size: var(--vps-font-small);
   line-height: 1.6;
 }
 .planGrid {
@@ -146,13 +146,13 @@
   border-radius: 999px;
   background: #dc2626;
   color: #fff;
-  font-size: 14px;
+  font-size: var(--vps-font-small);
   font-weight: 600;
   line-height: 20px;
   white-space: nowrap;
 }
 .pricingSection .plan h3 {
-  font-size: 22px;
+  font-size: var(--vps-font-h3);
   line-height: 1.45;
   letter-spacing: -0.025em;
 }
@@ -174,7 +174,7 @@
   overflow-wrap: anywhere;
 }
 .planPrice > span {
-  font-size: 15px;
+  font-size: var(--vps-font-small);
   color: var(--text-secondary);
 }
 .planPrice strong.longPrice {
@@ -199,8 +199,8 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  font-size: 16px;
-  line-height: 1.7;
+  font-size: var(--vps-font-body);
+  line-height: 1.75;
 }
 .plan li svg {
   flex-shrink: 0;
@@ -222,7 +222,7 @@
   padding: 12px 10px;
   border: 1px solid var(--brand-primary);
   border-radius: 999px;
-  font-size: 16px;
+  font-size: var(--vps-font-ui);
 }
 .outlineButton {
   color: var(--brand-primary);
@@ -261,7 +261,7 @@
   border: 0;
   color: var(--brand-primary);
   background: transparent;
-  font-size: 16px;
+  font-size: var(--vps-font-ui);
   font-weight: 600;
 }
 .more:hover {
@@ -310,7 +310,7 @@
     padding: 24px;
   }
   .pricingSection .plan h3 {
-    font-size: 21px;
+    font-size: var(--vps-font-h3);
   }
   .planPrice strong {
     font-size: 30px;
@@ -324,7 +324,7 @@
     padding-block: 56px;
   }
   .pricingSection .pricingIntro h2 {
-    font-size: 32px;
+    font-size: var(--vps-font-h2);
   }
 }
 @media (max-width: 639px) {
@@ -332,10 +332,10 @@
     padding-block: 44px;
   }
   .pricingSection .pricingIntro h2 {
-    font-size: 30px;
+    font-size: var(--vps-font-h2);
   }
   .pricingSection .pricingIntro > p {
-    font-size: 16px;
+    font-size: var(--vps-font-lead);
   }
   .serviceTabs {
     display: grid;
@@ -344,7 +344,7 @@
     border-radius: 18px;
   }
   .serviceTabs button {
-    font-size: 13px;
+    font-size: var(--vps-font-ui);
     padding-inline: 8px;
     white-space: normal;
   }
@@ -353,7 +353,7 @@
     border-radius: 18px;
   }
   .billingTabs button {
-    font-size: 15px;
+    font-size: var(--vps-font-ui);
     padding-inline: 8px;
   }
   .planGrid {

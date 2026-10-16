@@ -1,0 +1,48 @@
+.section {
+  --vps-font-h2: clamp(28px, 2.5vw, 36px);
+  --vps-font-feature-title: clamp(22px, 2vw, 28px);
+  --vps-font-body: var(--font-content);
+  --vps-font-lead: var(--font-content-lead);
+  --vps-font-ui: var(--font-content-ui);
+  --vps-font-small: calc(var(--font-content-meta) + 1px);
+  --vps-font-eyebrow: calc(var(--font-content-meta) - 1px);
+  font-size: var(--font-content);
+  line-height: 1.75;
+}
+
+.section h2 {
+  text-transform: uppercase;
+}
+
+.eyebrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+.itemHeading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.itemHeading svg {
+  width: 23px;
+  height: 23px;
+}
+
+.footer :global(.review-note) {
+  margin-right: auto;
+  color: var(--text-on-dark-secondary);
+}
+
+.section .photoCredit {
+  margin-top: 16px;
+  color: var(--text-on-dark-secondary);
+  font-size: var(--font-content-meta);
+}
+
+@media (max-width: 639px) {
+  .footer a {
+    width: 100%;
+  }
+}

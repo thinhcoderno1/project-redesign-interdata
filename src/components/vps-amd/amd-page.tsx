@@ -16,7 +16,7 @@ import {
   Video,
   type LucideIcon,
 } from "lucide-react";
-import { CustomerProof } from "@/components/shared/customer-proof";
+import { CompanyProofSections } from "@/components/shared/company-proof-sections";
 import { ParallaxBackground } from "@/components/ui/parallax-background";
 import { amdFaq } from "@/data/vps-amd";
 import { links } from "@/data/content";
@@ -501,7 +501,7 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
         </div>
         <span className={styles.photoCaption}>Ảnh minh họa datacenter</span>
       </section>
-      <CustomerProof />
+      <CompanyProofSections />
       <section
         id="cau-hoi"
         className={styles.section}

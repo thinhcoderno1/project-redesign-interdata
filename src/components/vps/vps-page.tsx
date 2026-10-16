@@ -1,26 +1,13 @@
 import Image from "next/image";
 import { CustomerProof } from "@/components/shared/customer-proof";
 import {
-  Check,
-  ArrowRight,
-  Cpu,
-  Database,
-  Network,
-  Globe2,
-  Gauge,
-  ShieldCheck,
-  KeyRound,
-  Headphones,
-  CloudCog,
-  Layers3,
-  Code2,
-  ShoppingCart,
-  Workflow,
-  Wrench,
-  Server,
-  HardDrive,
-  type LucideIcon,
-} from "lucide-react";
+  CapacitySection,
+  EducationSection,
+} from "@/components/home/company-sections";
+import { TechnologyPartners } from "@/components/home/technology-partners";
+import homeStyles from "@/components/home/home.module.css";
+import { Check } from "lucide-react";
+import { ConsultationCta } from "@/components/home/consultation-cta";
 import content from "@/data/vps-content.json";
 import type { VpsPrices } from "@/data/vps-pricing";
 import { Pricing } from "./pricing";
@@ -29,26 +16,9 @@ import { Infrastructure, ServiceRange, UseCases } from "./showcase";
 import styles from "./vps.module.css";
 import { VpsHero } from "./hero";
 import { VpsAdvantages } from "./advantages";
+import { VpsComparison } from "./comparison";
 
 type Block = { tag: string; text: string; function?: string };
-const icons: Record<string, LucideIcon> = {
-  Cpu,
-  Database,
-  Network,
-  Globe2,
-  Gauge,
-  ShieldCheck,
-  KeyRound,
-  Headphones,
-  CloudCog,
-  Layers3,
-  Code2,
-  ShoppingCart,
-  Workflow,
-  Wrench,
-  Server,
-  HardDrive,
-};
 function copy(blocks: Block[], tag: string, index = 0) {
   const block = blocks.filter((item) => item.tag === tag)[index];
   if (!block) throw new Error(`Missing VPS source text: ${tag} ${index}`);
@@ -79,105 +49,10 @@ function Heading({
     </div>
   );
 }
-function Cards({
-  items,
-  four = false,
-}: {
-  items: { icon?: string; title: string; text: string; number?: string }[];
-  four?: boolean;
-}) {
-  return (
-    <div className={four ? styles.fourCards : styles.cards}>
-      {items.map((item) => {
-        const Icon = icons[item.icon || "Server"] || Server;
-        return (
-          <article key={item.title} className={styles.card}>
-            {item.number ? (
-              <span className={styles.step}>{item.number}</span>
-            ) : (
-              <span className={styles.cardIcon}>
-                <Icon size={24} aria-hidden="true" />
-              </span>
-            )}
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
-          </article>
-        );
-      })}
-    </div>
-  );
-}
-function ComparisonTable({
-  columns,
-  rows,
-  criterion,
-  label,
-}: {
-  columns: { key: string; label: string; featured?: boolean }[];
-  rows: Record<string, string>[];
-  criterion: string;
-  label: string;
-}) {
-  return (
-    <div
-      className={styles.tableScroll}
-      role="region"
-      aria-label={`Bảng so sánh: ${label}`}
-      tabIndex={0}
-    >
-      <table>
-        <caption className={styles.srOnly}>{label}</caption>
-        <thead>
-          <tr>
-            <th scope="col">Tiêu chí</th>
-            {columns.map((column) => (
-              <th
-                key={column.key}
-                scope="col"
-                className={column.featured ? styles.featuredColumn : undefined}
-              >
-                {column.label}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr key={row[criterion]}>
-              <th scope="row">{row[criterion]}</th>
-              {columns.map((column) => (
-                <td
-                  key={column.key}
-                  className={column.featured ? styles.featuredCell : undefined}
-                >
-                  {row[column.key]}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
 export function VpsPage({ prices }: { prices: VpsPrices }) {
-  const definition = content.landing.blocks.filter(
-    (block) => block.function === "VpsDefinition",
-  );
   const performance = content.landing.blocks.filter(
     (block) => block.function === "Performance",
   );
-  const learning = content.learning.blocks;
-  const learningColumns = [
-    { key: "hosting", label: "Shared Hosting" },
-    { key: "vps", label: "VPS", featured: true },
-    { key: "cloud", label: "Cloud Server" },
-    { key: "dedicated", label: "Dedicated Server" },
-  ];
-  const terminal = content.cta.blocks
-    .filter((block) => block.tag === "p")
-    .slice(0, -1);
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -204,66 +79,17 @@ export function VpsPage({ prices }: { prices: VpsPrices }) {
       <Pricing initialPrices={prices} />
       <Infrastructure />
 
-      <details className={styles.technicalDetails} id="vps-technical-details">
-        <summary className="container">
-          <span>
-            <strong>Cấu hình, hiệu năng và môi trường triển khai</strong>
-            <small>
-              So sánh các dòng VPS, xem benchmark và lựa chọn hệ điều hành
-            </small>
-          </span>
-          <ChevronMark />
-        </summary>
-
-        <section
-          className={`${styles.section} ${styles.subtle}`}
-          aria-labelledby="vps-comparison-title"
-        >
-          <div className="container">
-            <Heading
-              blocks={content.comparison.blocks}
-              id="vps-comparison-title"
-            />
-            <ComparisonTable
-              columns={content.comparison.columns}
-              rows={content.comparison.rows}
-              criterion="criteria"
-              label={copy(content.comparison.blocks, "h2")}
-            />
-            <p className={styles.note}>
-              {copy(content.comparison.blocks, "p", 1)}
-            </p>
-          </div>
-        </section>
-
-        <section
-          className={styles.section}
-          aria-labelledby="vps-definition-title"
-        >
-          <div className={`container ${styles.definition}`}>
-            <div>
-              <span className="eyebrow">{copy(definition, "span")}</span>
-              <h2 id="vps-definition-title">{copy(definition, "h2")}</h2>
-              <p>{copy(definition, "p")}</p>
-              <p>{copy(definition, "p", 1)}</p>
-            </div>
-            <div className={styles.definitionSteps}>
-              {content.landing.definitionCards.map(([title, text], index) => (
-                <article key={title}>
-                  <span className={styles.step}>0{index + 1}</span>
-                  <div>
-                    <h3>{title}</h3>
-                    <p>{text}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
+      <div className={styles.technicalDetails} id="vps-technical-details">
+        <VpsComparison />
 
         <Environments />
 
-        <section className={styles.section} aria-labelledby="performance-title">
+        {/* Temporarily hidden; retain benchmark content for re-enabling. */}
+        <section
+          hidden
+          className={styles.section}
+          aria-labelledby="performance-title"
+        >
           <div className="container">
             <Heading blocks={performance} id="performance-title" />
             <ul className={styles.benchmarkChecklist}>
@@ -313,9 +139,16 @@ export function VpsPage({ prices }: { prices: VpsPrices }) {
             <p className={styles.note}>{copy(performance, "p", 1)}</p>
           </div>
         </section>
-      </details>
+      </div>
 
-      <CustomerProof />
+      <div className={`${homeStyles.home} ${styles.homeSections}`}>
+        <CapacitySection />
+      </div>
+      <CustomerProof controlsOnCards centerHeadings />
+      <div className={`${homeStyles.home} ${styles.homeSections}`}>
+        <EducationSection title="Kiến tạo tương lai" />
+        <TechnologyPartners />
+      </div>
 
       <section
         className={`${styles.section} ${styles.subtle}`}
@@ -341,109 +174,21 @@ export function VpsPage({ prices }: { prices: VpsPrices }) {
         </div>
       </section>
 
-      <section
-        className={`${styles.section} ${styles.cta} dark`}
-        aria-labelledby="vps-cta-title"
-      >
-        <Image
-          src={content.hero.background}
-          alt=""
-          fill
-          sizes="100vw"
-          className={styles.ctaPhoto}
-        />
-        <div className={`container ${styles.ctaLayout}`}>
-          <div>
-            <span className="eyebrow">Bắt đầu với InterData</span>
-            <h2 id="vps-cta-title">{copy(content.cta.blocks, "h2")}</h2>
-            <p>
-              {
-                content.cta.blocks.filter((block) => block.tag === "p").at(-1)
-                  ?.text
-              }
-            </p>
-            <div className={styles.actions}>
-              <a href="#pricing" className={`button ${styles.whiteButton}`}>
-                Xem bảng giá
-                <ArrowRight size={17} aria-hidden="true" />
-              </a>
-              <a
-                href="https://www.facebook.com/interdata.com.vn/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`button ${styles.heroSecondary}`}
-              >
-                Chat với tư vấn viên
-              </a>
-            </div>
-          </div>
-          <div className={styles.ctaVisual} aria-hidden="true">
-            <Image
-              src="/images/services-3d/cloud-platinum-gen2.webp"
-              alt=""
-              width={900}
-              height={600}
-              sizes="(min-width: 768px) 400px, 240px"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.section} aria-labelledby="vps-learning-title">
-        <div className="container">
-          <Heading blocks={learning} id="vps-learning-title" />
-          <details className={styles.learningDetails}>
-            <summary>
-              <span className={styles.expandLabel}>Xem thêm nội dung</span>
-              <span className={styles.collapseLabel}>Thu gọn nội dung</span>
-              <ChevronMark />
-            </summary>
-            <div className={styles.learningContent} id="vps-learning-content">
-              <div className={styles.terminal}>
-                <span className={styles.terminalLabel}>Minh họa</span>
-                <div className={styles.terminalDots} aria-hidden="true">
-                  ● ● ●
-                </div>
-                <pre>{terminal.map((block) => block.text).join("\n")}</pre>
-              </div>
-              <h3>{copy(learning, "h3")}</h3>
-              <p>{copy(learning, "p", 1)}</p>
-              <p>{copy(learning, "p", 2)}</p>
-              <Cards
-                items={content.learning.resources.map((item) => ({
-                  icon: item.icon,
-                  title: item.term,
-                  text: item.description,
-                }))}
-              />
-              <h3>{copy(learning, "h3", 1)}</h3>
-              <p>{copy(learning, "p", 3)}</p>
-              <ComparisonTable
-                columns={learningColumns}
-                rows={content.learning.comparisonRows}
-                criterion="criterion"
-                label="So sánh Shared Hosting, VPS, Cloud Server và Dedicated Server"
-              />
-              <h3>{copy(learning, "h3", 2)}</h3>
-              <p>{copy(learning, "p", 4)}</p>
-              <Cards items={content.learning.workloads} />
-              <h3>{copy(learning, "h3", 3)}</h3>
-              <ul className={styles.checklist}>
-                {content.learning.operationsChecklist.map((item) => (
-                  <li key={item}>
-                    <Check size={17} aria-hidden="true" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <aside className={styles.upgrade}>
-                <h3>{copy(learning, "h3", 4)}</h3>
-                <p>{copy(learning, "p", 5)}</p>
-              </aside>
-            </div>
-          </details>
-        </div>
-      </section>
+      <ConsultationCta
+        id="vps-consultation"
+        headingId="vps-cta-title"
+        className={styles.consultationCta}
+        eyebrow="KHỞI ĐẦU CÙNG INTERDATA"
+        title="VPS phù hợp cho ứng dụng của bạn."
+        description="Chia sẻ nhu cầu về website, ứng dụng hoặc hệ thống bạn muốn triển khai. InterData sẽ cùng bạn lựa chọn cấu hình VPS phù hợp với mức tải và ngân sách."
+        image="/images/cta/consultation-woman-upper-body.webp"
+        primaryAction={{ label: "Xem bảng giá VPS", href: "#pricing" }}
+        secondaryAction={{
+          label: "Chat với tư vấn viên",
+          href: "https://www.facebook.com/interdata.com.vn/",
+          newTab: true,
+        }}
+      />
     </main>
   );
 }

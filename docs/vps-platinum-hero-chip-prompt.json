@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "createdAt": "2026-10-16",
+  "mode": "edit",
+  "prompt": "Use case: precise-object-edit. Edit target: the supplied existing 16:9 VPS Platinum hero background.\nPrimary request: make an Intel Xeon Platinum processor clearly visible in the RIGHT foreground of this hero image, as a professional enterprise hardware advertising photograph.\nKeep the existing dark navy data-center aisle, silver server racks, restrained blue status lights, photographic finish, aspect ratio and the empty dark LEFT 45 percent used for website HTML headline, description and two buttons.\nAdd a large, crisp, realistically photographed brushed-silver CPU, resting slightly upright at a gentle three-quarter angle on a real dark motherboard in the right foreground, with believable contact shadow. The front metal lid must face the viewer and have exactly the neatly engraved dark text on three lines: \"intel\", \"XEON\", \"PLATINUM\". No specific CPU model number, no other writing.\nComposition: CPU centered around 74 percent across and 51 percent down. CPU fits entirely in the middle 56 percent of the image height and occupies about 28 percent of the canvas width, so both its full shape and branding survive a wide desktop crop and a mobile right-side crop. Silver chip and charcoal board in sharp focus, server aisle softly recedes behind. Clear separation from background, realistic metal highlights, subtle cool blue edge lighting.\nPreserve left-side negative space. No extra badges, no website text, no slogan, no holograms, no sci-fi rays, no floating icons, no huge glowing borders, no watermark. It should read as an elegant premium CPU product photograph with a datacenter background, not a toy or glossy 3D rendering.",
+  "reference": "public/images/vps-platinum/hero.webp",
+  "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a143df-4802-7da0-aec0-777ee4776781\\exec-572cf902-f1dc-40cd-adc1-0e0329e840f2.png",
+  "destination": "public/images/vps-platinum/hero-xeon-platinum-v2.webp",
+  "scope": "Replace the two Hero image references only. Preserve layout, copy, CTAs, pricing, metadata and all other sections."
+}

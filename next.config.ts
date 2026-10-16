@@ -5,6 +5,7 @@ const config: NextConfig = {
   trailingSlash: true,
   redirects() {
     return [
+      { source: "/platinum/", destination: "/vps-platinum/", permanent: true },
       { source: "/about-us/", destination: "/gioi-thieu/", permanent: true },
       { source: "/contact/", destination: "/lien-he/", permanent: true },
       {

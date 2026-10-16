@@ -185,15 +185,16 @@ try {
       .poll(() =>
         cards.first().evaluate((card) => getComputedStyle(card).borderTopColor),
       )
-      .toBe("rgb(0, 67, 236)");
+      .toBe("rgb(0, 102, 237)");
     const colors = await cards.first().evaluate((card) => ({
       focus: getComputedStyle(card.querySelector("a")).outlineColor,
       cta: getComputedStyle(card.querySelector("h3 + span")).color,
       border: getComputedStyle(card).borderTopColor,
     }));
     expect(colors.focus).toBe("rgb(0, 67, 236)");
-    expect(colors.cta).toBe("rgb(0, 67, 236)");
-    expect(colors.border).toBe("rgb(0, 67, 236)");
+    // Match the approved /thue-vps/ card accent; focus keeps the shared token.
+    expect(colors.cta).toBe("rgb(0, 102, 237)");
+    expect(colors.border).toBe("rgb(0, 102, 237)");
     const audit = await new AxeBuilder({ page })
       .include("#bao-chi")
       .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])

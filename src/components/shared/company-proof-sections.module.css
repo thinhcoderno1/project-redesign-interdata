@@ -1,0 +1,81 @@
+/* Match /thue-vps/ without applying its page styles to the host page. */
+.sections {
+  --brand-primary: #0066ed;
+  --proof-heading: clamp(28px, 2.5vw, 36px);
+  --proof-card-heading: clamp(20px, 1.7vw, 22px);
+  --proof-small: calc(var(--font-content-meta) + 1px);
+  --proof-eyebrow: calc(var(--font-content-meta) - 1px);
+  color: #10213e;
+  font-size: var(--font-content);
+  line-height: 1.75;
+}
+
+.sections section h2 {
+  font-size: var(--proof-heading);
+  line-height: 1.35;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.sections :global(.eyebrow) {
+  font-size: var(--proof-eyebrow);
+  letter-spacing: 0.07em;
+  margin-bottom: 12px;
+  color: #0054c9;
+  text-transform: uppercase;
+}
+
+.sections :global(.section-heading) p {
+  font-size: var(--font-content-lead);
+  line-height: 1.8;
+  color: #53647f;
+}
+
+.sections :global(.testimonial-copy) blockquote {
+  font-size: var(--font-content);
+  line-height: 1.75;
+}
+
+.sections :global(.testimonial-author) strong {
+  font-size: var(--font-content);
+}
+
+.sections :global(.testimonial-author) span,
+.sections :global(.testimonial-details) summary {
+  font-size: var(--proof-small);
+  line-height: 1.65;
+}
+
+.sections :global(.press) article h3 {
+  font-size: var(--proof-card-heading);
+  line-height: 1.5;
+}
+
+.sections :global(.press) article a > div:last-child > span {
+  font-size: var(--font-content-ui);
+}
+
+.education {
+  --brand-primary: #0043ec;
+  color: var(--text-primary);
+}
+
+.education :global(.education-heading) p {
+  font-size: var(--font-content-lead);
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+.sections .education :global(.eyebrow) {
+  color: var(--brand-primary);
+  letter-spacing: 0.14em;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 639px) {
+  .sections .education :global(.eyebrow) {
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+}

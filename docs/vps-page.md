@@ -1,9 +1,172 @@
 # Trang Thuê VPS
 
+## Bảng so sánh dạng kéo ngang 16/10/2026
+
+Section so sánh dùng `src/components/vps/comparison.tsx`,
+`comparison-rail.tsx` và `comparison.module.css`. Giữ vị trí trong khối
+`#vps-technical-details`, bốn dòng AMD / Platinum / Gold / Linux, thứ tự,
+bảy tiêu chí và toàn bộ giá trị từ `vps-content.json`. Bảng không sử dụng ảnh.
+Mô tả và liên kết xem chi tiết lấy từ `vps-service-range.ts` hiện có;
+không thêm các thông số hoặc nhãn xếp hạng từ ảnh mẫu.
+
+Desktop từ 900px hiển thị ba cột dịch vụ cùng cột tiêu chí cố định;
+640–899px hiển thị hai cột, dưới 640px một cột. Có kéo chuột, vuốt ngang tự
+nhiên, thanh cuộn, nút trái/phải và chỉ báo phạm vi đang xem. Khi focus vùng
+bảng, Arrow Left/Right chuyển một cột, Home/End về đầu/cuối; focus liên kết
+tự đưa cột tương ứng vào vùng nhìn, tránh bị cột tiêu chí che. Nút xem chi
+tiết ở đầu/cuối bảng được căn hàng, cao tối thiểu 44px. Khi tắt JavaScript,
+bảng và liên kết vẫn có đầy đủ, cuộn ngang tự nhiên vẫn dùng được.
+
+Kiểm tra riêng:
+
+```powershell
+$env:TEST_BASE_URL='http://localhost:3100'
+node scripts/verify-vps-comparison.mjs
+```
+
+QA tại 320/390/639/640/768/899/900/1024/1440/1920px kiểm tra số cột,
+không tràn ngang trang, cột tiêu chí cố định, kích thước/căn hàng CTA,
+nội dung nguồn và URL, kéo chuột, focus/bàn phím, accessibility tại sáu
+chiều rộng chính và fallback không JavaScript. Vuốt ngang và cuộn dọc được
+kiểm tra bằng touch input trong Chromium với mobile emulation.
+Kết quả/ảnh dev tại `artifacts/vps-comparison/`, bản production local tại
+`artifacts/vps-comparison/production/`; hồi quy toàn trang tại
+`artifacts/vps-comparison/full-qa/`. Build (gồm TypeScript), lint và
+`test:vps` đạt. Đây là kiểm chứng local, chưa triển khai lên tên miền chính thức.
+
 Route: `/thue-vps/`. Trang sử dụng layout website chung, font Be Vietnam Pro,
 color tokens hiện tại và contact widget của project.
 
+## Hiển thị thường trực khối kỹ thuật 16/10/2026
+
+Khối “Cấu hình, hiệu năng và môi trường triển khai” dùng container tĩnh thay
+cho `details/summary`. Theo yêu cầu tiếp theo cùng ngày, bỏ cả tiêu đề và
+dòng mô tả của khối; bảng so sánh nối trực tiếp sau section hạ tầng.
+Bảng so sánh và môi trường triển khai luôn hiển thị, kể cả khi tắt JavaScript.
+Benchmark được tạm ẩn theo yêu cầu tiếp theo cùng ngày. Giữ nguyên thứ tự, nội
+dung, liên kết, thiết kế và các tương tác bên trong từng section.
+
+`test:vps` và `verify-vps-comparison.mjs` kiểm tra trực tiếp nội dung mà
+không mở khối trước; kiểm tra hiển thị mặc định cả khi bật/tắt JavaScript.
+
+## Bỏ section Nền tảng cần biết trước khi triển khai 16/10/2026
+
+Gỡ toàn bộ section `VpsDefinition` gồm nhãn “Nền tảng cần biết trước khi
+triển khai”, tiêu đề định nghĩa, hai đoạn mô tả và các thẻ giải thích.
+Bỏ CSS riêng của section; bảng so sánh nối trực tiếp với section hệ điều
+hành/1-Click Applications. Giữ dữ liệu JSON nguồn và phần Tìm hiểu về VPS
+ở cuối trang. `test:vps` không còn yêu cầu hiển thị nội dung section đã bỏ,
+đồng thời kiểm tra section không tồn tại cả khi bật/tắt JavaScript.
+
 ## Nguồn nội dung
+
+### Tăng độ dễ đọc của FAQ 16/10/2026
+
+FAQ dùng token đọc của website: câu hỏi `--font-content` (17px desktop,
+16px dưới 640px), câu trả lời/mô tả/nút xem tất cả dùng `--font-content-ui`
+(16px desktop, 15px dưới 640px). Câu hỏi weight 600, giãn dòng 1.65;
+câu trả lời giãn dòng 1.85. Tăng padding và khoảng cách card, giữ nguyên
+20 câu, thứ tự, hiển thị 5 câu đầu, mở/thu gọn và dữ liệu FAQPage.
+Build và lint đạt. QA font, mở/thu gọn, bàn phím, accessibility và không tràn
+ngang ở 320–1920px; fallback không JavaScript đạt. Ảnh/kết quả local tại
+`artifacts/vps-faq-readability/`.
+
+### Bỏ section Kiến thức nền tảng 16/10/2026
+
+Gỡ toàn bộ section “Kiến thức nền tảng / Tìm Hiểu Về VPS” ở cuối trang,
+gồm phần mở rộng, ví dụ terminal, kiến thức ảo hóa, bảng so sánh mô hình,
+workload, checklist vận hành và gợi ý nâng cấp. Bỏ helper và CSS chỉ dùng
+cho section; giữ JSON nguồn, bảng so sánh các dòng VPS phía trên và CTA
+“Chọn cấu hình VPS phù hợp để triển khai”. CTA là section cuối trước footer.
+`test:vps` kiểm tra section không tồn tại cả khi bật/tắt JavaScript.
+Build, lint và `test:vps` đạt tại 320–1920px. Đối chiếu markup xác nhận toàn
+bộ phần trước section đã bỏ nguyên vẹn; CTA nối trực tiếp với footer.
+Ảnh và kết quả local tại `artifacts/vps-remove-learning/`.
+
+### Điều hướng card phản hồi và báo chí 16/10/2026
+
+`<CustomerProof controlsOnCards centerHeadings />` trên `/thue-vps/` ẩn số slide khỏi giao
+diện và đặt nút lùi/tiến ở giữa cạnh trái/phải vùng card. Giữ thông báo số
+slide dạng `sr-only`/`aria-live` cho trình đọc màn hình, chấm chọn slide,
+trạng thái vô hiệu hóa ở đầu/cuối, xem đầy đủ/thu gọn phản hồi, kéo/vuốt và
+bàn phím. CSS riêng tại `shared/carousel-card-controls.module.css` dùng lưới
+để nút theo chiều cao vùng card, không che phần nội dung bên trong.
+
+`controlsOnCards` mặc định false; homepage và `/vps-amd/` giữ cách bố trí cũ.
+`centerHeadings` căn giữa nhãn, tiêu đề và mô tả phía trên cả hai carousel;
+CSS tại `shared/customer-proof.module.css`. Prop này cũng mặc định false,
+chỉ bật trên `/thue-vps/`, không chỉnh nội dung hoặc bố cục card.
+Không thay dữ liệu, thứ tự, trích dẫn, logo hoặc URL báo chí. Trên 320px,
+hàng logo/sao phản hồi được xuống dòng khi cần để không tràn khỏi card.
+Khi tắt JavaScript, các nút tương tác vẫn ẩn và vùng cuộn tự nhiên được giữ.
+
+QA riêng: `node scripts/verify-vps-proof-controls.mjs`; kết quả/ảnh trong
+`artifacts/vps-proof-controls/`. `test:testimonials` cũng chạy với
+`TEST_BASE_URL=http://localhost:3100/thue-vps/` để kiểm tra đầy đủ nội dung,
+mở rộng, kéo/vuốt và resize. `test:press` kiểm tra luồng mặc định ở homepage.
+Build, lint, typecheck và các kiểm tra trên đạt. QA riêng xác minh vị trí
+nút, không tràn ngang, điều hướng và accessibility ở 320/390/768/1024/1440/1920px;
+kéo chuột và vuốt cảm ứng báo chí đạt. Nội dung và bố trí mặc định trên
+homepage/VPS AMD đã được đối chiếu; chưa triển khai live.
+
+### Tạm ẩn section Đo trên workload thực tế 16/10/2026
+
+Section benchmark `performance-title` tạm ẩn bằng thuộc tính HTML `hidden`,
+không chiếm khoảng trống và không hiển thị cả khi tắt JavaScript. Giữ nguyên
+component, nội dung, dữ liệu và ảnh để có thể bật lại bằng cách bỏ `hidden`.
+`test:vps` kiểm tra trạng thái ẩn thay cho yêu cầu hiển thị/chụp benchmark.
+
+### Giao diện môi trường triển khai theo mẫu 16/10/2026
+
+Section “Khởi tạo nhanh theo nhu cầu” dùng `environments.tsx` và CSS module
+riêng `environments.module.css`: nền xanh gradient với địa cầu chấm SVG
+trang trí tự dựng, tiêu đề trắng căn giữa, tab gạch chân và thẻ trắng vát
+góc có lớp nền xanh nhạt lệch 8px. Giữ nội dung tiêu đề, mô tả và bốn ứng
+dụng từ nguồn. SVG tại `public/images/vps/environments-globe.svg` là hình
+học trang trí, không phải ảnh hay thông tin về hạ tầng thực.
+
+`src/data/vps-environments.ts` lấy năm bản Linux hiện có theo đúng thứ tự:
+Ubuntu, CentOS, Debian, AlmaLinux, Fedora. Loại Webuzo khỏi bản hiển thị vì
+đây là control panel; không bổ sung Rocky Linux, Windows hay panel cài sẵn
+từ ảnh mẫu. Không thay đổi `vps-content.json` hoặc manifest nguồn.
+Hai tab là Linux OS và 1-Click Applications. Theo yêu cầu tiếp theo, đã gỡ
+ghi chú hỗ trợ cài đặt panel dưới thẻ cùng icon và CSS riêng của ghi chú.
+Phạm vi cung cấp vẫn giữ theo thông tin người dùng xác nhận: không cung cấp
+control panel cài sẵn; có thể hỗ trợ cài đặt từ xa panel miễn phí theo yêu cầu.
+
+Icon Ubuntu dùng file `ubuntu-icon.webp` do người dùng cung cấp, sao chép
+nguyên vẹn vào `public/images/vps/brands/operating-systems/`. Chỉ ghi đè logo
+trong dữ liệu trình bày của section; scale 1.1 bù lề trong suốt của ảnh để
+biểu tượng cân đối với các logo Linux còn lại trên desktop/mobile.
+
+Icon OpenClaw dùng file `openclaw-icon.png` do người dùng cung cấp, sao chép
+nguyên vẹn vào `public/images/vps/brands/one-click/`, scale 1.08 để cân đối
+với các logo ứng dụng. Icon n8n dùng khung vuông 60px trên desktop, 54px
+trên mobile, bo góc tương ứng 12px/10px để radius áp dụng đúng phần ảnh.
+
+Theo yêu cầu đồng bộ color system, nền section dùng gradient token InterData
+`--brand-primary` (#0043EC), `--brand-hover` (#0036C4) và `--brand-strong`
+(#031677). Section đặt lại primary về giá trị root vì `.page` VPS có override
+màu cũ; không thay token của các section khác. Chữ, nền thẻ, lớp cạnh thẻ,
+viền tab, hover và focus dùng các token semantic trong `globals.css`.
+Giữ bố cục, nội dung, logo và xử lý tab.
+QA màu cho cả hai tab, responsive 320–1920px và accessibility tại
+`artifacts/vps-environments-brand-colors/`; build và lint đạt.
+
+Linux hiển thị 5 cột từ 900px, 3 cột từ 640–899px, 2 cột trên mobile.
+Ứng dụng có 4/2/1 cột tùy chiều rộng. Giữ tab/panel ARIA, Arrow/Home/End,
+focus bàn phím và danh sách Linux mặc định khi tắt JavaScript.
+
+Kiểm tra riêng bằng `node scripts/verify-vps-environments.mjs`;
+`TEST_BASE_URL` chọn preview, `VPS_ENVIRONMENTS_QA_DIRECTORY` chọn thư mục
+kết quả. Nếu có snapshot hash tại `artifacts/vps-environments/source-before.json`
+(hoặc đường dẫn `VPS_ENVIRONMENTS_BASELINE`), script đối chiếu các file nguồn
+ngoài phạm vi. QA/ảnh tại `artifacts/vps-environments/`, bản production local
+tại `artifacts/vps-environments/production/`, hồi quy toàn trang tại
+`artifacts/vps-environments/full-qa/`. Build, lint, typecheck và `test:vps`
+đạt; QA cả hai tab ở 13 chiều rộng 320–1920px, accessibility ở sáu chiều
+rộng chính, bàn phím và fallback không JavaScript đạt. Đối chiếu 104 file
+nguồn ngoài phạm vi nguyên vẹn. Kiểm tra local, chưa triển khai live.
 
 Văn bản, danh sách, FAQ, ảnh, logo và benchmark được lấy từ working tree của
 `D:/InterData/thue-vps`. Manifest tại `docs/vps-source-manifest.json` ghi hash
@@ -49,7 +212,8 @@ nút thử lại khi lỗi. Không sử dụng giá mẫu để thay thế lỗi
 - Bảng giá desktop hiển thị 4 gói đầu tiên theo từng dòng, mở thêm để xem tất
   cả; mobile có vùng cuộn và nút điều hướng. Giá, chu kỳ và checkout giữ luồng cũ.
 - So sánh, định nghĩa VPS, hệ điều hành/1-Click Applications và benchmark được
-  giữ trong phần mở rộng `#vps-technical-details`. Giữ nguyên ghi chú phạm vi đo.
+  giữ trong khối `#vps-technical-details` (luôn hiển thị từ 16/10/2026).
+  Giữ nguyên ghi chú phạm vi đo.
 - FAQ hiển thị 5 câu đầu, mở rộng để xem đủ 20 câu; FAQPage vẫn dùng toàn bộ
   dữ liệu gốc. Ví dụ terminal được giữ trong phần Tìm hiểu về VPS.
 - Các thành phần nội dung dùng chung nằm trong `src/components/vps/showcase.tsx`;
@@ -601,3 +765,96 @@ rộng và nội dung không JavaScript. Báo cáo tại `artifacts/vps-redesign
 ảnh toàn trang tại `artifacts/vps-redesign/desktop.png`.
 
 Kiểm chứng local không thay thế triển khai và kiểm chứng trên tên miền chính thức.
+
+## Tái sử dụng các section homepage trên trang Thuê VPS 16/10/2026
+
+Đưa Năng lực InterData, Kết nối cùng giáo dục và Đối tác công nghệ sang
+`/thue-vps/`. Thứ tự hiển thị: Năng lực → Câu chuyện thành công → Báo chí →
+Kết nối giáo dục → Đối tác công nghệ, trước FAQ. Hai section đầu được tách
+thành component dùng chung trong `home/company-sections.tsx`; Đối tác công
+nghệ dùng component có sẵn. Giữ dữ liệu, logo và điều kiện hiển thị claim
+theo chế độ nội dung của homepage. Trang VPS tiếp tục viết hoa H2, căn giữa
+tiêu đề khách hàng/báo chí và đặt nút chuyển slide trên card.
+
+Đối chiếu nội dung và kiểu hiển thị homepage trước/sau, cùng báo cáo kiểm
+tra responsive của ba section tại `artifacts/vps-company-sections/`.
+
+Build, lint, typecheck và formatting đạt. QA production preview local
+xác nhận đúng thứ tự, nội dung/logo/kiểu chữ khớp homepage, H2 viết hoa,
+carousel hoạt động và không tràn ngang tại 320/390/768/1024/1440/1920px.
+Không phát hiện lỗi JavaScript hoặc vi phạm axe trong năm section này;
+ba section mới vẫn hiển thị khi tắt JavaScript. Chưa triển khai lên tên miền.
+
+## Đồng bộ cỡ chữ toàn trang Thuê VPS 16/10/2026
+
+Các CSS module VPS dùng chung thang chữ khai báo tại `.page` trong
+`vps.module.css`: tiêu đề section H2 28–36px, tiêu đề card 20–22px, nội dung
+17px desktop / 16px mobile, mô tả đầu section 18px / 17px, điều khiển và CTA
+16px / 15px, chữ phụ và bảng so sánh 15px / 14px. Nhãn đầu section dùng
+13px / 12px; H1, giá và số liệu nổi bật giữ phân cấp riêng. Giãn dòng nội
+dung 1.75, mô tả đầu section 1.8 và H2 1.35. Các section homepage được tái
+sử dụng trên VPS cũng theo thang này; homepage giữ nguyên kiểu hiển thị.
+
+Hai CTA Hero xếp dọc trên mobile dưới 600px, cùng chiều rộng và chiều cao,
+để nhãn không xuống dòng khi tăng cỡ chữ. Nội dung, thứ tự section, dữ liệu,
+liên kết và hành vi thanh toán giữ nguyên.
+
+Build (gồm TypeScript), lint, formatting và `test:vps` đạt. Đã kiểm tra
+320/390/768/1024/1440/1920px: H2 của các section đồng cỡ và giãn dòng,
+không tràn ngang hoặc cắt chữ, không còn nội dung/bảng/nút dưới 14px.
+Kiểm chứng toàn trang bao gồm 49 asset nguồn, 6 nhóm API giá, chu kỳ,
+checkout, tương tác, no-JavaScript và axe. Báo cáo/ảnh local tại
+`artifacts/vps-typography/`; chưa deploy.
+
+## CTA Box theo homepage 16/10/2026
+
+Thay CTA cuối `/thue-vps/` bằng `ConsultationCta` dùng chung với homepage:
+khung gradient xanh bo góc, nhân vật bên trái, nội dung bên phải và ba icon
+trang trí. Component nhận nội dung, ảnh và liên kết qua props; giá trị mặc
+định trên homepage giữ nguyên. Trang VPS dùng H2 “VPS phù hợp cho ứng dụng
+của bạn.” cùng lời mời chia sẻ ứng dụng, mức tải và ngân sách. Giữ đích CTA
+`#pricing` và Facebook tư vấn, sử dụng thang chữ của trang VPS.
+
+Ảnh cô gái được tạo bằng built-in image_gen dựa trên ảnh nhân vật homepage,
+lưu tại `public/images/cta/consultation-engineer-female.webp` (1254×1254,
+alpha trong suốt, khoảng 189 KB). Prompt đầy đủ và nguồn ảnh tham chiếu lưu
+trong `docs/vps-cta-image-prompt.json`. Ảnh nhân vật homepage giữ nguyên.
+
+Build, lint, typecheck, formatting và `test:vps` đạt. Đối chiếu CTA homepage
+trước/sau và nội dung/liên kết ngoài CTA trên VPS ở sáu viewport
+320/390/768/1024/1440/1920px đạt. CTA mới không tràn/cắt chữ, ảnh tải đúng,
+H2 viết hoa, focus rõ, hai đích CTA đúng, hiển thị khi tắt JavaScript và
+không có vi phạm axe. Báo cáo/ảnh tại `artifacts/vps-cta/`. Chưa deploy.
+
+### Thay nhân vật CTA bằng áo sơ mi và chân váy 16/10/2026
+
+Thay riêng prop ảnh của CTA `/thue-vps/` sang
+`public/images/cta/consultation-woman-blouse-skirt.webp`: nhân vật nữ mới,
+tóc dài, áo sơ mi trắng sơ vin và chân váy chữ A xanh navy. Ảnh được tạo
+bằng built-in image_gen, WebP 1254×1254, alpha trong suốt, 122332 byte.
+Prompt và nguồn PNG tại `docs/vps-cta-feminine-image-prompt.json`.
+Giữ nguyên ảnh cũ, ảnh homepage, component/CSS dùng chung, nội dung và CTA.
+
+Build (gồm TypeScript), lint và diff check đạt. QA local tại
+320/390/768/1024/1440/1920px xác nhận ảnh tải đúng, nằm trong card,
+không tràn ngang/cắt chữ, focus và liên kết CTA hoạt động, không có lỗi
+JavaScript hoặc vi phạm axe trong CTA. Đối chiếu toàn bộ chữ/liên kết trên
+trang ở 1440px và ảnh chụp CTA homepage trước/sau khớp; fallback không
+JavaScript hiển thị ảnh và hai liên kết. Báo cáo/ảnh tại
+`artifacts/vps-cta-feminine/`. Chưa deploy.
+
+### Chuyển ảnh CTA sang khung nửa người 16/10/2026
+
+Theo yêu cầu tiếp theo, thay ảnh toàn thân bằng
+`public/images/cta/consultation-woman-upper-body.webp` (1254×1254,
+alpha trong suốt). Built-in image_gen chỉnh từ ảnh vừa chọn sang khung
+từ đầu đến hông, giữ nhân vật, áo sơ mi và phần trên chân váy; khuôn mặt
+và thân trên lớn hơn trong CTA. Prompt/nguồn PNG nằm tại
+`docs/vps-cta-upper-body-image-prompt.json`. Chỉ đổi prop ảnh, giữ nguyên
+component/CSS dùng chung, chữ, liên kết và ảnh homepage.
+
+Build (gồm TypeScript), ESLint cho component và formatting đạt.
+QA local tại 320/390/768/1024/1440/1920px xác nhận ảnh tải đúng và nằm
+trong card, không tràn ngang/cắt chữ, liên kết giữ đúng và CTA bảng giá
+hoạt động; không có lỗi JavaScript. Ảnh chụp và báo cáo nằm tại
+`artifacts/vps-cta-upper-body/`. Chưa deploy.

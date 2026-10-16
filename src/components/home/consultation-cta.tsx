@@ -3,18 +3,54 @@ import { links } from "@/data/content";
 import { Icon } from "@/components/ui/icon";
 import styles from "./consultation-cta.module.css";
 
-export function ConsultationCta() {
+type CtaAction = {
+  label: string;
+  href: string;
+  newTab?: boolean;
+};
+
+export function ConsultationCta({
+  id = "lien-he",
+  headingId = "consultation-cta-title",
+  eyebrow = "TRAO ĐỔI CÙNG INTERDATA",
+  title = "Cấu hình phù hợp bắt đầu từ một bài toán rõ ràng.",
+  description = "Cho chúng tôi biết ứng dụng, mức tải và kế hoạch của bạn. Cùng xác định dịch vụ và phương án triển khai tiếp theo.",
+  image = "/images/cta/consultation-engineer.webp",
+  primaryAction = { label: "Liên hệ tư vấn", href: links.contact },
+  secondaryAction,
+  className,
+}: {
+  id?: string;
+  headingId?: string;
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  primaryAction?: CtaAction;
+  secondaryAction?: CtaAction;
+  className?: string;
+}) {
+  const primaryButton = (
+    <a
+      className={styles.button}
+      href={primaryAction.href}
+      target={primaryAction.newTab ? "_blank" : undefined}
+      rel={primaryAction.newTab ? "noopener noreferrer" : undefined}
+    >
+      {primaryAction.label} <Icon name="arrow" />
+    </a>
+  );
   return (
     <section
-      id="lien-he"
-      className="final-section container"
-      aria-labelledby="consultation-cta-title"
+      id={id}
+      className={`final-section container${className ? ` ${className}` : ""}`}
+      aria-labelledby={headingId}
     >
       <div className={styles.card}>
         <div className={styles.visual} aria-hidden="true">
           <div className={styles.orbit} />
           <Image
-            src="/images/cta/consultation-engineer.webp"
+            src={image}
             alt=""
             width={1254}
             height={1254}
@@ -32,17 +68,24 @@ export function ConsultationCta() {
           </span>
         </div>
         <div className={styles.content}>
-          <span className={styles.eyebrow}>TRAO ĐỔI CÙNG INTERDATA</span>
-          <h2 id="consultation-cta-title">
-            Cấu hình phù hợp bắt đầu từ một bài toán rõ ràng.
-          </h2>
-          <p>
-            Cho chúng tôi biết ứng dụng, mức tải và kế hoạch của bạn. Cùng xác
-            định dịch vụ và phương án triển khai tiếp theo.
-          </p>
-          <a className={styles.button} href={links.contact}>
-            Liên hệ tư vấn <Icon name="arrow" />
-          </a>
+          <span className={styles.eyebrow}>{eyebrow}</span>
+          <h2 id={headingId}>{title}</h2>
+          <p>{description}</p>
+          {secondaryAction ? (
+            <div className={styles.actions}>
+              {primaryButton}
+              <a
+                className={styles.secondaryAction}
+                href={secondaryAction.href}
+                target={secondaryAction.newTab ? "_blank" : undefined}
+                rel={secondaryAction.newTab ? "noopener noreferrer" : undefined}
+              >
+                {secondaryAction.label} <Icon name="arrow" />
+              </a>
+            </div>
+          ) : (
+            primaryButton
+          )}
         </div>
       </div>
     </section>

@@ -1,0 +1,73 @@
+{
+  "tool": "built-in image_gen",
+  "createdAt": "2026-10-16",
+  "note": "AI-generated illustrative service images, not evidence of a specific facility. Shared company proof keeps its source-backed logos and photos.",
+  "images": [
+    {
+      "key": "hero",
+      "prompt": "Use case: photorealistic-natural. Generate a wide 16:9 enterprise website hero photograph for an Intel Xeon Platinum VPS service. A real looking premium data center aisle, platinum silver rack server fronts on the right two thirds, restrained blue status lights, graphite navy ambience, dark negative space on the left 45 percent for HTML copy. Documentary commercial infrastructure photography, crisp plausible cables and racks, no glowing sci-fi, no holograms, no text, no logos, no watermark. Credible understated professional photograph, not 3D. Wide landscape.",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a143df-4802-7da0-aec0-777ee4776781\\exec-481a6461-3a23-47b8-82e5-5f2fc5aefe04.png",
+      "destination": "public/images/vps-platinum/hero.webp"
+    },
+    {
+      "key": "platform",
+      "prompt": "Use case: product-mockup. Wide 16:9 high end macro product photograph of a silver enterprise server CPU seated on a realistic dark motherboard, CPU on the right half, dark navy negative space left for HTML text. For a VPS Intel Xeon Platinum service website. Chip metal lid has small accurately engraved text INTEL XEON PLATINUM, otherwise no labels. Real brushed metal, physically plausible motherboard traces and components, cool silver and blue rim light, restrained enterprise aesthetic. No sci-fi holograms, no neon beams, no watermark.",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a143df-4802-7da0-aec0-777ee4776781\\exec-3bd013da-3451-4361-adf6-71c22cf445dc.png",
+      "destination": "public/images/vps-platinum/platform.webp"
+    },
+    {
+      "key": "center",
+      "prompt": "Use case: product-mockup. Square premium enterprise website illustration on pure white background. A compact photorealistic black and silver rack server tower, three neatly stacked metal servers on a low silver base, silver processor standing in front with small engraved INTEL XEON PLATINUM label. Restrained blue accents, realistic brushed metal, soft studio shadow, clean centered composition fully within frame. No extra text, no watermark, no sci-fi glowing effects. This is the central hardware visual connecting application cards on a VPS Platinum page.",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a143df-4802-7da0-aec0-777ee4776781\\exec-31b1fa48-5233-48bb-be2f-6f66df0ba3a9.png",
+      "destination": "public/images/vps-platinum/center.webp"
+    },
+    {
+      "key": "infrastructure",
+      "prompt": "Wide 16:9 documentary commercial photograph inside a modern Vietnamese-style enterprise data center. Organized parallel rows of real black rack cabinets, overhead cable trays and contained cooling aisle. Silvery blue neutral lighting, dark left half suitable for white HTML copy. Understated credible infrastructure photography. No humans, logos, signs, watermarks or holograms. Not evidence of any named real facility; illustrative photography.",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a143df-4802-7da0-aec0-777ee4776781\\exec-f1aa67c4-b22c-4ddd-bd11-dd00e09ec8e7.png",
+      "destination": "public/images/vps-platinum/infrastructure.webp"
+    },
+    {
+      "key": "cta",
+      "prompt": "Wide 16:9 enterprise website background photograph. Eye-level view down a real server rack corridor with platinum silver panels, dark navy ambience and restrained blue indicator LEDs. Soft depth of field, darker left two thirds suitable for white HTML text. Plausible hardware and cooling floor, quiet professional commercial photography. No humans, text, logos, watermark or sci-fi graphics.",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a143df-4802-7da0-aec0-777ee4776781\\exec-6a12fecb-0424-495d-a1d7-c16266adb533.png",
+      "destination": "public/images/vps-platinum/cta.webp"
+    },
+    {
+      "key": "website",
+      "prompt": "Square premium enterprise web illustration, isolated on clean white background, small physical silver and blue miniature objects, realistic studio product photography with soft shadows, readable silhouette at 120 pixels. No text, no logos, no watermark, no robot mascots, no sci-fi glow. Subject: a miniature desktop monitor displaying abstract blocks of a web store layout, with two small browser cards, one dark silver microserver below. Blue accent.",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a143df-4802-7da0-aec0-777ee4776781\\exec-4232dcfb-e4dd-47b4-a597-f3a23cff5194.png",
+      "destination": "public/images/vps-platinum/website.webp"
+    },
+    {
+      "key": "development",
+      "prompt": "Square premium enterprise web illustration, isolated on clean white background, small physical silver and blue miniature objects, realistic studio product photography with soft shadows, readable silhouette at 120 pixels. No text, no logos, no watermark, no robot mascots, no sci-fi glow. Subject: an open silver laptop displaying abstract colored code lines beside a small metal server and two little blue container cubes. Green-blue accent.",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a143df-4802-7da0-aec0-777ee4776781\\exec-f450a449-e2f6-459e-b214-86668acb6650.png",
+      "destination": "public/images/vps-platinum/development.webp"
+    },
+    {
+      "key": "media",
+      "prompt": "Square premium enterprise web illustration, isolated on clean white background, small physical silver and blue miniature objects, realistic studio product photography with soft shadows, readable silhouette at 120 pixels. No text, no logos, no watermark, no robot mascots, no sci-fi glow. Subject: small silver media server beside a physical film frame containing a blue play triangle, two subtle audio wave objects. Red-blue accent.",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a143df-4802-7da0-aec0-777ee4776781\\exec-83e8cc49-b743-4751-bcf1-ec4431757db8.png",
+      "destination": "public/images/vps-platinum/media.webp"
+    },
+    {
+      "key": "database",
+      "prompt": "Square premium enterprise web illustration, isolated on clean white background, small physical silver and blue miniature objects, realistic studio product photography with soft shadows, readable silhouette at 120 pixels. No text, no logos, no watermark, no robot mascots, no sci-fi glow. Subject: a small silver rack server beside three brushed metal database cylinders connected by thin blue cables. Purple-blue accent.",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a143df-4802-7da0-aec0-777ee4776781\\exec-67780a72-c8bd-4a8f-9f5e-21dfaadc7972.png",
+      "destination": "public/images/vps-platinum/database.webp"
+    },
+    {
+      "key": "agent",
+      "prompt": "Square premium enterprise web illustration, isolated on clean white background, small physical silver and blue miniature objects, realistic studio product photography with soft shadows, readable silhouette at 120 pixels. No text, no logos, no watermark, no robot mascots, no sci-fi glow. Subject: a miniature silver server with a physical workflow of five white and blue cubes connected by short neat cables, small amber gear. An API automation concept, no robot.",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a143df-4802-7da0-aec0-777ee4776781\\exec-2dd49bad-67e8-42f2-bb0e-6307650cab9b.png",
+      "destination": "public/images/vps-platinum/agent.webp"
+    },
+    {
+      "key": "backup",
+      "prompt": "Square premium enterprise web illustration, isolated on clean white background, small physical silver and blue miniature objects, realistic studio product photography with soft shadows, readable silhouette at 120 pixels. No text, no logos, no watermark, no robot mascots, no sci-fi glow. Subject: two stacked silver network storage drives beside a small blue shield and circular backup arrow, real product model studio photograph. Cyan-blue accent.",
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a143df-4802-7da0-aec0-777ee4776781\\exec-b86c4f24-9e0c-4ae9-8ba3-64c74e4ad357.png",
+      "destination": "public/images/vps-platinum/backup.webp"
+    }
+  ]
+}

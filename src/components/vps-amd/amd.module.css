@@ -1140,23 +1140,6 @@
   flex-shrink: 0;
   margin-top: 0;
 }
-.page :global(.testimonial-copy blockquote) {
-  font-size: 17px;
-}
-.page :global(.testimonial-details summary) {
-  font-size: 16px;
-}
-.page :global(.testimonial-author span) {
-  font-size: 15px;
-  line-height: 1.6;
-}
-.page :global(#bao-chi h3) {
-  font-size: 20px;
-  line-height: 1.5;
-}
-.page :global(#bao-chi h3 + span) {
-  font-size: 16px;
-}
 @media (min-width: 1200px) {
   .heroBackground img {
     object-position: center;

@@ -2,13 +2,22 @@
 
 import Image from "next/image";
 import { useRef, useState, type KeyboardEvent } from "react";
-import content from "@/data/vps-content.json";
-import styles from "./vps.module.css";
+import {
+  vpsEnvironmentHeader,
+  vpsLinuxSystems,
+  vpsOneClickApps,
+} from "@/data/vps-environments";
+import styles from "./environments.module.css";
+
+const appLogoClasses: Partial<Record<string, string>> = {
+  OpenClaw: styles.openclawLogo,
+  n8n: styles.n8nLogo,
+};
 
 export function Environments() {
   const [selected, setSelected] = useState(0);
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
-  const header = content.landing.headers.OneClickApps;
+  const header = vpsEnvironmentHeader;
   function keyboard(event: KeyboardEvent<HTMLButtonElement>) {
     if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) return;
     event.preventDefault();
@@ -18,13 +27,10 @@ export function Environments() {
     refs.current[next]?.focus();
   }
   return (
-    <section
-      className={`${styles.section} ${styles.subtle}`}
-      aria-labelledby={header.id}
-    >
+    <section className={styles.section} aria-labelledby={header.id}>
       <div className="container">
-        <div className={styles.sectionHeading}>
-          <span className="eyebrow">{header.eyebrow}</span>
+        <div className={styles.heading}>
+          <span className={styles.eyebrow}>{header.eyebrow}</span>
           <h2 id={header.id}>{header.title}</h2>
           <p>{header.text}</p>
         </div>
@@ -33,7 +39,7 @@ export function Environments() {
           role="tablist"
           aria-label="Chọn môi trường triển khai"
         >
-          {["Hệ điều hành", "1-Click Applications"].map((label, index) => (
+          {["Linux OS", "1-Click Applications"].map((label, index) => (
             <button
               key={label}
               ref={(element) => {
@@ -59,19 +65,22 @@ export function Environments() {
           hidden={selected !== 0}
           tabIndex={0}
         >
-          <div className={styles.environmentGrid}>
-            {content.landing.operatingSystems.map((item) => (
-              <article key={item.name} className={styles.environment}>
-                <Image
-                  src={item.logo}
-                  alt={`${item.name} logo`}
-                  width={160}
-                  height={80}
-                  unoptimized
-                />
-                <small>Hệ điều hành</small>
-                <h3>{item.name}</h3>
-                <p>Sẵn sàng cài đặt khi khởi tạo VPS.</p>
+          <div className={styles.osGrid}>
+            {vpsLinuxSystems.map((item) => (
+              <article key={item.name} className={styles.card}>
+                <div className={styles.cardSurface}>
+                  <Image
+                    src={item.logo}
+                    alt=""
+                    className={
+                      item.name === "Ubuntu" ? styles.ubuntuLogo : undefined
+                    }
+                    width={160}
+                    height={80}
+                    unoptimized
+                  />
+                  <h3>{item.name}</h3>
+                </div>
               </article>
             ))}
           </div>
@@ -83,19 +92,25 @@ export function Environments() {
           hidden={selected !== 1}
           tabIndex={0}
         >
-          <div className={styles.environmentGrid}>
-            {content.landing.apps.map((item) => (
-              <article key={item.name} className={styles.environment}>
-                <Image
-                  src={item.logo}
-                  alt={`${item.name} logo`}
-                  width={160}
-                  height={80}
-                  unoptimized
-                />
-                <small>{item.label}</small>
-                <h3>{item.name}</h3>
-                <p>{item.text}</p>
+          <div className={styles.appGrid}>
+            {vpsOneClickApps.map((item) => (
+              <article
+                key={item.name}
+                className={`${styles.card} ${styles.app}`}
+              >
+                <div className={styles.cardSurface}>
+                  <Image
+                    src={item.logo}
+                    alt=""
+                    className={appLogoClasses[item.name]}
+                    width={160}
+                    height={80}
+                    unoptimized
+                  />
+                  <small>{item.label}</small>
+                  <h3>{item.name}</h3>
+                  <p>{item.text}</p>
+                </div>
               </article>
             ))}
           </div>

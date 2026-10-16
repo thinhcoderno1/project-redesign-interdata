@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { KeyboardEvent, PointerEvent } from "react";
+import cardControls from "@/components/shared/carousel-card-controls.module.css";
 
 type Testimonial = {
   name: string;
@@ -29,7 +30,13 @@ function previewQuote(quote: string) {
   return `${excerpt}…`;
 }
 
-export function TestimonialCarousel({ items }: { items: Testimonial[] }) {
+export function TestimonialCarousel({
+  items,
+  controlsOnCards = false,
+}: {
+  items: Testimonial[];
+  controlsOnCards?: boolean;
+}) {
   const slides = Array.from(
     { length: Math.ceil(items.length / 3) },
     (_, index) => items.slice(index * 3, index * 3 + 3),
@@ -202,7 +209,7 @@ export function TestimonialCarousel({ items }: { items: Testimonial[] }) {
 
   return (
     <div
-      className="testimonial-carousel"
+      className={`testimonial-carousel${controlsOnCards ? ` ${cardControls.carousel}` : ""}`}
       ref={carousel}
       role="region"
       aria-roledescription="bộ trình chiếu"
@@ -211,6 +218,7 @@ export function TestimonialCarousel({ items }: { items: Testimonial[] }) {
       <div
         id="testimonial-track"
         className="testimonial-track"
+        data-carousel-track
         ref={track}
         tabIndex={0}
         aria-label="Các phản hồi; dùng phím trái, phải để chuyển slide"
@@ -280,9 +288,10 @@ export function TestimonialCarousel({ items }: { items: Testimonial[] }) {
           </div>
         ))}
       </div>
-      <div className="testimonial-controls">
+      <div className="testimonial-controls" data-carousel-controls>
         <span
-          className="testimonial-count"
+          className={controlsOnCards ? "sr-only" : "testimonial-count"}
+          data-carousel-count
           aria-live="polite"
           aria-atomic="true"
         >
@@ -294,6 +303,7 @@ export function TestimonialCarousel({ items }: { items: Testimonial[] }) {
         </span>
         <div
           className="testimonial-pagination"
+          data-carousel-pagination
           role="group"
           aria-label="Chọn slide phản hồi"
         >
@@ -310,7 +320,7 @@ export function TestimonialCarousel({ items }: { items: Testimonial[] }) {
             </button>
           ))}
         </div>
-        <div className="testimonial-arrows">
+        <div className="testimonial-arrows" data-carousel-arrows>
           <button
             type="button"
             aria-label="Slide phản hồi trước"

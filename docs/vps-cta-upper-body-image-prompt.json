@@ -1,0 +1,11 @@
+{
+  "tool": "built-in image_gen",
+  "useCase": "precise-object-edit",
+  "referenceAsset": "public/images/cta/consultation-woman-blouse-skirt.webp",
+  "outputAsset": "public/images/cta/consultation-woman-upper-body.webp",
+  "sourceImage": "C:/Users/interdigi 03/.codex/generated_images/01a1438e-e086-7ed1-97e6-e77cdfaf5044/exec-3c16f87d-5c6f-456a-a45b-55c6cf6e1ee2.png",
+  "transparentBackground": true,
+  "prompt": "Use case: precise-object-edit. Edit target: supplied transparent full-body woman image. Change ONLY the framing/composition to an upper-body, head-to-hips portrait suited to a square website CTA cutout. Preserve the exact adult woman's face and identity, long dark wavy hair, smile, white button-up collared blouse tucked into navy skirt, discreet headset, studio photographic rendering and soft lighting. Zoom in substantially: head near top with a small safe margin, torso large and prominent, frame ends at upper hips with just a narrow band of navy skirt visible at bottom. No full-length figure, no skirt hem, no legs or feet. Preserve the welcoming open-hand gesture on image right, entire hand inside frame. Bring her other hand and silver laptop up to hold the laptop against the torso at lower right/center so they are visible within head-to-hips framing. Retain two small navy server towers at lower left and bring them upward to fit at waist level, subordinate to the woman. Efficient square composition with woman occupying most of height and width, suitable for display at 280–380 pixels. Keep transparent alpha background, with clean edges and no opaque backdrop, no checkerboard, no added text, logos, watermarks or decorative icons. Keep the same individual and wardrobe, edit only the composition as requested.",
+  "processing": "WebP quality 90, alphaQuality 100, original square dimensions retained.",
+  "scope": "Only replace the image prop for /thue-vps/ CTA."
+}

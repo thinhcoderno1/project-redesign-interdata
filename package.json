@@ -23,7 +23,8 @@
     "test:legal": "node scripts/verify-legal-pages.mjs",
     "test:vps": "node scripts/verify-vps.mjs",
     "test:vps-range": "node scripts/verify-vps-range.mjs",
-    "test:vps-amd": "node scripts/verify-vps-amd.mjs"
+    "test:vps-amd": "node scripts/verify-vps-amd.mjs",
+    "test:vps-platinum": "node scripts/verify-vps-platinum.mjs"
   },
   "dependencies": {
     "entities": "8.1.0",

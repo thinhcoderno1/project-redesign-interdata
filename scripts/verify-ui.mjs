@@ -362,7 +362,10 @@ try {
       );
       await expect(
         needs.getByRole("tabpanel").getByRole("link").first(),
-      ).toHaveAttribute("href", /^(https:\/\/interdata\.vn\/|\/lien-he\/$)/);
+      ).toHaveAttribute(
+        "href",
+        /^(https:\/\/interdata\.vn\/|\/(?:lien-he|thue-vps)\/$)/,
+      );
     }
     await needs.getByRole("tab").first().focus();
     await page.keyboard.press("End");

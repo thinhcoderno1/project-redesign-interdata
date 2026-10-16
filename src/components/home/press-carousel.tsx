@@ -5,6 +5,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { KeyboardEvent, PointerEvent } from "react";
 import styles from "./press.module.css";
+import cardControls from "@/components/shared/carousel-card-controls.module.css";
 
 type PressItem = {
   publication: string;
@@ -16,7 +17,13 @@ type PressItem = {
   href: string;
 };
 
-export function PressCarousel({ items }: { items: PressItem[] }) {
+export function PressCarousel({
+  items,
+  controlsOnCards = false,
+}: {
+  items: PressItem[];
+  controlsOnCards?: boolean;
+}) {
   const [perSlide, setPerSlide] = useState(3);
   const [active, setActive] = useState(0);
   const root = useRef<HTMLDivElement>(null);
@@ -219,7 +226,7 @@ export function PressCarousel({ items }: { items: PressItem[] }) {
 
   return (
     <div
-      className={styles.carousel}
+      className={`${styles.carousel}${controlsOnCards ? ` ${cardControls.carousel}` : ""}`}
       ref={root}
       role="region"
       aria-roledescription="bộ trình chiếu"
@@ -228,6 +235,7 @@ export function PressCarousel({ items }: { items: PressItem[] }) {
       <div
         id="press-track"
         className={styles.track}
+        data-carousel-track
         ref={track}
         tabIndex={0}
         aria-label="Các bài báo; dùng phím trái, phải để chuyển slide"
@@ -299,8 +307,13 @@ export function PressCarousel({ items }: { items: PressItem[] }) {
           </div>
         ))}
       </div>
-      <div className={styles.controls}>
-        <span className={styles.count} aria-live="polite" aria-atomic="true">
+      <div className={styles.controls} data-carousel-controls>
+        <span
+          className={controlsOnCards ? "sr-only" : styles.count}
+          data-carousel-count
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <span className="sr-only">Slide </span>
           {String(active + 1).padStart(2, "0")}
           <span aria-hidden="true"> / </span>
@@ -309,6 +322,7 @@ export function PressCarousel({ items }: { items: PressItem[] }) {
         </span>
         <div
           className={styles.pagination}
+          data-carousel-pagination
           role="group"
           aria-label="Chọn slide báo chí"
         >
@@ -325,7 +339,7 @@ export function PressCarousel({ items }: { items: PressItem[] }) {
             </button>
           ))}
         </div>
-        <div className={styles.arrows}>
+        <div className={styles.arrows} data-carousel-arrows>
           <button
             type="button"
             aria-label="Slide báo chí trước"

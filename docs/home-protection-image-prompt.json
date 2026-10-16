@@ -1,0 +1,15 @@
+{
+  "tool": "built-in image_gen",
+  "useCase": "photorealistic-natural",
+  "role": "Generated illustration for the Protection & Monitoring row, not documentary evidence of actual InterData facilities or specific deployed hardware.",
+  "outputAsset": "public/images/home/infrastructure/protection-monitoring.webp",
+  "sourceImage": "C:/Users/interdigi 03/.codex/generated_images/01a1438e-e086-7ed1-97e6-e77cdfaf5044/exec-e530e233-1f50-4868-b74d-81393328b650.png",
+  "transparentBackground": false,
+  "width": 1800,
+  "height": 600,
+  "bytes": 92178,
+  "sha256": "404077ccc301d54d22da50b8560de67826517272f2386a95681aba653f9a1422",
+  "prompt": "Use case: photorealistic-natural. Create ONE finished ultra-wide 3:1 landscape photographic website asset for the 'Protection & Monitoring' row of an enterprise data center infrastructure section. Match a coherent existing photographic series: refined realistic brushed steel and graphite equipment, precise engineering details, neutral white studio-documentary key light, restrained cobalt-blue reflected ambient light, natural shadows and shallow depth of field, dark navy surrounding rack interior. Subject: a close three-quarter view of two enterprise 1U network security appliances mounted neatly in a real 19-inch server rack, modest Ethernet and SFP ports, organized short blue network cables, normal small green/amber status LEDs; at the right behind the appliances a partially visible real rack-mounted console monitor with a very subtle defocused blue system-health line chart, no readable text. The physical appliances remain the sharp primary subject; monitoring console is secondary and integrated into the rack, not a floating graphic. Clearly distinct from a simple fully populated Ethernet switch photo. No branding or identifiable vendor. Fit all important hardware within the central 65 percent of image height for shallow responsive cropping. Strong horizontal composition; focal equipment around 62 percent of image width, generous dark side margins. Dark outer edges should blend smoothly into InterData navy #031677 and card blue #102681, primary reflected blue #0043EC; hardware itself must remain naturally lit and tactile. The image sits on the RIGHT side of an alternating row, so the LEFT edge should be especially quiet and dark to fade behind the text panel. This is a generic generated photographic illustration, not documentary evidence of InterData facilities. No people, readable lettering, labels, logos, captions, watermark, border, infographic, shield icon, padlock icon, neon beams, laser data trails, holograms, giant fantasy chips, isometric composition, vector art, glossy CGI, plastic 3D render, smoke, flames or exaggerated cinematic effects. Output a clean 3:1 panoramic image, not a page mockup.",
+  "processing": "WebP quality 90, 1800x600, original 3:1 ratio preserved.",
+  "scope": "Only the fourth Homepage infrastructure image and its alt text; update the existing hidden editorial photo note to reflect the new source. Layout, masks, copy, CTA and other images stay the same."
+}

@@ -1,10 +1,21 @@
 import { TestimonialCarousel } from "@/components/home/testimonial-carousel";
 import { PressCarousel } from "@/components/home/press-carousel";
 import { testimonials, press } from "@/data/content";
+import { MessageSquareQuote, Newspaper } from "lucide-react";
 import styles from "@/components/home/home.module.css";
+import proofStyles from "./customer-proof.module.css";
 
 /** Shared homepage content and presentation for service landing pages. */
-export function CustomerProof() {
+export function CustomerProof({
+  controlsOnCards = false,
+  centerHeadings = false,
+  withBadgeIcons = false,
+}: {
+  controlsOnCards?: boolean;
+  centerHeadings?: boolean;
+  withBadgeIcons?: boolean;
+}) {
+  const headingClass = `section-heading${centerHeadings ? ` ${proofStyles.centeredHeading}` : ""}`;
   return (
     <div className={styles.home}>
       <section
@@ -13,10 +24,18 @@ export function CustomerProof() {
         aria-labelledby="customer-proof-title"
       >
         <div className="container">
-          <div className="section-heading">
+          <div className={headingClass}>
             <div>
-              <span className="eyebrow">GÓC NHÌN TỪ KHÁCH HÀNG</span>
-              <h2 id="customer-proof-title">
+              <span className="eyebrow">
+                {withBadgeIcons && (
+                  <MessageSquareQuote size={16} aria-hidden="true" />
+                )}
+                GÓC NHÌN TỪ KHÁCH HÀNG
+              </span>
+              <h2
+                id="customer-proof-title"
+                className={proofStyles.customerTitle}
+              >
                 Câu Chuyện Thành Công Cùng InterData
               </h2>
               <p>
@@ -25,7 +44,10 @@ export function CustomerProof() {
               </p>
             </div>
           </div>
-          <TestimonialCarousel items={testimonials} />
+          <TestimonialCarousel
+            items={testimonials}
+            controlsOnCards={controlsOnCards}
+          />
         </div>
       </section>
       <section
@@ -34,9 +56,12 @@ export function CustomerProof() {
         aria-labelledby="press-proof-title"
       >
         <div className="container">
-          <div className="section-heading">
+          <div className={headingClass}>
             <div>
-              <span className="eyebrow">INTERDATA TRÊN BÁO CHÍ</span>
+              <span className="eyebrow">
+                {withBadgeIcons && <Newspaper size={16} aria-hidden="true" />}
+                INTERDATA TRÊN BÁO CHÍ
+              </span>
               <h2 id="press-proof-title">Báo Chí Nói Gì Về InterData?</h2>
               <p>
                 Các bài viết về hoạt động, công nghệ và hợp tác của InterData.
@@ -44,7 +69,7 @@ export function CustomerProof() {
               </p>
             </div>
           </div>
-          <PressCarousel items={press} />
+          <PressCarousel items={press} controlsOnCards={controlsOnCards} />
         </div>
       </section>
     </div>

@@ -26,7 +26,9 @@
   height: 650px;
   right: -450px;
   top: -480px;
-  box-shadow: 0 0 0 70px #e6f1ff50, 0 0 0 140px #e6f1ff30;
+  box-shadow:
+    0 0 0 70px #e6f1ff50,
+    0 0 0 140px #e6f1ff30;
 }
 .container {
   width: min(1248px, calc(100% - 96px));
@@ -44,14 +46,14 @@
   border-radius: 30px;
   color: #0056d9;
   background: #dcecff;
-  font-size: 13px;
+  font-size: var(--vps-font-eyebrow);
   font-weight: 600;
   letter-spacing: 0.035em;
 }
 .useCases .heading h2 {
   margin: 14px 0 8px;
-  font-size: clamp(28px, 2.8vw, 40px);
-  line-height: 1.25;
+  font-size: var(--vps-font-h2);
+  line-height: 1.35;
   font-weight: 800;
   letter-spacing: -0.035em;
   color: #050f30;
@@ -63,8 +65,8 @@
 .useCases .heading p {
   max-width: 800px;
   margin: 0 auto;
-  font-size: 16px;
-  line-height: 1.55;
+  font-size: var(--vps-font-lead);
+  line-height: 1.8;
   color: #55637e;
   text-wrap: balance;
 }
@@ -92,7 +94,12 @@
   position: absolute;
   inset: 20% 5% 2%;
   border-radius: 50%;
-  background: radial-gradient(ellipse, #e6f1ff 0%, #edf5ff70 55%, transparent 72%);
+  background: radial-gradient(
+    ellipse,
+    #e6f1ff 0%,
+    #edf5ff70 55%,
+    transparent 72%
+  );
 }
 .illustration img {
   position: relative;
@@ -109,7 +116,7 @@
 .useCases .card h3 {
   margin: 3px 0 8px;
   color: #071132;
-  font-size: 20px;
+  font-size: var(--vps-font-h3);
   font-weight: 750;
   line-height: 1.4;
   letter-spacing: -0.025em;
@@ -118,8 +125,8 @@
   flex: 1;
   margin: 0 0 5px;
   color: #505e77;
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: var(--vps-font-body);
+  line-height: 1.75;
 }
 .card a {
   display: inline-flex;
@@ -128,7 +135,7 @@
   align-self: flex-start;
   min-height: 44px;
   padding-block: 7px;
-  font-size: 14px;
+  font-size: var(--vps-font-ui);
   font-weight: 600;
   line-height: 1.5;
   color: #0054e8;
@@ -144,25 +151,60 @@
   border-radius: 4px;
 }
 @media (max-width: 1199px) {
-  .container { width: calc(100% - 64px); }
+  .container {
+    width: calc(100% - 64px);
+  }
 }
 @media (max-width: 1099px) {
-  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .body { padding-inline: 24px; }
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .body {
+    padding-inline: 24px;
+  }
 }
 @media (max-width: 699px) {
-  .useCases { padding: 30px 0; }
-  .eyebrow { font-size: 12px; min-height: 31px; padding-inline: 18px; }
-  .heading { margin-bottom: 22px; }
-  .useCases .heading h2 { margin-top: 14px; font-size: clamp(27px, 7vw, 34px); }
-  .useCases .heading p { font-size: 15px; }
-  .grid { grid-template-columns: minmax(0, 1fr); gap: 18px; }
-  .illustration { height: clamp(150px, 44vw, 190px); margin-inline: 12px; }
-  .body { padding: 0 22px 12px; }
-  .useCases .card h3 { font-size: 19px; }
-  .useCases .card p { font-size: 15px; }
-  .card a { font-size: 14px; }
+  .useCases {
+    padding: 30px 0;
+  }
+  .eyebrow {
+    font-size: var(--vps-font-eyebrow);
+    min-height: 31px;
+    padding-inline: 18px;
+  }
+  .heading {
+    margin-bottom: 22px;
+  }
+  .useCases .heading h2 {
+    margin-top: 14px;
+    font-size: var(--vps-font-h2);
+  }
+  .useCases .heading p {
+    font-size: var(--vps-font-lead);
+  }
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  .illustration {
+    height: clamp(150px, 44vw, 190px);
+    margin-inline: 12px;
+  }
+  .body {
+    padding: 0 22px 12px;
+  }
+  .useCases .card h3 {
+    font-size: var(--vps-font-h3);
+  }
+  .useCases .card p {
+    font-size: var(--vps-font-body);
+  }
+  .card a {
+    font-size: var(--vps-font-ui);
+  }
 }
 @media (max-width: 639px) {
-  .container { width: calc(100% - 40px); }
+  .container {
+    width: calc(100% - 40px);
+  }
 }

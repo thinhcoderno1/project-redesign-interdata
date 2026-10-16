@@ -1,0 +1,14 @@
+.centeredHeading {
+  text-align: center;
+}
+.centeredHeading > div {
+  width: 100%;
+}
+.centeredHeading h2,
+.centeredHeading p {
+  margin-inline: auto;
+}
+
+.centeredHeading .customerTitle {
+  max-width: 100%;
+}

@@ -1,38 +1,22 @@
 import homeStyles from "./home.module.css";
 import Image from "next/image";
-import Link from "next/link";
 import { Consultation } from "@/components/home/consultation";
 import { ConsultationCta } from "@/components/home/consultation-cta";
 import { Icon } from "@/components/ui/icon";
-import { WorldMap } from "@/components/home/world-map";
-import { CustomerProof } from "@/components/shared/customer-proof";
+import { CapacitySection } from "./company-sections";
+import { ClaimNote } from "./claim-note";
+import { CompanyProofSections } from "@/components/shared/company-proof-sections";
 import { ParallaxBackground } from "@/components/ui/parallax-background";
 import { HeroHeading } from "@/components/home/hero-heading";
 import { InfrastructureServices } from "@/components/home/infrastructure-services";
+import { HomeInfrastructure } from "@/components/home/infrastructure-section";
 import solutionStyles from "@/components/home/solutions.module.css";
 import { SolutionsCarousel } from "@/components/home/solutions-carousel";
 import { TechnologyPartners } from "@/components/home/technology-partners";
 import { PromotionCarousel } from "@/components/home/promotion-carousel";
 import { KnowledgeResources } from "@/components/home/knowledge-resources";
-import {
-  claims,
-  infrastructure,
-  links,
-  partners,
-  reviewMode,
-  showEditorialNotes,
-} from "@/data/content";
+import { claims, links, reviewMode, showEditorialNotes } from "@/data/content";
 
-function ClaimNote() {
-  return reviewMode && showEditorialNotes ? (
-    <p className="review-note">
-      Nội dung theo brief, đang chờ duyệt.{" "}
-      <Link href="/content-review">
-        Xem trạng thái xác nhận <Icon name="external" />
-      </Link>
-    </p>
-  ) : null;
-}
 export function HomePage() {
   const visibleClaims = claims.filter(
     (c) => reviewMode || c.status === "approved",
@@ -40,7 +24,6 @@ export function HomePage() {
   const featureClaims = visibleClaims.filter((c) =>
     ["uptime", "support", "bandwidth"].includes(c.id),
   );
-  const capacityClaim = visibleClaims.find((c) => c.id === "business");
   return (
     <>
       <main id="noi-dung" className={homeStyles.home}>
@@ -126,108 +109,12 @@ export function HomePage() {
             <SolutionsCarousel />
           </div>
         </section>
-        <section id="nang-luc" className="capacity section">
-          <WorldMap />
-          <div className="container capacity-content">
-            <span className="eyebrow">NĂNG LỰC INTERDATA</span>
-            <h2>
-              {capacityClaim?.text || "Hạ tầng cho doanh nghiệp và người dùng"}
-            </h2>
-            <p>
-              InterData cung cấp dịch vụ máy chủ và giải pháp triển khai cho
-              website, ứng dụng và hệ thống doanh nghiệp. Mỗi nhu cầu được xem
-              xét theo tài nguyên và yêu cầu vận hành thực tế.
-            </p>
-            <div className="stat-grid">
-              {visibleClaims
-                .filter((c) => ["years", "customers", "servers"].includes(c.id))
-                .map((c) => {
-                  const [number, ...label] = c.text.split(" ");
-                  return (
-                    <div key={c.id}>
-                      <strong>{number}</strong>
-                      <span>{label.join(" ")}</span>
-                    </div>
-                  );
-                })}
-            </div>
-            <ClaimNote />
-          </div>
-        </section>
-        <CustomerProof />
-        <section id="doi-tac" className="education section">
-          <div className="container">
-            <div className="education-heading">
-              <span className="eyebrow">KẾT NỐI CÙNG GIÁO DỤC</span>
-              <h2>Cùng các trường đại học, cao đẳng</h2>
-              <p>
-                Các trường được giới thiệu trong nội dung chương trình Free
-                Hosting của InterData.
-              </p>
-            </div>
-            <div className="partner-grid">
-              {partners.map((p) => (
-                <div key={p.asset} className="partner">
-                  <Image
-                    src={`/images/${p.asset}.webp`}
-                    alt={p.name}
-                    width={200}
-                    height={96}
-                    sizes="(max-width: 640px) 35vw, 160px"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <CapacitySection />
+        <CompanyProofSections />
         <TechnologyPartners />
-        <section id="ha-tang" className="infrastructure dark section">
-          <ParallaxBackground className="infra-background">
-            <Image
-              src="/images/viettel-idc.jpg"
-              alt=""
-              fill
-              sizes="100vw"
-              className="infra-photo"
-            />
-            <div className="infra-overlay" />
-          </ParallaxBackground>
-          <div className="container infrastructure-layout">
-            <div className="infra-content">
-              <span className="eyebrow">NỀN TẢNG PHÍA SAU DỊCH VỤ</span>
-              <h2>
-                Hạ tầng được lựa chọn
-                <br />
-                cho từng hệ thống
-              </h2>
-              <div className="infra-items">
-                {infrastructure
-                  .filter((item) => reviewMode || item.status === "approved")
-                  .map((item) => (
-                    <div key={item.name}>
-                      <Icon name={item.icon} />
-                      <div>
-                        <h3>{item.name}</h3>
-                        <p>{item.detail}</p>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-              <ClaimNote />
-              <a href={links.contact} className="text-link">
-                Trao đổi yêu cầu kỹ thuật <Icon name="arrow" />
-              </a>
-              {showEditorialNotes && (
-                <p className="photo-credit">
-                  Ảnh minh họa datacenter · Viettel-IDC.jpg (tệp người dùng cung
-                  cấp)
-                </p>
-              )}
-            </div>
-          </div>
-        </section>
+        <HomeInfrastructure />
         <Consultation />
-        <ConsultationCta />
+        <ConsultationCta image="/images/cta/consultation-woman-upper-body.webp" />
         <KnowledgeResources />
       </main>
     </>

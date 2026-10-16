@@ -1,0 +1,8 @@
+{
+  "tool": "built-in image_gen",
+  "useCase": "precise-object-edit",
+  "referenceAsset": "public/images/cta/consultation-engineer.webp",
+  "outputAsset": "public/images/cta/consultation-engineer-female.webp",
+  "transparentBackground": true,
+  "prompt": "Use case: precise-object-edit. Asset type: transparent cutout illustration for the InterData VPS consultation CTA. Edit target: the supplied existing male consultation engineer cutout. Replace the adult male consultant with an adult Vietnamese woman, around 28 years old, friendly professional expression, shoulder-length dark hair, natural realistic face, wearing the same white overshirt over a royal blue top and dark trousers, and a small discreet headset microphone. Preserve the square composition, waist-up framing, studio photography/realistic commercial illustration finish, blue accent lighting, silver laptop held against her torso, the two small server racks at the lower left, open hand gesture, and visual balance of the source. Feminine professional adult styling, believable anatomy and hands, no exaggerated beauty retouching. Keep every edge clean on a genuinely transparent alpha background with no white halo, no solid background, no baked checkerboard. No logos, text, watermark, badges, extra people or decorations. Keep the subject fully inside the square canvas with a small margin around her head and sides. This image will be displayed at about 280 to 380 CSS pixels on a blue card."
+}

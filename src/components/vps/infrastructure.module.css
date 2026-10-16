@@ -49,7 +49,7 @@
   border-radius: 999px;
   background: var(--brand-card);
   color: var(--text-on-brand);
-  font-size: 12px;
+  font-size: var(--vps-font-eyebrow);
   font-weight: 600;
   line-height: 1.6;
   letter-spacing: 0.04em;
@@ -58,9 +58,9 @@
 .section .heading h2 {
   margin: 0;
   color: var(--text-on-brand);
-  font-size: clamp(28px, 2.6vw, 38px);
+  font-size: var(--vps-font-h2);
   font-weight: 750;
-  line-height: 1.3;
+  line-height: 1.35;
   letter-spacing: -0.035em;
   text-wrap: balance;
 }
@@ -71,8 +71,8 @@
   max-width: 760px;
   margin: 12px auto 0;
   color: var(--text-on-dark-secondary);
-  font-size: 16px;
-  line-height: 1.65;
+  font-size: var(--vps-font-lead);
+  line-height: 1.8;
   text-wrap: balance;
 }
 .rows {
@@ -176,7 +176,7 @@
 .section .details h3 {
   margin: 0;
   color: var(--text-on-brand);
-  font-size: clamp(23px, 1.9vw, 28px);
+  font-size: var(--vps-font-feature-title);
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: -0.025em;
@@ -184,8 +184,8 @@
 .section .details p {
   margin: 8px 0 0;
   color: var(--text-on-dark-secondary);
-  font-size: 15px;
-  line-height: 1.65;
+  font-size: var(--vps-font-body);
+  line-height: 1.75;
 }
 .benefits {
   display: grid;
@@ -201,7 +201,7 @@
   gap: 9px;
   min-width: 0;
   color: var(--text-on-dark-secondary);
-  font-size: 13px;
+  font-size: var(--vps-font-small);
   line-height: 1.5;
 }
 .benefitIcon {
@@ -263,7 +263,7 @@
   border-radius: 999px;
   background: var(--brand-primary);
   color: var(--text-on-brand);
-  font-size: 13px;
+  font-size: var(--vps-font-ui);
   font-weight: 600;
   line-height: 1.5;
 }
@@ -292,7 +292,7 @@
     font-size: 48px;
   }
   .section .details p {
-    font-size: 14px;
+    font-size: var(--vps-font-body);
   }
   .benefits {
     gap: 8px;
@@ -363,22 +363,22 @@
     background: linear-gradient(180deg, transparent 65%, var(--brand-card));
   }
   .section .details h3 {
-    font-size: 26px;
+    font-size: var(--vps-font-feature-title);
   }
   .section .details p {
-    font-size: 15px;
+    font-size: var(--vps-font-body);
   }
 }
 @media (max-width: 639px) {
   .section .heading h2 {
-    font-size: clamp(27px, 6.8vw, 32px);
+    font-size: var(--vps-font-h2);
   }
   .section .heading p {
-    font-size: 14px;
-    line-height: 1.75;
+    font-size: var(--vps-font-lead);
+    line-height: 1.8;
   }
   .eyebrow {
-    font-size: 12px;
+    font-size: var(--vps-font-eyebrow);
   }
   .copy,
   .row:nth-child(even) .copy {
@@ -391,10 +391,10 @@
     font-size: 42px;
   }
   .section .details h3 {
-    font-size: 24px;
+    font-size: var(--vps-font-feature-title);
   }
   .section .details p {
-    font-size: 14px;
+    font-size: var(--vps-font-body);
     line-height: 1.75;
   }
   .benefits {
@@ -405,7 +405,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
-    font-size: 12px;
+    font-size: var(--vps-font-small);
   }
   .benefitIcon {
     width: 36px;

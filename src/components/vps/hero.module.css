@@ -55,7 +55,7 @@
   margin: 0;
   clip-path: none;
   background: #061a39;
-  font-size: 12px;
+  font-size: var(--vps-font-small);
 }
 .copy {
   position: relative;
@@ -73,7 +73,7 @@
   border-radius: 40px;
   background: linear-gradient(100deg, #062451, #153f76);
   color: #e6efff;
-  font-size: 11px;
+  font-size: var(--vps-font-eyebrow);
   line-height: 1.6;
   text-transform: uppercase;
   letter-spacing: 0.01em;
@@ -100,13 +100,13 @@
 .hero .description {
   max-width: 520px;
   color: #c8d4e8;
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: var(--vps-font-body);
+  line-height: 1.75;
   margin: 0;
 }
 .actions {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   flex-wrap: wrap;
   gap: 14px;
   margin-top: 24px;
@@ -119,9 +119,10 @@
   min-height: 52px;
   padding: 12px 24px;
   border-radius: 999px;
-  font-size: 14px;
+  font-size: var(--vps-font-ui);
   font-weight: 600;
   line-height: 1.4;
+  white-space: nowrap;
 }
 .primary {
   min-width: 180px;
@@ -187,7 +188,7 @@
 }
 .benefitBar .benefit h2 {
   margin: 0;
-  font-size: 18px;
+  font-size: var(--vps-font-benefit);
   line-height: 1.5;
   font-weight: 700;
   letter-spacing: -0.025em;
@@ -212,13 +213,13 @@
   }
   .hero .description {
     max-width: 480px;
-    font-size: 14px;
+    font-size: var(--vps-font-body);
   }
 
   .hero .actions :global(.button) {
     min-height: 54px;
     padding: 13px 20px;
-    font-size: 12px;
+    font-size: var(--vps-font-ui);
   }
   .primary {
     min-width: 158px;
@@ -292,7 +293,7 @@
     width: 100%;
   }
   .badge {
-    font-size: 9px;
+    font-size: var(--vps-font-eyebrow);
     padding: 6px 10px;
     gap: 6px;
     min-height: 30px;
@@ -309,29 +310,26 @@
   }
   .hero .description {
     max-width: none;
-    font-size: 14px;
-    line-height: 1.8;
+    font-size: var(--vps-font-body);
+    line-height: 1.75;
   }
   .actions {
-    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: stretch;
     gap: 10px;
     margin-top: 24px;
   }
   .hero .actions :global(.button) {
+    flex: auto;
+    width: 100%;
     min-width: 0;
-    min-height: 50px;
+    min-height: 52px;
     padding: 12px 13px;
-    font-size: 11px;
+    font-size: var(--vps-font-ui);
     gap: 7px;
   }
-  .primary {
-    flex: 0.9;
-  }
-  .secondary {
-    flex: 1.15;
-  }
   .secondary svg {
-    display: none;
+    display: block;
   }
 
   .benefitBar {
@@ -357,22 +355,8 @@
     height: 25px;
   }
   .benefitBar .benefit h2 {
-    font-size: 16px;
+    font-size: var(--vps-font-benefit);
     text-align: center;
-  }
-}
-@media (max-width: 359px) {
-  .actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .hero .actions :global(.button) {
-    flex: auto;
-    width: 100%;
-    font-size: 13px;
-  }
-  .secondary svg {
-    display: block;
   }
 }
 @media (min-width: 600px) and (max-width: 639px) {

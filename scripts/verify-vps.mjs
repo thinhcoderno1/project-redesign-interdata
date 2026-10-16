@@ -66,7 +66,7 @@ function collect(value) {
   }
 }
 // Use-case cards follow the approved six-category reference, checked below.
-// The getting-started section was removed from the visible page by request.
+// Getting-started and VPS-definition sections were removed by request.
 const { GettingStarted: removedGettingStarted, ...visibleLandingHeaders } =
   data.landing.headers;
 collect({
@@ -74,24 +74,24 @@ collect({
   useCases: [],
   process: [],
   headers: visibleLandingHeaders,
+  // Environment cards now use logos/names; legacy repeated captions are omitted.
   blocks: data.landing.blocks.filter(
-    (block) => block.function !== "GettingStarted",
+    (block) =>
+      !["GettingStarted", "VpsDefinition", "OneClickApps"].includes(
+        block.function,
+      ),
   ),
 });
 collect(data.comparison);
 // Feedback and press now use shared homepage content, verified in verify-vps-amd.mjs.
 
 collect(data.faq);
-collect(data.cta);
-collect(data.learning);
+// The learning section and its terminal example were removed by request.
+// The homepage-style CTA replaces legacy CTA copy by request.
 // The reference-led hero replaces the old promotional badge with service copy.
 collect(data.hero.blocks.filter((block) => block.tag !== "span"));
 collect(data.pricing.blocks);
-required.push(
-  ...data.learning.operationsChecklist,
-  ...data.landing.benchmarkChecklist,
-  ...data.landing.definitionCards.flat(),
-);
+required.push(...data.landing.benchmarkChecklist);
 for (const group of data.landing.benchmarkGroups)
   for (const image of group.images) required.push(...image.metrics);
 
@@ -124,6 +124,16 @@ try {
   await expect(page.locator("h1")).toHaveText(
     "Thuê VPS Hiệu năng cao cho mọi nhu cầu",
   );
+  const consultationCta = page.locator("#vps-consultation");
+  await expect(consultationCta.locator("#vps-cta-title")).toHaveText(
+    "VPS phù hợp cho ứng dụng của bạn.",
+  );
+  await expect(
+    consultationCta.getByRole("link", { name: "Xem bảng giá VPS" }),
+  ).toHaveAttribute("href", "#pricing");
+  await expect(
+    consultationCta.getByRole("link", { name: "Chat với tư vấn viên" }),
+  ).toHaveAttribute("href", "https://www.facebook.com/interdata.com.vn/");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     "https://interdata.vn/thue-vps/",
@@ -340,12 +350,31 @@ try {
       '#hot-deals, #hot-deals-title, [id^="hot-tab-"], [id^="hot-panel-"]',
     ),
   ).toHaveCount(0);
-  await page.locator("#vps-technical-details > summary").click();
+  await expect(page.locator("#vps-technical-details > summary")).toHaveCount(0);
+  await expect(page.locator("#vps-definition-title")).toHaveCount(0);
+  await expect(
+    page.getByText("Nền tảng cần biết trước khi triển khai", { exact: true }),
+  ).toHaveCount(0);
+  for (const id of ["vps-comparison-title", "one-click-title"])
+    await expect(page.locator(`#${id}`)).toBeVisible();
+  await expect(page.locator("#performance-title")).toBeHidden();
   await page.locator("#environment-tab-1").click();
   await expect(page.locator("#environment-panel-1 article")).toHaveCount(4);
   await expect(page.locator("#environment-panel-0")).toBeHidden();
   await page.locator("#environment-tab-0").click();
-  await expect(page.locator("#environment-panel-0 article")).toHaveCount(6);
+  await expect(page.locator("#environment-panel-0 article")).toHaveCount(5);
+  const environment = page.locator(
+    'section[aria-labelledby="one-click-title"]',
+  );
+  await expect(environment.getByRole("tab")).toHaveText([
+    "Linux OS",
+    "1-Click Applications",
+  ]);
+  await expect(
+    environment.getByRole("heading", {
+      name: /Windows|Webuzo|aaPanel|Control Panel/i,
+    }),
+  ).toHaveCount(0);
   const faq = page.locator("details").filter({
     has: page.getByRole("heading", {
       name: data.faq.items[0].question,
@@ -373,10 +402,12 @@ try {
   await expect(lastFaq.locator("div")).toBeVisible();
   await lastFaq.locator("summary").click();
   await moreFaqs.click();
-  await page.getByText("Xem thêm nội dung", { exact: true }).click();
-  await expect(page.locator("#vps-learning-content")).toBeVisible();
-  await page.getByText("Thu gọn nội dung", { exact: true }).click();
-  await expect(page.locator("#vps-learning-content")).toBeHidden();
+  await expect(
+    page.locator("#vps-learning-title, #vps-learning-content"),
+  ).toHaveCount(0);
+  await expect(
+    page.getByText("Kiến thức nền tảng", { exact: true }),
+  ).toHaveCount(0);
 
   for (const width of [320, 390, 768, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 960 });
@@ -415,8 +446,6 @@ try {
       await page.screenshot({ path: `${directory}/pricing-${width}.png` });
       await page.locator("#one-click-title").scrollIntoViewIfNeeded();
       await page.screenshot({ path: `${directory}/one-click-${width}.png` });
-      await page.locator("#performance-title").scrollIntoViewIfNeeded();
-      await page.screenshot({ path: `${directory}/benchmark-${width}.png` });
     }
     if (width < 768) {
       const useCases = page.locator(
@@ -466,14 +495,28 @@ try {
   const plain = await plainContext.newPage();
   await plain.goto(`${base}/thue-vps/`);
   await expect(plain.locator("#hot-deals, #hot-deals-title")).toHaveCount(0);
+  await expect(plain.locator("#vps-technical-details > summary")).toHaveCount(
+    0,
+  );
+  await expect(plain.locator("#vps-definition-title")).toHaveCount(0);
+  await expect(
+    plain.getByText("Nền tảng cần biết trước khi triển khai", { exact: true }),
+  ).toHaveCount(0);
+  for (const id of ["vps-comparison-title", "one-click-title"])
+    await expect(plain.locator(`#${id}`)).toBeVisible();
+  await expect(plain.locator("#performance-title")).toBeHidden();
   await expect(plain.locator(`#${removedGettingStarted.id}`)).toHaveCount(0);
   await expect(plain.locator("#vps-panel-3")).toBeVisible();
   await expect(plain.locator("#vps-panel-3 article[data-pid]")).toHaveCount(4);
   await expect(
     plain.getByText(data.faq.items[0].question, { exact: true }),
   ).toBeVisible();
-  await plain.getByText("Xem thêm nội dung", { exact: true }).click();
-  await expect(plain.locator("#vps-learning-content")).toBeVisible();
+  await expect(
+    plain.locator("#vps-learning-title, #vps-learning-content"),
+  ).toHaveCount(0);
+  await expect(
+    plain.getByText("Kiến thức nền tảng", { exact: true }),
+  ).toHaveCount(0);
   await plainContext.close();
   await fs.writeFile(
     `${directory}/results.json`,
@@ -485,7 +528,8 @@ try {
         pricingContracts: "passed",
         viewports: results,
         keyboard: "passed",
-        noJavaScript: "default pricing, FAQ and learning passed",
+        noJavaScript:
+          "default pricing, FAQ and removed learning section passed",
         errors,
         submissions,
       },
