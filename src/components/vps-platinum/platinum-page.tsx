@@ -21,6 +21,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { CompanyProofSections } from "@/components/shared/company-proof-sections";
+import { CapacitySection } from "@/components/home/company-sections";
+import { TechnologyPartners } from "@/components/home/technology-partners";
+import homeStyles from "@/components/home/home.module.css";
 import { ParallaxBackground } from "@/components/ui/parallax-background";
 import { platinumFaq } from "@/data/vps-platinum";
 import { links } from "@/data/content";
@@ -522,7 +525,13 @@ export function PlatinumPage({ prices }: { prices: PlatinumPrices }) {
         </div>
         <span className={styles.photoCaption}>Ảnh minh họa datacenter</span>
       </section>
+      <div className={`${homeStyles.home} ${styles.companySection}`}>
+        <CapacitySection />
+      </div>
       <CompanyProofSections withBadgeIcons />
+      <div className={`${homeStyles.home} ${styles.companySection}`}>
+        <TechnologyPartners />
+      </div>
       <section
         id="cau-hoi"
         className={styles.section}

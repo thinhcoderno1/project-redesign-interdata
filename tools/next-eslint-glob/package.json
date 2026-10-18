@@ -1,0 +1,10 @@
+{
+  "name": "fast-glob",
+  "version": "3.3.1",
+  "private": true,
+  "description": "Scoped globSync adapter for @next/eslint-plugin-next 16.3.8; see docs/dependency-security.md",
+  "main": "index.cjs",
+  "dependencies": {
+    "tinyglobby": "0.2.17"
+  }
+}

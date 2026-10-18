@@ -17,6 +17,45 @@
 .section {
   padding-block: 72px;
 }
+.companySection {
+  --brand-primary: #0043ec;
+  color: var(--text-primary);
+  font-size: var(--font-content);
+  line-height: 1.75;
+}
+.companySection section h2 {
+  font-size: clamp(28px, 2.5vw, 36px);
+  line-height: 1.35;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.companySection p {
+  color: var(--text-secondary);
+}
+.companySection :global(.capacity-content) > p,
+.companySection :global(#doi-tac-cong-nghe) p {
+  font-size: var(--font-content-lead);
+  line-height: 1.8;
+}
+.companySection :global(.stat-grid) span {
+  font-size: calc(var(--font-content-meta) + 1px);
+  line-height: 1.65;
+}
+.companySection section :global(.eyebrow) {
+  display: block;
+  font-size: calc(var(--font-content-meta) - 1px);
+  color: var(--brand-primary);
+  letter-spacing: 0.14em;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+@media (max-width: 639px) {
+  .companySection section :global(.eyebrow) {
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+}
 .hero,
 .performance,
 .infrastructure,
@@ -186,6 +225,7 @@
 }
 .hero .actions .heroTrialButton {
   min-height: 68px;
+  justify-content: flex-start;
   padding: 8px 26px 8px 8px;
   gap: 16px;
   border: 0;

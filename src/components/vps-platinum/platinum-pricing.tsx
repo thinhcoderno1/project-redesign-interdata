@@ -152,9 +152,9 @@ export function PlatinumPricing({
           </a>
         </div>
         <div className={styles.groupControl}>
-          <label htmlFor="platinum-group">Dòng VPS PLATINUM</label>
           <select
             id="platinum-group"
+            aria-label="Chọn dòng VPS"
             value={gid}
             onChange={(event) => {
               controller.current?.abort();
@@ -170,10 +170,6 @@ export function PlatinumPricing({
               </option>
             ))}
           </select>
-          <p>
-            Giá hiển thị là tổng tiền của chu kỳ đã chọn. Kiểm tra thuế, tùy
-            chọn và giá gia hạn tại trang đăng ký.
-          </p>
         </div>
         <noscript>
           <p className={styles.noScriptNote}>

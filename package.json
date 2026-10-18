@@ -8,6 +8,7 @@
     "start": "next start --hostname 0.0.0.0 --port 3100",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "test:eslint-roots": "node scripts/verify-eslint-roots.mjs",
     "test:ui": "node scripts/verify-ui.mjs",
     "test:parallax": "node scripts/verify-parallax.mjs",
     "test:hero-heading": "node scripts/verify-hero-heading.mjs",
@@ -34,6 +35,11 @@
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
+  "overrides": {
+    "@next/eslint-plugin-next@16.3.8": {
+      "fast-glob": "$fast-glob"
+    }
+  },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.56.0",
@@ -42,6 +48,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.8",
+    "fast-glob": "file:tools/next-eslint-glob",
     "prettier": "^3.9.9",
     "typescript": "^5"
   }
