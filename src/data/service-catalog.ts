@@ -45,10 +45,10 @@ export const vpsCatalog: CatalogService[] = [
     icon: "code",
     description:
       "Môi trường Linux để triển khai website, API và công cụ self-host trên hệ điều hành bạn chọn.",
-    href: "https://interdata.vn/vps-linux/",
+    href: "/vps-linux/",
     price: 95000,
     period: "tháng",
-    priceNote: "Linux · Plan 1 · IPv4 Private",
+    priceNote: "Linux · Plan 1 · IPv4 theo cấu hình gói",
   },
   {
     id: "vps-gold",
@@ -57,7 +57,7 @@ export const vpsCatalog: CatalogService[] = [
     icon: "cpu",
     description:
       "Máy chủ ảo dùng Intel Xeon Gold cho website và ứng dụng cần môi trường vận hành riêng.",
-    href: "https://interdata.vn/vps-gold-nvme-u2/",
+    href: "/vps-gold/",
     price: 332000,
     period: "3 tháng",
     priceNote: "VPS Gold · Plan 1 · Thanh toán 3 tháng",
@@ -65,11 +65,11 @@ export const vpsCatalog: CatalogService[] = [
   {
     id: "vps-n8n",
     name: "VPS n8n",
-    platform: "Workflow & tự động hóa",
+    platform: "Template n8n & tự động hóa",
     icon: "network",
     description:
-      "Self-host n8n trên VPS để kết nối ứng dụng, xây dựng workflow và quản lý dữ liệu của bạn.",
-    href: "https://interdata.vn/vps-n8n/",
+      "Self-host n8n với template cài sẵn trên mọi dịch vụ VPS InterData. Kết nối ứng dụng và xây dựng workflow của bạn.",
+    href: "/vps-n8n/",
     price: 150000,
     period: "tháng",
     priceNote: "Gói tham khảo: VPS AMD · Plan 1",
@@ -81,7 +81,7 @@ export const vpsCatalog: CatalogService[] = [
     icon: "code",
     description:
       "Triển khai ứng dụng phát triển cùng AI trên môi trường VPS tích hợp EzyPlatform.",
-    href: "https://interdata.vn/vps-vibe-coding/",
+    href: "/vps-vibe-coding/",
     price: 277000,
     period: "tháng",
     priceNote: "Vibe Basic · Chỉ hỗ trợ mã nguồn EzyPlatform",

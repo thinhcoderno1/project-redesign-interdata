@@ -51,7 +51,10 @@ export function InfrastructureServices() {
       aria-label="Dịch vụ hạ tầng"
     >
       <div className="container">
-        <span className="eyebrow">DỊCH VỤ HẠ TẦNG</span>
+        <span className="eyebrow">
+          <Icon name="server" />
+          DỊCH VỤ HẠ TẦNG
+        </span>
         <section
           id="dich-vu-vps"
           className={styles.group}

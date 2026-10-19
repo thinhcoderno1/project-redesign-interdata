@@ -1,0 +1,14 @@
+[
+  {
+    "key": "hero",
+    "prompt": "Create a premium wide 16:9 website hero illustration for InterData's self-hosted n8n OS template. Photorealistic enterprise server hardware on the RIGHT HALF, a single realistic monitor showing abstract connected workflow nodes with coral-pink accents (no readable text, no fabricated chart), subtle luminous coral workflow connector motif. Dark navy and cobalt blue data center environment, polished but credible enterprise infrastructure photography aesthetic, controlled studio lighting, deep natural shadows. LEFT 55 percent quiet dark navy negative space for heading overlay, no foreground objects left. No text, labels, numbers, humans, badges, claims or logos. This illustrates workflow automation hosted on a VPS, not a distinct hardware product. Landscape 1672x941."
+  },
+  {
+    "key": "platform",
+    "prompt": "Wide 16:9 enterprise web section artwork for a self-hosted workflow automation OS template on a virtual server. On the RIGHT 55 percent, close-up credible dark metal server rack and a restrained suspended visual of interconnected coral-pink and blue rounded workflow nodes representing webhook to actions. Photographic hardware materials, highly legible simple composition, restrained glow, premium dark blue lighting. LEFT 45 percent empty very dark navy for white text overlay. No readable text, logos, pseudo-code, chart, performance claims, humans or lock symbols. Landscape 1672x941."
+  },
+  {
+    "key": "center",
+    "prompt": "Single clean premium 3D illustration on transparent background: compact silver and dark navy VPS server tower with a coral pink workflow branching node symbol floating above it, three connected small rounded nodes. Self-hosted workflow automation metaphor, friendly professional enterprise product illustration, precise metal finish, soft blue edge lighting with warm coral accent, centered compact composition, isolated full object, no text, no Tux penguin, no logo, no background, no floor. Square 960x960."
+  }
+]

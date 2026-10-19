@@ -25,7 +25,11 @@
     "test:vps": "node scripts/verify-vps.mjs",
     "test:vps-range": "node scripts/verify-vps-range.mjs",
     "test:vps-amd": "node scripts/verify-vps-amd.mjs",
-    "test:vps-platinum": "node scripts/verify-vps-platinum.mjs"
+    "test:vps-platinum": "node scripts/verify-vps-platinum.mjs",
+    "test:vps-linux": "node scripts/verify-vps-linux.mjs",
+    "test:vps-gold": "node scripts/verify-vps-gold.mjs",
+    "test:vps-n8n": "node scripts/verify-vps-n8n.mjs",
+    "test:vps-vibe-coding": "node scripts/verify-vps-vibe-coding.mjs"
   },
   "dependencies": {
     "entities": "8.1.0",
@@ -51,5 +55,8 @@
     "fast-glob": "file:tools/next-eslint-glob",
     "prettier": "^3.9.9",
     "typescript": "^5"
+  },
+  "allowScripts": {
+    "unrs-resolver@1.12.2": true
   }
 }

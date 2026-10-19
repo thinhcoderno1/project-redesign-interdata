@@ -16,6 +16,7 @@ import {
   Network,
   RefreshCw,
   ShieldCheck,
+  Tags,
   Zap,
 } from "lucide-react";
 import { amdBillingCycles } from "@/data/vps-amd";
@@ -123,7 +124,10 @@ export function AmdPricing({
     >
       <div className={`container ${styles.pricingLayout}`}>
         <div className={styles.pricingIntro}>
-          <span className={styles.lightEyebrow}>BẢNG GIÁ VPS AMD</span>
+          <span className={styles.lightEyebrow}>
+            <Tags size={16} aria-hidden="true" />
+            BẢNG GIÁ VPS AMD
+          </span>
           <h2 id="amd-pricing-title">Đa dạng cấu hình, phù hợp nhu cầu</h2>
           <p>
             Chọn số vCPU, RAM, dung lượng NVMe và băng thông theo ứng dụng của

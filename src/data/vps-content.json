@@ -1073,12 +1073,12 @@
       {
         "gid": 20,
         "label": "VPS GOLD",
-        "href": "https://interdata.vn/vps-gold-enterprise-1gbps"
+        "href": "/vps-gold/"
       },
       {
         "gid": 3,
         "label": "VPS LINUX",
-        "href": "https://interdata.vn/vps-linux"
+        "href": "/vps-linux/"
       }
     ],
     "defaultGid": 3,

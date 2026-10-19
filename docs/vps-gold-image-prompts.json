@@ -1,0 +1,25 @@
+{
+  "method": "Built-in image_gen",
+  "createdAt": "2026-10-19",
+  "assets": [
+    {
+      "file": "public/images/vps-gold/hero.webp",
+      "source": "C:/Users/interdigi 03/.codex/generated_images/01a151fb-dcaf-7010-8285-516ca49fb88e/exec-aff45f76-cfb0-4358-b11b-ab4c6910a400.png",
+      "prompt": "Use case: photorealistic-natural. Asset: enterprise VPS Gold website hero, wide 16:9 photograph. A credible contemporary datacenter aisle in deep navy and charcoal. On the RIGHT a close-up real silver server CPU package on a rack hardware tray, professionally lit, small precisely engraved text \"Intel Xeon Gold\" on the metal heatspreader, no model number. The LEFT 50 percent dark and calm negative space for white website headline and CTA. Real server vents, rack rails, restrained blue status LEDs, modest warm gold reflection on the CPU edge. Editorial infrastructure photography, realistic materials, no floating hologram, no sci-fi beams, no cartoon mascot, no giant gold bars or stars, no exaggerated circuits, no watermark, no other promotional text. Illustrative scene, not documentation of an actual facility.",
+      "transparent": false
+    },
+    {
+      "file": "public/images/vps-gold/platform.webp",
+      "source": "C:/Users/interdigi 03/.codex/generated_images/01a151fb-dcaf-7010-8285-516ca49fb88e/exec-a8e9c847-ed1a-41c4-a157-15a00f73b0d0.png",
+      "prompt": "Use case: photorealistic-natural. Asset: wide VPS Gold platform section background, 16:9. Realistic macro editorial photograph of an enterprise server motherboard with two CPU sockets and memory DIMMs, one installed Intel Xeon Gold processor with clearly engraved small text \"Intel Xeon Gold\", no model number. Hardware occupies RIGHT 60 percent, LEFT dark empty navy surface for overlaid text. Restrained cool studio lighting with a subtle warm gold highlight, physically believable aluminum, green PCB, DIMM slots and heatsinks, professional datacenter hardware photography. No Platinum or AMD text, no stars, no gold bullion, no neon science-fiction, no fake metrics, no holograms, no watermark.",
+      "transparent": false
+    },
+    {
+      "file": "public/images/vps-gold/center.webp",
+      "source": "C:/Users/interdigi 03/.codex/generated_images/01a151fb-dcaf-7010-8285-516ca49fb88e/exec-ebb8e7f2-3159-4c51-8627-4101da4c77fd.png",
+      "prompt": "Use case: product-mockup. Asset: square central illustration for an enterprise VPS Gold applications section. Premium photorealistic product render of three compact dark silver enterprise rack-server units stacked vertically, neatly spaced, a realistic square brushed-metal CPU package mounted flat on the top unit, engraved \"Intel Xeon Gold\" in small clean dark lettering, no model number. Subtle warm gold accent on edges and minimal blue status LEDs, realistic server ventilation and metal surfaces. Three-quarter view, isolated object centered with generous transparent margins, elegant restrained technical aesthetic. No star, no trophy, no crown, no cartoon, no extra text, no ground plane extending to image edges. Transparent background.",
+      "transparent": true
+    }
+  ],
+  "note": "Illustrative renders, not photographs of an identified InterData facility or evidence of a particular CPU model. Shared generic VPS assets are used for application, infrastructure and CTA sections; no Platinum or AMD product images."
+}

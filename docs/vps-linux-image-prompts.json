@@ -1,0 +1,17 @@
+{
+  "method": "Built-in image_gen",
+  "createdAt": "2026-10-19",
+  "assets": [
+    {
+      "file": "public/images/vps-linux/hero.webp",
+      "source": "C:/Users/interdigi 03/.codex/generated_images/01a151fb-dcaf-7010-8285-516ca49fb88e/exec-e1ac33fb-1ff3-4b20-a3f8-219b7e2225a2.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide website hero background, landscape 16:9. Create a credible enterprise Linux server administration scene photographed in a real modern datacenter, dark navy rack cabinets, subtle blue status LEDs, a compact angled administration console on the RIGHT displaying a restrained Linux terminal with small green command lines, elegant black and silver server hardware. The LEFT 50 percent must be dark calm negative space for white headline and CTA overlay. Camera at standing eye level, professional editorial infrastructure photography, real metal, cables and ventilation, natural lens rendering, understated cinematic blue lighting. Show one small recognizable Tux Linux penguin decal on the administration console edge, no giant mascot. Avoid Intel or AMD chips or branding, holograms, floating UI, neon sci-fi, cartoons, white SaaS illustration, legible promotional text, watermark. This is an illustrative scene, not claimed as a specific real facility. Deliver a polished high-resolution wide photograph."
+    },
+    {
+      "file": "public/images/vps-linux/platform.webp",
+      "source": "C:/Users/interdigi 03/.codex/generated_images/01a151fb-dcaf-7010-8285-516ca49fb88e/exec-142c8485-d83d-4aec-a141-f1cbf24b997b.png",
+      "prompt": "Use case: photorealistic-natural. Asset: wide background photograph for a Linux VPS platform section, 16:9. Realistic close-up of an enterprise server rack and a slim administration monitor on the RIGHT half, monitor displaying a dark Linux terminal and a small Linux penguin emblem on its bezel, real Ethernet cables and server trays, professionally organized hardware. Navy and charcoal, restrained cool blue lighting, technical editorial photography. LEFT 45 percent dark and uncluttered for web copy. No Intel or AMD branded chip, no floating holograms, no giant mascot, no glowing neon outlines, no promotional lettering, no watermark. Must differ from an aisle hero: intimate close-up at workstation height with screen and rack details prominent."
+    }
+  ],
+  "note": "Illustrations of Linux administration, not documentary photographs of InterData facilities. Other images reuse existing Linux and generic VPS assets; no Platinum or AMD product imagery."
+}

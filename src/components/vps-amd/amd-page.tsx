@@ -11,9 +11,13 @@ import {
   Globe2,
   HardDrive,
   Headphones,
+  HelpCircle,
   KeyRound,
+  Layers3,
   Network,
+  Rocket,
   Video,
+  Workflow,
   type LucideIcon,
 } from "lucide-react";
 import { CompanyProofSections } from "@/components/shared/company-proof-sections";
@@ -126,6 +130,7 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
           <div className={styles.heroGrid}>
             <div className={`hero-content ${styles.heroCopy}`}>
               <span className={styles.darkEyebrow}>
+                <Cpu size={16} aria-hidden="true" />
                 VPS AMD · NỀN TẢNG EPYC
               </span>
               <h1 id="amd-title">
@@ -205,7 +210,10 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
         <div className={styles.performanceOverlay} />
         <div className={`container ${styles.performanceGrid}`}>
           <div className={styles.performanceCopy}>
-            <span className={styles.darkEyebrow}>NỀN TẢNG XỬ LÝ</span>
+            <span className={styles.darkEyebrow}>
+              <Cpu size={16} aria-hidden="true" />
+              NỀN TẢNG XỬ LÝ
+            </span>
             <h2 id="amd-hardware-title">
               CPU AMD EPYC
               <br />
@@ -297,6 +305,7 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
             className={`${styles.sectionHeading} ${styles.applicationHeading}`}
           >
             <span className={styles.lightEyebrow}>
+              <Layers3 size={16} aria-hidden="true" />
               PHÙ HỢP VỚI NHIỀU NHU CẦU
             </span>
             <h2 id="amd-uses-title">
@@ -380,6 +389,7 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
         <div className={`container ${styles.comparisonLayout}`}>
           <div className={styles.sectionHeading}>
             <span className={styles.lightEyebrow}>
+              <Workflow size={16} aria-hidden="true" />
               CHỌN MÔI TRƯỜNG TRIỂN KHAI
             </span>
             <h2 id="amd-comparison-title">Khi nào nên chọn VPS AMD?</h2>
@@ -437,7 +447,10 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
         <div className={styles.infrastructureOverlay} />
         <div className={`container ${styles.infrastructureGrid}`}>
           <div className={styles.infrastructureCopy}>
-            <span className={styles.darkEyebrow}>HẠ TẦNG PHÍA SAU DỊCH VỤ</span>
+            <span className={styles.darkEyebrow}>
+              <Network size={16} aria-hidden="true" />
+              HẠ TẦNG PHÍA SAU DỊCH VỤ
+            </span>
             <h2 id="amd-infrastructure-title">
               Hạ tầng máy chủ
               <br />
@@ -501,7 +514,7 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
         </div>
         <span className={styles.photoCaption}>Ảnh minh họa datacenter</span>
       </section>
-      <CompanyProofSections />
+      <CompanyProofSections withBadgeIcons />
       <section
         id="cau-hoi"
         className={styles.section}
@@ -510,7 +523,10 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
         <div className="container">
           <div className={styles.faqHeading}>
             <div className={styles.sectionHeading}>
-              <span className={styles.lightEyebrow}>CÂU HỎI THƯỜNG GẶP</span>
+              <span className={styles.lightEyebrow}>
+                <HelpCircle size={16} aria-hidden="true" />
+                CÂU HỎI THƯỜNG GẶP
+              </span>
               <h2 id="amd-faq-title">Giải đáp thắc mắc về VPS AMD</h2>
               <p>
                 Cấu hình, quyền quản trị và những điều cần kiểm tra trước khi
@@ -548,7 +564,10 @@ export function AmdPage({ products }: { products: VpsProduct[] | null }) {
         <div className={styles.ctaOverlay} />
         <div className={`container ${styles.ctaLayout}`}>
           <div>
-            <span className={styles.darkEyebrow}>SẴN SÀNG TRIỂN KHAI?</span>
+            <span className={styles.darkEyebrow}>
+              <Rocket size={16} aria-hidden="true" />
+              SẴN SÀNG TRIỂN KHAI?
+            </span>
             <h2 id="amd-cta-title">
               Chọn VPS AMD
               <br />

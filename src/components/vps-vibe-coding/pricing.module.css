@@ -1,0 +1,100 @@
+/* Reuse Linux pricing styles; these rules accommodate Vibe's own five cycles
+   and annual offer without changing its content or checkout contract. */
+.root {
+  padding-block: 80px;
+  scroll-margin-top: 152px;
+}
+.root .billingTabs {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.root .billingTabs button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.discount {
+  padding: 2px 5px;
+  border-radius: 999px;
+  background: #fff1e8;
+  color: #a83c0e;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.billingTabs button[aria-selected="true"] .discount {
+  background: rgb(255 255 255 / 16%);
+  color: #fff;
+}
+.annualOffer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: auto 0 20px;
+  padding: 14px;
+  border: 1px solid var(--border-default);
+  border-radius: 12px;
+  background: var(--brand-subtle);
+  color: var(--brand-strong);
+}
+.annualOffer small {
+  display: block;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.annualOffer strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 22px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.annualOffer > span {
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: var(--brand-primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+.featuredOffer {
+  border-color: rgb(255 255 255 / 24%);
+  background: rgb(255 255 255 / 10%);
+  color: #fff;
+}
+.featuredOffer > span {
+  background: #fff;
+  color: #0739a5;
+}
+.root .planButton {
+  color: var(--brand-primary);
+}
+.root [data-popular] .planButton {
+  color: #0739a5;
+}
+.root [data-popular] .planButton:focus-visible {
+  outline-color: #fff;
+}
+@media (max-width: 1024px) {
+  .root {
+    padding-block: 64px;
+  }
+}
+@media (max-width: 767px) {
+  .root {
+    padding-block: 48px;
+    scroll-margin-top: 176px;
+  }
+}
+@media (max-width: 639px) {
+  .root .billingTabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .root .billingTabs button {
+    flex-direction: column;
+    min-height: 64px;
+    gap: 3px;
+  }
+}

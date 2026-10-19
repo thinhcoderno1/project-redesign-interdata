@@ -1,0 +1,268 @@
+[
+  {
+    "source": "images/ezyplatform-logo.png",
+    "target": "public/images/vps-vibe-coding/ezyplatform-logo.png",
+    "sha256": "36212f509a3ffd60f50a326025b98915b69b8b5bc10291f9a2ea145f85023bba",
+    "width": 512,
+    "height": 512
+  },
+  {
+    "source": "images/mockup-ai-api.png",
+    "target": "public/images/vps-vibe-coding/mockup-ai-api.png",
+    "sha256": "471dff63d716af98d8afe3712a758ba119517e38d756451c89f4479a49c6b0fb",
+    "width": 1448,
+    "height": 1086
+  },
+  {
+    "source": "images/mockup-automation.png",
+    "target": "public/images/vps-vibe-coding/mockup-automation.png",
+    "sha256": "e825e97ce42c869986d91d9206b15f81b003db505d699735050e87f761a22158",
+    "width": 1448,
+    "height": 1086
+  },
+  {
+    "source": "images/mockup-business-blog.png",
+    "target": "public/images/vps-vibe-coding/mockup-business-blog.png",
+    "sha256": "214ef823721c03e555ffb454d3a4f79e3092cdc0d86ce5b315676f9903ee38ec",
+    "width": 1448,
+    "height": 1086
+  },
+  {
+    "source": "images/mockup-ecommerce.png",
+    "target": "public/images/vps-vibe-coding/mockup-ecommerce.png",
+    "sha256": "5ec1500a3b84a7b28496a3b2a9ea4a96a00019a484134d714409f813cdd0e046",
+    "width": 1448,
+    "height": 1086
+  },
+  {
+    "source": "images/mockup-landing-page.png",
+    "target": "public/images/vps-vibe-coding/mockup-landing-page.png",
+    "sha256": "cafabe95bc61b1ab90fbb58c80deb908dbe368f2f6c29faf2351dd1a3856cea2",
+    "width": 1448,
+    "height": 1086
+  },
+  {
+    "source": "images/mockup-mini-crm.png",
+    "target": "public/images/vps-vibe-coding/mockup-mini-crm.png",
+    "sha256": "5871b1f0f8416eaf07c42024cd775eccb18c56a9bc6bf2539cc8f516dcc178ff",
+    "width": 1448,
+    "height": 1086
+  },
+  {
+    "source": "images/mockup-mvp.png",
+    "target": "public/images/vps-vibe-coding/mockup-mvp.png",
+    "sha256": "a48f572079be45eea3d586b32dc830ed3e313f09a733e722439afccc4170203c",
+    "width": 1448,
+    "height": 1086
+  },
+  {
+    "source": "social-proof/logos/balico.png",
+    "target": "public/images/vps-vibe-coding/social-proof/logos/balico.png",
+    "sha256": "9b29f7adcfc4fb951ba70f43c84a94af41fedd1b5bacaf4ea3cd0b936257652d",
+    "width": 400,
+    "height": 111
+  },
+  {
+    "source": "social-proof/logos/logo-digizone-vietnam.png",
+    "target": "public/images/vps-vibe-coding/social-proof/logos/logo-digizone-vietnam.png",
+    "sha256": "7313c62975c210bc059be8bee0006cc3077b047bdd3f1c4ae836214b5cd8909f",
+    "width": 1024,
+    "height": 384
+  },
+  {
+    "source": "social-proof/logos/logo-donghohaitrieu.png",
+    "target": "public/images/vps-vibe-coding/social-proof/logos/logo-donghohaitrieu.png",
+    "sha256": "683199c3ef4f54a3fb322fe2f3c0e0e6c7ee50405114e0c62fa81c80e02ec75c",
+    "width": 900,
+    "height": 190
+  },
+  {
+    "source": "social-proof/logos/logo-jobkey.png",
+    "target": "public/images/vps-vibe-coding/social-proof/logos/logo-jobkey.png",
+    "sha256": "cfdf39feb36a4255d23b933d447a3328c41e6fb498410776184d3bc67dcc584e",
+    "width": 260,
+    "height": 55
+  },
+  {
+    "source": "social-proof/logos/logo-realdev.png",
+    "target": "public/images/vps-vibe-coding/social-proof/logos/logo-realdev.png",
+    "sha256": "382f010cb2c51050ec999b90f3b41a52d98d6e083fa2f9e4f4424a03e6a35f1d",
+    "width": 500,
+    "height": 277
+  },
+  {
+    "source": "social-proof/logos/logo-seoviet.png",
+    "target": "public/images/vps-vibe-coding/social-proof/logos/logo-seoviet.png",
+    "sha256": "0412d339203f2b8a8e9d03177edb73f94d10a6c0dd3e490e0b5844f5ddb338f5",
+    "width": 609,
+    "height": 236
+  },
+  {
+    "source": "social-proof/logos/logo-themewpgiare-truongphong.png",
+    "target": "public/images/vps-vibe-coding/social-proof/logos/logo-themewpgiare-truongphong.png",
+    "sha256": "26d08baa5360bd649ad8f7fb831e9033555c2ec9d6966fe4a25d25aad8f7768f",
+    "width": 1024,
+    "height": 269
+  },
+  {
+    "source": "social-proof/logos/logo-umix-vietnam.png",
+    "target": "public/images/vps-vibe-coding/social-proof/logos/logo-umix-vietnam.png",
+    "sha256": "32e713c808aacdd8ee37902e7c63f07187d8b8af662f768d18fa837a07a9810b",
+    "width": 148,
+    "height": 53
+  },
+  {
+    "source": "social-proof/press/24h.png",
+    "target": "public/images/vps-vibe-coding/social-proof/press/24h.png",
+    "sha256": "d51e5b0aaf20601ff142a2814481b8111347274dbfdc532b8b015ec90b6f9c3a",
+    "width": 547,
+    "height": 365
+  },
+  {
+    "source": "social-proof/press/baoangiang.png",
+    "target": "public/images/vps-vibe-coding/social-proof/press/baoangiang.png",
+    "sha256": "78539ffffe86f341b609d9a217cbfd149f47d4474253a3457d3612ee3d27248a",
+    "width": 300,
+    "height": 106
+  },
+  {
+    "source": "social-proof/press/baohatinh.png",
+    "target": "public/images/vps-vibe-coding/social-proof/press/baohatinh.png",
+    "sha256": "1b6856cd1a8b4567b3aa59846e4982169ac5e4067262f4dcedee6f292960a074",
+    "width": 1280,
+    "height": 717
+  },
+  {
+    "source": "social-proof/press/baothanhnien.webp",
+    "target": "public/images/vps-vibe-coding/social-proof/press/baothanhnien.webp",
+    "sha256": "1c00f88a8d12f605a0064e240133ee14b0ba432ed72c4f8aa0a51cace9693445",
+    "width": 508,
+    "height": 112
+  },
+  {
+    "source": "social-proof/press/cafef.png",
+    "target": "public/images/vps-vibe-coding/social-proof/press/cafef.png",
+    "sha256": "167c8b6d0255c987fb089541dd0f4809bf0b506ada524a60aed38cc90bfc8f53",
+    "width": 400,
+    "height": 164
+  },
+  {
+    "source": "social-proof/press/dantri.webp",
+    "target": "public/images/vps-vibe-coding/social-proof/press/dantri.webp",
+    "sha256": "6d852b6eb2c7399b235e1f4025d16b84395f294e1c6184f34b54d64bfe9ae8c4",
+    "width": 236,
+    "height": 92
+  },
+  {
+    "source": "social-proof/press/lamdong.png",
+    "target": "public/images/vps-vibe-coding/social-proof/press/lamdong.png",
+    "sha256": "8fe61a827a1fa765ddc39bdab0986fa82e07f696f8d515491e4e9ad075f5d0d0",
+    "width": 854,
+    "height": 240
+  },
+  {
+    "source": "social-proof/press/Logo_Vietnamnet.png",
+    "target": "public/images/vps-vibe-coding/social-proof/press/Logo_Vietnamnet.png",
+    "sha256": "93903dfdf29986e07ed1f4e916383bcb238b734eeb32679e50d5e0b6ee5fb436",
+    "width": 1280,
+    "height": 495
+  },
+  {
+    "source": "social-proof/press/thumb-24h.jpg",
+    "target": "public/images/vps-vibe-coding/social-proof/press/thumb-24h.jpg",
+    "sha256": "884cf05f371b5805664cc6c4c97eadff49f1b45f3fa386cdf764f78108cbdbf3",
+    "width": 2000,
+    "height": 1125
+  },
+  {
+    "source": "social-proof/press/thumb-angiang.png",
+    "target": "public/images/vps-vibe-coding/social-proof/press/thumb-angiang.png",
+    "sha256": "e3af26ed8d079a3a00f2bdfd37ef6dfe60a2844b6ca3bd0883d576c418f14e35",
+    "width": 1242,
+    "height": 876
+  },
+  {
+    "source": "social-proof/press/Thumb-baohatinh.jpg",
+    "target": "public/images/vps-vibe-coding/social-proof/press/Thumb-baohatinh.jpg",
+    "sha256": "d85d850f7403e2deaa26523c4661d79aff3a72fb582aaa232ed12d6dd344bf79",
+    "width": 810,
+    "height": 608
+  },
+  {
+    "source": "social-proof/press/thumb-baothanhnien.webp",
+    "target": "public/images/vps-vibe-coding/social-proof/press/thumb-baothanhnien.webp",
+    "sha256": "7901fbdbcd89f50aa5dfa88b6e2108966be2d05b53f22fb044a66a1e89e24eed",
+    "width": 2000,
+    "height": 1581
+  },
+  {
+    "source": "social-proof/press/thumb-cafef.png",
+    "target": "public/images/vps-vibe-coding/social-proof/press/thumb-cafef.png",
+    "sha256": "e4b76ba18eae735bc5eee18d7e596678e5841c083857a4ffd9c7735279e70ca6",
+    "width": 624,
+    "height": 468
+  },
+  {
+    "source": "social-proof/press/thumb-dantri.webp",
+    "target": "public/images/vps-vibe-coding/social-proof/press/thumb-dantri.webp",
+    "sha256": "4e1183058c9d9fd1d2bebd55a3cd19501d3aad5d8ade6c746658e8b8c26f6d65",
+    "width": 1020,
+    "height": 765
+  },
+  {
+    "source": "social-proof/press/thumb-lamdong.jpg",
+    "target": "public/images/vps-vibe-coding/social-proof/press/thumb-lamdong.jpg",
+    "sha256": "f108b286903c37b1d1e8de276ee690ab40ce1d30142d0f013af5fb41647021bf",
+    "width": 2560,
+    "height": 1706
+  },
+  {
+    "source": "social-proof/press/thumb-vietnamnet.jpg",
+    "target": "public/images/vps-vibe-coding/social-proof/press/thumb-vietnamnet.jpg",
+    "sha256": "55a339690cb7204acce78c8a6251f7b6772e4d95035aca4e1e796c02c91be06d",
+    "width": 1000,
+    "height": 578
+  },
+  {
+    "source": "social-proof/press/thumb-vnexpress.webp",
+    "target": "public/images/vps-vibe-coding/social-proof/press/thumb-vnexpress.webp",
+    "sha256": "3d0a9c97045a3e0da50338051cac5a5cdd79a870fd6cb5e235f9d2ea68dd3320",
+    "width": 680,
+    "height": 379
+  },
+  {
+    "source": "social-proof/press/thumb-vtc.webp",
+    "target": "public/images/vps-vibe-coding/social-proof/press/thumb-vtc.webp",
+    "sha256": "841ff78d446755d3240f5c11c09900da53d7620a1c1d6234122eb8e1289a0a40",
+    "width": 720,
+    "height": 405
+  },
+  {
+    "source": "social-proof/press/thumb-vtv.png",
+    "target": "public/images/vps-vibe-coding/social-proof/press/thumb-vtv.png",
+    "sha256": "907202f0ac99698ac69f92ffb8ecf1d9a607a262aabe88a8385421831ef6c505",
+    "width": 551,
+    "height": 284
+  },
+  {
+    "source": "social-proof/press/vnexpress.png",
+    "target": "public/images/vps-vibe-coding/social-proof/press/vnexpress.png",
+    "sha256": "256a75df65c8ae17ea570fa1eaeac6f0f6f62e31d8ba743478ca200887cbac82",
+    "width": 5000,
+    "height": 968
+  },
+  {
+    "source": "social-proof/press/vtcnews.webp",
+    "target": "public/images/vps-vibe-coding/social-proof/press/vtcnews.webp",
+    "sha256": "9e2da5ff4862306c88dba7b952f0ba59ea3106b70d4f9c24dec6c28b58bd215f",
+    "width": 220,
+    "height": 54
+  },
+  {
+    "source": "social-proof/press/vtv.webp",
+    "target": "public/images/vps-vibe-coding/social-proof/press/vtv.webp",
+    "sha256": "1fdd3fbe137277806432c454ee3c7bfe68f4fb74c3951a1a5e21a9d06c40c5cb",
+    "width": 158,
+    "height": 22
+  }
+]

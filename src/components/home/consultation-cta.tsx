@@ -19,6 +19,7 @@ export function ConsultationCta({
   primaryAction = { label: "Liên hệ tư vấn", href: links.contact },
   secondaryAction,
   className,
+  withBadgeIcons = false,
 }: {
   id?: string;
   headingId?: string;
@@ -29,6 +30,7 @@ export function ConsultationCta({
   primaryAction?: CtaAction;
   secondaryAction?: CtaAction;
   className?: string;
+  withBadgeIcons?: boolean;
 }) {
   const primaryButton = (
     <a
@@ -68,7 +70,10 @@ export function ConsultationCta({
           </span>
         </div>
         <div className={styles.content}>
-          <span className={styles.eyebrow}>{eyebrow}</span>
+          <span className={styles.eyebrow}>
+            {withBadgeIcons && <Icon name="headphones" />}
+            {eyebrow}
+          </span>
           <h2 id={headingId}>{title}</h2>
           <p>{description}</p>
           {secondaryAction ? (

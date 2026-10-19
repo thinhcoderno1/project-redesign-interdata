@@ -1,4 +1,5 @@
 import { getResourceFeeds } from "@/lib/interdata-blog";
+import { BookOpenText } from "lucide-react";
 import { ResourceTabs } from "./resource-tabs";
 import { Icon } from "@/components/ui/icon";
 import { links } from "@/data/content";
@@ -15,7 +16,10 @@ export async function KnowledgeResources() {
       <div className="container">
         <div className={styles.heading}>
           <div>
-            <span className="eyebrow">CẬP NHẬT TỪ INTERDATA</span>
+            <span className="eyebrow">
+              <BookOpenText size={16} aria-hidden="true" />
+              CẬP NHẬT TỪ INTERDATA
+            </span>
             <h2 id="resources-title">Kiến thức &amp; Tin tức</h2>
           </div>
           <a href={links.blog} className="text-link">

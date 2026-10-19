@@ -93,7 +93,10 @@ export function HomePage() {
           <div className={`container ${solutionStyles.layout}`}>
             <div className={solutionStyles.intro}>
               <div>
-                <span className="eyebrow">GIẢI PHÁP TRIỂN KHAI</span>
+                <span className="eyebrow">
+                  <Icon name="layers" />
+                  GIẢI PHÁP TRIỂN KHAI
+                </span>
                 <h2>Từ tài nguyên đến môi trường chạy ứng dụng</h2>
               </div>
               <div className={solutionStyles.introDetail}>
@@ -109,12 +112,15 @@ export function HomePage() {
             <SolutionsCarousel />
           </div>
         </section>
-        <CapacitySection />
-        <CompanyProofSections />
-        <TechnologyPartners />
+        <CapacitySection withBadgeIcons />
+        <CompanyProofSections withBadgeIcons />
+        <TechnologyPartners withBadgeIcons />
         <HomeInfrastructure />
         <Consultation />
-        <ConsultationCta image="/images/cta/consultation-woman-upper-body.webp" />
+        <ConsultationCta
+          withBadgeIcons
+          image="/images/cta/consultation-woman-upper-body.webp"
+        />
         <KnowledgeResources />
       </main>
     </>

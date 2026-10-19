@@ -15,7 +15,10 @@ export function Consultation() {
   return (
     <section id="nhu-cau" className="consultation section">
       <div className="container">
-        <span className="eyebrow">BẠN CẦN HẠ TẦNG CHO VIỆC GÌ?</span>
+        <span className="eyebrow">
+          <Icon name="layers" />
+          BẠN CẦN HẠ TẦNG CHO VIỆC GÌ?
+        </span>
         <div className="section-heading">
           <h2>Chọn hạ tầng theo nhu cầu triển khai</h2>
           <p>

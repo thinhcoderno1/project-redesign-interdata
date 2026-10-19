@@ -1,10 +1,14 @@
 import Image from "next/image";
-import { GraduationCap } from "lucide-react";
+import { Building2, GraduationCap } from "lucide-react";
 import { claims, partners, reviewMode } from "@/data/content";
 import { WorldMap } from "./world-map";
 import { ClaimNote } from "./claim-note";
 
-export function CapacitySection() {
+export function CapacitySection({
+  withBadgeIcons = false,
+}: {
+  withBadgeIcons?: boolean;
+}) {
   const visibleClaims = claims.filter(
     (c) => reviewMode || c.status === "approved",
   );
@@ -13,7 +17,10 @@ export function CapacitySection() {
     <section id="nang-luc" className="capacity section">
       <WorldMap />
       <div className="container capacity-content">
-        <span className="eyebrow">NĂNG LỰC INTERDATA</span>
+        <span className="eyebrow">
+          {withBadgeIcons && <Building2 size={16} aria-hidden="true" />}
+          NĂNG LỰC INTERDATA
+        </span>
         <h2>
           {capacityClaim?.text || "Hạ tầng cho doanh nghiệp và người dùng"}
         </h2>

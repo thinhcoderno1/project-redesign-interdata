@@ -14,7 +14,7 @@ const appLogoClasses: Partial<Record<string, string>> = {
   n8n: styles.n8nLogo,
 };
 
-export function Environments() {
+export function Environments({ className }: { className?: string }) {
   const [selected, setSelected] = useState(0);
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
   const header = vpsEnvironmentHeader;
@@ -27,7 +27,10 @@ export function Environments() {
     refs.current[next]?.focus();
   }
   return (
-    <section className={styles.section} aria-labelledby={header.id}>
+    <section
+      className={`${styles.section}${className ? ` ${className}` : ""}`}
+      aria-labelledby={header.id}
+    >
       <div className="container">
         <div className={styles.heading}>
           <span className={styles.eyebrow}>{header.eyebrow}</span>

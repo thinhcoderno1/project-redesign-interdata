@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Network } from "lucide-react";
 import type { CSSProperties } from "react";
 import { technologyPartnerGroups } from "@/data/technology-partners";
 import styles from "./technology-partners.module.css";
@@ -25,7 +26,11 @@ function placePartners(side: (typeof sides)[number]) {
   );
 }
 
-export function TechnologyPartners() {
+export function TechnologyPartners({
+  withBadgeIcons = false,
+}: {
+  withBadgeIcons?: boolean;
+}) {
   return (
     <section
       id="doi-tac-cong-nghe"
@@ -34,7 +39,10 @@ export function TechnologyPartners() {
     >
       <div className="container">
         <div className={styles.heading}>
-          <span className="eyebrow">HỆ SINH THÁI CÔNG NGHỆ</span>
+          <span className="eyebrow">
+            {withBadgeIcons && <Network size={16} aria-hidden="true" />}
+            HỆ SINH THÁI CÔNG NGHỆ
+          </span>
           <h2 id="technology-partners-title">Đối Tác Công Nghệ</h2>
           <p>Kết nối công nghệ, nền tảng và hạ tầng cùng InterData.</p>
         </div>

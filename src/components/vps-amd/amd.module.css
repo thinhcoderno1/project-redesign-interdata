@@ -94,6 +94,8 @@
 .lightEyebrow {
   display: inline-flex;
   align-items: center;
+  gap: 8px;
+  max-width: 100%;
   width: fit-content;
   border-radius: 6px;
   font-size: 13px;
@@ -102,6 +104,19 @@
   letter-spacing: 0.04em;
   padding: 5px 11px;
   margin-bottom: 18px;
+}
+.darkEyebrow > svg,
+.lightEyebrow > svg {
+  flex-shrink: 0;
+}
+.page :global(.eyebrow) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+}
+.page :global(.eyebrow > svg) {
+  flex-shrink: 0;
 }
 .darkEyebrow {
   background: var(--amd-accent-dark-surface);
@@ -177,7 +192,9 @@
   line-height: 1.4;
   white-space: nowrap;
   box-shadow: 0 10px 26px rgb(0 70 239 / 24%);
-  transition: background-color 180ms ease, box-shadow 180ms ease;
+  transition:
+    background-color 180ms ease,
+    box-shadow 180ms ease;
 }
 .hero .actions .heroTrialButton:hover {
   background: #1a59f5;
@@ -605,7 +622,12 @@
 }
 .performanceOverlay {
   background:
-    linear-gradient(90deg, #08111f 34%, rgb(8 17 31 / 94%) 48%, transparent 74%),
+    linear-gradient(
+      90deg,
+      #08111f 34%,
+      rgb(8 17 31 / 94%) 48%,
+      transparent 74%
+    ),
     linear-gradient(0deg, #08111f 18%, transparent 55%);
 }
 .performanceGrid {

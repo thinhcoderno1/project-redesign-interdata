@@ -476,9 +476,9 @@ export const needs = [
       "Tài nguyên, dữ liệu cần lưu và người quản trị",
     ],
     cta: "Xem VPS n8n",
-    href: "https://interdata.vn/vps-n8n/",
+    href: "/vps-n8n/",
     secondaryCta: "Xem VPS Vibe Coding",
-    secondaryHref: "https://interdata.vn/vps-vibe-coding/",
+    secondaryHref: "/vps-vibe-coding/",
   },
   {
     id: "virtual",

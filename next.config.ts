@@ -6,6 +6,16 @@ const config: NextConfig = {
   redirects() {
     return [
       { source: "/platinum/", destination: "/vps-platinum/", permanent: true },
+      {
+        source: "/vps-gold-nvme-u2/",
+        destination: "/vps-gold/",
+        permanent: true,
+      },
+      {
+        source: "/vps-gold-enterprise-1gbps/",
+        destination: "/vps-gold/",
+        permanent: true,
+      },
       { source: "/about-us/", destination: "/gioi-thieu/", permanent: true },
       { source: "/contact/", destination: "/lien-he/", permanent: true },
       {
