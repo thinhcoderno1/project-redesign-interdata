@@ -858,3 +858,43 @@ QA local tại 320/390/768/1024/1440/1920px xác nhận ảnh tải đúng và n
 trong card, không tràn ngang/cắt chữ, liên kết giữ đúng và CTA bảng giá
 hoạt động; không có lỗi JavaScript. Ảnh chụp và báo cáo nằm tại
 `artifacts/vps-cta-upper-body/`. Chưa deploy.
+
+## Cân đối khoảng cách section 20/10/2026
+
+Trang Thuê VPS bật riêng class `sectionSpacing` và dùng chung biến
+`--vps-section-space`: padding trên/dưới 64px từ 1024px, 48px tại
+640–1023px và 40px dưới 640px. Các khối dịch vụ, hạ tầng, so sánh,
+môi trường, bằng chứng doanh nghiệp, FAQ và CTA cùng theo thang này.
+Giữ bố cục Hero/dải lợi ích; khoảng từ dải lợi ích đến nội dung lợi thế
+lần lượt là 40/32/24px. CSS dùng lại có fallback về spacing cũ khi
+không bật class này; homepage và các trang dịch vụ khác không nhận biến.
+
+Build (gồm TypeScript), lint, formatting các file thay đổi và diff check
+đạt. QA production local tại 320/390/640/768/1024/1440/1920px xác nhận đủ
+15 section hiển thị, padding đúng, không có khoảng hở/chồng section ngoài
+thiết kế Hero, không tràn ngang, không có vi phạm axe trong main hoặc lỗi
+JavaScript. Đối chiếu toàn bộ chữ/liên kết VPS trước/sau và spacing
+homepage ở 390px đạt; thao tác chọn dòng VPS/chu kỳ, checkout theo chu kỳ,
+tab môi trường, FAQ, CTA bảng giá và fallback không JavaScript đạt.
+Ảnh trước/sau, ảnh các điểm nối và báo cáo ở
+`artifacts/vps-section-spacing/`. Chưa deploy.
+
+`npm run test:vps` hiện dừng ngay ở đối chiếu JSON nguồn: ba URL nhóm
+Platinum/Gold/Linux trong dữ liệu đã commit dùng route nội bộ, khác bản
+nguồn tại `D:/InterData/thue-vps`. Chênh lệch có trước lần chỉnh spacing;
+không sửa dữ liệu hoặc bộ kiểm tra nguồn trong phạm vi này.
+
+### Khoảng cách ảnh và tiêu đề card ứng dụng 20/10/2026
+
+Tăng padding trên/dưới khối nội dung card ứng dụng lên 24px trên
+tablet/desktop và 20px dưới 640px, thông qua biến chỉ bật trên Thuê VPS.
+Khoảng cách khung ảnh đến tiêu đề tăng từ 3px lên 27px/23px; giữ nguyên
+ảnh, kích thước ảnh, chữ, liên kết, thứ tự card và padding section.
+Component dùng lại trên Cloud Server giữ padding cũ qua fallback.
+
+Build gồm TypeScript và formatting đạt. Kiểm tra 320/390/768/1024/1440/1920px
+đạt spacing cả sáu card, không tràn ngang hoặc có lỗi JavaScript/axe trong
+section. Đối chiếu toàn bộ chữ/liên kết, kích thước ảnh và padding section
+trước/sau trên dev tại 390/1440px đạt. Production local tại 390/1440px
+cũng đạt spacing, responsive và axe. Ảnh/báo cáo tại
+`artifacts/vps-use-cases-spacing/`. Chưa deploy.

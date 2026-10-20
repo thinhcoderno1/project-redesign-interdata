@@ -96,7 +96,7 @@ export const cloudCatalog: CatalogService[] = [
     icon: "cpu",
     description:
       "Cloud Server trên nền tảng AMD EPYC thế hệ 3, lựa chọn tài nguyên theo nhu cầu website và ứng dụng.",
-    href: "https://interdata.vn/amd-epyc-gen3-cloud/",
+    href: "/amd-cloud-server/",
     price: 165000,
     period: "tháng",
     priceNote: "AMD G3 Cloud · Plan 1",
@@ -108,7 +108,7 @@ export const cloudCatalog: CatalogService[] = [
     icon: "cpu",
     description:
       "Tài nguyên Cloud Server trên nền tảng Intel Xeon Platinum thế hệ 2 cho ứng dụng và hệ thống doanh nghiệp.",
-    href: "https://interdata.vn/intel-platinum-gen2-cloud/",
+    href: "/platinum-cloud-server/",
     price: 150000,
     period: "tháng",
     priceNote: "Platinum G2 Cloud · Plan 1",

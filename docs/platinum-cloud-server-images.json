@@ -1,0 +1,19 @@
+{
+  "method": "Built-in image_gen; separate generation for each project asset",
+  "images": [
+    {
+      "asset": "public/images/platinum-cloud-server/hero-xeon-cloud-v1.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: wide website hero background for Platinum Cloud Server. Create a premium photorealistic enterprise infrastructure product composition, landscape about 2.4:1 at 2048x864. A silver Intel Xeon Platinum processor package resting at a gentle upright angle on the edge of a dark rackmount cloud server enclosure in the RIGHT half. The engraved processor text must read exactly 'intel' on the first line, 'XEON' on the next line, 'PLATINUM' below; no numeric CPU model or unsupported generation suffix on the chip. Strongest focal subject around x=76%, y=55%, occupies about 25% of the width. Behind it, a different perspective down an elegant modern datacenter aisle with neatly arranged compute racks, cool blue status LEDs, soft silver highlights and subtle depth of field. LEFT 44% is quiet dark navy negative space for white title, description and two buttons. Product photography with realistic brushed metal, green substrate edge, clean reflections, grounded perspective, cool editorial lighting, no exaggerated neon, no floating holograms, no AMD branding. Distinct from a top-down motherboard close-up and distinct from an AMD processor scene. No people, slogans, watermarks or text beyond the engraved processor branding. Illustration of cloud infrastructure, not documentary photography of a real facility.",
+      "source": "C:/Users/interdigi 03/.codex/generated_images/01a15804-d067-7d00-83be-642c97796734/exec-62b82d82-b742-403c-a8f1-46f6bf752251.png",
+      "transparent": false
+    },
+    {
+      "asset": "public/images/platinum-cloud-server/usecase-platinum-center-v1.webp",
+      "prompt": "Use case: stylized-concept. Asset type: centered illustration for a Cloud Server use-case section. Create a high-end 3D isometric miniature stack of three dark silver and navy cloud server units, softly rounded realistic metal, neat blue status lights, a prominently visible square silver CPU tile on top engraved with exact text 'intel XEON PLATINUM'. Behind the stack are three subtle translucent pale blue glass panels with simple generic chart lines, no additional text. Soft electric blue rim highlights and gentle contact shadow, sophisticated enterprise visual, front three-quarter camera, centered symmetrical composition with comfortable clear margin. Square image 1024x1024 with genuinely transparent background. Entire object visible, no cropped edges, no people, no AMD marks, no watermark. This is a restrained 3D illustration compatible with a white or very pale blue website section, not a photograph.",
+      "source": "C:/Users/interdigi 03/.codex/generated_images/01a15804-d067-7d00-83be-642c97796734/exec-4d30e7ca-be4e-4a2b-897a-185cd1ff5762.png",
+      "transparent": true
+    }
+  ],
+  "optimization": "Sharp WebP quality 85, effort 6; transparent alpha retained on the use-case illustration",
+  "note": "Illustrative assets, not documentary photos of InterData facilities or guaranteed installed processor models"
+}

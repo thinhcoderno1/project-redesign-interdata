@@ -4,7 +4,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: 24px 0 32px;
+  padding: var(--vps-section-space, 24px) 0 var(--vps-section-space, 32px);
   background: var(--brand-strong);
   color: var(--text-on-brand);
 }
@@ -305,7 +305,7 @@
 }
 @media (max-width: 999px) {
   .section {
-    padding-block: 40px 32px;
+    padding-block: var(--vps-section-space, 40px) var(--vps-section-space, 32px);
   }
   .container {
     width: min(720px, calc(100% - 40px));

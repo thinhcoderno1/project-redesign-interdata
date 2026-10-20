@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import {
   links,
@@ -17,15 +16,6 @@ export function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-company">
-            <Link href="/" className="footer-logo">
-              <Image
-                src="/images/logo.webp"
-                alt="InterData"
-                width={500}
-                height={174}
-                sizes="180px"
-              />
-            </Link>
             <p>CÔNG TY CỔ PHẦN INTER GROUP</p>
             <address>
               240 Nguyễn Đình Chính,
@@ -48,7 +38,7 @@ export function Footer() {
             <h2>Giải pháp</h2>
             {solutions.map((s) => (
               <HomeSectionLink key={s.id} section={s.id}>
-                {s.name}
+                {s.id === "proxmox" ? "Triển khai Proxmox / CEPH" : s.name}
               </HomeSectionLink>
             ))}
           </div>

@@ -19,6 +19,28 @@
   font-size: var(--vps-font-body);
   line-height: 1.75;
 }
+/* Opt in on Thuê VPS only; shared components keep their original spacing elsewhere. */
+.sectionSpacing {
+  --vps-section-space: 64px;
+  --vps-benefits-gap: 40px;
+  --vps-use-case-body-space: 24px;
+}
+.sectionSpacing :global(.section) {
+  padding-block: var(--vps-section-space);
+}
+@media (max-width: 1023px) {
+  .sectionSpacing {
+    --vps-section-space: 48px;
+    --vps-benefits-gap: 32px;
+  }
+}
+@media (max-width: 639px) {
+  .sectionSpacing {
+    --vps-section-space: 40px;
+    --vps-benefits-gap: 24px;
+    --vps-use-case-body-space: 20px;
+  }
+}
 .page :global(.eyebrow) {
   font-size: var(--vps-font-eyebrow);
   letter-spacing: 0.07em;
@@ -167,7 +189,7 @@
   opacity: 1;
 }
 .section {
-  padding: 52px 0;
+  padding: var(--vps-section-space, 52px) 0;
 }
 .subtle {
   background: linear-gradient(110deg, #f0f8ff, #f7fbff);
@@ -891,7 +913,7 @@
 }
 @media (max-width: 767px) {
   .section {
-    padding: 38px 0;
+    padding: var(--vps-section-space, 38px) 0;
   }
   .customerLogos {
     gap: 18px;
@@ -1088,10 +1110,10 @@
 }
 
 .consultationCta {
-  padding-block: 80px;
+  padding-block: var(--vps-section-space, 80px);
 }
 @media (max-width: 639px) {
   .consultationCta {
-    padding-block: 52px;
+    padding-block: var(--vps-section-space, 52px);
   }
 }

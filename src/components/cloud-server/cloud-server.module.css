@@ -1,0 +1,220 @@
+.page {
+  --cloud-section-space: 64px;
+  --cloud-heading-gap: 32px;
+  --cloud-benefits-gap: 40px;
+  overflow-wrap: anywhere;
+}
+
+/* Keep the shared VPS styles intact; normalize only this page's section rhythm. */
+.page
+  > section:where(
+    :not([aria-labelledby="cloud-title"]):not(
+      [aria-labelledby="cloud-advantages-title"]
+    )
+  ),
+.page > div > section {
+  padding-block: var(--cloud-section-space);
+}
+
+/* The benefit bar overlaps the hero, so space its content instead of its shell. */
+.page > section[aria-labelledby="cloud-advantages-title"] > div:last-child {
+  padding-block: var(--cloud-benefits-gap) var(--cloud-section-space);
+}
+
+.page
+  > section[aria-labelledby="cloud-advantages-title"]
+  > div:last-child
+  > div
+  > div:first-child,
+.page
+  > section:is(
+    [aria-labelledby="cloud-range-title"],
+    [aria-labelledby="cloud-use-cases-title"],
+    [aria-labelledby="cloud-infrastructure-title"]
+  )
+  > div:first-child
+  > div:first-child,
+.page > div > section:not([id="nang-luc"]) > div > div:first-child {
+  margin-bottom: var(--cloud-heading-gap);
+}
+
+.page
+  > section[aria-labelledby="cloud-advantages-title"]
+  > div:last-child
+  > div
+  > ul {
+  margin-top: var(--cloud-heading-gap);
+}
+
+.page
+  > section[aria-labelledby="cloud-range-title"]
+  > div:first-child
+  > div:last-child {
+  margin-bottom: var(--cloud-heading-gap);
+}
+
+.page > section[id="pricing"] > div {
+  gap: var(--cloud-heading-gap);
+}
+
+.page > section[id="pricing"] > div > [role="tabpanel"] > div:first-child {
+  margin-bottom: var(--cloud-heading-gap);
+}
+.container {
+  width: min(1248px, calc(100% - 96px));
+  margin-inline: auto;
+}
+.section {
+  padding-block: var(--cloud-section-space);
+}
+.subtle {
+  background: #f4f8ff;
+}
+.heading {
+  max-width: 960px;
+  margin: 0 auto var(--cloud-heading-gap);
+  text-align: center;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  padding: 6px 16px;
+  border: 1px solid #d5e9ff;
+  border-radius: 999px;
+  background: #edf7ff;
+  color: #0055d8;
+  font-size: var(--vps-font-eyebrow);
+  font-weight: 600;
+}
+.badgeWithIcon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+}
+.page :global(.eyebrow):has(> svg) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.page :global(.eyebrow) > svg {
+  flex-shrink: 0;
+}
+.eyebrow > svg,
+.badgeWithIcon > svg {
+  flex-shrink: 0;
+}
+.heading h2 {
+  margin: 14px 0;
+  color: #061333;
+}
+.heading p {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: var(--vps-font-lead);
+  line-height: 1.8;
+}
+.useCaseGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.useCaseGrid .useCaseBody {
+  padding-block: 24px;
+}
+.page .useCaseGrid .useCaseBody > h3 {
+  margin: 0 0 12px;
+}
+.page .useCaseGrid .useCaseBody > p {
+  margin-bottom: 12px;
+}
+.proofGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.quote,
+.pressCard {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+  padding: 28px;
+  margin: 0;
+  background: #fff;
+  border: 1px solid #dbe6f4;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px #17478b08;
+}
+.quote > svg,
+.pressCard > svg {
+  color: #0062ed;
+}
+.quote blockquote {
+  margin: 0;
+  color: #354b6a;
+  font-size: var(--vps-font-body);
+}
+.quote figcaption {
+  display: grid;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid #dbe6f4;
+}
+.quote figcaption span {
+  color: #53647f;
+  font-size: var(--vps-font-small);
+}
+.pressCard h3 {
+  margin: 0;
+  font-size: var(--vps-font-h3);
+  line-height: 1.5;
+}
+.pressCard > a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  color: #0054c9;
+  margin-top: auto;
+}
+@media (max-width: 1199px) {
+  .page {
+    --cloud-section-space: 48px;
+    --cloud-heading-gap: 24px;
+    --cloud-benefits-gap: 32px;
+  }
+  .container {
+    width: calc(100% - 64px);
+  }
+}
+@media (max-width: 899px) {
+  .useCaseGrid,
+  .proofGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 699px) {
+  .useCaseGrid .useCaseBody {
+    padding-block: 20px;
+  }
+  .useCaseGrid,
+  .proofGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 639px) {
+  .page {
+    --cloud-section-space: 40px;
+  }
+  .container {
+    width: calc(100% - 40px);
+  }
+  .page > section[aria-labelledby="cloud-faq-title"] > div {
+    row-gap: var(--cloud-heading-gap);
+  }
+  .quote,
+  .pressCard {
+    padding: 22px;
+  }
+}

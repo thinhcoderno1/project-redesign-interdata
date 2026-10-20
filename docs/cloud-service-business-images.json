@@ -1,0 +1,31 @@
+{
+  "tool": "Built-in image_gen",
+  "created": "2026-10-20",
+  "note": "Two newly generated enterprise solutions illustrations for the service range cards only; not photographs of InterData staff or facilities.",
+  "images": [
+    {
+      "key": "amd-business-solutions",
+      "prompt": "Use case: photorealistic-natural. Asset type: original photographic background for the AMD Cloud service card on an enterprise cloud solutions website. Generate a NEW premium realistic corporate editorial photograph, square 1:1 composition, high resolution. Scene: a small Vietnamese enterprise digital-product team of three professionals collaboratively reviewing a business application rollout at a modern glass office table; one open laptop and a background monitor with subtle abstract ecommerce and workflow dashboard shapes, no legible writing. Show confident natural collaboration and practical business problem solving, candid expressions, believable anatomy and materials, understated smart casual clothing. Camera at seated eye level, medium-wide 35mm editorial photography, polished but authentic, blue daylight and restrained navy/cobalt corporate palette with realistic skin tones. Layout is essential: keep the principal people, faces, laptop and monitor clustered in the UPPER CENTRAL 45% of the square, all important subjects inside the middle 60% horizontally so a tall mobile crop still works; leave a calm low-detail naturally dark navy desk/office foreground across the lower 45% where HTML copy will be overlaid. Balanced soft light on faces and screen, plenty of visible enterprise context in the upper half. No server racks, no processor chips, no motherboards, no hardware close-ups, no floating clouds, no holograms, no sci-fi, no conspicuous handshake, no text, no labels, no logos, no watermark, no baked-in web card border, no typography. This is a conceptual enterprise solutions illustration, not documentary evidence of a specific company.",
+      "transparent_background": false,
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a15738-e555-77f1-93ea-471dc2f8c07c\\exec-5d928a22-ffad-488d-be83-ebd92b82a759.png",
+      "target": "public/images/cloud-server/amd-business-solutions.webp",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": false,
+      "bytes": 94618,
+      "sha256": "3addaeba426b92e88585c5202b147f1d7dc2aa5ca8563a670d5d85b589e0cb90"
+    },
+    {
+      "key": "intel-business-operations",
+      "prompt": "Use case: photorealistic-natural. Asset type: new photographic background for the Intel Platinum Cloud service card on an enterprise cloud solutions website. Generate a NEW premium realistic corporate editorial photograph, square 1:1 composition, high resolution. Scene: two Vietnamese enterprise professionals, a female operations manager and a male business systems consultant, standing side by side in a sophisticated modern business operations office, calmly discussing a large wall display with abstract business process flows, operational charts and connected application panels. The woman holds a slim tablet and the man gestures naturally at a simple business dashboard. Communicate organized enterprise operations, planning and dependable business applications rather than computing hardware. No code editor. Medium-wide eye-level 35mm editorial camera; authentic human expressions, believable hands and anatomy, tailored understated navy and pale-blue smart business clothing, tasteful glass partitions. Soft blue daylight, realistic skin tones, restrained navy and cobalt palette, polished professional photographic finish. Compose ALL faces and the main dashboard in the UPPER CENTRAL 40% of the square, inside the middle 60% horizontally so mobile portrait crops work; maintain generous calm low-detail dark navy office foreground over the lower 45% for HTML headline and description. The upper area should remain clearly readable as a real business environment, not a black image. Distinct from a team gathered around a laptop: standing operations review with a large wall screen, no meeting-table group. No server rooms, no hardware racks, no processor chips, no motherboards, no hardware close-ups, no huge cloud symbols, no floating holograms, no futuristic neon, no text or numbers, no logos, no watermark, no baked-in card border or UI typography. Conceptual enterprise solutions illustration, not documentary evidence of any specific company.",
+      "transparent_background": false,
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a15738-e555-77f1-93ea-471dc2f8c07c\\exec-431a1001-bf08-46fd-8c7e-31ea7a37664e.png",
+      "target": "public/images/cloud-server/intel-business-operations.webp",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": false,
+      "bytes": 89626,
+      "sha256": "4f021fe1de9509096556f45dc6c41f872605b579495eb0edc0da58708a10b9fa"
+    }
+  ]
+}

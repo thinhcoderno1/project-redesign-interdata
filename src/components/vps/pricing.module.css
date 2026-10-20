@@ -1,6 +1,6 @@
 .pricingSection {
   --brand-primary: #0043ec;
-  padding-block: 64px;
+  padding-block: var(--vps-section-space, 64px);
   background: linear-gradient(135deg, #f1f6ff, #fff 48%, #edf4ff);
 }
 .pricingLayout {
@@ -321,7 +321,7 @@
 }
 @media (max-width: 959px) {
   .pricingSection {
-    padding-block: 56px;
+    padding-block: var(--vps-section-space, 56px);
   }
   .pricingSection .pricingIntro h2 {
     font-size: var(--vps-font-h2);
@@ -329,7 +329,7 @@
 }
 @media (max-width: 639px) {
   .pricingSection {
-    padding-block: 44px;
+    padding-block: var(--vps-section-space, 44px);
   }
   .pricingSection .pricingIntro h2 {
     font-size: var(--vps-font-h2);

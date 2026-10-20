@@ -2,7 +2,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: 28px 0;
+  padding: var(--vps-section-space, 28px) 0;
   background: linear-gradient(115deg, #eff7ff, #f4f9ff 52%, #edf6ff);
 }
 .useCases::before,
@@ -111,7 +111,8 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  padding: 0 22px 12px;
+  padding: var(--vps-use-case-body-space, 0px) 22px
+    var(--vps-use-case-body-space, 12px);
 }
 .useCases .card h3 {
   margin: 3px 0 8px;
@@ -165,7 +166,7 @@
 }
 @media (max-width: 699px) {
   .useCases {
-    padding: 30px 0;
+    padding: var(--vps-section-space, 30px) 0;
   }
   .eyebrow {
     font-size: var(--vps-font-eyebrow);
@@ -191,7 +192,8 @@
     margin-inline: 12px;
   }
   .body {
-    padding: 0 22px 12px;
+    padding: var(--vps-use-case-body-space, 0px) 22px
+      var(--vps-use-case-body-space, 12px);
   }
   .useCases .card h3 {
     font-size: var(--vps-font-h3);

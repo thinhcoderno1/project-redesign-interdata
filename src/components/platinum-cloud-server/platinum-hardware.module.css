@@ -1,0 +1,15 @@
+.hardware {
+  --vps-font-h2: clamp(28px, 2.5vw, 36px);
+  --vps-font-feature-title: clamp(22px, 2vw, 28px);
+  --vps-font-body: var(--font-content);
+  --vps-font-lead: var(--font-content-lead);
+  --vps-font-ui: var(--font-content-ui);
+  --vps-font-small: calc(var(--font-content-meta) + 1px);
+  --vps-font-eyebrow: calc(var(--font-content-meta) - 1px);
+  font-size: var(--vps-font-body);
+  line-height: 1.75;
+}
+
+.hardware h2 {
+  text-transform: uppercase;
+}

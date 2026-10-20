@@ -8,7 +8,7 @@ export const links = {
   vps: "/thue-vps/",
   // Matches the trial CTA in the source project's components/header/menu.js.
   trial: "/thue-vps/#pricing",
-  cloud: "https://interdata.vn/cloud-server/",
+  cloud: "/cloud-server/",
   dedicated: "https://interdata.vn/vietnam-dedicated-server",
   colocation: "https://interdata.vn/vietnam-co-location",
   about: "/gioi-thieu/",

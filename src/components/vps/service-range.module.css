@@ -2,7 +2,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: 48px 0 32px;
+  padding: var(--vps-section-space, 48px) 0 var(--vps-section-space, 32px);
   background: #031677;
   color: #fff;
 }
@@ -288,7 +288,7 @@
 }
 @media (max-width: 639px) {
   .range {
-    padding: 32px 0 26px;
+    padding: var(--vps-section-space, 32px) 0 var(--vps-section-space, 26px);
   }
   .range::before {
     width: 640px;

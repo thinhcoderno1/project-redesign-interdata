@@ -5,6 +5,16 @@ const config: NextConfig = {
   trailingSlash: true,
   redirects() {
     return [
+      {
+        source: "/intel-platinum-gen2-cloud/",
+        destination: "/platinum-cloud-server/",
+        permanent: true,
+      },
+      {
+        source: "/amd-epyc-gen3-cloud/",
+        destination: "/amd-cloud-server/",
+        permanent: true,
+      },
       { source: "/platinum/", destination: "/vps-platinum/", permanent: true },
       {
         source: "/vps-gold-nvme-u2/",

@@ -1,5 +1,5 @@
 .section {
-  padding-block: 56px;
+  padding-block: var(--vps-section-space, 56px);
   background: linear-gradient(120deg, #f1f7fd, #fbfdff 65%, #f3f8ff);
 }
 .heading {
@@ -317,7 +317,7 @@
 }
 @media (max-width: 639px) {
   .section {
-    padding-block: 36px;
+    padding-block: var(--vps-section-space, 36px);
   }
   .heading {
     margin-bottom: 24px;

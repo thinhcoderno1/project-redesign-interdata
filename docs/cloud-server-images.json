@@ -1,0 +1,115 @@
+{
+  "tool": "Built-in image_gen",
+  "created": "2026-10-20",
+  "note": "AI-generated illustrative assets, not photographs documenting InterData facilities or staff.",
+  "images": [
+    {
+      "key": "hero",
+      "prompt": "Create a premium photorealistic enterprise cloud computing data center photograph for a Vietnamese Cloud Server website hero, 16:9 landscape, 1920x1080 or larger. The layout needs dark quiet navy negative space in the LEFT 52% for HTML headline; RIGHT half shows a close three-quarter view of several modern black server cabinets and network patch panels behind glass, restrained blue activity LEDs, clean overhead cable trays, realistic brushed metal, believable professional colocation facility. Eye level architectural photography, 35mm lens, natural perspective, low key cool white and blue practical lighting, rich navy shadows. No text, no logos, no lettering, no floating icons, no holograms, no giant clouds, no neon sci-fi, no people. Refined credible infrastructure photograph rather than shiny 3D illustration. New original image, not a recreation of any existing asset.",
+      "transparent_background": false,
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a15738-e555-77f1-93ea-471dc2f8c07c\\exec-5bc575e5-d471-4ee5-99a3-399feeb86288.png",
+      "target": "public/images/cloud-server/hero.webp",
+      "width": 1672,
+      "height": 941,
+      "hasAlpha": false,
+      "bytes": 137564,
+      "sha256": "c2eddb9fcd17a43320fed50c612c5e57d9b184bd5051e5056f668de72d2a5477"
+    },
+    {
+      "key": "cluster",
+      "prompt": "Create a sophisticated enterprise cloud infrastructure 3D product illustration on a truly TRANSPARENT background, square composition. Three compact realistic matte white and brushed silver server towers at different heights arranged on a clean low circular platform, dark blue vented fronts with restrained cyan indicator LEDs. A small frosted glass cloud shape links the towers with thin subtle blue paths. Precise technical product render, calm blue and white palette, soft studio lighting, generous transparent margins, isolated object, no writing, no logos, no neon, no visual clutter, no sci fi. Website section illustration, professional and understated.",
+      "transparent_background": true,
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a15738-e555-77f1-93ea-471dc2f8c07c\\exec-94ec0afa-fb03-4646-9a2f-4d31ddfe088e.png",
+      "target": "public/images/cloud-server/cluster.webp",
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 107268,
+      "sha256": "21f23e6e7e6162fc4f4d5dd2afaac9f8df30a2ebdc39fbb835c46bbaabab6556"
+    },
+    {
+      "key": "amd",
+      "prompt": "Generate a photorealistic enterprise server motherboard macro photograph, wide 16:9. A large unbranded brushed silver server processor socket with many neatly arranged memory slots and circuits, mounted inside a dark modern rackmount chassis. Hardware fills the RIGHT 65% of frame, LEFT third is dark navy and uncluttered for HTML copy. Subtle teal practical lighting, accurate metal and PCB textures, crisp editorial hardware photography, 50mm macro, no text, no visible brands, no logos, no floating elements, no neon or holograms.",
+      "transparent_background": false,
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a15738-e555-77f1-93ea-471dc2f8c07c\\exec-c72219bb-305d-4c4e-814b-99cfe8d96ee4.png",
+      "target": "public/images/cloud-server/amd.webp",
+      "width": 1440,
+      "height": 810,
+      "hasAlpha": false,
+      "bytes": 142628,
+      "sha256": "660a3d29eff191b3b82c9a3c2aff93490484a8dc47ce0b29570d4e59712e9c9e"
+    },
+    {
+      "key": "intel",
+      "prompt": "Generate a photorealistic enterprise compute hardware photograph, wide 16:9. A dual socket server motherboard with two large silver finned heatsinks in a rackmounted chassis, dark navy black metal with cool blue ambient light. All hardware focal points are on RIGHT half, LEFT half is dark quiet navy for HTML copy. Distinct visual from single processor macros; overhead oblique camera angle, realistic memory modules and copper board details, premium editorial photography. No text, no logos, no visible brands, no holograms, no floating icons.",
+      "transparent_background": false,
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a15738-e555-77f1-93ea-471dc2f8c07c\\exec-f94a88b3-baa3-42c5-9e8a-2c886e3304ff.png",
+      "target": "public/images/cloud-server/intel.webp",
+      "width": 1440,
+      "height": 810,
+      "hasAlpha": false,
+      "bytes": 134446,
+      "sha256": "8f8df87b589be7b3edd45e6634cc575d13feb8416873f865b78a80c714395a6b"
+    },
+    {
+      "key": "web",
+      "prompt": "Create a realistic editorial photograph for a Cloud Server website application card, landscape 3:2. Close view of a modern laptop and second monitor on a tidy professional desk, showing an abstract ecommerce product grid and simple analytics dashboard without any legible letters or numbers. A small plant and soft daylight, muted white and cool blue office palette, natural human-scale scene, realistic screen perspective and materials, high quality architectural lifestyle photography, no logos, no floating graphics, no watermark.",
+      "transparent_background": false,
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a15738-e555-77f1-93ea-471dc2f8c07c\\exec-b950bbb0-4fc3-424d-ad13-5a95f53bcc65.png",
+      "target": "public/images/cloud-server/web.webp",
+      "width": 1440,
+      "height": 960,
+      "hasAlpha": false,
+      "bytes": 89318,
+      "sha256": "81eb2d3feebefa8511dd31b1d56c493ebbdbb5fe31d03b71ccbcb0c186a3a68d"
+    },
+    {
+      "key": "api",
+      "prompt": "Create a realistic editorial photograph for a Cloud Server backend and API use-case website card, landscape 3:2. Side view of an Asian software engineer seated at a clean desk facing two widescreen monitors with abstract dark code editor panes and a subtle systems diagram. Person occupies right edge, screens center left. Modern calm office, blue daylight, understated natural professional photography, shallow depth of field, realistic anatomy, no readable text, no brand names, no logos, no holograms, no sci-fi.",
+      "transparent_background": false,
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a15738-e555-77f1-93ea-471dc2f8c07c\\exec-42a86bd6-412b-4248-9a1d-a9069cd9189d.png",
+      "target": "public/images/cloud-server/api.webp",
+      "width": 1440,
+      "height": 960,
+      "hasAlpha": false,
+      "bytes": 98270,
+      "sha256": "2e79ca2080f6d9419383e63d06656e63f6f9d60bc311ec33134cbf1c039bb3c5"
+    },
+    {
+      "key": "data",
+      "prompt": "Create a realistic enterprise cloud database website application card photograph, landscape 3:2. Three-quarter close-up of neatly aligned hot swappable enterprise server storage drives and disk trays in a dark rackmount chassis. Foreground brushed metal drive handles crisp, tiny restrained blue and green activity LEDs, dark navy background, real datacenter hardware with credible proportions. Technical editorial photograph, soft side lighting, no readable writing, no brand names, no logos, no floating graphics.",
+      "transparent_background": false,
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a15738-e555-77f1-93ea-471dc2f8c07c\\exec-8d5c3cfd-dbec-4012-9863-744978a9739e.png",
+      "target": "public/images/cloud-server/data.webp",
+      "width": 1440,
+      "height": 960,
+      "hasAlpha": false,
+      "bytes": 104322,
+      "sha256": "222ce56dc5100f484d95780211a47692d6d49036cb79d0d752447d65d77639c0"
+    },
+    {
+      "key": "network",
+      "prompt": "Create a photorealistic enterprise cloud network infrastructure photograph, wide landscape 16:9. Close-up right side of a professional data center top-of-rack network switch with meticulously organized blue and pale gray ethernet patch cables, realistic metal connectors and small green link LEDs. Large dark navy negative space on the LEFT third, hardware arranged on RIGHT. Credible network engineering photography, crisp material texture, cool white practical lights, no text, no logos, no illustrated symbols, no sci fi, no exaggerated light beams.",
+      "transparent_background": false,
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a15738-e555-77f1-93ea-471dc2f8c07c\\exec-d322df2f-b985-46c4-86fd-9a2d8312927e.png",
+      "target": "public/images/cloud-server/network.webp",
+      "width": 1440,
+      "height": 810,
+      "hasAlpha": false,
+      "bytes": 68112,
+      "sha256": "352aba91b2c1d7d97a0283f523f14bb25518742b8119d4b0f93dc1856bf671fb"
+    },
+    {
+      "key": "advisor",
+      "prompt": "Create a realistic professional studio portrait cutout with genuinely TRANSPARENT background, square canvas. Vietnamese male cloud infrastructure consultant, approximately 30 years old, friendly relaxed expression, neat short black hair, wearing a smart plain light blue shirt, no tie, no visible branding, waist-up, both forearms and hands visible, naturally holding a closed thin navy tablet at waist height, body facing slightly right and looking toward camera. Soft flattering professional studio light, believable skin texture and anatomy, clean precise edges, generous transparent margin around head and body. Not a stock corporate thumbs-up pose. No logos, no text, no background.",
+      "transparent_background": true,
+      "source": "C:\\Users\\interdigi 03\\.codex\\generated_images\\01a15738-e555-77f1-93ea-471dc2f8c07c\\exec-94dc717c-6446-42ca-a910-e3b5ab77b049.png",
+      "target": "public/images/cloud-server/advisor.webp",
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": true,
+      "bytes": 79748,
+      "sha256": "0e6f7526a1043e4dba9fb770371747f23ace98d0a055b3ef85a6c7ccc1d8256e"
+    }
+  ]
+}

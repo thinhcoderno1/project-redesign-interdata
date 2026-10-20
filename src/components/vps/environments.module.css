@@ -4,7 +4,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: 56px 0 42px;
+  padding: var(--vps-section-space, 56px) 0 var(--vps-section-space, 42px);
   color: var(--text-on-brand);
   background: linear-gradient(
     112deg,
@@ -218,7 +218,7 @@
 }
 @media (max-width: 639px) {
   .section {
-    padding: 38px 0 30px;
+    padding: var(--vps-section-space, 38px) 0 var(--vps-section-space, 30px);
   }
   .section::before {
     top: 150px;

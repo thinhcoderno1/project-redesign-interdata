@@ -63,7 +63,7 @@ export function VpsPage({ prices }: { prices: VpsPrices }) {
     })),
   };
   return (
-    <main id="noi-dung" className={styles.page}>
+    <main id="noi-dung" className={`${styles.page} ${styles.sectionSpacing}`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

@@ -1,0 +1,62 @@
+{
+  "brandAssets": [
+    {
+      "target": "public/images/cloud-server/operating-systems/ubuntu-icon.webp",
+      "source": "public/images/vps/brands/operating-systems/ubuntu-icon.webp",
+      "kind": "Brand mark matching the VPS environments section",
+      "sha256": "9be9c7c10433dab5c20fa135121d4f05c0fa4ef56cbf3b339e2effd1d191df72"
+    },
+    {
+      "target": "public/images/cloud-server/operating-systems/centos.svg",
+      "source": "public/images/vps/brands/operating-systems/centos.svg",
+      "kind": "Brand mark matching the VPS environments section",
+      "sha256": "babc2f610b692305077e2896b4272cc20c165d2d4bd6126268404a53e75eced5"
+    },
+    {
+      "target": "public/images/cloud-server/operating-systems/debian.svg",
+      "source": "public/images/vps/brands/operating-systems/debian.svg",
+      "kind": "Brand mark matching the VPS environments section",
+      "sha256": "09b14c9813a322b58b11aa5390fb1a2b4e9bfd02868321482f1a19534a66ec54"
+    },
+    {
+      "target": "public/images/cloud-server/operating-systems/almalinux.svg",
+      "source": "public/images/vps/brands/operating-systems/almalinux.svg",
+      "kind": "Brand mark matching the VPS environments section",
+      "sha256": "178c0e3f1c1a9f0d7c7533ae8d976c8dfb6da571dc520b8dfe5ae2f0c7118cca"
+    },
+    {
+      "target": "public/images/cloud-server/operating-systems/fedora.svg",
+      "source": "public/images/vps/brands/operating-systems/fedora.svg",
+      "kind": "Brand mark matching the VPS environments section",
+      "sha256": "df636ff635af3e0ce200eabd8ca994e5d5a7e0afc8d0dcaff6ca9f41e56b9400"
+    },
+    {
+      "target": "public/images/cloud-server/one-click/n8n.png",
+      "source": "public/images/vps/brands/one-click/n8n.png",
+      "kind": "Brand mark matching the VPS environments section",
+      "sha256": "69655687755e22d1ce1695e31fab9aa6c9b8f4aa7924dfbddc6a747ef3b832a4"
+    },
+    {
+      "target": "public/images/cloud-server/one-click/openclaw-icon.png",
+      "source": "public/images/vps/brands/one-click/openclaw-icon.png",
+      "kind": "Brand mark matching the VPS environments section",
+      "sha256": "c6b3eaf0a8f21c343e9af8fa20b8d75523308b01917a5c5775420f8b118b6251"
+    },
+    {
+      "target": "public/images/cloud-server/one-click/ezyplatform.png",
+      "source": "public/images/vps/brands/one-click/ezyplatform.png",
+      "kind": "Brand mark matching the VPS environments section",
+      "sha256": "91f0c63478e00392f950bf39a9b198bcb915725b4397a5631d7a46e418ed7906"
+    },
+    {
+      "target": "public/images/cloud-server/one-click/wptangtoc.png",
+      "source": "public/images/vps/brands/one-click/wptangtoc.png",
+      "kind": "Brand mark matching the VPS environments section",
+      "sha256": "9674c678822b298d059167f834f3179ab28ff4127f0b94997fefcc8b17e670dd"
+    }
+  ],
+  "background": {
+    "target": "public/images/cloud-server/environments-grid.svg",
+    "source": "Original geometric SVG; separate from the VPS background."
+  }
+}

@@ -1,0 +1,304 @@
+.section {
+  /* Match the root brand token instead of the legacy VPS page override. */
+  --brand-primary: #0043ec;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 56px 0 42px;
+  color: var(--text-on-brand);
+  background: linear-gradient(
+    112deg,
+    var(--brand-primary),
+    var(--brand-hover) 48%,
+    var(--brand-strong)
+  );
+}
+.section::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  width: max(1350px, 110%);
+  height: 820px;
+  left: 50%;
+  top: 90px;
+  transform: translateX(-50%);
+  background: url("/images/cloud-server/environments-grid.svg") top center /
+    100% auto no-repeat;
+}
+.heading {
+  text-align: center;
+  margin: 0 auto var(--cloud-heading-gap, 30px);
+  max-width: 1050px;
+}
+.eyebrow > svg {
+  flex-shrink: 0;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  max-width: 100%;
+  margin-bottom: 12px;
+  color: var(--text-on-dark-secondary);
+  font-size: var(--vps-font-eyebrow);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.section .heading h2 {
+  color: var(--text-on-brand);
+  font-size: var(--vps-font-h2);
+  line-height: 1.35;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.section .heading p {
+  margin: 18px auto 0;
+  color: var(--text-on-dark-secondary);
+  font-size: var(--vps-font-lead);
+  line-height: 1.8;
+}
+.tabs {
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  gap: 24px;
+  margin: 0 auto 36px;
+  border-bottom: 1px solid var(--border-on-dark);
+}
+.tabs button {
+  flex: 0 1 auto;
+  min-height: 50px;
+  padding: 12px 18px 14px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+  color: var(--text-on-brand);
+  background: transparent;
+  font-size: var(--vps-font-ui);
+  font-weight: 500;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.tabs button[aria-selected="true"] {
+  border-bottom-color: var(--text-on-brand);
+  font-weight: 700;
+}
+.tabs button:hover {
+  background: var(--brand-card);
+}
+.section :focus-visible {
+  outline: 3px solid var(--focus-dark);
+  outline-offset: 5px;
+}
+.osGrid,
+.appGrid {
+  display: grid;
+  gap: 28px;
+  align-items: stretch;
+  grid-auto-rows: 1fr;
+}
+.osGrid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.appGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.card {
+  --cut: 28px;
+  --card-shape: polygon(
+    var(--cut) 0,
+    100% 0,
+    100% calc(100% - var(--cut)),
+    calc(100% - var(--cut)) 100%,
+    0 100%,
+    0 var(--cut)
+  );
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  margin: 0 8px 8px 0;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translate(8px, 8px);
+  border-radius: 10px;
+  clip-path: var(--card-shape);
+  background: color-mix(
+    in srgb,
+    var(--brand-primary) 40%,
+    var(--surface-canvas)
+  );
+}
+.cardSurface {
+  height: 100%;
+  min-height: 166px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px 18px;
+  border-radius: 10px;
+  clip-path: var(--card-shape);
+  background: var(--surface-canvas);
+  text-align: center;
+}
+.cardSurface img {
+  width: 72px;
+  height: 64px;
+  object-fit: contain;
+}
+.cardSurface .ubuntuLogo {
+  /* Compensate for the supplied icon's transparent inset, preserving its ratio. */
+  transform: scale(1.1);
+}
+.card h3 {
+  color: var(--text-primary);
+  font-size: var(--vps-font-h3);
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+  overflow-wrap: anywhere;
+}
+.app .cardSurface {
+  min-height: 240px;
+  justify-content: flex-start;
+  gap: 8px;
+  padding-block: 24px;
+}
+.section .fallbackTitle {
+  margin: 28px 0 20px;
+  color: var(--text-on-brand);
+}
+.app img {
+  width: 130px;
+  height: 60px;
+  margin-bottom: 10px;
+}
+.app .openclawLogo {
+  transform: scale(1.08);
+}
+.app .n8nLogo {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+}
+.app small {
+  color: var(--brand-primary);
+  font-size: var(--vps-font-small);
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.section .app p {
+  color: var(--text-secondary);
+  font-size: var(--vps-font-body);
+  line-height: 1.75;
+}
+@media (max-width: 1099px) {
+  .osGrid {
+    gap: 18px;
+  }
+  .appGrid {
+    gap: 20px;
+  }
+  .card {
+    --cut: 22px;
+  }
+  .cardSurface {
+    min-height: 154px;
+    padding-inline: 12px;
+  }
+  .card h3 {
+    font-size: var(--vps-font-h3);
+  }
+}
+@media (max-width: 899px) {
+  .osGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .appGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 639px) {
+  .section {
+    padding: 38px 0 30px;
+  }
+  .section::before {
+    top: 150px;
+    width: 1300px;
+    opacity: 0.65;
+  }
+  .heading {
+    margin-bottom: 24px;
+  }
+  .section .heading p {
+    font-size: var(--vps-font-lead);
+    margin-top: 14px;
+  }
+  .tabs {
+    width: 100%;
+    gap: 6px;
+    margin-bottom: 26px;
+  }
+  .tabs button {
+    padding: 10px 8px 12px;
+    font-size: var(--vps-font-ui);
+  }
+  .osGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .appGrid {
+    gap: 16px;
+  }
+  .card {
+    margin-right: 6px;
+    margin-bottom: 6px;
+    --cut: 20px;
+  }
+  .card::before {
+    transform: translate(6px, 6px);
+  }
+  .cardSurface {
+    min-height: 148px;
+    padding: 20px 10px;
+    gap: 12px;
+  }
+  .cardSurface img {
+    width: 62px;
+    height: 58px;
+  }
+  .card h3 {
+    font-size: var(--vps-font-h3);
+  }
+  .app .cardSurface {
+    min-height: 258px;
+    padding: 20px 12px;
+  }
+  .app img {
+    width: 108px;
+    height: 54px;
+  }
+  .app .n8nLogo {
+    width: 54px;
+    height: 54px;
+    border-radius: 10px;
+  }
+}
+@media (max-width: 359px) {
+  .appGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .app .cardSurface {
+    min-height: 224px;
+  }
+}
