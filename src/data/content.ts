@@ -9,8 +9,8 @@ export const links = {
   // Matches the trial CTA in the source project's components/header/menu.js.
   trial: "/thue-vps/#pricing",
   cloud: "/cloud-server/",
-  dedicated: "https://interdata.vn/vietnam-dedicated-server",
-  colocation: "https://interdata.vn/vietnam-co-location",
+  dedicated: "/thue-may-chu-vat-ly/",
+  colocation: "/vietnam-colocation/",
   about: "/gioi-thieu/",
   contact: "/lien-he/",
   careers: "https://interdata.vn/blog/tuyen-dung/",
@@ -145,6 +145,7 @@ export const services = [
 export const solutions = [
   {
     id: "private-network",
+    href: "/trien-khai-private-network/",
     name: "Triển khai Private Network",
     shortName: "Private Network",
     icon: "network",
@@ -154,6 +155,7 @@ export const solutions = [
   },
   {
     id: "proxmox",
+    href: "/trien-khai-proxmox-ceph/",
     name: "Triển Khai Ảo Hóa Proxmox / CEPH",
     shortName: "Proxmox / CEPH",
     icon: "layers",
@@ -163,6 +165,7 @@ export const solutions = [
   },
   {
     id: "kubernetes",
+    href: "/trien-khai-Kubernetes-k8s/",
     name: "Triển khai Kubernetes (K8s)",
     shortName: "Kubernetes",
     icon: "boxes",
@@ -172,7 +175,8 @@ export const solutions = [
   },
   {
     id: "vmware",
-    name: "Triển khai VMWare",
+    href: "/trien-khai-vmware/",
+    name: "Triển khai VMware",
     shortName: "VMware",
     icon: "database",
     description:

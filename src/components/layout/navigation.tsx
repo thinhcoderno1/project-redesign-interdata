@@ -323,7 +323,7 @@ export function Navigation() {
               {solutions.map((s) => (
                 <a
                   key={s.id}
-                  href={homeSectionHref(s.id)}
+                  href={"href" in s ? s.href : homeSectionHref(s.id)}
                   onClick={() => setSolutionsOpen(false)}
                 >
                   <Icon name={s.icon} />
@@ -421,7 +421,7 @@ export function Navigation() {
               {solutions.map((s) => (
                 <a
                   key={s.id}
-                  href={homeSectionHref(s.id)}
+                  href={"href" in s ? s.href : homeSectionHref(s.id)}
                   onClick={closeDrawer}
                 >
                   {s.name}

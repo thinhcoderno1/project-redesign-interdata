@@ -51,11 +51,16 @@ function CardContent({ index, preview }: { index: number; preview: boolean }) {
         <p>{solution.description}</p>
         {preview ? (
           <span className={styles.cta}>
-            Trao đổi về {solution.shortName} <Icon name="external" />
+            {"href" in solution ? "Tìm hiểu" : "Trao đổi về"}{" "}
+            {solution.shortName} <Icon name="external" />
           </span>
         ) : (
-          <a href={links.contact} className={styles.cta}>
-            Trao đổi về {solution.shortName} <Icon name="external" />
+          <a
+            href={"href" in solution ? solution.href : links.contact}
+            className={styles.cta}
+          >
+            {"href" in solution ? "Tìm hiểu" : "Trao đổi về"}{" "}
+            {solution.shortName} <Icon name="external" />
           </a>
         )}
       </div>

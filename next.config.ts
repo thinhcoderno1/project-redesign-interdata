@@ -6,6 +6,16 @@ const config: NextConfig = {
   redirects() {
     return [
       {
+        source: "/vietnam-co-location/",
+        destination: "/vietnam-colocation/",
+        permanent: true,
+      },
+      {
+        source: "/vietnam-dedicated-server/",
+        destination: "/thue-may-chu-vat-ly/",
+        permanent: true,
+      },
+      {
         source: "/intel-platinum-gen2-cloud/",
         destination: "/platinum-cloud-server/",
         permanent: true,

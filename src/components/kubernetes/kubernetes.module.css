@@ -1,0 +1,39 @@
+.page {
+  --brand-primary: #0066ed;
+}
+.options .optionGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding-top: 18px;
+}
+.options .optionAudience {
+  margin: 16px 0 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e3ebf8;
+  color: inherit;
+  font-size: var(--vps-font-body);
+  line-height: 1.75;
+}
+.options article[data-option="production-ha"] .optionAudience {
+  border-color: #ffffff3d;
+}
+.options article {
+  scroll-margin-top: 150px;
+}
+.stepIcon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  margin-bottom: 10px;
+  border-radius: 18px;
+  color: #0043ec;
+  background: #eef4ff;
+}
+@media (max-width: 899px) {
+  .options .optionGrid {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 620px;
+    margin-inline: auto;
+  }
+}

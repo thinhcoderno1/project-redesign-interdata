@@ -1,0 +1,57 @@
+.page {
+  --dedicated-section-padding: 80px;
+}
+.page :global(#dedicated-title) {
+  white-space: normal;
+}
+.applicationImage {
+  transform: translateX(-14%);
+}
+.priceBlock {
+  gap: 8px;
+}
+.originalPrice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.priceBlock[data-highlighted="true"] .originalPrice {
+  color: var(--text-on-dark-secondary);
+}
+.monthlyPrice {
+  container-type: inline-size;
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  gap: 5px 7px;
+}
+.priceBlock .monthlyPrice > strong {
+  font-size: clamp(24px, 12cqw, 38px);
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+.monthlyPrice > span {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+.priceBlock[data-highlighted="true"] .monthlyPrice > span {
+  color: var(--text-on-brand);
+}
+.hardware {
+  --vps-font-h2: clamp(28px, 2.5vw, 36px);
+  --vps-font-feature-title: clamp(22px, 2vw, 28px);
+  --vps-font-body: var(--font-content);
+  --vps-font-lead: var(--font-content-lead);
+  --vps-font-ui: var(--font-content-ui);
+  --vps-font-small: calc(var(--font-content-meta) + 1px);
+  --vps-font-eyebrow: calc(var(--font-content-meta) - 1px);
+  font-size: var(--vps-font-body);
+  line-height: 1.75;
+}
+.hardware h2 {
+  text-transform: uppercase;
+}
