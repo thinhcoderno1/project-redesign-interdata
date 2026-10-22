@@ -147,8 +147,6 @@ function ServiceSubmenu({
 
 export function Navigation() {
   const pathname = usePathname();
-  const homeSectionHref = (section: string) =>
-    `${pathname === "/" ? "" : "/"}#${section}`;
   const header = useRef<HTMLElement>(null);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -323,7 +321,7 @@ export function Navigation() {
               {solutions.map((s) => (
                 <a
                   key={s.id}
-                  href={"href" in s ? s.href : homeSectionHref(s.id)}
+                  href={s.href}
                   onClick={() => setSolutionsOpen(false)}
                 >
                   <Icon name={s.icon} />
@@ -419,11 +417,7 @@ export function Navigation() {
                 <Icon name="down" />
               </summary>
               {solutions.map((s) => (
-                <a
-                  key={s.id}
-                  href={"href" in s ? s.href : homeSectionHref(s.id)}
-                  onClick={closeDrawer}
-                >
+                <a key={s.id} href={s.href} onClick={closeDrawer}>
                   {s.name}
                 </a>
               ))}

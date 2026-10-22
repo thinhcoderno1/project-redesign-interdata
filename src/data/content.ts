@@ -185,6 +185,7 @@ export const solutions = [
   },
   {
     id: "s3",
+    href: "/s3-object-storage/",
     name: "Triển khai lưu trữ S3 Storage",
     shortName: "S3 Storage",
     icon: "harddrive",

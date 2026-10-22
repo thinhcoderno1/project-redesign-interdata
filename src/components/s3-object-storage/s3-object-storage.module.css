@@ -1,0 +1,86 @@
+.page {
+  --brand-primary: #0066ed;
+}
+.page .benefitsBar {
+  --vps-font-benefit: 16px;
+}
+.page .benefitsBar > div {
+  gap: 8px;
+  padding-inline: 8px;
+}
+.page .benefitsBar > div > span {
+  width: 40px;
+  height: 40px;
+}
+.page .benefitsBar h2 {
+  white-space: nowrap;
+}
+@media (max-width: 699px) {
+  .page .benefitsBar {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .page .benefitsBar > div {
+    flex-direction: row;
+    padding: 0;
+    border-left: 0;
+  }
+  .page .benefitsBar h2 {
+    text-align: left;
+  }
+}
+.page .heroImage {
+  object-position: center 25%;
+}
+@media (max-width: 899px) {
+  .page .heroImage {
+    object-position: 75% center;
+  }
+}
+.page .heroTitle {
+  white-space: nowrap;
+}
+.page .heroTitle > span {
+  display: inline-block;
+}
+@media (max-width: 599px) {
+  .page .heroTitle {
+    font-size: clamp(24px, 8.2vw, 44px);
+  }
+}
+.options .optionGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding-top: 18px;
+}
+.options .optionAudience {
+  margin: 16px 0 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e3ebf8;
+  color: inherit;
+  font-size: var(--vps-font-body);
+  line-height: 1.75;
+}
+.options article[data-option="backup"] .optionAudience {
+  border-color: #ffffff3d;
+}
+.options article {
+  scroll-margin-top: 150px;
+}
+.stepIcon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  margin-bottom: 10px;
+  border-radius: 18px;
+  color: #0043ec;
+  background: #eef4ff;
+}
+@media (max-width: 899px) {
+  .options .optionGrid {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 620px;
+    margin-inline: auto;
+  }
+}

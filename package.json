@@ -30,6 +30,7 @@
     "test:proxmox-ceph": "node scripts/verify-proxmox-ceph.mjs",
     "test:kubernetes": "node scripts/verify-kubernetes.mjs",
     "test:vmware": "node scripts/verify-vmware.mjs",
+    "test:s3-object-storage": "node scripts/verify-s3-object-storage.mjs",
     "test:cloud-comparison": "node scripts/verify-cloud-comparison.mjs",
     "test:cloud-environments": "node scripts/verify-cloud-environments.mjs",
     "test:vps-range": "node scripts/verify-vps-range.mjs",

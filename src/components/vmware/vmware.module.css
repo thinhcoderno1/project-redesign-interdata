@@ -1,6 +1,14 @@
 .page {
   --brand-primary: #0066ed;
 }
+@media (min-width: 900px) {
+  .page .heroTitle {
+    white-space: nowrap;
+  }
+  .page .heroTitle > span {
+    display: inline-block;
+  }
+}
 .options .optionGrid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   padding-top: 18px;

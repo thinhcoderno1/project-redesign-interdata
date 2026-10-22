@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-22",
+  "mode": "built-in image_gen",
+  "useCase": "stylized-concept",
+  "asset": "public/images/s3-object-storage/hero-object-storage-v1.webp",
+  "width": 2172,
+  "height": 724,
+  "format": "webp",
+  "quality": 88,
+  "prompt": "Use case: stylized-concept. Asset type: production background image for a Vietnamese enterprise S3 Object Storage website hero, not a screenshot or a UI mockup. Create a premium, restrained, highly polished 3D conceptual render of OBJECT STORAGE. Panoramic ultra-wide composition, approximately 3:1 aspect ratio, high resolution. Scene: seamless very dark midnight-navy studio space, subtly lit deep blue floor, no data-center racks. The entire LEFT 48 percent must be very quiet, nearly uniform dark navy negative space for white live website text; no objects, no lines, no bright lights in that area. In the RIGHT half, around 75 percent across the frame, show one substantial elegant open-top cobalt-blue storage bucket with a broad oval opening and thick engineered walls, on a low dark geometric platform. It must read as a digital object-storage bucket, not a trash can or a household pail: no handles, no waste, no water. Above and around the bucket, arrange a small coherent group of frosted-glass object tiles and a few orderly small blue data cubes. Tiles have simple embossed pictograms for a photograph, video play symbol, document, and a backup archive. Three thin deliberate cyan connection paths lead the file tiles into the bucket, explaining data collection through an API without words. Give the storage bucket the dominant silhouette; the file objects are secondary and legible. Keep the right-side group compact, within 56 to 94 percent of image width and central 16 to 84 percent of height, leaving edge and crop clearance. Fine realistic matte metal and glass materials, controlled electric-blue rim light, soft cyan bounce lighting, convincing depth and ambient shadows, mostly dark with bright detail only on the right. Color palette fits InterData blue: midnight navy #061526, cobalt #0066ED and subtle cyan #3FBFFF. Sophisticated enterprise technology art direction, clean and calm rather than gaming or neon science fiction. No readable text, no letters or numbers, no S3 lettering, no AWS logo, no other logos, no watermark, no people, no website controls. Opaque full-bleed background.",
+  "composition": "Dark negative space on the left for live copy; bucket and connected file/media objects on the right. Responsive object-position is scoped to the S3 hero.",
+  "constraints": [
+    "No text or logos baked into the image",
+    "Preserve the one-line H1, content and CTAs",
+    "No changes to shared VPS hero styling"
+  ],
+  "usage": ["S3ObjectStoragePage hero background", "S3 route Open Graph image"]
+}

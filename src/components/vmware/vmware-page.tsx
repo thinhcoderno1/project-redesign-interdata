@@ -70,7 +70,7 @@ function VmwareHero() {
               <Network size={16} aria-hidden="true" />
               ẢO HÓA DOANH NGHIỆP · QUẢN TRỊ HẠ TẦNG
             </span>
-            <h1 id="vmware-title">
+            <h1 id="vmware-title" className={local.heroTitle}>
               TRIỂN KHAI <span>VMWARE</span>
             </h1>
             <p className={hero.description}>
