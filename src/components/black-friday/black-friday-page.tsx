@@ -1,21 +1,38 @@
 "use client";
 
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type ReactNode,
+} from "react";
+import Image from "next/image";
+import { ConsultationCta } from "@/components/home/consultation-cta";
 import {
   ArrowDownUp,
   ArrowRight,
+  ArrowUp,
   Check,
   ChevronDown,
+  CircleHelp,
   Cloud,
   Cpu,
+  Crown,
   Gift,
   Globe2,
   HardDrive,
+  Info,
   MemoryStick,
   Network,
+  RefreshCw,
   Server,
+  Sparkles,
   Ticket,
+  TicketPercent,
+  TicketPlus,
   Zap,
+  type LucideIcon,
 } from "lucide-react";
 import {
   checkoutUrl,
@@ -26,8 +43,10 @@ import {
 } from "@/data/vps-pricing";
 import {
   blackFridayCoupons,
+  blackFridayFaqs,
   blackFridaySlots,
   getBlackFridaySavings,
+  getBlackFridayUpgrade,
 } from "@/data/black-friday";
 import { links } from "@/data/content";
 import styles from "./black-friday.module.css";
@@ -46,6 +65,23 @@ const bestPlanCycles: { key: BillingCycle; label: string }[] = [
   { key: "biennially", label: "2 năm" },
   { key: "triennially", label: "3 năm" },
 ];
+
+function EyebrowBadge({
+  icon: Icon,
+  children,
+  className,
+}: {
+  icon: LucideIcon;
+  children: ReactNode;
+  className: string;
+}) {
+  return (
+    <span className={`${styles.eyebrowBadge} ${className}`}>
+      <Icon aria-hidden="true" focusable="false" />
+      <span>{children}</span>
+    </span>
+  );
+}
 
 function Price({
   product,
@@ -106,9 +142,51 @@ function Specs({ product }: { product: VpsProduct }) {
   );
 }
 
+function PlanUpgrade({
+  product,
+  previous,
+  cycle,
+}: {
+  product: VpsProduct;
+  previous: VpsProduct | undefined;
+  cycle: BillingCycle;
+}) {
+  const upgrade = getBlackFridayUpgrade(product, previous, cycle);
+  if (!upgrade) return null;
+  return (
+    <div className={styles.planUpgrade}>
+      <p className={styles.upgradeTitle}>
+        <ArrowUp size={16} aria-hidden="true" />
+        Nâng cấp từ Plan {upgrade.previousPlan}
+      </p>
+      <div className={styles.upgradeMonthly}>
+        <strong>+{formatVnd(upgrade.monthlyEquivalent)}</strong>
+        <span>/tháng</span>
+      </div>
+      <ul className={styles.upgradeResources} role="list">
+        {upgrade.resources.map(({ key, value, unit }) => {
+          const Icon =
+            key === "cpu" ? Cpu : key === "ram" ? MemoryStick : HardDrive;
+          return (
+            <li
+              key={key}
+              className={key === "storage" ? styles.upgradeStorage : undefined}
+            >
+              <Icon size={14} aria-hidden="true" />
+              <span>
+                +{new Intl.NumberFormat("vi-VN").format(value)}{" "}
+                {key === "storage" ? "GB NVMe" : unit}
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
 export function BlackFridayPage({
   vps,
-  cloud,
 }: {
   vps: VpsProduct[];
   cloud: VpsProduct[];
@@ -165,7 +243,9 @@ export function BlackFridayPage({
         </div>
         <div className={`container ${styles.heroInner}`}>
           <div className={styles.heroCopy}>
-            <span className={styles.eyebrow}>ƯU ĐÃI ĐẶC BIỆT</span>
+            <EyebrowBadge icon={Gift} className={styles.eyebrow}>
+              ƯU ĐÃI ĐẶC BIỆT
+            </EyebrowBadge>
             <h1 id="black-friday-title">
               Nâng cấp hạ tầng.
               <br />
@@ -241,9 +321,9 @@ export function BlackFridayPage({
             className={`${styles.sectionHeading} ${styles.bestPlansHeading}`}
           >
             <div>
-              <span className={styles.sectionEyebrow}>
-                <b>01</b> / ƯU ĐÃI NỔI BẬT
-              </span>
+              <EyebrowBadge icon={Sparkles} className={styles.sectionEyebrow}>
+                ƯU ĐÃI NỔI BẬT
+              </EyebrowBadge>
               <h2 id="best-plans-title">Best Plans</h2>
               <p>Chọn cấu hình phù hợp với nhu cầu của bạn.</p>
             </div>
@@ -275,10 +355,32 @@ export function BlackFridayPage({
                       onKeyDown={(event) => cycleKeyboard(event, index)}
                     >
                       {label}
+                      {key === "triennially" && (
+                        <span className={styles.cycleSavingsTag}>
+                          Tiết kiệm nhất
+                        </span>
+                      )}
                     </button>
                   ))}
                 </div>
               </div>
+              <ul
+                className={styles.planHighlights}
+                aria-label="Điểm nổi bật của Best Plans"
+                role="list"
+              >
+                {[
+                  "Intel Xeon Platinum Gen 2",
+                  "SSD NVMe U.2 Gen 4",
+                  "Uptime 99.9%",
+                  "Support 24/7",
+                ].map((highlight) => (
+                  <li key={highlight}>
+                    <Check size={17} strokeWidth={2.5} aria-hidden="true" />
+                    <span>{highlight}</span>
+                  </li>
+                ))}
+              </ul>
               <div
                 id="bf-plans"
                 className={styles.planGrid}
@@ -295,21 +397,28 @@ export function BlackFridayPage({
                       data-pid={product.pid}
                       className={`${styles.planCard} ${index === 1 ? styles.featured : ""}`}
                     >
-                      {savings && (
-                        <span className={styles.cornerBadge}>
-                          Tiết Kiệm {savings.percent}%
+                      {index === 1 && (
+                        <span className={styles.recommendationTag}>
+                          <Crown size={16} aria-hidden="true" />
+                          Gợi ý cho bạn
                         </span>
                       )}
-                      <h3>{product.name}</h3>
-                      <p className={styles.planDescription}>
-                        {
-                          [
-                            "Cho website và ứng dụng nhỏ.",
-                            "Thêm tài nguyên cho dự án phát triển.",
-                            "Sẵn sàng cho nhu cầu vận hành lớn hơn.",
-                          ][index]
-                        }
-                      </p>
+                      <div className={styles.planHeader}>
+                        <h3>{product.name}</h3>
+                        <span
+                          className={styles.planIconStage}
+                          aria-hidden="true"
+                        >
+                          <Image
+                            className={styles.planServerIcon}
+                            src="/images/black-friday/3d-server-icon.png"
+                            alt=""
+                            width={300}
+                            height={300}
+                            sizes="(max-width: 360px) 76px, (max-width: 700px) 92px, (max-width: 800px) 52px, (max-width: 900px) 60px, (max-width: 1100px) 80px, 108px"
+                          />
+                        </span>
+                      </div>
                       {selectedCycle === "triennially" && (
                         <div className={styles.giftTag}>
                           <Gift size={17} aria-hidden="true" />
@@ -325,9 +434,17 @@ export function BlackFridayPage({
                                 ?.label
                             }
                           </del>
+                          <span className={styles.savingsBadge}>
+                            -{savings.percent}%
+                          </span>
                         </div>
                       )}
                       <Price product={product} cycle={selectedCycle} />
+                      <PlanUpgrade
+                        product={product}
+                        previous={products[index - 1]}
+                        cycle={selectedCycle}
+                      />
                       <Specs product={product} />
                       <a
                         className={`button ${styles.blueButton}`}
@@ -364,66 +481,67 @@ export function BlackFridayPage({
         className={styles.renewal}
         aria-labelledby="renewal-title"
       >
-        <div className="container">
-          <div className={styles.renewalHeader}>
-            <div>
-              <span className={styles.renewalEyebrow}>02 / ƯU ĐÃI GIA HẠN</span>
-              <h2 id="renewal-title">
-                Gia hạn dịch vụ<span>.</span>
-              </h2>
+        <div className={`container ${styles.renewalGrid}`}>
+          <div className={styles.renewalIntro}>
+            <RefreshCw className={styles.renewalIcon} aria-hidden="true" />
+            <EyebrowBadge icon={RefreshCw} className={styles.renewalEyebrow}>
+              ƯU ĐÃI GIA HẠN
+            </EyebrowBadge>
+            <h2 id="renewal-title">
+              <span>Gia hạn.</span>
+              <span>Thêm lợi ích.</span>
+            </h2>
+            <p>
+              Tiếp tục sử dụng dịch vụ với ưu đãi dành riêng cho khách hàng hiện
+              tại.
+            </p>
+          </div>
+          <article className={styles.renewalCard}>
+            <Gift className={styles.renewalIcon} aria-hidden="true" />
+            <h3>GIA HẠN TẶNG ĐẾN</h3>
+            <div className={`${styles.renewalOffer} ${styles.renewalMonths}`}>
+              <strong>6</strong>
+              <span>THÁNG</span>
             </div>
             <p>
-              Tiếp tục sử dụng dịch vụ
-              <br />
-              với chi phí tối ưu hơn.
+              Áp dụng cho các dịch vụ đăng ký trước ngày{" "}
+              <strong>
+                <time dateTime="2026-08-31">31/08/2026.</time>
+              </strong>
             </p>
-            <span className={styles.renewalCampaign}>BLACK FRIDAY</span>
-          </div>
-          <div className={styles.renewalGrid}>
-            <article
-              className={`${styles.renewalCard} ${styles.renewalPrimary}`}
-            >
-              <svg
-                className={styles.renewalWatermark}
-                viewBox="0 0 300 300"
-                fill="none"
-                stroke="currentColor"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <path d="M25 125C40 38 143 2 211 70L242 39V125H156L187 94C145 48 81 64 66 125Z" />
-                <path d="M275 175C260 262 157 298 89 230L58 261V175H144L113 206C155 252 219 236 234 175Z" />
-              </svg>
-              <span className={styles.renewalBadge}>GÓI ĐẠI TRÀ</span>
-              <div className={styles.renewalOffer}>
-                <span>GIẢM</span>
-                <strong>50%</strong>
-              </div>
-              <h3>Khi gia hạn gói đại trà</h3>
-              <p>
-                Áp dụng cho các gói chưa từng được ưu đãi, khuyến mãi hoặc giảm
-                giá.
-              </p>
-              <a
-                className={`button ${styles.renewalWhiteButton}`}
-                href={links.login}
-              >
-                Gia hạn ngay <ArrowRight size={24} aria-hidden="true" />
-              </a>
-            </article>
-            <article className={styles.renewalCard}>
-              <span className={styles.renewalBadge}>GÓI MUA TẠI CANH ME</span>
-              <div className={styles.renewalOffer}>
-                <span>GIẢM THÊM</span>
-                <strong>10%</strong>
-              </div>
-              <h3>Khi gia hạn gói mua tại Canh Me</h3>
-              <p>Áp dụng cho các gói được mua tại trang Canh Me.</p>
-              <a className={`button ${styles.blueButton}`} href={links.login}>
-                Gia hạn ngay <ArrowRight size={24} aria-hidden="true" />
-              </a>
-            </article>
-          </div>
+            <a className={styles.renewalAction} href={links.login}>
+              Gia hạn ngay <ArrowRight size={18} aria-hidden="true" />
+            </a>
+          </article>
+          <article className={styles.renewalCard}>
+            <TicketPercent className={styles.renewalIcon} aria-hidden="true" />
+            <h3>GIA HẠN GIẢM ĐẾN</h3>
+            <div className={styles.renewalOffer}>
+              <strong>
+                50<span>%</span>
+              </strong>
+            </div>
+            <p>
+              Áp dụng cho các gói đại trà, chưa từng được ưu đãi, khuyến mãi
+              hoặc giảm giá.
+            </p>
+            <a className={styles.renewalAction} href={links.login}>
+              Gia hạn ngay <ArrowRight size={18} aria-hidden="true" />
+            </a>
+          </article>
+          <article className={styles.renewalCard}>
+            <TicketPlus className={styles.renewalIcon} aria-hidden="true" />
+            <h3>GIA HẠN GIẢM THÊM</h3>
+            <div className={styles.renewalOffer}>
+              <strong>
+                10<span>%</span>
+              </strong>
+            </div>
+            <p>Áp dụng cho các gói được mua tại trang Canh Me.</p>
+            <a className={styles.renewalAction} href={links.login}>
+              Gia hạn ngay <ArrowRight size={18} aria-hidden="true" />
+            </a>
+          </article>
         </div>
       </section>
 
@@ -432,98 +550,124 @@ export function BlackFridayPage({
         className={styles.flashSale}
         aria-labelledby="flash-sale-title"
       >
-        <div className={styles.flashFacet} aria-hidden="true" />
-        <div className="container">
-          <div className={styles.sectionHeading}>
-            <div>
-              <span className={`${styles.sectionEyebrow} ${styles.orangeText}`}>
-                03 / ƯU ĐÃI THEO KHUNG GIỜ
-              </span>
+        <div className={`container ${styles.flashPanel}`}>
+          <div className={styles.flashIntro}>
+            <div className={styles.flashHeading}>
+              <EyebrowBadge icon={Zap} className={styles.sectionEyebrow}>
+                ƯU ĐÃI THEO KHUNG GIỜ
+              </EyebrowBadge>
               <div className={styles.flashTitle}>
-                <Zap aria-hidden="true" />
-                <h2 id="flash-sale-title">Flash Sale</h2>
+                <h2 id="flash-sale-title">
+                  <span>FLASH</span>
+                  <span>SALE</span>
+                </h2>
+                <svg
+                  viewBox="0 0 70 100"
+                  fill="none"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M30 5H54L42 34H65L16 94L28 54H5Z" />
+                </svg>
               </div>
               <p>Săn ưu đãi trong khung giờ mở bán.</p>
             </div>
-            <div className={styles.schedule} aria-live="polite">
-              <span>KHUNG GIỜ SĂN DEAL</span>
-              <div>
-                <strong>{currentSlot.start}</strong>
-                <span>—</span>
-                <strong>{currentSlot.end}</strong>
+            <div className={styles.flashArtwork}>
+              <Image
+                src="/images/black-friday/flash-sale-3d.webp"
+                alt=""
+                width={1200}
+                height={800}
+                sizes="(max-width: 800px) 100vw, 440px"
+              />
+            </div>
+            <details className={styles.flashTerms}>
+              <summary>
+                <Info size={24} aria-hidden="true" />
+                Điều kiện áp dụng
+              </summary>
+              <p>
+                Liên hệ InterData để xác nhận gói áp dụng, mã ưu đãi, thời gian
+                sử dụng và giá gia hạn trước khi đăng ký.
+              </p>
+              <div className={styles.flashServiceLinks}>
+                <a className={styles.detailsLink} href="/vps-platinum/">
+                  Khám phá cấu hình VPS{" "}
+                  <ArrowRight size={16} aria-hidden="true" />
+                </a>
+                <a
+                  className={styles.detailsLink}
+                  href="/platinum-cloud-server/"
+                >
+                  Khám phá cấu hình Cloud Server{" "}
+                  <ArrowRight size={16} aria-hidden="true" />
+                </a>
+              </div>
+            </details>
+          </div>
+          <div className={styles.flashDeals}>
+            <div className={styles.schedule}>
+              <span className={styles.scheduleHeading}>KHUNG GIỜ SĂN DEAL</span>
+              <div
+                className={styles.slotSwitch}
+                role="group"
+                aria-label="Chọn khung giờ Flash Sale"
+              >
+                {blackFridaySlots.map((item, index) => (
+                  <button
+                    key={item.start}
+                    type="button"
+                    aria-pressed={slot === index}
+                    onClick={() => setSlot(index)}
+                    aria-label={`${item.start} đến ${item.end}`}
+                  >
+                    <strong>{item.start}</strong>
+                    <span>ĐẾN {item.end}</span>
+                  </button>
+                ))}
               </div>
             </div>
-          </div>
-          <div
-            className={styles.slotSwitch}
-            role="group"
-            aria-label="Chọn khung giờ Flash Sale"
-          >
-            {blackFridaySlots.map((item, index) => (
-              <button
-                key={item.start}
-                type="button"
-                aria-pressed={slot === index}
-                onClick={() => setSlot(index)}
-              >
-                {item.start} – {item.end}
-              </button>
-            ))}
-          </div>
-          <div className={styles.flashGrid}>
-            {[
-              {
-                label: "VPS Flash Deal",
-                product: vps[0],
-                href: "/vps-platinum/",
-              },
-              {
-                label: "Cloud Flash Deal",
-                product: cloud[0],
-                href: "/platinum-cloud-server/",
-              },
-            ].map(({ label, product, href }) => {
-              const flashCycle =
-                cycles.find(
-                  ({ key }) => product?.pricing.VND[key] !== undefined,
-                )?.key ?? "annually";
-              return (
+            <div className={styles.flashGrid}>
+              {[
+                {
+                  label: "VPS Flash Deal",
+                  service: "VPS",
+                  discount: 70,
+                },
+                {
+                  label: "Cloud Flash Deal",
+                  service: "Cloud Server",
+                  discount: 60,
+                },
+              ].map(({ label, service, discount }) => (
                 <article key={label} className={styles.flashCard}>
-                  <div className={styles.flashCardTitle}>
-                    <h3>{label}</h3>
-                    <span>BLACK FRIDAY</span>
+                  <div className={styles.flashCardOffer}>
+                    <div className={styles.flashCardTitle}>
+                      <span className={styles.flashBadge}>{service}</span>
+                      <h3>{label}</h3>
+                    </div>
+                    <div className={styles.flashDiscount}>
+                      <span>Giảm</span> <strong>{discount}%</strong>
+                    </div>
                   </div>
-                  {product ? (
-                    <>
-                      <Price product={product} cycle={flashCycle} />
-                      <p className={styles.flashSpecs}>
-                        {productSpecs(product, true)
-                          .filter((spec) =>
-                            /vCPU|vCore|RAM|NVMe|SSD/i.test(spec),
-                          )
-                          .slice(0, 3)
-                          .join(" · ")}
-                      </p>
-                    </>
-                  ) : (
-                    <p>Chọn cấu hình phù hợp với nhu cầu.</p>
-                  )}
                   <div className={styles.flashCardBottom}>
-                    <a className={styles.detailsLink} href={href}>
-                      Khám phá cấu hình{" "}
-                      <ArrowRight size={16} aria-hidden="true" />
-                    </a>
+                    <span className={styles.flashCode}>Liên hệ nhận mã</span>
                     <a
                       className={`button ${styles.orangeButton}`}
                       href="/lien-he/"
                       aria-label={`Nhận tư vấn ${label} khung giờ ${currentSlot.start} đến ${currentSlot.end}`}
                     >
-                      Xem ưu đãi <ArrowRight size={16} aria-hidden="true" />
+                      <Ticket size={24} aria-hidden="true" /> Xem ưu đãi
                     </a>
                   </div>
                 </article>
-              );
-            })}
+              ))}
+            </div>
+            <p className={styles.flashNote}>
+              <Info size={19} aria-hidden="true" />
+              Liên hệ InterData để nhận mã và xác nhận ưu đãi.
+            </p>
           </div>
         </div>
       </section>
@@ -536,9 +680,12 @@ export function BlackFridayPage({
         <div className="container">
           <div className={styles.couponHeading}>
             <div>
-              <span className={`${styles.sectionEyebrow} ${styles.orangeText}`}>
-                04 / MÃ ƯU ĐÃI
-              </span>
+              <EyebrowBadge
+                icon={TicketPercent}
+                className={styles.sectionEyebrow}
+              >
+                MÃ ƯU ĐÃI
+              </EyebrowBadge>
               <h2 id="coupons-title">
                 Mã giảm giá<span>.</span>
               </h2>
@@ -602,6 +749,66 @@ export function BlackFridayPage({
                 </details>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+      <div className={styles.consultationArea}>
+        <ConsultationCta
+          id="black-friday-consultation"
+          headingId="black-friday-cta-title"
+          className={styles.consultationCta}
+          eyebrow=""
+          title="Chọn đúng gói. Tối ưu chi phí."
+          description="Chia sẻ nhu cầu sử dụng VPS hoặc Cloud Server. InterData sẽ giúp bạn chọn cấu hình, chu kỳ và ưu đãi Black Friday phù hợp."
+          image="/images/cta/consultation-woman-upper-body.webp"
+          primaryAction={{ label: "Nhận tư vấn ưu đãi", href: links.contact }}
+          secondaryAction={{ label: "Xem lại Best Plans", href: "#best-plans" }}
+        />
+      </div>
+      <section
+        id="black-friday-faq"
+        className={styles.faqSection}
+        aria-labelledby="black-friday-faq-title"
+      >
+        <div className="container">
+          <div className={styles.faqPanel}>
+            <div className={`${styles.sectionHeading} ${styles.faqHeading}`}>
+              <EyebrowBadge icon={CircleHelp} className={styles.sectionEyebrow}>
+                HỖ TRỢ KHÁCH HÀNG
+              </EyebrowBadge>
+              <h2 id="black-friday-faq-title">
+                Câu hỏi thường gặp<span className={styles.faqTitleDot}>.</span>
+              </h2>
+              <p>Giải đáp về ưu đãi Black Friday và gia hạn dịch vụ.</p>
+            </div>
+            <div className={styles.faqList}>
+              {[blackFridayFaqs.slice(0, 4), blackFridayFaqs.slice(4)].map(
+                (column, index) => (
+                  <div className={styles.faqColumn} key={index}>
+                    {column.map((item) => (
+                      <details className={styles.faqItem} key={item.question}>
+                        <summary>
+                          <h3>{item.question}</h3>
+                          <span
+                            className={styles.faqToggle}
+                            aria-hidden="true"
+                          />
+                        </summary>
+                        <div className={styles.faqAnswer}>
+                          <p>{item.answer}</p>
+                          {item.action && (
+                            <a href={item.action.href}>
+                              {item.action.label}
+                              <ArrowRight size={16} aria-hidden="true" />
+                            </a>
+                          )}
+                        </div>
+                      </details>
+                    ))}
+                  </div>
+                ),
+              )}
+            </div>
           </div>
         </div>
       </section>

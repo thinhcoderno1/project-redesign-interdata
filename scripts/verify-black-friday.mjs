@@ -28,12 +28,28 @@ try {
     "https://interdata.vn/black-friday/",
   );
   await expect(page.locator("#best-plans article")).toHaveCount(3);
+  await expect(page.locator('#best-plans [class*="planHeader"] p')).toHaveCount(
+    0,
+  );
+  await expect(
+    page.locator("#best-plans").getByText(/^Quy đổi từ/),
+  ).toHaveCount(0);
   await expect(page.locator("#best-plans article h3")).toHaveText([
     "INTER PLATINUM 1",
     "INTER PLATINUM 2",
     "INTER PLATINUM 3",
   ]);
-  assert(!/GỢI Ý CHO BẠN/.test(await page.locator("#best-plans").innerText()));
+  const recommendation = page.locator(
+    '#best-plans [class*="recommendationTag"]',
+  );
+  await expect(recommendation).toHaveCount(1);
+  await expect(
+    page
+      .locator("#best-plans article")
+      .nth(1)
+      .locator('[class*="recommendationTag"]'),
+  ).toHaveText("Gợi ý cho bạn");
+  await expect(recommendation.locator("svg")).toHaveCount(1);
   const highlighted = await page
     .locator("#best-plans article")
     .nth(1)
@@ -44,10 +60,26 @@ try {
   assert.equal(highlighted.outline, "2px");
   assert.equal(highlighted.color, "rgb(0, 96, 255)");
   const renewal = page.locator("#gia-han");
-  await expect(renewal.locator("h2")).toHaveText("Gia hạn dịch vụ.");
-  await expect(renewal.locator("article")).toHaveCount(2);
-  await expect(renewal.locator("article strong")).toHaveText(["50%", "10%"]);
+  await expect(renewal.locator("h2")).toHaveText(/Gia hạn\.\s*Thêm lợi ích\./);
+  await expect(renewal.locator("article")).toHaveCount(3);
+  await expect(renewal.locator('[class*="renewalOffer"] > strong')).toHaveText([
+    "6",
+    "50%",
+    "10%",
+  ]);
+  await expect(renewal.locator("time")).toHaveAttribute(
+    "datetime",
+    "2026-08-31",
+  );
+  await expect(renewal.locator("time")).toHaveText("31/08/2026.");
+  await expect(renewal.locator("article p").nth(1)).toContainText(
+    "gói đại trà, chưa từng được ưu đãi",
+  );
+  await expect(renewal.locator("article p").nth(2)).toContainText(
+    "mua tại trang Canh Me",
+  );
   await expect(renewal.locator("article a")).toHaveText([
+    "Gia hạn ngay",
     "Gia hạn ngay",
     "Gia hạn ngay",
   ]);
@@ -69,7 +101,7 @@ try {
     ),
   );
   const tabs = page.locator('#best-plans [role="tab"]');
-  await expect(tabs).toHaveText(["1 năm", "2 năm", "3 năm"]);
+  await expect(tabs).toHaveText(["1 năm", "2 năm", /3 năm\s*Tiết kiệm nhất/]);
   await expect(tabs.last()).toHaveAttribute("aria-selected", "true");
   const gifts = page
     .locator("#best-plans article")
@@ -101,7 +133,9 @@ try {
         assert(
           await gift
             .locator("..")
-            .evaluate((el) => el.previousElementSibling.tagName === "P"),
+            .evaluate((el) =>
+              Boolean(el.previousElementSibling.querySelector("h3")),
+            ),
         );
       }
     }
@@ -111,7 +145,7 @@ try {
       `bf-cycle-${cycle}`,
     );
     const prices = await page
-      .locator("#best-plans article strong")
+      .locator('#best-plans article [class*="price"] > strong')
       .allTextContents();
     if (previousPrices) assert.notDeepEqual(prices, previousPrices);
     previousPrices = prices;
@@ -119,7 +153,10 @@ try {
       const name = await card.locator("h3").innerText();
       const original = originalPrices[name][cycle];
       const current = Number(
-        (await card.locator("strong").innerText()).replace(/\D/g, ""),
+        (await card.locator('[class*="price"] > strong').innerText()).replace(
+          /\D/g,
+          "",
+        ),
       );
       await expect(card.locator("del")).toHaveText(
         `${new Intl.NumberFormat("vi-VN").format(original)}đ / ${["12 tháng", "24 tháng", "36 tháng"][index]}`,
@@ -131,12 +168,47 @@ try {
             .evaluate((el) => getComputedStyle(el).textDecorationLine)
         ).includes("line-through"),
       );
-      await expect(card.locator(":scope > span")).toHaveText(
-        `Tiết Kiệm ${Math.floor(((original - current) / original) * 100)}%`,
+      await expect(card.locator("del + span")).toHaveText(
+        `-${Math.floor(((original - current) / original) * 100)}%`,
+      );
+      assert(
+        !(
+          await card
+            .locator("del + span")
+            .evaluate((el) => getComputedStyle(el).textDecorationLine)
+        ).includes("line-through"),
       );
       await expect(card.locator("a")).toHaveAttribute(
         "href",
         new RegExp(`/inter-platinum-\\d&billingcycle=${cycle}$`),
+      );
+    }
+    const cards = page.locator("#best-plans article");
+    await expect(cards.first().locator('[class*="planUpgrade"]')).toHaveCount(
+      0,
+    );
+    for (const cardIndex of [1, 2]) {
+      const upgrade = cards.nth(cardIndex).locator('[class*="planUpgrade"]');
+      const readPrice = async (i) =>
+        Number(
+          (
+            await cards.nth(i).locator('[class*="price"] > strong').innerText()
+          ).replace(/\D/g, ""),
+        );
+      const difference =
+        (await readPrice(cardIndex)) - (await readPrice(cardIndex - 1));
+      const months = [12, 24, 36][index];
+      await expect(upgrade.locator('[class*="upgradeTitle"]')).toHaveText(
+        `Nâng cấp từ Plan ${cardIndex}`,
+      );
+      await expect(upgrade.locator("strong")).toHaveText(
+        `+${new Intl.NumberFormat("vi-VN").format(Math.ceil(difference / months))}đ`,
+      );
+      await expect(upgrade.locator('[class*="upgradeTotal"]')).toHaveCount(0);
+      await expect(upgrade.locator("li")).toHaveText(
+        cardIndex === 1
+          ? ["+3 vCore", "+5 GB RAM", "+40 GB NVMe"]
+          : ["+4 vCore", "+8 GB RAM", "+70 GB NVMe"],
       );
     }
   }
@@ -154,8 +226,9 @@ try {
     const url = new URL(await card.locator("a").getAttribute("href"));
     assert.equal(url.protocol, "https:");
     assert.equal(url.hostname, "support.interdata.vn");
-    await expect(card.locator("li")).toHaveCount(6);
-    await expect(card.locator("li:visible")).toHaveCount(3);
+    const specs = card.locator('[class*="specs"]');
+    await expect(specs.locator("li")).toHaveCount(6);
+    await expect(specs.locator("li:visible")).toHaveCount(3);
     const configuration = card.locator("details");
     await expect(configuration).not.toHaveAttribute("open", "");
     await expect(configuration.locator("summary")).toHaveText(
@@ -167,13 +240,13 @@ try {
     await expect(configuration.locator("summary")).toHaveText("Thu gọn", {
       useInnerText: true,
     });
-    await expect(card.locator("li:visible")).toHaveCount(6);
+    await expect(specs.locator("li:visible")).toHaveCount(6);
     await expect(page.locator("#best-plans details[open]")).toHaveCount(1);
-    await expect(card.locator("li").nth(3)).toHaveText("1 IPv4 Public Global");
-    await expect(card.locator("li").nth(4)).toHaveText("300Mbps Network Port");
-    await expect(card.locator("li").nth(5)).toHaveText("Unlimited Bandwidth");
+    await expect(specs.locator("li").nth(3)).toHaveText("1 IPv4 Public Global");
+    await expect(specs.locator("li").nth(4)).toHaveText("300Mbps Network Port");
+    await expect(specs.locator("li").nth(5)).toHaveText("Unlimited Bandwidth");
     await configuration.locator("summary").press("Enter");
-    await expect(card.locator("li:visible")).toHaveCount(3);
+    await expect(specs.locator("li:visible")).toHaveCount(3);
   }
   await tabs.last().click();
   const slots = page.locator("#flash-sale button");
@@ -207,6 +280,94 @@ try {
   await expect(terms).toHaveAttribute("open", "");
   await expect(terms.locator("p")).toBeVisible();
   await terms.locator("summary").click();
+  const consultation = page.locator("#black-friday-consultation");
+  await expect(consultation).toHaveCount(1);
+  await expect(consultation).toHaveAttribute(
+    "aria-labelledby",
+    "black-friday-cta-title",
+  );
+  assert(
+    await consultation.evaluate(
+      (el) => el.parentElement.previousElementSibling.id === "ma-giam-gia",
+    ),
+  );
+  await expect(consultation.locator("h2")).toHaveText(
+    "Chọn đúng gói. Tối ưu chi phí.",
+  );
+  await expect(consultation.locator("a")).toHaveCount(2);
+  await expect(consultation.locator('a[href="/lien-he/"]')).toHaveText(
+    "Nhận tư vấn ưu đãi",
+  );
+  await expect(consultation.locator('a[href="#best-plans"]')).toHaveText(
+    "Xem lại Best Plans",
+  );
+  await consultation.scrollIntoViewIfNeeded();
+  assert(
+    await consultation.locator("img").evaluate(async (img) => {
+      await img.decode();
+      return (
+        img.naturalWidth > 0 &&
+        img.getAttribute("src").includes("consultation-woman-upper-body.webp")
+      );
+    }),
+  );
+  await consultation.locator('a[href="#best-plans"]').click();
+  await expect(page).toHaveURL(/#best-plans$/);
+  const faq = page.locator("#black-friday-faq");
+  const faqItems = faq.locator("details");
+  await expect(faq).toHaveAttribute(
+    "aria-labelledby",
+    "black-friday-faq-title",
+  );
+  assert(
+    await faq.evaluate((el) =>
+      Boolean(
+        el.previousElementSibling.querySelector("#black-friday-consultation"),
+      ),
+    ),
+  );
+  await expect(faqItems).toHaveCount(8);
+  await expect(faq.locator('[class*="faqSupport"]')).toHaveCount(0);
+  for (const item of await faqItems.all()) {
+    await expect(item).not.toHaveAttribute("open", "");
+    const summary = item.locator("summary");
+    await summary.focus();
+    await summary.press("Enter");
+    await expect(item).toHaveAttribute("open", "");
+    await expect(item.locator("p")).toBeVisible();
+    await expect(item.locator('[class*="faqToggle"]')).toHaveCSS(
+      "color",
+      "rgb(198, 74, 10)",
+    );
+    assert.equal(
+      await item
+        .locator('[class*="faqToggle"]')
+        .evaluate((el) => getComputedStyle(el, "::after").opacity),
+      "0",
+    );
+    assert(
+      await summary.evaluate(
+        (el) => getComputedStyle(el).outlineStyle !== "none",
+      ),
+    );
+    await summary.press("Space");
+    await expect(item).not.toHaveAttribute("open", "");
+    await expect(item.locator('[class*="faqToggle"]')).toHaveCSS(
+      "color",
+      "rgb(0, 67, 236)",
+    );
+    assert.equal(
+      await item
+        .locator('[class*="faqToggle"]')
+        .evaluate((el) => getComputedStyle(el, "::after").opacity),
+      "1",
+    );
+  }
+  for (const link of await faq.locator("a").all()) {
+    const href = await link.getAttribute("href");
+    if (href.startsWith("#")) await expect(page.locator(href)).toHaveCount(1);
+    else assert.equal(href, "/lien-he/");
+  }
   await page
     .locator('nav[aria-label="Nội dung Black Friday"] a[href="#ma-giam-gia"]')
     .click();
@@ -229,16 +390,27 @@ try {
     );
     await expect(page.locator("h1")).toBeVisible();
     await expect(page.locator("#best-plans article").first()).toBeVisible();
-    const renewalBoxes = await renewal.locator("article").evaluateAll((cards) =>
-      cards.map((card) => {
-        const { x, y, width, height } = card.getBoundingClientRect();
-        return { x, y, width, height };
-      }),
-    );
+    const renewalBoxes = await renewal
+      .locator('[class*="renewalGrid"] > *')
+      .evaluateAll((cards) =>
+        cards.map((card) => {
+          const { x, y, width, height } = card.getBoundingClientRect();
+          return { x, y, width, height };
+        }),
+      );
     assert(
-      width > 700
-        ? Math.abs(renewalBoxes[0].y - renewalBoxes[1].y) < 1
-        : renewalBoxes[1].y >= renewalBoxes[0].y + renewalBoxes[0].height,
+      width > 1000
+        ? renewalBoxes.every((box) => Math.abs(box.y - renewalBoxes[0].y) < 1)
+        : width > 600
+          ? Math.abs(renewalBoxes[0].y - renewalBoxes[1].y) < 1 &&
+            Math.abs(renewalBoxes[2].y - renewalBoxes[3].y) < 1 &&
+            renewalBoxes[2].y >= renewalBoxes[0].y + renewalBoxes[0].height
+          : renewalBoxes
+              .slice(1)
+              .every(
+                (box, index) =>
+                  box.y >= renewalBoxes[index].y + renewalBoxes[index].height,
+              ),
     );
     const couponGroups = await page
       .locator("#ma-giam-gia h3")
@@ -270,6 +442,11 @@ try {
     results.push({ width, overflow: false });
   }
   await page.setViewportSize({ width: 1440, height: 1000 });
+  await faqItems.evaluateAll((items) =>
+    items.forEach((item) => {
+      item.open = true;
+    }),
+  );
   const axe = await new AxeBuilder({ page })
     .include("main")
     .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
@@ -294,6 +471,14 @@ try {
   });
   const staticPage = await noJs.newPage();
   await staticPage.goto(`${base}/black-friday/`);
+  await expect(
+    staticPage.locator('#gia-han [class*="renewalOffer"] > strong'),
+  ).toHaveText(["6", "50%", "10%"]);
+  await expect(staticPage.locator("#gia-han time")).toHaveAttribute(
+    "datetime",
+    "2026-08-31",
+  );
+  await expect(staticPage.locator("#gia-han article a")).toHaveCount(3);
   await expect(staticPage.locator("#best-plans article")).toHaveCount(3);
   await expect(
     staticPage.locator("#best-plans article").first().locator("a"),
@@ -316,6 +501,12 @@ try {
   await expect(
     staticPage.locator("#ma-giam-gia details").first(),
   ).toHaveAttribute("open", "");
+  await expect(staticPage.locator("#black-friday-faq details")).toHaveCount(8);
+  const staticFaq = staticPage.locator("#black-friday-faq details").first();
+  await expect(staticFaq).not.toHaveAttribute("open", "");
+  await staticFaq.locator("summary").click();
+  await expect(staticFaq).toHaveAttribute("open", "");
+  await expect(staticFaq.locator("p")).toBeVisible();
   assert.deepEqual(errors, []);
   await fs.writeFile(
     `${directory}/results.json`,
@@ -326,7 +517,7 @@ try {
     ),
   );
   console.log(
-    "Black Friday: 3-year default, original prices and calculated savings across all cycles, keyboard support, checkout URLs, centered layout, time slots, terms, anchors, 7 viewport widths, axe and no-JavaScript checks passed.",
+    "Black Friday: pricing across cycles, keyboard support, checkout URLs, layout, time slots, terms, anchors, consultation CTA, 8 FAQs, 7 viewport widths, axe with expanded answers and no-JavaScript checks passed.",
   );
 } finally {
   await browser.close();

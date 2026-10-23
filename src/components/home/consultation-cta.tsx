@@ -70,10 +70,12 @@ export function ConsultationCta({
           </span>
         </div>
         <div className={styles.content}>
-          <span className={styles.eyebrow}>
-            {withBadgeIcons && <Icon name="headphones" />}
-            {eyebrow}
-          </span>
+          {eyebrow && (
+            <span className={styles.eyebrow}>
+              {withBadgeIcons && <Icon name="headphones" />}
+              {eyebrow}
+            </span>
+          )}
           <h2 id={headingId}>{title}</h2>
           <p>{description}</p>
           {secondaryAction ? (
