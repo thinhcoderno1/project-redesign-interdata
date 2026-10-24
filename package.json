@@ -39,15 +39,20 @@
     "test:vps-linux": "node scripts/verify-vps-linux.mjs",
     "test:vps-gold": "node scripts/verify-vps-gold.mjs",
     "test:vps-n8n": "node scripts/verify-vps-n8n.mjs",
-    "test:vps-vibe-coding": "node scripts/verify-vps-vibe-coding.mjs"
+    "test:vps-vibe-coding": "node scripts/verify-vps-vibe-coding.mjs",
+    "test:canh-me": "node scripts/verify-canh-me.mjs",
+    "test:blog:data": "node scripts/verify-blog-data.mjs",
+    "test:blog": "node scripts/verify-blog.mjs"
   },
   "dependencies": {
     "entities": "8.1.0",
+    "htmlparser2": "^12.0.0",
     "lucide-react": "1.52.0",
     "markdown-it": "15.0.2",
     "next": "16.3.8",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "sanitize-html": "^2.18.1"
   },
   "overrides": {
     "@next/eslint-plugin-next@16.3.8": {
@@ -60,6 +65,7 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/sanitize-html": "^2.16.2",
     "eslint": "^9",
     "eslint-config-next": "16.3.8",
     "fast-glob": "file:tools/next-eslint-glob",

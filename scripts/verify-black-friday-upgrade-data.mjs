@@ -32,6 +32,11 @@ const { getBlackFridayUpgrade: compare } = await loadData(
   {
     "./vps-content.json": content,
     "./vps-pricing": pricing,
+    "./content": await loadData("src/data/content.ts", {
+      "./articles.json": JSON.parse(
+        await fs.readFile("src/data/articles.json", "utf8"),
+      ),
+    }),
   },
 );
 const cycles = ["annually", "biennially", "triennially"];

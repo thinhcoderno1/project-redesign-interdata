@@ -92,7 +92,7 @@ function normalizeArticle(
     title,
     excerpt:
       excerpt.length > 220 ? `${excerpt.slice(0, 217).trimEnd()}…` : excerpt,
-    href,
+    href: new URL(href).pathname,
     image: featuredImage(value),
     category: category?.name || topic.label,
     publishedAt: date.toISOString(),

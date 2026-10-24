@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" fill="none">
+  <defs>
+    <linearGradient id="left" x1="-80" y1="40" x2="320" y2="880" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0043EC" stop-opacity="0"/>
+      <stop offset=".3" stop-color="#0043EC" stop-opacity=".2"/>
+      <stop offset=".7" stop-color="#2188FF" stop-opacity=".15"/>
+      <stop offset="1" stop-color="#0043EC" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="right" x1="1660" y1="140" x2="1280" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0043EC" stop-opacity="0"/>
+      <stop offset=".3" stop-color="#2188FF" stop-opacity=".2"/>
+      <stop offset=".65" stop-color="#0043EC" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#0043EC" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="crossing" x1="-80" y1="940" x2="1660" y2="1100" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0043EC" stop-opacity="0"/>
+      <stop offset=".2" stop-color="#0043EC" stop-opacity=".1"/>
+      <stop offset=".55" stop-color="#2188FF" stop-opacity=".06"/>
+      <stop offset=".85" stop-color="#0043EC" stop-opacity=".15"/>
+      <stop offset="1" stop-color="#0043EC" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g stroke="url(#left)" stroke-width="1.2">
+    <path d="M-160 80C40 90 50 260 190 340S480 370 510 520 240 730-120 840"/>
+    <path d="M-160 103C20 110 35 282 175 362S464 395 493 541 220 750-120 862"/>
+    <path d="M-160 126C0 130 20 304 160 384S448 420 476 562 200 770-120 884"/>
+    <path d="M-160 149C-20 150 5 326 145 406S432 445 459 583 180 790-120 906"/>
+    <path d="M-160 172C-40 170-10 348 130 428S416 470 442 604 160 810-120 928"/>
+    <path d="M-160 195C-60 190-25 370 115 450S400 495 425 625 140 830-120 950"/>
+  </g>
+  <g stroke="url(#right)" stroke-width="1.2">
+    <path d="M1780 130C1530 180 1530 320 1375 430S1080 550 1160 730 1510 820 1740 980"/>
+    <path d="M1780 154C1550 204 1548 342 1392 452S1100 572 1180 751 1530 842 1740 1004"/>
+    <path d="M1780 178C1570 228 1566 364 1409 474S1120 594 1200 772 1550 864 1740 1028"/>
+    <path d="M1780 202C1590 252 1584 386 1426 496S1140 616 1220 793 1570 886 1740 1052"/>
+    <path d="M1780 226C1610 276 1602 408 1443 518S1160 638 1240 814 1590 908 1740 1076"/>
+  </g>
+  <g stroke="url(#crossing)" stroke-width="1">
+    <path d="M-120 1020C180 1170 330 830 650 890S1120 1200 1730 1060"/>
+    <path d="M-120 1040C180 1190 330 850 650 910S1120 1220 1730 1080"/>
+    <path d="M-120 1060C180 1210 330 870 650 930S1120 1240 1730 1100"/>
+    <path d="M-120 1080C180 1230 330 890 650 950S1120 1260 1730 1120"/>
+  </g>
+</svg>

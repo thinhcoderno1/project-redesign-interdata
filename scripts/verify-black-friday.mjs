@@ -6,7 +6,9 @@ import AxeBuilder from "@axe-core/playwright";
 const base = process.env.TEST_BASE_URL || "http://localhost:3100";
 const directory = "artifacts/black-friday";
 await fs.mkdir(directory, { recursive: true });
-const browser = await chromium.launch();
+const browser = await chromium.launch({
+  channel: process.env.TEST_BROWSER_CHANNEL || undefined,
+});
 const errors = [];
 const results = [];
 const originalPrices = JSON.parse(
@@ -17,6 +19,7 @@ try {
     viewport: { width: 1440, height: 1000 },
   });
   const page = await context.newPage();
+  await page.emulateMedia({ reducedMotion: "reduce" });
   page.on("pageerror", (error) => errors.push(error.message));
   const response = await page.goto(`${base}/black-friday/`);
   assert.equal(response.status(), 200);
@@ -249,18 +252,46 @@ try {
     await expect(specs.locator("li:visible")).toHaveCount(3);
   }
   await tabs.last().click();
-  const slots = page.locator("#flash-sale button");
-  for (let index = 0; index < 3; index++) {
-    await slots.nth(index).click();
-    await expect(slots.nth(index)).toHaveAttribute("aria-pressed", "true");
-    await expect(
-      page.locator("#flash-sale a[aria-label]").first(),
-    ).toHaveAttribute(
-      "aria-label",
-      new RegExp(["10:00", "14:00", "20:00"][index]),
-    );
-  }
-  await slots.first().click();
+  const countdown = page.locator('#flash-sale [role="timer"]');
+  await expect(countdown).toHaveCount(1);
+  await expect(countdown.locator("strong")).toHaveText([
+    "00",
+    "00",
+    "00",
+    "00",
+  ]);
+  await expect(countdown.locator("span")).toHaveText([
+    "Ngày",
+    "Giờ",
+    "Phút",
+    "Giây",
+  ]);
+  await expect(page.locator('#flash-sale [class*="slotSwitch"]')).toHaveCount(
+    0,
+  );
+  await page.waitForTimeout(1100);
+  await expect(countdown.locator("strong")).toHaveText([
+    "00",
+    "00",
+    "00",
+    "00",
+  ]);
+  await expect(page.locator('#flash-sale [class*="flashCode"]')).toHaveText([
+    "BF-XXXX",
+    "BF-XXXX",
+  ]);
+  await expect(page.locator("#flash-sale article a")).toHaveText([
+    "Nhận ưu đãi",
+    "Nhận ưu đãi",
+  ]);
+  await expect(page.locator("#flash-sale article a").nth(0)).toHaveAttribute(
+    "href",
+    "/thue-vps/",
+  );
+  await expect(page.locator("#flash-sale article a").nth(1)).toHaveAttribute(
+    "href",
+    "/cloud-server/",
+  );
   await expect(page.locator("#ma-giam-gia article")).toHaveCount(6);
   await expect(page.locator("#ma-giam-gia details")).toHaveCount(2);
   await expect(page.locator("#ma-giam-gia article h4 strong")).toHaveText([
@@ -272,8 +303,30 @@ try {
     "41%",
   ]);
   await expect(page.locator("#ma-giam-gia article a")).toHaveCount(6);
-  for (const action of await page.locator("#ma-giam-gia article a").all())
-    await expect(action).toHaveAttribute("href", "/lien-he/");
+  await expect(page.locator('#ma-giam-gia [class*="couponCode"]')).toHaveText(
+    Array(6).fill("BF-XXXX"),
+  );
+  for (const [index, action] of (
+    await page.locator("#ma-giam-gia article a").all()
+  ).entries()) {
+    await expect(action).toHaveText("Nhận ưu đãi");
+    await expect(action).toHaveAttribute(
+      "href",
+      index < 3 ? "/thue-vps/" : "/cloud-server/",
+    );
+  }
+  await expect(
+    page.locator(
+      '#flash-sale a[href="/lien-he/"], #ma-giam-gia a[href="/lien-he/"]',
+    ),
+  ).toHaveCount(0);
+  for (const condition of await page
+    .locator('#flash-sale [class*="flashTerms"] > p, #ma-giam-gia details > p')
+    .all()) {
+    await expect(condition).toContainText(
+      "Mã không áp dụng đồng thời hoặc cộng dồn với các chương trình khuyến mãi khác.",
+    );
+  }
   await expect(page.locator("#ma-giam-gia button")).toHaveCount(0);
   const terms = page.locator("#ma-giam-gia details").first();
   await terms.locator("summary").click();
@@ -502,6 +555,9 @@ try {
     staticPage.locator("#ma-giam-gia details").first(),
   ).toHaveAttribute("open", "");
   await expect(staticPage.locator("#black-friday-faq details")).toHaveCount(8);
+  await expect(
+    staticPage.locator('#flash-sale [role="timer"] strong'),
+  ).toHaveText(["00", "00", "00", "00"]);
   const staticFaq = staticPage.locator("#black-friday-faq details").first();
   await expect(staticFaq).not.toHaveAttribute("open", "");
   await staticFaq.locator("summary").click();
@@ -517,7 +573,7 @@ try {
     ),
   );
   console.log(
-    "Black Friday: pricing across cycles, keyboard support, checkout URLs, layout, time slots, terms, anchors, consultation CTA, 8 FAQs, 7 viewport widths, axe with expanded answers and no-JavaScript checks passed.",
+    "Black Friday: pricing across cycles, keyboard support, checkout URLs, layout, static countdown preview, terms, anchors, consultation CTA, 8 FAQs, 7 viewport widths, axe with expanded answers and no-JavaScript checks passed.",
   );
 } finally {
   await browser.close();

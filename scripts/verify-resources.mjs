@@ -81,7 +81,10 @@ try {
       );
       assert.deepEqual(
         actual,
-        posts[i].map((post) => ({ id: post.id, href: post.link })),
+        posts[i].map((post) => ({
+          id: post.id,
+          href: new URL(new URL(post.link).pathname, baseUrl).href,
+        })),
         `Latest API posts at ${width}px/${topics[i]}`,
       );
       const dates = await panel
@@ -175,7 +178,9 @@ try {
       await panel
         .locator("article > a")
         .evaluateAll((links) => links.map((link) => link.href)),
-      posts[i].map((post) => post.link),
+      posts[i].map(
+        (post) => new URL(new URL(post.link).pathname, baseUrl).href,
+      ),
     );
   }
   const imageSource = await page

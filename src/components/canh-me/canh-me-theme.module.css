@@ -1,0 +1,298 @@
+@font-face {
+  font-family: "Be Vietnam Pro Canh Me ExtraBold";
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/be-vietnam-pro-extrabold.ttf") format("truetype");
+}
+
+.theme {
+  color: #f8fbff;
+  background:
+    radial-gradient(
+      900px 520px at 82% 8%,
+      rgba(0, 115, 255, 0.14),
+      transparent 64%
+    ),
+    #070d1a;
+  overflow: clip;
+}
+.theme.theme :global(.cm-hero-inner) {
+  width: min(1248px, calc(100% - 96px));
+  margin-inline: auto;
+}
+.theme.theme :global(.cm-section) {
+  width: min(1248px, calc(100% - 96px));
+  margin-inline: auto;
+}
+.theme.theme :global(.cm-hero h1) {
+  font-family:
+    "Be Vietnam Pro Canh Me ExtraBold", "Be Vietnam Pro", Arial, sans-serif;
+  font-size: clamp(32px, 3.35vw, 51px);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.045em;
+}
+.theme.theme :global(.cm-hero-copy p) {
+  font-size: 17px;
+}
+.theme.theme :global(.cm-hero-badge) {
+  border-radius: 6px;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  padding: 5px 10px;
+}
+.theme.theme :global(.cm-pill) {
+  border-radius: 6px;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  padding: 5px 10px;
+}
+.theme.theme :global(.cm-program-eyebrow) {
+  border-radius: 6px;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  padding: 5px 10px;
+}
+.theme.theme :global(.cm-section-heading h2) {
+  font-size: clamp(28px, 3.1vw, 40px);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.04em;
+}
+.theme.theme :global(.cm-zalo-content h2) {
+  font-size: clamp(28px, 3.1vw, 40px);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.04em;
+}
+.theme.theme :global(.cm-info-card h2) {
+  font-size: clamp(28px, 3.1vw, 40px);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.04em;
+}
+.theme.theme :global(.cm-section-heading p) {
+  font-size: 17px;
+}
+.theme.theme :global(.cm-program-intro) {
+  border-radius: 20px;
+  border-width: 1px;
+  border-style: solid;
+}
+.theme.theme :global(.cm-zalo-card) {
+  border-radius: 20px;
+  border-width: 1px;
+  border-style: solid;
+}
+.theme.theme :global(.cm-info-card) {
+  border-radius: 20px;
+  border-width: 1px;
+  border-style: solid;
+}
+.theme.theme :global(.cm-program-subheadline) {
+  font-size: clamp(21px, 2.2vw, 28px);
+  line-height: 1.4;
+}
+.theme.theme :global(.cm-program-copy) {
+  min-width: 0;
+}
+.theme.theme :global(.cm-program-countdown) {
+  max-width: 100%;
+  min-width: 0;
+}
+.theme.theme :global(.cm-program-copy > p:not(.cm-program-subheadline)) {
+  font-size: 16px;
+  line-height: 1.8;
+}
+.theme.theme :global(.cm-zalo-content p) {
+  font-size: 16px;
+  line-height: 1.8;
+}
+.theme.theme :global(.cm-info-sapo) {
+  font-size: 16px;
+  line-height: 1.8;
+}
+.theme.theme :global(.cm-info-body p) {
+  font-size: 16px;
+  line-height: 1.8;
+}
+.theme.theme :global(.cm-program-icon) {
+  filter: none;
+}
+.theme.theme :global(.cm-period-tabs button) {
+  border-radius: 8px;
+  min-height: 44px;
+  border-width: 1px;
+  border-style: solid;
+  font-weight: 600;
+}
+.theme.theme :global(.cm-deal-grid .cm-deal-card:nth-child(n)) {
+  border-radius: 16px;
+  border-width: 1px;
+  border-style: solid;
+}
+.theme.theme :global(.cm-deal-grid .cm-deal-card h3) {
+  font-weight: 800;
+}
+.theme.theme :global(.cm-deal-grid .cm-price) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.theme.theme :global(.cm-price-summary) {
+  color: #b8c4d6;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.theme.theme :global(.cm-hero-actions a) {
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+  min-height: 48px;
+  font-weight: 700;
+  transition: background-color 0.2s ease;
+}
+.theme.theme :global(.cm-deal-grid .cm-deal-card a) {
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+  min-height: 48px;
+  font-weight: 700;
+  transition: background-color 0.2s ease;
+}
+.theme.theme :global(.cm-zalo-button) {
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+  min-height: 48px;
+  font-weight: 700;
+  transition: background-color 0.2s ease;
+}
+.theme.theme :global(.cm-info-toggle) {
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+  min-height: 48px;
+  font-weight: 700;
+  transition: background-color 0.2s ease;
+}
+.theme.theme :global(.cm-faq-item) {
+  background: rgba(16, 37, 68, 0.82);
+  border: 1px solid rgba(255, 106, 0, 0.2);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.22);
+  border-radius: 12px;
+}
+.theme :global(.cm-faq-grid) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 16px;
+}
+.theme.theme :global(.cm-faq + .cm-info-section) {
+  padding-top: clamp(32px, 4vw, 56px);
+}
+.theme.theme :global(.cm-faq-item summary) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  min-height: 72px;
+  color: #f8fbff;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.6;
+  cursor: pointer;
+  list-style: none;
+}
+.theme.theme :global(.cm-faq-item summary::-webkit-details-marker) {
+  display: none;
+}
+.theme.theme :global(.cm-faq-item summary span) {
+  color: #ffb000;
+  font-size: 24px;
+}
+.theme.theme :global(.cm-faq-item[open] summary span) {
+  transform: rotate(45deg);
+}
+.theme.theme :global(.cm-faq-item p) {
+  color: #aab8cc;
+  padding: 0 20px 20px;
+  line-height: 1.8;
+}
+.theme.theme :global(.cm-pricing-unavailable) {
+  padding: 24px;
+  border: 1px solid rgba(0, 194, 255, 0.34);
+  border-radius: 12px;
+  color: #b8c4d6;
+}
+@media (max-width: 959px) {
+  .theme.theme :global(.cm-hero-inner) {
+    width: calc(100% - 48px);
+  }
+  .theme.theme :global(.cm-section) {
+    width: calc(100% - 48px);
+  }
+}
+@media (max-width: 600px) {
+  .theme :global(.cm-faq-grid) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .theme.theme :global(.cm-program-intro) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .theme.theme :global(.cm-program-countdown) {
+    border-radius: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .theme.theme :global(.cm-program-countdown-label) {
+    width: 100%;
+  }
+  .theme.theme :global(.cm-program-countdown-time) {
+    min-width: 0;
+  }
+  .theme.theme :global(.cm-hero-inner) {
+    width: calc(100% - 40px);
+  }
+  .theme.theme :global(.cm-section) {
+    width: calc(100% - 40px);
+  }
+  .theme.theme :global(.cm-hero h1) {
+    font-size: clamp(28px, 7.5vw, 40px);
+  }
+  .theme.theme :global(.cm-hero-copy p) {
+    font-size: 16px;
+  }
+  .theme.theme :global(.cm-program-eyebrow) {
+    font-size: 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme.theme :global(*) {
+    animation: none;
+    transition: none;
+    scroll-behavior: auto;
+  }
+}
+.theme.theme :global(:is(a, button, summary, [tabindex]):focus-visible) {
+  outline: 3px solid #ffb000;
+  outline-offset: 4px;
+}

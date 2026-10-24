@@ -49,10 +49,10 @@
   width: fit-content;
   max-width: 100%;
   padding: 5px 10px;
-  border: 1px solid #ff852f66;
+  border: 1px solid var(--brand-primary);
   border-radius: 6px;
-  background: #24170f;
-  color: #ff852f;
+  background: var(--brand-primary);
+  color: var(--text-on-brand);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.055em;
@@ -77,10 +77,12 @@
   margin-bottom: 20px;
 }
 .hero h1 {
+  font-family:
+    "Be Vietnam Pro Plan ExtraBold", "Be Vietnam Pro", Arial, sans-serif;
   text-transform: uppercase;
   font-size: clamp(32px, 3.35vw, 51px);
   line-height: 1.25;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.04em;
   font-weight: 800;
 }
 .heroCopy p {
@@ -98,6 +100,67 @@
 .blueButton:hover {
   background: #0043ec;
   border-color: #6da0ff;
+}
+.heroButton {
+  min-height: 66px;
+  max-width: 100%;
+  padding: 7px 26px 7px 7px;
+  gap: 16px;
+  border-color: transparent;
+  border-radius: 999px;
+  background: var(--brand-primary);
+  color: var(--text-on-brand);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+  box-shadow: 0 6px 24px rgb(0 67 236 / 28%);
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.heroButton:hover {
+  background: var(--brand-hover);
+  box-shadow: 0 8px 28px rgb(0 67 236 / 36%);
+}
+.hero .heroButton:focus-visible {
+  outline-color: var(--focus-dark);
+}
+.heroButtonIcon {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--surface-canvas);
+  color: var(--brand-primary);
+  transition: color 0.2s ease;
+}
+.heroButtonIcon svg {
+  width: 24px;
+  height: 24px;
+}
+.heroButton:hover .heroButtonIcon {
+  color: var(--brand-hover);
+}
+.heroButtonLabel {
+  white-space: nowrap;
+}
+@media (max-width: 639px) {
+  .heroButton {
+    min-height: 58px;
+    padding: 6px 20px 6px 6px;
+    gap: 12px;
+    font-size: 16px;
+  }
+  .heroButtonIcon {
+    width: 44px;
+    height: 44px;
+  }
+  .heroButtonIcon svg {
+    width: 22px;
+    height: 22px;
+  }
 }
 .facets {
   position: absolute;
@@ -236,7 +299,8 @@
 }
 .navInner {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
 }
 .navInner a {
   padding: 17px 10px;
@@ -1240,67 +1304,72 @@
 }
 .schedule {
   margin: 0 8px 20px;
+  padding: 16px 18px 14px;
+  border: 1px solid #ff6b2759;
+  border-radius: 14px;
+  background:
+    radial-gradient(ellipse at 50% 0%, #ff60181f, transparent 75%),
+    linear-gradient(135deg, #1c1714, #0e1217);
+  box-shadow: inset 0 1px 0 #ffffff08;
 }
 .scheduleHeading {
-  display: block;
-  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
   color: #e0e7f1;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 700;
+  letter-spacing: 0.06em;
 }
-.slotSwitch {
+.scheduleHeading svg {
+  color: #ff852f;
+  flex-shrink: 0;
+}
+.countdown {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
-  overflow: visible;
-  border: 0;
-  border-radius: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
 }
-.slotSwitch button {
+.countdownUnit {
   position: relative;
   display: grid;
   justify-items: center;
   gap: 8px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: #e2ebf9;
   font-variant-numeric: tabular-nums;
 }
-.slotSwitch button:not(:last-child)::after {
+.countdownUnit:not(:last-child)::after {
   content: ":";
   position: absolute;
-  right: -16px;
-  top: 8px;
-  color: #e6edf7;
+  right: -14px;
+  top: 12px;
+  color: #c18b6c;
   font-size: 28px;
   font-weight: 700;
 }
-.slotSwitch strong {
+.countdownUnit strong {
   display: grid;
   place-items: center;
   width: 100%;
-  min-height: 64px;
-  border: 1px solid #354453;
+  min-height: 68px;
+  border: 1px solid #fb6b2780;
   border-radius: 9px;
-  background: radial-gradient(ellipse at bottom, #1b2934, #0c131a 80%);
+  background: radial-gradient(ellipse at bottom, #302017, #101418 80%);
   color: #ff6119;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 32px;
+  font-size: 38px;
   font-weight: 800;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.025em;
   line-height: 1.1;
+  box-shadow:
+    inset 0 1px 0 #ffffff12,
+    0 5px 12px #0002;
 }
-.slotSwitch button[aria-pressed="true"] strong {
-  border-color: #fb6b27;
-  box-shadow: inset 0 0 18px #ff510d12;
-}
-.slotSwitch button:hover strong {
-  background: #202d39;
-}
-.slotSwitch button > span {
+.countdownUnit > span {
   color: #d4e0f0;
   font-size: 11px;
+  font-weight: 500;
 }
 .flashGrid {
   display: grid;
@@ -1438,8 +1507,24 @@
   --offers-glow-y: 0%;
   padding: 48px 0 54px;
 }
+.consultationArea,
+.faqSection {
+  background-color: #080e12;
+  /* Match the glows at the CTA/FAQ edge so the light flows between sections. */
+  background-image:
+    radial-gradient(
+      ellipse 75% 560px at 0% var(--closing-glow-y),
+      rgb(0 67 236 / 38%),
+      transparent 74%
+    ),
+    radial-gradient(
+      ellipse 60% 460px at 100% var(--closing-glow-y),
+      rgb(41 148 255 / 22%),
+      transparent 76%
+    );
+}
 .consultationArea {
-  background: #080e12;
+  --closing-glow-y: 100%;
 }
 .consultationCta {
   --vps-font-h2: var(--bf-heading-size);
@@ -1450,8 +1535,8 @@
   letter-spacing: -0.045em;
 }
 .faqSection {
+  --closing-glow-y: 0%;
   padding: 16px 0 64px;
-  background: #080e12;
 }
 .faqPanel {
   position: relative;
@@ -1800,9 +1885,11 @@
   padding: 7px 4px;
   border: 1px dashed #b8c4db;
   border-radius: 6px;
-  color: #526075;
+  color: var(--brand-primary);
+  font-family: "Courier New", monospace;
+  letter-spacing: 0.04em;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
 }
 .couponAction > a {
@@ -1948,11 +2035,6 @@
   .heroCopy p {
     font-size: 15px;
   }
-  .heroCopy .blueButton {
-    font-size: 12px;
-    padding-inline: 16px;
-    gap: 12px;
-  }
   .sectionHeading {
     align-items: start;
   }
@@ -1994,17 +2076,12 @@
     padding: 39px 0 22px;
   }
   .hero h1 {
-    font-size: clamp(31px, 7.8vw, 43px);
+    font-size: clamp(27px, 7.8vw, 43px);
   }
   .heroCopy p {
     font-size: 15px;
     margin-top: 12px;
     margin-bottom: 21px;
-  }
-  .heroCopy .blueButton {
-    font-size: 13px;
-    min-height: 47px;
-    padding-inline: 20px;
   }
   .heroArtwork {
     width: 88%;
@@ -2208,13 +2285,13 @@
   .schedule {
     margin-inline: 4px;
   }
-  .slotSwitch {
-    gap: 18px;
+  .countdown {
+    gap: 14px;
   }
-  .slotSwitch button:not(:last-child)::after {
-    right: -13px;
+  .countdownUnit:not(:last-child)::after {
+    right: -10px;
   }
-  .slotSwitch strong {
+  .countdownUnit strong {
     min-height: 60px;
     font-size: 28px;
   }
@@ -2296,7 +2373,7 @@
   .schedule {
     margin: 0 6px 18px;
   }
-  .slotSwitch strong {
+  .countdownUnit strong {
     font-size: 32px;
     min-height: 60px;
   }
@@ -2332,23 +2409,24 @@
   }
   .schedule {
     margin: 0 2px 18px;
+    padding: 14px 12px 12px;
   }
   .scheduleHeading {
     font-size: 11px;
   }
-  .slotSwitch {
-    gap: 18px;
+  .countdown {
+    gap: 12px;
   }
-  .slotSwitch strong {
+  .countdownUnit strong {
     min-height: 55px;
     font-size: clamp(23px, 6.5vw, 32px);
     border-radius: 6px;
   }
-  .slotSwitch button > span {
+  .countdownUnit > span {
     font-size: 10px;
   }
-  .slotSwitch button:not(:last-child)::after {
-    right: -13px;
+  .countdownUnit:not(:last-child)::after {
+    right: -9px;
     top: 7px;
     font-size: 25px;
   }

@@ -127,6 +127,11 @@ assert.deepEqual(
   ["news", "blog", "promotion", "careers"],
 );
 assert.ok(feeds.every((f) => f.status === "ready" && f.articles.length === 1));
+assert.ok(
+  feeds.every((f) =>
+    f.articles.every((article) => /^\/blog\/[^/]+\/$/.test(article.href)),
+  ),
+);
 assert.equal(feeds[1].articles[0].category, "Kiến thức & Hướng dẫn");
 assert.equal(feeds[0].articles[0].dateLabel, "10/10/2026");
 assert.equal(feeds[0].articles[0].publishedAt, "2026-10-09T18:30:00.000Z");

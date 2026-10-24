@@ -368,7 +368,7 @@ export function AboutPage() {
             ))}
           </div>
           <a
-            href="https://interdata.vn/blog/su-kien/"
+            href="/blog/?category=su-kien"
             className={styles.moreEvents}
           >
             Xem thêm hoạt động của InterData <Icon name="arrow" />

@@ -1,4 +1,6 @@
 import vpsContent from "./vps-content.json";
+import { links } from "./content";
+import type { FlashSaleSchedule } from "@/lib/flash-sale";
 import {
   productSpecs,
   type BillingCycle,
@@ -121,22 +123,29 @@ export function getBlackFridayUpgrade(
   };
 }
 
-// Presentation values supplied in the approved reference. Campaign codes and
-// dates must come from Sales before enabling redemption or a live countdown.
-export const blackFridaySlots = [
-  { start: "10:00", end: "12:00" },
-  { start: "14:00", end: "16:00" },
-  { start: "20:00", end: "22:00" },
-] as const;
+// Preview keeps the section visible and the clock at 00:00:00:00.
+// Set all dates and switch to "scheduled" when the official schedule is ready.
+// Scheduled mode shows the section from visibleFrom until endsAt; "hidden" hides it.
+export const blackFridayFlashSale: FlashSaleSchedule = {
+  mode: "preview",
+  visibleFrom: null,
+  startsAt: null,
+  endsAt: null,
+};
 
 export const blackFridayCoupons = [
-  { service: "VPS", discounts: [71, 61, 51], href: "/vps-platinum/" },
+  { service: "VPS", discounts: [71, 61, 51], href: links.vps },
   {
     service: "Cloud Server",
     discounts: [61, 51, 41],
-    href: "/platinum-cloud-server/",
+    href: links.cloud,
   },
 ] as const;
+
+export const blackFridayCouponPlaceholder = "BF-XXXX";
+
+export const blackFridayCouponCondition =
+  "Mã không áp dụng đồng thời hoặc cộng dồn với các chương trình khuyến mãi khác.";
 
 export const blackFridayFaqs: {
   question: string;
@@ -158,19 +167,18 @@ export const blackFridayFaqs: {
   {
     question: "Nên đăng ký 1, 2 hay 3 năm để tối ưu chi phí?",
     answer:
-      "Chu kỳ 1 năm phù hợp khi nhu cầu còn có thể thay đổi hoặc bạn muốn phân bổ ngân sách theo năm. Cân nhắc 2–3 năm khi đã xác định nhu cầu sử dụng dài hạn. Hãy đổi tab để so sánh tổng tiền, mức giảm và quyền lợi của từng chu kỳ; lựa chọn nên dựa trên cả ngân sách thanh toán ban đầu lẫn thời gian dự kiến sử dụng.",
+      "Chu kỳ 1 năm phù hợp khi bạn muốn linh hoạt ngân sách hoặc nhu cầu sử dụng còn có thể thay đổi. Chu kỳ 2 năm là lựa chọn cân bằng nếu bạn đã có kế hoạch sử dụng lâu hơn nhưng chưa muốn thanh toán cho 3 năm. Nếu nhu cầu đã ổn định và ngân sách cho phép, InterData khuyên bạn chọn chu kỳ 3 năm để được tặng thêm 1 năm sử dụng. Bạn có tổng cộng 4 năm sử dụng với chi phí của chu kỳ 3 năm, giúp giảm chi phí bình quân theo thời gian và lùi thời điểm cần gia hạn. Đây là lựa chọn đáng ưu tiên cho website, ứng dụng hoặc hệ thống cần vận hành lâu dài.",
   },
   {
     question: "Tôi nhận và sử dụng mã ưu đãi như thế nào?",
     answer:
-      "Ở Flash Sale, chọn khung giờ và dịch vụ rồi nhấn “Xem ưu đãi”. Ở Mã giảm giá, chọn thẻ VPS hoặc Cloud Server theo chu kỳ rồi nhấn “Nhận ưu đãi”. Gửi tên gói, chu kỳ và ưu đãi muốn áp dụng để InterData xác nhận mã cùng điều kiện sử dụng. Đối chiếu mức giảm và tổng tiền trên đơn hàng trước khi thanh toán.",
-    action: { label: "Nhận tư vấn mã ưu đãi", href: "/lien-he/" },
+      "Mã ưu đãi được hiển thị trực tiếp trong các khung mã tại Flash Sale và Mã giảm giá. Chọn đúng dịch vụ, thời gian mở bán và chu kỳ áp dụng, nhấn “Nhận ưu đãi” để xem các gói dịch vụ, sau đó nhập mã ở bước thanh toán. Đối chiếu mức giảm và tổng tiền trên đơn hàng trước khi thanh toán.",
+    action: { label: "Xem mã ưu đãi", href: "#ma-giam-gia" },
   },
   {
     question:
       "Flash Sale có cộng dồn với mã giảm giá hoặc ưu đãi gia hạn không?",
-    answer:
-      "Điều kiện cộng dồn cần được xác nhận cho từng mã và dịch vụ. Hãy gửi mã ưu đãi, tên gói, chu kỳ và mã dịch vụ nếu có để InterData đối chiếu mức ưu đãi cuối cùng. Không cộng các tỷ lệ giảm trên trang với nhau để tự tính giá; kiểm tra số tiền của đơn hàng đã được xác nhận trước khi thanh toán.",
+    answer: `Không. ${blackFridayCouponCondition} Vui lòng chọn một chương trình phù hợp và kiểm tra tổng tiền trên đơn hàng trước khi thanh toán.`,
   },
   {
     question: "Khách hàng đang sử dụng dịch vụ được hưởng ưu đãi nào?",
@@ -181,7 +189,7 @@ export const blackFridayFaqs: {
   {
     question: "Ưu đãi “Tặng thêm 1 năm” được áp dụng như thế nào?",
     answer:
-      "Best Plans hiển thị quyền lợi “Tặng thêm 1 năm” khi chọn chu kỳ 3 năm; chu kỳ 1 năm và 2 năm không hiển thị quyền lợi này. Trước khi đăng ký, hãy xác nhận gói đủ điều kiện, cách ghi nhận thời gian tặng và ngày hết hạn dịch vụ. Tổng tiền hiển thị vẫn là số tiền của chu kỳ 3 năm đang chọn.",
+      "Ưu đãi “Tặng thêm 1 năm” chỉ áp dụng cho các gói đăng ký chu kỳ 3 năm.",
   },
   {
     question: "Cần chuẩn bị gì khi muốn chuyển dữ liệu hoặc nâng cấp gói?",
