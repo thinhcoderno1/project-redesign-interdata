@@ -67,7 +67,7 @@ export default function Page() { return <>
       }),
     ).toEqual({ position: "static", minHeight: "0px" });
     await expect(
-      page.locator('footer a[href="/#private-network"]'),
+      page.locator('footer a[href="/trien-khai-private-network/"]'),
     ).toHaveCount(1);
     if (width < 1100) {
       await page
@@ -80,14 +80,16 @@ export default function Page() { return <>
         .locator("summary")
         .click();
       await expect(
-        page.locator('dialog a[href="/#private-network"]'),
+        page.locator('dialog a[href="/trien-khai-private-network/"]'),
       ).toBeVisible();
       await page
         .getByRole("button", { name: "Đóng điều hướng", exact: true })
         .click();
     } else {
       await expect(
-        page.locator('#solution-navigation a[href="/#private-network"]'),
+        page.locator(
+          '#solution-navigation a[href="/trien-khai-private-network/"]',
+        ),
       ).toHaveCount(1);
     }
     expect(
@@ -95,27 +97,23 @@ export default function Page() { return <>
         () => document.documentElement.scrollWidth > innerWidth,
       ),
     ).toBe(false);
-    // Client navigation keeps the shared layout and updates section destinations.
+    // Client navigation keeps the shared layout and solution page destinations.
     await page.locator("[data-home-link]").click();
     await expect(page.locator("#giai-phap")).toHaveCount(1);
-    await expect(page.locator('footer a[href="#private-network"]')).toHaveCount(
-      1,
-    );
+    await expect(
+      page.locator('footer a[href="/trien-khai-private-network/"]'),
+    ).toHaveCount(1);
     await expect(page.locator('[aria-label="Trang chủ"]')).toHaveAttribute(
       "aria-current",
       "page",
     );
     await page.goBack({ waitUntil: "domcontentloaded" });
     await expect(
-      page.locator('footer a[href="/#private-network"]'),
+      page.locator('footer a[href="/trien-khai-private-network/"]'),
     ).toHaveCount(1);
-    await page.locator('footer a[href="/#private-network"]').click();
-    await expect(page).toHaveURL(new RegExp("/#private-network$"));
-    await expect(
-      page
-        .locator('#giai-phap [role="tab"]')
-        .filter({ hasText: "Private Network" }),
-    ).toHaveAttribute("aria-selected", "true");
+    await page.locator('footer a[href="/trien-khai-private-network/"]').click();
+    await expect(page).toHaveURL(new RegExp("/trien-khai-private-network/$"));
+    await expect(page.locator("main h1")).toContainText("Private Network");
     console.log(
       `PASS ${width}px: shared layout, child-page links, client navigation and isolated homepage CSS`,
     );

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import styles from "./promotion-carousel.module.css";
 
 const banners = [
@@ -27,75 +27,20 @@ const banners = [
     alt: "VPS Vibe Coding dành cho môi trường lập trình cùng AI",
   },
 ];
-const interval = 6000;
-const motionQuery = "(prefers-reduced-motion: reduce)";
 const subscribeHydration = () => () => {};
 const hydratedSnapshot = () => true;
 const serverSnapshot = () => false;
-
-function subscribeMotion(callback: () => void) {
-  const media = window.matchMedia(motionQuery);
-  media.addEventListener("change", callback);
-  return () => media.removeEventListener("change", callback);
-}
-function motionSnapshot() {
-  return window.matchMedia(motionQuery).matches;
-}
-function subscribeVisibility(callback: () => void) {
-  document.addEventListener("visibilitychange", callback);
-  return () => document.removeEventListener("visibilitychange", callback);
-}
-function visibilitySnapshot() {
-  return document.hidden;
-}
 
 export function PromotionCarousel({ href }: { href: string }) {
   const root = useRef<HTMLDivElement>(null);
   const gesture = useRef<{ x: number; y: number } | null>(null);
   const suppressClick = useRef(false);
   const [active, setActive] = useState(0);
-  const [hovered, setHovered] = useState(false);
-  const [focused, setFocused] = useState(false);
-  const [inView, setInView] = useState(false);
   const enhanced = useSyncExternalStore(
     subscribeHydration,
     hydratedSnapshot,
     serverSnapshot,
   );
-  const reducedMotion = useSyncExternalStore(
-    subscribeMotion,
-    motionSnapshot,
-    serverSnapshot,
-  );
-  const hidden = useSyncExternalStore(
-    subscribeVisibility,
-    visibilitySnapshot,
-    serverSnapshot,
-  );
-  const automatic =
-    enhanced && inView && !hovered && !focused && !hidden && !reducedMotion;
-
-  useEffect(() => {
-    const element = root.current;
-    if (!element) return;
-    const observer = new IntersectionObserver(
-      ([entry]) =>
-        setInView(entry.isIntersecting && entry.intersectionRatio >= 0.3),
-      { threshold: [0, 0.3] },
-    );
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!automatic) return;
-    const timer = window.setTimeout(
-      () => setActive((current) => (current + 1) % banners.length),
-      interval,
-    );
-    return () => window.clearTimeout(timer);
-  }, [automatic, active]);
-
   function goTo(index: number) {
     const next = (index + banners.length) % banners.length;
     setActive(next);
@@ -108,17 +53,9 @@ export function PromotionCarousel({ href }: { href: string }) {
       className={styles.carousel}
       data-enhanced={enhanced || undefined}
       data-active-slide={active + 1}
-      data-playing={automatic || undefined}
       role="region"
       aria-roledescription="slideshow"
       aria-label="Banner ưu đãi InterData"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onFocusCapture={() => setFocused(true)}
-      onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node))
-          setFocused(false);
-      }}
     >
       <div className={styles.stage}>
         <div
@@ -166,7 +103,7 @@ export function PromotionCarousel({ href }: { href: string }) {
             style={{
               transform: enhanced ? `translateX(-${active * 100}%)` : undefined,
             }}
-            aria-live={automatic ? "off" : "polite"}
+            aria-live="polite"
           >
             {banners.map((banner, index) => (
               <div

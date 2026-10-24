@@ -112,7 +112,7 @@ export function HomePage() {
             <SolutionsCarousel />
           </div>
         </section>
-        <CapacitySection withBadgeIcons />
+        <CapacitySection withBadgeIcons animateNumbers emphasizeHeading />
         <CompanyProofSections withBadgeIcons />
         <TechnologyPartners withBadgeIcons />
         <HomeInfrastructure />

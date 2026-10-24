@@ -71,10 +71,7 @@ try {
       );
       await expect(bannerLinks(root)).toHaveCount(1);
       const link = bannerLinks(root);
-      await expect(link).toHaveAttribute(
-        "href",
-        "https://interdata.vn/canhme/",
-      );
+      await expect(link).toHaveAttribute("href", "/canhme/");
       const image = link.locator("img");
       expect(
         new URL(await image.getAttribute("src"), base).searchParams.get("url"),
@@ -172,80 +169,47 @@ try {
   await expect(root).toHaveAttribute("data-enhanced", "true");
   await root.scrollIntoViewIfNeeded();
   await page.mouse.move(0, 0);
-  await expect(root).toHaveAttribute("data-playing", "true");
-  for (const slide of [2, 3, 4, 1]) {
-    await page.clock.fastForward(6100);
-    await expect(root).toHaveAttribute("data-active-slide", String(slide));
-    await expect
-      .poll(async () => {
-        const imageBox = await root
-          .locator(
-            `[data-promotion-page="${Number(await root.getAttribute("data-active-slide")) - 1}"] [data-promotion-link]`,
-          )
-          .first()
-          .boundingBox();
-        const viewportBox = await root
-          .locator("#promotion-slides")
-          .locator("..")
-          .boundingBox();
-        return Math.abs(imageBox.x - viewportBox.x);
-      })
-      .toBeLessThan(1);
-  }
-  await root.hover();
+  await expect(root).toHaveAttribute("data-active-slide", "1");
   await expect(root).not.toHaveAttribute("data-playing", "true");
-  await page.clock.fastForward(13000);
+  await expect(root.locator("#promotion-slides")).toHaveAttribute(
+    "aria-live",
+    "polite",
+  );
+  await page.clock.fastForward(30000);
   await expect(root).toHaveAttribute("data-active-slide", "1");
-  await page.mouse.move(0, 0);
-  await bannerLinks(root).first().focus();
-  await page.clock.fastForward(13000);
-  await expect(root).toHaveAttribute("data-active-slide", "1");
+  await root
+    .getByRole("button", { name: "Banner tiếp theo", exact: true })
+    .click();
+  await expect(root).toHaveAttribute("data-active-slide", "2");
   await page.mouse.move(0, 0);
   await page.evaluate(() => document.activeElement.blur());
-  await expect(root).toHaveAttribute("data-playing", "true");
-  await page.clock.fastForward(6100);
+  await page.clock.fastForward(30000);
   await expect(root).toHaveAttribute("data-active-slide", "2");
-  await root.getByRole("button", { name: /^Xem banner 1:/ }).click();
-  await expect(root).toHaveAttribute("data-active-slide", "1");
-  await page.clock.fastForward(13000);
-  await expect(root).toHaveAttribute("data-active-slide", "1");
+  await root.getByRole("button", { name: /^Xem banner 4:/ }).click();
+  await expect(root).toHaveAttribute("data-active-slide", "4");
   await page.mouse.move(0, 0);
   await page.evaluate(() => document.activeElement.blur());
-  await expect(root).toHaveAttribute("data-playing", "true");
-  await page.clock.fastForward(6100);
-  await expect(root).toHaveAttribute("data-active-slide", "2");
+  await page.clock.fastForward(30000);
+  await expect(root).toHaveAttribute("data-active-slide", "4");
+  await root
+    .getByRole("button", { name: "Banner tiếp theo", exact: true })
+    .click();
+  await expect(root).toHaveAttribute("data-active-slide", "1");
   await page.locator("footer").scrollIntoViewIfNeeded();
-  await expect(root).not.toHaveAttribute("data-playing", "true");
-  await page.clock.fastForward(13000);
-  await expect(root).toHaveAttribute("data-active-slide", "2");
+  await page.clock.fastForward(30000);
   await root.scrollIntoViewIfNeeded();
-  await expect(root).toHaveAttribute("data-playing", "true");
-  await page.evaluate(() => {
-    Object.defineProperty(document, "hidden", {
-      configurable: true,
-      value: true,
-    });
-    document.dispatchEvent(new Event("visibilitychange"));
-  });
-  await expect(root).not.toHaveAttribute("data-playing", "true");
-  await page.clock.fastForward(13000);
-  await expect(root).toHaveAttribute("data-active-slide", "2");
-  await page.evaluate(() => {
-    delete document.hidden;
-    document.dispatchEvent(new Event("visibilitychange"));
-  });
-  await expect(root).toHaveAttribute("data-playing", "true");
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await expect(root).not.toHaveAttribute("data-playing", "true");
-  await page.clock.fastForward(13000);
-  await expect(root).toHaveAttribute("data-active-slide", "2");
+  await page.mouse.move(0, 0);
+  await page.evaluate(() => document.activeElement.blur());
+  await page.clock.fastForward(30000);
+  await expect(root).toHaveAttribute("data-active-slide", "1");
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(root).toHaveAttribute("data-enhanced", "true");
+  await expect(root).toHaveAttribute("data-active-slide", "1");
   results.push({
-    autoplay: "passed",
+    autoplayDisabled: "passed",
+    defaultFirstSlide: "passed",
+    manualSelectionPersists: "passed",
     wraparound: "passed",
-    resumeAfterManualSelection: "passed",
-    hoverFocus: "passed",
-    visibility: "passed",
-    reducedMotion: "passed",
   });
   await page.close();
 

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Cloud, Server, type LucideIcon } from "lucide-react";
 import { services } from "@/data/content";
 import {
   cloudCatalog,
@@ -21,14 +22,51 @@ function ServiceArtwork({ serviceId }: { serviceId: string }) {
   );
 }
 
-function ProductCard({ service }: { service: CatalogService }) {
+function ServerRackIcon() {
+  return (
+    <svg
+      className={styles.titleIcon}
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.6}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="5" y="2" width="14" height="20" rx="2" />
+      <path d="M5 8h14M5 14h14M8 5h4M8 11h4M8 17h4" />
+      <circle cx="16" cy="5" r="0.5" />
+      <circle cx="16" cy="11" r="0.5" />
+      <circle cx="16" cy="17" r="0.5" />
+    </svg>
+  );
+}
+
+function ProductCard({
+  service,
+  icon: ServiceIcon,
+}: {
+  service: CatalogService;
+  icon: LucideIcon;
+}) {
   return (
     <article className={styles.card} data-catalog-service={service.id}>
       <ServiceArtwork serviceId={service.id} />
       <div className={styles.cardTop}>
         <div className={styles.heading}>
           <span className={styles.platform}>{service.platform}</span>
-          <h3>{service.name}</h3>
+          <h3>
+            <ServiceIcon
+              className={styles.titleIcon}
+              size={24}
+              strokeWidth={1.6}
+              aria-hidden="true"
+            />
+            <span>{service.name}</span>
+          </h3>
         </div>
       </div>
       <p className={styles.description}>{service.description}</p>
@@ -74,7 +112,7 @@ export function InfrastructureServices() {
           </header>
           <div className={styles.vpsGrid}>
             {vpsCatalog.map((service) => (
-              <ProductCard key={service.id} service={service} />
+              <ProductCard key={service.id} service={service} icon={Server} />
             ))}
           </div>
         </section>
@@ -97,7 +135,7 @@ export function InfrastructureServices() {
           </header>
           <div className={styles.twoGrid}>
             {cloudCatalog.map((service) => (
-              <ProductCard key={service.id} service={service} />
+              <ProductCard key={service.id} service={service} icon={Cloud} />
             ))}
           </div>
         </section>
@@ -128,9 +166,12 @@ export function InfrastructureServices() {
                   <div className={styles.heading}>
                     <span className={styles.platform}>{service.type}</span>
                     <h3>
-                      {service.id === "colocation"
-                        ? "Colocation – Chỗ Đặt Máy Chủ"
-                        : service.name}
+                      <ServerRackIcon />
+                      <span>
+                        {service.id === "colocation"
+                          ? "Colocation – Chỗ Đặt Máy Chủ"
+                          : service.name}
+                      </span>
                     </h3>
                   </div>
                 </div>

@@ -865,21 +865,15 @@ th {
 }
 @media (max-width: 767px) {
   html:has(.site-header) {
-    --site-header-height: 169px;
+    --site-header-height: 80px;
   }
-  .utility-inner {
-    flex-direction: column;
-    align-items: stretch;
-    font-size: 13px;
-  }
-  .utility-links {
-    justify-content: space-between;
-    gap: 12px;
+  .utility {
+    display: none;
   }
 }
 @media (max-width: 639px) {
   html:has(.site-header) {
-    --site-header-height: 157px;
+    --site-header-height: 76px;
   }
   .parallax-background[data-parallax-active="true"] {
     --parallax-travel: 28px;
@@ -913,10 +907,6 @@ th {
   h2 {
     font-size: 28px;
     line-height: 1.4;
-  }
-  .utility a,
-  .utility-menu > button {
-    min-height: 40px;
   }
   .nav-row {
     min-height: 76px;

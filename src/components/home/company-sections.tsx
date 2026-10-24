@@ -3,16 +3,30 @@ import { Building2, GraduationCap } from "lucide-react";
 import { claims, partners, reviewMode } from "@/data/content";
 import { WorldMap } from "./world-map";
 import { ClaimNote } from "./claim-note";
+import { CapacityStats } from "./capacity-stats";
 
 export function CapacitySection({
   withBadgeIcons = false,
+  animateNumbers = false,
+  emphasizeHeading = false,
 }: {
   withBadgeIcons?: boolean;
+  animateNumbers?: boolean;
+  emphasizeHeading?: boolean;
 }) {
   const visibleClaims = claims.filter(
     (c) => reviewMode || c.status === "approved",
   );
   const capacityClaim = visibleClaims.find((c) => c.id === "business");
+  const headingParts = emphasizeHeading
+    ? capacityClaim?.text.match(/^(.*?Doanh Nghiệp)\s+(.+)$/)
+    : null;
+  const stats = visibleClaims
+    .filter((c) => ["years", "customers", "servers"].includes(c.id))
+    .map((c) => {
+      const [value, ...label] = c.text.split(" ");
+      return { id: c.id, value, label: label.join(" ") };
+    });
   return (
     <section id="nang-luc" className="capacity section">
       <WorldMap />
@@ -21,27 +35,36 @@ export function CapacitySection({
           {withBadgeIcons && <Building2 size={16} aria-hidden="true" />}
           NĂNG LỰC INTERDATA
         </span>
-        <h2>
-          {capacityClaim?.text || "Hạ tầng cho doanh nghiệp và người dùng"}
+        <h2 className={headingParts ? "capacity-heading-split" : undefined}>
+          {headingParts ? (
+            <>
+              <span className="capacity-heading-highlight">
+                {headingParts[1]}
+              </span>{" "}
+              <br />
+              {headingParts[2]}
+            </>
+          ) : (
+            capacityClaim?.text || "Hạ tầng cho doanh nghiệp và người dùng"
+          )}
         </h2>
         <p>
           InterData cung cấp dịch vụ máy chủ và giải pháp triển khai cho
           website, ứng dụng và hệ thống doanh nghiệp. Mỗi nhu cầu được xem xét
           theo tài nguyên và yêu cầu vận hành thực tế.
         </p>
-        <div className="stat-grid">
-          {visibleClaims
-            .filter((c) => ["years", "customers", "servers"].includes(c.id))
-            .map((c) => {
-              const [number, ...label] = c.text.split(" ");
-              return (
-                <div key={c.id}>
-                  <strong>{number}</strong>
-                  <span>{label.join(" ")}</span>
-                </div>
-              );
-            })}
-        </div>
+        {animateNumbers ? (
+          <CapacityStats items={stats} />
+        ) : (
+          <div className="stat-grid">
+            {stats.map((stat) => (
+              <div key={stat.id}>
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        )}
         <ClaimNote />
       </div>
     </section>

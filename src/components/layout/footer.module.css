@@ -1,3 +1,22 @@
+.companyDetail {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  max-width: 100%;
+}
+.companyDetail > svg {
+  margin-top: 0.25em;
+}
+.companyCertificate {
+  display: inline-flex;
+  margin-top: 16px;
+}
+.companyCertificate img {
+  width: 148px;
+  height: 56px;
+  object-fit: contain;
+}
 .policies {
   padding: 24px 0;
   border-top: 1px solid var(--border-on-dark);
@@ -20,6 +39,37 @@
   color: var(--text-on-dark-secondary);
   font-size: 14px;
 }
+.socialLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.socialLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border-on-dark);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 8%);
+  transition:
+    background 160ms ease,
+    border-color 160ms ease;
+}
+.socialLink img {
+  filter: invert(1);
+}
+.socialLink:hover {
+  border-color: var(--text-on-brand);
+  background: rgb(255 255 255 / 18%);
+}
+@media (min-width: 640px) and (max-width: 1407px) {
+  .socialLinks {
+    margin-inline-end: 64px;
+  }
+}
 @media (max-width: 959px) {
   .policies > div {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -28,5 +78,14 @@
 @media (max-width: 639px) {
   .policies > div {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .socialLinks {
+    justify-content: flex-start;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .socialLink {
+    width: 40px;
+    height: 40px;
   }
 }

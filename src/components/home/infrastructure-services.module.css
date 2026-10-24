@@ -162,10 +162,18 @@
   color: var(--text-secondary);
 }
 .card h3 {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
   font-size: 24px;
   line-height: 1.4;
   color: var(--text-primary);
   text-transform: uppercase;
+}
+.titleIcon {
+  flex-shrink: 0;
+  margin-top: calc((1.4em - 24px) / 2);
+  color: var(--brand-primary);
 }
 .description {
   margin-top: 0;

@@ -26,7 +26,7 @@ const menus = [
 
 await fs.mkdir("artifacts/topbar-navigation", { recursive: true });
 try {
-  for (const width of [320, 390, 768, 960, 1024, 1440]) {
+  for (const width of [320, 390, 639, 640, 767, 768, 960, 1024, 1440]) {
     const touch = width < 960;
     const context = await browser.newContext({
       viewport: { width, height: 960 },
@@ -49,6 +49,38 @@ try {
       .not.toBe("");
     await page.evaluate(() => document.fonts.ready);
     const utility = page.locator(".utility");
+    if (width < 768) {
+      await expect(utility).toBeHidden();
+      await expect(page.locator(".logo")).toBeVisible();
+      await expect(page.locator(".nav-actions .nav-promotion")).toBeVisible();
+      const trigger = page.locator(".mobile-trigger");
+      await expect(trigger).toBeVisible();
+      const layout = await page.evaluate(() => ({
+        scrollWidth: document.documentElement.scrollWidth,
+        header: document.querySelector(".site-header").getBoundingClientRect()
+          .height,
+        navTop: document.querySelector(".nav-row").getBoundingClientRect().top,
+        reservedHeader: parseFloat(
+          document.documentElement.style.getPropertyValue(
+            "--site-header-height",
+          ),
+        ),
+      }));
+      expect(layout.scrollWidth).toBeLessThanOrEqual(width);
+      expect(layout.navTop).toBe(0);
+      expect(layout.header).toBe(width < 640 ? 76 : 80);
+      expect(layout.reservedHeader).toBe(Math.ceil(layout.header));
+      await page.screenshot({
+        path: `artifacts/topbar-navigation/${width}-mobile.png`,
+      });
+      await trigger.tap();
+      await expect(page.locator("dialog[open]")).toBeVisible();
+      expect(errors).toEqual([]);
+      results.push({ width, touch, layout, errors });
+      await context.close();
+      continue;
+    }
+    await expect(utility).toBeVisible();
     const left = utility.getByRole("navigation", {
       name: "Thông tin InterData",
     });
@@ -178,7 +210,7 @@ try {
     JSON.stringify(results, null, 2),
   );
   console.log(
-    "Top bar: links, hover, touch, keyboard, overflow and accessibility passed at 320–1440px.",
+    "Top bar: hidden on mobile; links, hover, touch, keyboard, overflow and accessibility passed at 320–1440px.",
   );
 } finally {
   await browser.close();

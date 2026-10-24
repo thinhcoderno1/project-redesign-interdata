@@ -1,0 +1,15 @@
+.number {
+  display: grid;
+  font-variant-numeric: tabular-nums;
+}
+.number::before {
+  content: attr(data-final-value);
+  grid-area: 1 / 1;
+  visibility: hidden;
+}
+.number .digits {
+  grid-area: 1 / 1;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}

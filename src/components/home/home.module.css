@@ -483,6 +483,15 @@
   margin: auto;
   font-size: clamp(30px, 3.2vw, 44px);
 }
+:where(.home) :global(.capacity-heading-highlight) {
+  color: var(--brand-primary);
+  white-space: nowrap;
+}
+@media (max-width: 639px) {
+  :where(.home) :global(.capacity .capacity-heading-split) {
+    font-size: clamp(24px, 7.4vw, 29px);
+  }
+}
 :where(.home) :global(.capacity-content > p) {
   max-width: 680px;
   margin: 22px auto 0;
