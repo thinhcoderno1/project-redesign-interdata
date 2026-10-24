@@ -681,9 +681,9 @@ article[id] {
 .footer-grid {
   display: grid;
   grid-template-columns:
-    minmax(0, 1.8fr) minmax(0, 1fr) minmax(0, 1.2fr)
-    minmax(0, 1fr) minmax(0, 1.3fr);
-  gap: 32px;
+    minmax(380px, 2.2fr) minmax(0, 0.85fr) minmax(0, 1.25fr)
+    minmax(0, 0.85fr) minmax(0, 1.25fr);
+  gap: 24px;
   padding-bottom: 44px;
 }
 .footer-grid > div {
@@ -824,7 +824,11 @@ th {
     gap: 16px;
   }
   .footer-grid {
-    gap: 20px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 32px 24px;
+  }
+  .footer-company {
+    grid-column: 1 / -1;
   }
 }
 @media (max-width: 1099px) {
@@ -852,9 +856,6 @@ th {
   }
   .footer-company {
     grid-column: span 4;
-  }
-  .footer-company address {
-    max-width: 300px;
   }
   .footer-logo {
     margin-bottom: 16px;

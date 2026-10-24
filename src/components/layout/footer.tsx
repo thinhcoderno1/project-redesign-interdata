@@ -21,11 +21,7 @@ export function Footer() {
             <p>CÔNG TY CỔ PHẦN INTER GROUP</p>
             <address className={styles.companyDetail}>
               <MapPin size={18} strokeWidth={1.6} aria-hidden="true" />
-              <span>
-                240 Nguyễn Đình Chính,
-                <br />
-                P. Phú Nhuận, TP. HCM
-              </span>
+              <span>240 Nguyễn Đình Chính, P. Phú Nhuận, TP. HCM</span>
             </address>
             <a className={styles.companyDetail} href="tel:1900636822">
               <Phone size={18} strokeWidth={1.6} aria-hidden="true" />
