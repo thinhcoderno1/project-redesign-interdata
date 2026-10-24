@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { PlatinumCloudPage } from "@/components/platinum-cloud-server/platinum-cloud-page";
 import { getPlatinumCloudProducts } from "@/lib/platinum-cloud-server-pricing";
@@ -27,7 +28,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Page() {
+async function Page() {
   const products = await getPlatinumCloudProducts().catch(() => null);
   return <PlatinumCloudPage products={products} />;
 }
+
+export default withPageSchema(Page, {
+  path: "/platinum-cloud-server/",
+  metadata,
+});

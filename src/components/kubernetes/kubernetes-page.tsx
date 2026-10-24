@@ -577,43 +577,11 @@ function KubernetesFaqItem({ item }: { item: (typeof kubernetesFaq)[number] }) {
 }
 
 export function KubernetesPage() {
-  const schemas = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      name: "Triển Khai Kubernetes (K8s)",
-      serviceType: "Thiết kế và triển khai nền tảng Kubernetes",
-      url: "https://interdata.vn/trien-khai-Kubernetes-k8s/",
-      provider: {
-        "@type": "Organization",
-        name: "InterData",
-        url: "https://interdata.vn/",
-      },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: kubernetesFaq.map((item) => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: { "@type": "Answer", text: item.answer },
-      })),
-    },
-  ];
   return (
     <main
       id="noi-dung"
       className={`${styles.page} ${styles.sectionSpacing} ${local.page}`}
     >
-      {schemas.map((schema) => (
-        <script
-          key={schema["@type"]}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-          }}
-        />
-      ))}
       <KubernetesHero />
       <KubernetesAdvantages />
       <KubernetesArchitectures />

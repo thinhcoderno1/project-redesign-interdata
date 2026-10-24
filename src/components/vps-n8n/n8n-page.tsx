@@ -83,28 +83,8 @@ const applications: {
 ];
 
 export function N8nPage({ prices }: { prices: N8nPrices }) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "VPS n8n InterData",
-    serviceType: "Template hệ điều hành cài sẵn n8n trên VPS",
-    url: "https://interdata.vn/vps-n8n/",
-    description:
-      "Tất cả dịch vụ VPS InterData hỗ trợ template hệ điều hành cài sẵn n8n để tự host workflow.",
-    provider: {
-      "@type": "Organization",
-      name: "InterData",
-      url: "https://interdata.vn/",
-    },
-  };
   return (
     <main id="noi-dung" className={styles.page}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-        }}
-      />
       <section
         className={`hero-shell ${styles.hero} dark`}
         aria-labelledby="n8n-title"

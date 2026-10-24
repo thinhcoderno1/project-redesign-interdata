@@ -1,3 +1,4 @@
+import { readSchemaNodes } from "./schema-helpers.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import vm from "node:vm";
@@ -135,9 +136,9 @@ try {
     "href",
     "https://interdata.vn/thue-may-chu-vat-ly/",
   );
-  const schemas = await page
-    .locator('script[type="application/ld+json"]')
-    .allTextContents();
+  const schemas = (await readSchemaNodes(page)).map((node) =>
+    JSON.stringify(node),
+  );
   assert(
     schemas.some((s) => {
       const d = JSON.parse(s);

@@ -578,43 +578,11 @@ function ProxmoxFaqItem({ item }: { item: (typeof proxmoxCephFaq)[number] }) {
 }
 
 export function ProxmoxCephPage() {
-  const schemas = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      name: "Triển Khai Ảo Hóa Proxmox / Ceph",
-      serviceType: "Triển khai ảo hóa Proxmox VE và lưu trữ Ceph",
-      url: "https://interdata.vn/trien-khai-proxmox-ceph/",
-      provider: {
-        "@type": "Organization",
-        name: "InterData",
-        url: "https://interdata.vn/",
-      },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: proxmoxCephFaq.map((item) => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: { "@type": "Answer", text: item.answer },
-      })),
-    },
-  ];
   return (
     <main
       id="noi-dung"
       className={`${styles.page} ${styles.sectionSpacing} ${local.page}`}
     >
-      {schemas.map((schema) => (
-        <script
-          key={schema["@type"]}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-          }}
-        />
-      ))}
       <ProxmoxHero />
       <ProxmoxAdvantages />
       <ProxmoxArchitectures />

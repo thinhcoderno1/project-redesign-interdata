@@ -1,3 +1,4 @@
+import { readSchemaNodes } from "./schema-helpers.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import vm from "node:vm";
@@ -48,9 +49,7 @@ try {
       await page.locator('meta[name="robots"]').getAttribute("content")
     ).includes("noindex"),
   );
-  const schemas = (
-    await page.locator('script[type="application/ld+json"]').allTextContents()
-  ).map((s) => JSON.parse(s));
+  const schemas = await readSchemaNodes(page);
   assert(
     schemas.some(
       (s) =>

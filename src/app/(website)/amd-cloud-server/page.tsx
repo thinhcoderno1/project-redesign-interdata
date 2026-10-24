@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { AmdCloudPage } from "@/components/amd-cloud-server/amd-cloud-page";
 import { getAmdCloudProducts } from "@/lib/amd-cloud-server-pricing";
@@ -27,7 +28,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Page() {
+async function Page() {
   const products = await getAmdCloudProducts().catch(() => null);
   return <AmdCloudPage products={products} />;
 }
+
+export default withPageSchema(Page, { path: "/amd-cloud-server/", metadata });

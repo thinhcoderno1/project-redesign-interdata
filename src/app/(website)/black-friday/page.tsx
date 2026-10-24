@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { BlackFridayPage } from "@/components/black-friday/black-friday-page";
 import { getPlatinumProducts } from "@/lib/vps-platinum-pricing";
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Page() {
+async function Page() {
   const [vps, cloud] = await Promise.allSettled([
     getPlatinumProducts(100),
     getPlatinumCloudProducts(),
@@ -35,3 +36,5 @@ export default async function Page() {
     />
   );
 }
+
+export default withPageSchema(Page, { path: "/black-friday/", metadata });

@@ -1,3 +1,4 @@
+import { readSchemaNodes } from "./schema-helpers.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -114,8 +115,8 @@ try {
     "content",
     /noindex/,
   );
-  const schema = JSON.parse(
-    await page.locator('main script[type="application/ld+json"]').textContent(),
+  const schema = (await readSchemaNodes(page)).find(
+    (node) => node["@type"] === "Service",
   );
   assert.equal(schema.url, "https://interdata.vn/vps-linux/");
   assert.equal(schema.name, "VPS Linux InterData");

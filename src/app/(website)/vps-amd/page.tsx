@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { AmdPage } from "@/components/vps-amd/amd-page";
 import { getAmdProducts } from "@/lib/vps-amd-pricing";
@@ -27,7 +28,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Page() {
+async function Page() {
   const products = await getAmdProducts().catch(() => null);
   return <AmdPage products={products} />;
 }
+
+export default withPageSchema(Page, { path: "/vps-amd/", metadata });

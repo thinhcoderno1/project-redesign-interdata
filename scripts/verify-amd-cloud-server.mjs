@@ -1,4 +1,5 @@
-﻿import assert from "node:assert/strict";
+import { readSchemaNodes } from "./schema-helpers.mjs";
+import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import vm from "node:vm";
 import ts from "typescript";
@@ -113,8 +114,8 @@ try {
     "content",
     /noindex/,
   );
-  const schema = JSON.parse(
-    await page.locator('main script[type="application/ld+json"]').textContent(),
+  const schema = (await readSchemaNodes(page)).find(
+    (node) => node["@type"] === "Service",
   );
   assert.equal(schema.url, "https://interdata.vn/amd-cloud-server/");
   assert.equal(schema.name, "AMD Cloud Server InterData");

@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import policy from "@/data/privacy-policy.json";
 import { LegalDocumentLayout } from "@/components/legal/legal-document-layout";
@@ -41,7 +42,7 @@ function PolicyText({ text }: { text: string }) {
   );
 }
 
-export default function Page() {
+function Page() {
   return (
     <LegalDocumentLayout
       title={policy.title}
@@ -83,3 +84,5 @@ export default function Page() {
     </LegalDocumentLayout>
   );
 }
+
+export default withPageSchema(Page, { path: "/chinh-sach-bao-mat/", metadata });

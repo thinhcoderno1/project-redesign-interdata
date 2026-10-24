@@ -42,6 +42,23 @@ function image(value: unknown) {
     return null;
   }
 }
+function authorProfile(value: unknown) {
+  if (typeof value !== "string") return;
+  try {
+    const url = new URL(value);
+    if (
+      url.protocol === "https:" &&
+      url.hostname === "interdata.vn" &&
+      !url.port &&
+      !url.username &&
+      !url.password &&
+      url.pathname.startsWith("/blog/author/")
+    )
+      return url.href;
+  } catch {
+    /* A missing or invalid CMS profile is omitted from schema. */
+  }
+}
 export function normalizeBlogPost(
   value: unknown,
   categories: BlogCategory[],
@@ -80,6 +97,9 @@ export function normalizeBlogPost(
     image: image(large) || image(record(media) ? media.source_url : null),
     imageAlt: record(media) ? htmlToText(media.alt_text) : "",
     author: record(author) ? htmlToText(author.name) : "",
+    ...(record(author) && authorProfile(author.link)
+      ? { authorUrl: authorProfile(author.link) }
+      : {}),
     categories: categories.filter((category) =>
       categoryIds.includes(category.id),
     ),

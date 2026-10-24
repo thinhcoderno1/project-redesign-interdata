@@ -329,23 +329,8 @@ function CloudInfrastructure() {
 }
 
 export function CloudServerPage({ prices }: { prices: CloudPrices }) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: cloudServerFaqs.map((f) => ({
-      "@type": "Question",
-      name: f.question,
-      acceptedAnswer: { "@type": "Answer", text: f.answer },
-    })),
-  };
   return (
     <main id="noi-dung" className={`${base.page} ${styles.page}`}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-        }}
-      />
       <CloudHero />
       <CloudAdvantages />
       <CloudServiceRange />

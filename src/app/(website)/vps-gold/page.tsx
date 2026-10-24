@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { GoldPage } from "@/components/vps-gold/gold-page";
 import { getGoldProducts } from "@/lib/vps-gold-pricing";
@@ -27,7 +28,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Page() {
+async function Page() {
   const products = await getGoldProducts().catch(() => null);
   return <GoldPage products={products} />;
 }
+
+export default withPageSchema(Page, { path: "/vps-gold/", metadata });

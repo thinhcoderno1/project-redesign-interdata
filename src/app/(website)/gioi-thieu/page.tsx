@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { AboutPage } from "@/components/about/about-page";
 
@@ -25,4 +26,4 @@ export const metadata: Metadata = {
   },
 };
 
-export default AboutPage;
+export default withPageSchema(AboutPage, { path: "/gioi-thieu/", metadata });

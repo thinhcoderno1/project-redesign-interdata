@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { PlatinumPage } from "@/components/vps-platinum/platinum-page";
 import { getPlatinumPrices } from "@/lib/vps-platinum-pricing";
@@ -27,7 +28,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Page() {
+async function Page() {
   const prices = await getPlatinumPrices();
   return <PlatinumPage prices={prices} />;
 }
+
+export default withPageSchema(Page, { path: "/vps-platinum/", metadata });

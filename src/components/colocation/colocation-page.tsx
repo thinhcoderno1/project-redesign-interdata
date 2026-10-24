@@ -75,26 +75,8 @@ const applications: {
 ];
 
 export function ColocationPage() {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "Thuê Chỗ Đặt Máy Chủ InterData",
-    serviceType: "Colocation tại Việt Nam",
-    url: "https://interdata.vn/vietnam-colocation/",
-    provider: {
-      "@type": "Organization",
-      name: "InterData",
-      url: "https://interdata.vn/",
-    },
-  };
   return (
     <main id="noi-dung" className={`${styles.page} ${local.page}`}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-        }}
-      />
       <section
         className={`hero-shell ${styles.hero} dark`}
         aria-labelledby="colocation-title"

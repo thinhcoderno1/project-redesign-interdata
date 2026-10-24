@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { S3ObjectStoragePage } from "@/components/s3-object-storage/s3-object-storage-page";
 
@@ -28,6 +29,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
+function Page() {
   return <S3ObjectStoragePage />;
 }
+
+export default withPageSchema(Page, { path: "/s3-object-storage/", metadata });

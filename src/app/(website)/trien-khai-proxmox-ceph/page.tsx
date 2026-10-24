@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { ProxmoxCephPage } from "@/components/proxmox-ceph/proxmox-ceph-page";
 
@@ -26,6 +27,11 @@ export const metadata: Metadata = {
     ],
   },
 };
-export default function Page() {
+function Page() {
   return <ProxmoxCephPage />;
 }
+
+export default withPageSchema(Page, {
+  path: "/trien-khai-proxmox-ceph/",
+  metadata,
+});

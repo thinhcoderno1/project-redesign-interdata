@@ -77,26 +77,8 @@ export function DedicatedServerPage({
 }: {
   products: DedicatedProduct[] | null;
 }) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "Thuê Máy Chủ InterData",
-    serviceType: "Thuê máy chủ vật lý Dedicated Server",
-    url: "https://interdata.vn/thue-may-chu-vat-ly/",
-    provider: {
-      "@type": "Organization",
-      name: "InterData",
-      url: "https://interdata.vn/",
-    },
-  };
   return (
     <main id="noi-dung" className={`${styles.page} ${dedicatedStyles.page}`}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-        }}
-      />
       <section
         className={`hero-shell ${styles.hero} dark`}
         aria-labelledby="dedicated-title"

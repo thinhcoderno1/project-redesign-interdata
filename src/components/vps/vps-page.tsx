@@ -53,23 +53,8 @@ export function VpsPage({ prices }: { prices: VpsPrices }) {
   const performance = content.landing.blocks.filter(
     (block) => block.function === "Performance",
   );
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: content.faq.items.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: { "@type": "Answer", text: item.answer },
-    })),
-  };
   return (
     <main id="noi-dung" className={`${styles.page} ${styles.sectionSpacing}`}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(faqSchema).replace(/</g, "\\u003c"),
-        }}
-      />
       <VpsHero />
 
       <VpsAdvantages />

@@ -1,3 +1,4 @@
+import { readSchemaNodes } from "./schema-helpers.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import crypto from "node:crypto";
@@ -153,9 +154,9 @@ try {
     if (!body.includes(compact(text)))
       throw new Error(`Missing source wording: ${text.slice(0, 160)}`);
   }
-  const schemas = await page
-    .locator('main script[type="application/ld+json"]')
-    .allTextContents();
+  const schemas = (await readSchemaNodes(page)).map((node) =>
+    JSON.stringify(node),
+  );
   const faqSchema = schemas
     .map((text) => JSON.parse(text))
     .find((schema) => schema["@type"] === "FAQPage");

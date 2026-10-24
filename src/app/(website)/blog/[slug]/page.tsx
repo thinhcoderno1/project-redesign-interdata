@@ -19,8 +19,11 @@ import {
   SectionHeading,
 } from "@/components/blog/blog-components";
 import styles from "@/components/blog/blog.module.css";
+import { StructuredData } from "@/components/seo/structured-data";
+import { buildBlogPostSchema } from "@/lib/structured-data";
 
 export const revalidate = 300;
+export const dynamicParams = true;
 export function generateStaticParams() {
   return [];
 }
@@ -68,27 +71,11 @@ export default async function SinglePost({ params }: Props) {
     perPage: 3,
     exclude: [post.id],
   });
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    description: post.excerpt,
-    datePublished: post.publishedAt,
-    dateModified: post.modifiedAt,
-    mainEntityOfPage: `https://interdata.vn${post.href}`,
-    ...(post.image ? { image: post.image } : {}),
-    ...(post.author
-      ? { author: { "@type": "Person", name: post.author } }
-      : {}),
-    publisher: { "@type": "Organization", name: "InterData" },
-  };
   return (
     <main id="main-content" className={`${styles.page} ${styles.postPage}`}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-        }}
+      <StructuredData
+        id="page-structured-data"
+        data={buildBlogPostSchema(post, readingMinutes)}
       />
       <header className={styles.postHeader}>
         <div className={styles.container}>

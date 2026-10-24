@@ -42,7 +42,9 @@
     "test:vps-vibe-coding": "node scripts/verify-vps-vibe-coding.mjs",
     "test:canh-me": "node scripts/verify-canh-me.mjs",
     "test:blog:data": "node scripts/verify-blog-data.mjs",
-    "test:blog": "node scripts/verify-blog.mjs"
+    "test:blog": "node scripts/verify-blog.mjs",
+    "test:schemas:data": "node scripts/verify-schema-data.mjs",
+    "test:schemas": "node scripts/verify-schemas.mjs"
   },
   "dependencies": {
     "entities": "8.1.0",

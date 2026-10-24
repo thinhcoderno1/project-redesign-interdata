@@ -1,30 +1,11 @@
+import { socialProfiles } from "@/data/site-identity";
 import Image from "next/image";
 import styles from "./footer.module.css";
-
-const socialLinks = [
-  {
-    name: "Facebook",
-    icon: "facebook",
-    href: "https://www.facebook.com/interdata.com.vn/",
-  },
-  { name: "Zalo", icon: "zalo", href: "https://zalo.me/2009180325727970604" },
-  { name: "X", icon: "x", href: "https://x.com/Interdatavn" },
-  {
-    name: "YouTube",
-    icon: "youtube",
-    href: "https://www.youtube.com/@interdata-vn",
-  },
-  {
-    name: "Threads",
-    icon: "threads",
-    href: "https://www.threads.com/@interdatavn",
-  },
-];
 
 export function FooterSocialLinks() {
   return (
     <nav className={styles.socialLinks} aria-label="Kết nối với InterData">
-      {socialLinks.map((social) => (
+      {socialProfiles.map((social) => (
         <a
           key={social.icon}
           href={social.href}

@@ -3,6 +3,7 @@ import { FloatingContact } from "@/components/layout/floating-contact";
 import "./fonts.css";
 import "./globals.css";
 export const metadata: Metadata = {
+  metadataBase: new URL("https://interdata.vn"),
   title: "InterData — VPS, Cloud Server & Hạ tầng máy chủ",
   description:
     "Tìm hiểu dịch vụ VPS, Cloud Server, thuê máy chủ, chỗ đặt máy chủ và các giải pháp Proxmox, Kubernetes, S3 Storage của InterData.",

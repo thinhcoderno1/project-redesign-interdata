@@ -579,43 +579,11 @@ function VmwareFaqItem({ item }: { item: (typeof vmwareFaq)[number] }) {
 }
 
 export function VmwarePage() {
-  const schemas = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      name: "Triển Khai VMware",
-      serviceType: "Thiết kế và triển khai hạ tầng ảo hóa VMware",
-      url: "https://interdata.vn/trien-khai-vmware/",
-      provider: {
-        "@type": "Organization",
-        name: "InterData",
-        url: "https://interdata.vn/",
-      },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: vmwareFaq.map((item) => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: { "@type": "Answer", text: item.answer },
-      })),
-    },
-  ];
   return (
     <main
       id="noi-dung"
       className={`${styles.page} ${styles.sectionSpacing} ${local.page}`}
     >
-      {schemas.map((schema) => (
-        <script
-          key={schema["@type"]}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-          }}
-        />
-      ))}
       <VmwareHero />
       <VmwareAdvantages />
       <VmwareArchitectures />

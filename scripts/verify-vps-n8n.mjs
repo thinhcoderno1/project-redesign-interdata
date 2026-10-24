@@ -1,3 +1,4 @@
+import { readSchemaNodes } from "./schema-helpers.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import { chromium, expect } from "@playwright/test";
@@ -81,9 +82,9 @@ try {
     "href",
     "https://interdata.vn/vps-n8n/",
   );
-  const schema = await page
-    .locator('main script[type="application/ld+json"]')
-    .evaluate((e) => JSON.parse(e.textContent));
+  const schema = (await readSchemaNodes(page)).find(
+    (node) => node["@type"] === "Service",
+  );
   assert(schema.serviceType.includes("Template"));
   await expect(page.locator("#n8n-service-3")).toHaveAttribute(
     "aria-selected",

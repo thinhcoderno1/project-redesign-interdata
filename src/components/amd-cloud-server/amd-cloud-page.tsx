@@ -84,26 +84,8 @@ export function AmdCloudPage({
 }: {
   products: AmdCloudProduct[] | null;
 }) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "AMD Cloud Server InterData",
-    serviceType: "Cloud Server AMD EPYC Gen 3",
-    url: "https://interdata.vn/amd-cloud-server/",
-    provider: {
-      "@type": "Organization",
-      name: "InterData",
-      url: "https://interdata.vn/",
-    },
-  };
   return (
     <main id="noi-dung" className={styles.page}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-        }}
-      />
       <section
         className={`hero-shell ${styles.hero} dark`}
         aria-labelledby="amd-cloud-title"

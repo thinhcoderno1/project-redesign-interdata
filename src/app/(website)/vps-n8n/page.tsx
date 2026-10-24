@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { N8nPage } from "@/components/vps-n8n/n8n-page";
 import { getN8nPrices } from "@/lib/vps-n8n-pricing";
@@ -25,6 +26,8 @@ export const metadata: Metadata = {
     ],
   },
 };
-export default async function Page() {
+async function Page() {
   return <N8nPage prices={await getN8nPrices()} />;
 }
+
+export default withPageSchema(Page, { path: "/vps-n8n/", metadata });

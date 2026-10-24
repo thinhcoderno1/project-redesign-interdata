@@ -1,3 +1,4 @@
+import { readSchemaNodes } from "./schema-helpers.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -72,8 +73,8 @@ try {
   expect(await page.locator("#nen-tang").innerText()).not.toMatch(
     /AMD|EPYC|7763/,
   );
-  const schema = JSON.parse(
-    await page.locator('main script[type="application/ld+json"]').innerText(),
+  const schema = (await readSchemaNodes(page)).find(
+    (node) => node["@type"] === "Service",
   );
   expect(schema.url).toBe("https://interdata.vn/vps-platinum/");
   for (const old of ["/platinum/?utm_source=qa", "/platinum?utm_source=qa"]) {

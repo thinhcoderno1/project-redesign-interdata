@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import content from "@/data/vps-content.json";
 import { getAllVpsPrices } from "@/lib/vps-pricing";
@@ -24,6 +25,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Page() {
+async function Page() {
   return <VpsPage prices={await getAllVpsPrices()} />;
 }
+
+export default withPageSchema(Page, { path: "/thue-vps/", metadata });

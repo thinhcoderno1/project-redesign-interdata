@@ -367,12 +367,9 @@ export function AboutPage() {
               </article>
             ))}
           </div>
-          <a
-            href="/blog/?category=su-kien"
-            className={styles.moreEvents}
-          >
+          <Link href="/blog/?category=su-kien" className={styles.moreEvents}>
             Xem thêm hoạt động của InterData <Icon name="arrow" />
-          </a>
+          </Link>
         </div>
       </section>
 

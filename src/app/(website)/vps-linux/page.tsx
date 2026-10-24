@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { LinuxPage } from "@/components/vps-linux/linux-page";
 import { getLinuxProducts } from "@/lib/vps-linux-pricing";
@@ -27,7 +28,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Page() {
+async function Page() {
   const products = await getLinuxProducts().catch(() => null);
   return <LinuxPage products={products} />;
 }
+
+export default withPageSchema(Page, { path: "/vps-linux/", metadata });

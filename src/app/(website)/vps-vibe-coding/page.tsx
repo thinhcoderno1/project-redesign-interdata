@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { VibePage } from "@/components/vps-vibe-coding/vibe-page";
 import { getVibePlans } from "@/lib/vps-vibe-coding-pricing";
@@ -33,7 +34,9 @@ export const metadata: Metadata = {
     images: ["https://interdata.vn/assets/og-images/interdata-og-image.jpg"],
   },
 };
-export default async function Page() {
+async function Page() {
   const plans = await getVibePlans().catch(() => []);
   return <VibePage plans={plans} />;
 }
+
+export default withPageSchema(Page, { path: "/vps-vibe-coding/", metadata });

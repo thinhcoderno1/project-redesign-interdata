@@ -85,26 +85,8 @@ const applications: {
 ];
 
 export function LinuxPage({ products }: { products: VpsProduct[] | null }) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: "VPS Linux InterData",
-    serviceType: "Máy chủ ảo VPS Linux",
-    url: "https://interdata.vn/vps-linux/",
-    provider: {
-      "@type": "Organization",
-      name: "InterData",
-      url: "https://interdata.vn/",
-    },
-  };
   return (
     <main id="noi-dung" className={styles.page}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-        }}
-      />
       <section
         className={`hero-shell ${styles.hero} dark`}
         aria-labelledby="linux-title"

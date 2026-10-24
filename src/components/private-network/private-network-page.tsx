@@ -576,43 +576,11 @@ function NetworkFaqItem({
 }
 
 export function PrivateNetworkPage() {
-  const schemas = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      name: "Triển Khai Private Network",
-      serviceType: "Thiết kế và triển khai mạng riêng",
-      url: "https://interdata.vn/trien-khai-private-network/",
-      provider: {
-        "@type": "Organization",
-        name: "InterData",
-        url: "https://interdata.vn/",
-      },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: privateNetworkFaq.map((item) => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: { "@type": "Answer", text: item.answer },
-      })),
-    },
-  ];
   return (
     <main
       id="noi-dung"
       className={`${styles.page} ${styles.sectionSpacing} ${local.page}`}
     >
-      {schemas.map((schema) => (
-        <script
-          key={schema["@type"]}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-          }}
-        />
-      ))}
       <NetworkHero />
       <NetworkAdvantages />
       <NetworkArchitectures />

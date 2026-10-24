@@ -16,6 +16,7 @@ export type BlogPost = {
   publishedAt: string;
   modifiedAt: string;
   author: string;
+  authorUrl?: string;
   categories: BlogCategory[];
 };
 export type BlogListing = {

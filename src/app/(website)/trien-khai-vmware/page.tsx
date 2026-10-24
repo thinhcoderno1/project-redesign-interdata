@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { VmwarePage } from "@/components/vmware/vmware-page";
 
@@ -26,6 +27,8 @@ export const metadata: Metadata = {
     ],
   },
 };
-export default function Page() {
+function Page() {
   return <VmwarePage />;
 }
+
+export default withPageSchema(Page, { path: "/trien-khai-vmware/", metadata });

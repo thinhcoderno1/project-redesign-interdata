@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { ColocationPage } from "@/components/colocation/colocation-page";
 
@@ -25,6 +26,8 @@ export const metadata: Metadata = {
     ],
   },
 };
-export default function Page() {
+function Page() {
   return <ColocationPage />;
 }
+
+export default withPageSchema(Page, { path: "/vietnam-colocation/", metadata });

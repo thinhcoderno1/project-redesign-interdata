@@ -562,43 +562,11 @@ function S3FaqItem({ item }: { item: (typeof s3Faq)[number] }) {
 }
 
 export function S3ObjectStoragePage() {
-  const schemas = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      name: "S3 Object Storage",
-      serviceType: "Giải pháp lưu trữ đối tượng tương thích S3 API",
-      url: "https://interdata.vn/s3-object-storage/",
-      provider: {
-        "@type": "Organization",
-        name: "InterData",
-        url: "https://interdata.vn/",
-      },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: s3Faq.map((item) => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: { "@type": "Answer", text: item.answer },
-      })),
-    },
-  ];
   return (
     <main
       id="noi-dung"
       className={`${styles.page} ${styles.sectionSpacing} ${local.page}`}
     >
-      {schemas.map((schema) => (
-        <script
-          key={schema["@type"]}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-          }}
-        />
-      ))}
       <S3Hero />
       <S3Advantages />
       <S3Scenarios />

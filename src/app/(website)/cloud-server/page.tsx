@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { CloudServerPage } from "@/components/cloud-server/cloud-server-page";
 import { getCloudPrices } from "@/lib/cloud-server-pricing";
@@ -27,6 +28,8 @@ export const metadata: Metadata = {
     ],
   },
 };
-export default async function Page() {
+async function Page() {
   return <CloudServerPage prices={await getCloudPrices()} />;
 }
+
+export default withPageSchema(Page, { path: "/cloud-server/", metadata });

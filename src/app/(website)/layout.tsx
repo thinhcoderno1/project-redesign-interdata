@@ -1,5 +1,7 @@
 import { Navigation } from "@/components/layout/navigation";
 import { Footer } from "@/components/layout/footer";
+import { StructuredData } from "@/components/seo/structured-data";
+import { buildSiteSchema } from "@/lib/structured-data";
 
 export default function WebsiteLayout({
   children,
@@ -12,6 +14,7 @@ export default function WebsiteLayout({
       <Navigation />
       {children}
       <Footer />
+      <StructuredData id="site-structured-data" data={buildSiteSchema()} />
     </>
   );
 }

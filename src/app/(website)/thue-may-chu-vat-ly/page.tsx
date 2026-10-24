@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { DedicatedServerPage } from "@/components/dedicated-server/dedicated-page";
 import { getDedicatedProducts } from "@/lib/dedicated-server-pricing";
@@ -26,7 +27,12 @@ export const metadata: Metadata = {
     ],
   },
 };
-export default async function Page() {
+async function Page() {
   const products = await getDedicatedProducts().catch(() => null);
   return <DedicatedServerPage products={products} />;
 }
+
+export default withPageSchema(Page, {
+  path: "/thue-may-chu-vat-ly/",
+  metadata,
+});

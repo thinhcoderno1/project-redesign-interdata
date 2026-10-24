@@ -14,6 +14,8 @@ import {
   SectionHeading,
 } from "@/components/blog/blog-components";
 import styles from "@/components/blog/blog.module.css";
+import { StructuredData } from "@/components/seo/structured-data";
+import { buildBlogListingSchema } from "@/lib/structured-data";
 
 type Query = {
   q?: string | string[];
@@ -108,8 +110,28 @@ export default async function BlogPage({
     perPage: filtered ? 12 : 9,
   });
   const selected = categories.find((item) => item.slug === category);
+  const schemaPath = blogListingHref({
+    q,
+    category,
+    page: query.page ? page : undefined,
+  });
+  const schemaTitle = q
+    ? `Kết quả cho “${q}”`
+    : selected?.name || "InterData Blog";
   return (
     <main id="main-content" className={styles.page}>
+      <StructuredData
+        id="page-structured-data"
+        data={buildBlogListingSchema({
+          path: schemaPath,
+          title: schemaTitle,
+          description: q
+            ? `Kết quả tìm kiếm bài viết cho “${q}” trên InterData Blog.`
+            : "Kiến thức, hướng dẫn và tin tức công nghệ từ InterData.",
+          posts: listing.posts,
+          search: !!q,
+        })}
+      />
       <section
         className={`${styles.hero} ${filtered ? styles.heroCompact : ""}`}
         aria-labelledby="blog-title"

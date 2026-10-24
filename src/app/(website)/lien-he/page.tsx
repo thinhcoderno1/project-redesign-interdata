@@ -1,3 +1,4 @@
+import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { ContactPage } from "@/components/contact/contact-page";
 
@@ -17,6 +18,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
+function Page() {
   return <ContactPage />;
 }
+
+export default withPageSchema(Page, { path: "/lien-he/", metadata });

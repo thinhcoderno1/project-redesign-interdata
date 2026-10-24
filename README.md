@@ -38,6 +38,7 @@ Section phản hồi có 8 feedback từ `D:\InterData\thue-vps\components\testi
 - `docs/contact-page.md`: nguồn thông tin, hành vi Google Maps và phạm vi tiếp nhận yêu cầu.
 - `src/components/layout`: điều hướng, footer và widget liên hệ nổi.
 - `src/components/ui`: icon và thành phần tái sử dụng.
+- `docs/structured-data.md`: schema JSON-LD cho từng loại trang, bài viết CMS tự động, cách thêm trang và kiểm tra SEO.
 - `src/app/globals.css`: semantic color tokens, UI nền tảng và style dùng chung.
 - `docs/project-structure.md`: cấu trúc thư mục và cách thêm trang con.
 - `docs/asset-manifest.json`: nguồn từng tài sản và kích thước ảnh đã nén.

@@ -1,3 +1,4 @@
+import { readSchemaNodes } from "./schema-helpers.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import crypto from "node:crypto";
@@ -354,9 +355,9 @@ try {
     await expect(faq.locator("details[open]")).toHaveCount(2);
     await faq.locator("summary").filter({ hasText: "Xem tất cả" }).click();
     await faq.locator("details > summary").first().click();
-    const schema = await page
-      .locator('main script[type="application/ld+json"]')
-      .textContent();
+    const schema = JSON.stringify(
+      (await readSchemaNodes(page)).find((node) => node["@type"] === "FAQPage"),
+    );
     const json = JSON.parse(schema);
     assert.equal(json.mainEntity.length, await faq.locator("h3").count());
     const axe = await new AxeBuilder({ page })
