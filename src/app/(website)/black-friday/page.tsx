@@ -1,8 +1,8 @@
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { BlackFridayPage } from "@/components/black-friday/black-friday-page";
-import { getPlatinumProducts } from "@/lib/vps-platinum-pricing";
-import { getPlatinumCloudProducts } from "@/lib/platinum-cloud-server-pricing";
+import { getBlackFridayProducts } from "@/lib/black-friday-pricing";
+import { getBlackFridayCoupons } from "@/lib/black-friday-coupons";
 
 export const revalidate = 60;
 
@@ -21,18 +21,11 @@ export const metadata: Metadata = {
 };
 
 async function Page() {
-  const [vps, cloud] = await Promise.allSettled([
-    getPlatinumProducts(100),
-    getPlatinumCloudProducts(),
-  ]);
+  const [vps] = await Promise.allSettled([getBlackFridayProducts()]);
   return (
     <BlackFridayPage
-      vps={vps.status === "fulfilled" ? vps.value.slice(0, 3) : []}
-      cloud={
-        cloud.status === "fulfilled"
-          ? cloud.value.filter((p) => p.available).slice(0, 3)
-          : []
-      }
+      vps={vps.status === "fulfilled" ? vps.value : []}
+      coupons={getBlackFridayCoupons()}
     />
   );
 }

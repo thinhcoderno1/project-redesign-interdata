@@ -7,7 +7,37 @@ import {
   type VpsProduct,
 } from "./vps-pricing";
 
-// Reuse the original Inter Platinum prices already retained in the VPS source.
+export const blackFridayGid = 103;
+// Temporarily hide the percentage beside the original price; set true to restore it.
+export const showBlackFridaySavingsBadge = false;
+// Retain renewal copy and the additional offer for a future campaign update.
+export const blackFridayRenewal = {
+  showDescriptions: false,
+  showExtraDiscount: false,
+};
+export const blackFridayPlans = [
+  { pid: 567, slug: "bf26-start", platinumName: "INTER PLATINUM 1", plan: 1 },
+  { pid: 568, slug: "bf26-core", platinumName: "INTER PLATINUM 2", plan: 2 },
+  { pid: 569, slug: "bf26-plus", platinumName: "INTER PLATINUM 3", plan: 3 },
+] as const;
+
+export function getBlackFridayPlan(product: VpsProduct) {
+  return product.gid === blackFridayGid
+    ? blackFridayPlans.find(
+        ({ pid, slug }) => product.pid === pid && product.slug === slug,
+      )
+    : undefined;
+}
+
+export function blackFridaySpecs(product: VpsProduct) {
+  // The API includes campaign copy above the specs; the 3-year gift has its own tag.
+  return productSpecs(product, true).filter(
+    (line) => !/^Tặng\s+1\s+Năm\s+HSD\b/i.test(line),
+  );
+}
+
+// Use the retained Inter Platinum annual ORIGINAL, not its discounted API price.
+// Black Friday has no additional discount for longer billing cycles.
 const originalPrices: Partial<
   Record<string, Partial<Record<BillingCycle, number>>>
 > = vpsContent.hotDeals.originalPrices;
@@ -16,13 +46,18 @@ export function getBlackFridaySavings(
   product: VpsProduct,
   cycle: BillingCycle,
 ) {
+  const plan = getBlackFridayPlan(product);
+  const years = { annually: 1, biennially: 2, triennially: 3 }[
+    cycle as "annually" | "biennially" | "triennially"
+  ];
+  const annualOriginal = plan && originalPrices[plan.platinumName]?.annually;
   const originalPrice =
-    originalPrices[product.name.trim().toUpperCase()]?.[cycle];
+    typeof annualOriginal === "number" ? annualOriginal * years : NaN;
   const price = product.pricing.VND[cycle];
   const currentPrice = Number(price);
   if (
-    product.gid !== 100 ||
-    typeof originalPrice !== "number" ||
+    !plan ||
+    !years ||
     !Number.isFinite(originalPrice) ||
     originalPrice <= 0 ||
     typeof price !== "string" ||
@@ -48,16 +83,14 @@ export function getBlackFridayUpgrade(
   const months = { annually: 12, biennially: 24, triennially: 36 }[
     cycle as "annually" | "biennially" | "triennially"
   ];
-  const plan = product.name.trim().match(/^INTER PLATINUM ([123])$/i);
-  const previousPlan = previous?.name.trim().match(/^INTER PLATINUM ([123])$/i);
+  const plan = getBlackFridayPlan(product);
+  const previousPlan = previous && getBlackFridayPlan(previous);
   if (
     !previous ||
-    product.gid !== 100 ||
-    previous.gid !== 100 ||
     !months ||
     !plan ||
     !previousPlan ||
-    Number(plan[1]) !== Number(previousPlan[1]) + 1
+    plan.plan !== previousPlan.plan + 1
   )
     return null;
 
@@ -113,7 +146,7 @@ export function getBlackFridayUpgrade(
   if (!increases.length) return null;
   const difference = Number(price) - Number(previousPrice);
   return {
-    previousPlan: Number(previousPlan[1]),
+    previousPlan: previousPlan.plan,
     months,
     difference,
     // The comparison is a monthly equivalent, never a monthly checkout price.
@@ -134,18 +167,56 @@ export const blackFridayFlashSale: FlashSaleSchedule = {
 };
 
 export const blackFridayCoupons = [
-  { service: "VPS", discounts: [71, 61, 51], href: links.vps },
+  {
+    service: "VPS",
+    offers: [
+      { months: 36, discount: 71 },
+      { months: 24, discount: 61 },
+      { months: 12, discount: 51 },
+    ],
+    href: links.vps,
+  },
   {
     service: "Cloud Server",
-    discounts: [61, 51, 41],
+    offers: [
+      { months: 36, discount: 61 },
+      { months: 24, discount: 51 },
+      { months: 12, discount: 41 },
+    ],
     href: links.cloud,
   },
 ] as const;
 
+export type BlackFridayCouponGroup = {
+  service: (typeof blackFridayCoupons)[number]["service"];
+  href: string;
+  offers: {
+    months: 12 | 24 | 36;
+    discount: number;
+    code: string;
+  }[];
+};
+
+// Flash Sale retains its own placeholder independently of the coupon section.
 export const blackFridayCouponPlaceholder = "BF-XXXX";
+export const blackFridayDiscountCouponPlaceholder = "BF26-XXXXX";
+
+export const blackFridayCouponConditions = [
+  "Mã ONE TIME: Chỉ áp dụng cho lần thanh toán đầu tiên. Để hưởng ưu đãi dài hạn, Quý Khách nên cân nhắc đăng ký chu kỳ phù hợp.",
+  "Mã không áp dụng đồng thời / cộng dồn với các chương trình khuyến mãi khác.",
+  "Chương trình không áp dụng cho thanh toán qua tài khoản credit tại InterData.",
+] as const;
 
 export const blackFridayCouponCondition =
   "Mã không áp dụng đồng thời hoặc cộng dồn với các chương trình khuyến mãi khác.";
+
+export const blackFridayFlashSaleConditions = [
+  "Mã ONE TIME: Chỉ áp dụng cho lần thanh toán đầu tiên. Để hưởng ưu đãi dài hạn, Quý Khách nên cân nhắc đăng ký chu kỳ phù hợp.",
+  "Ưu tiên những khách hàng thanh toán nhanh và sớm nhất.",
+  "Các hóa đơn không được thanh toán sau 15 phút kể từ khi khởi tạo sẽ bị xóa.",
+  "Mã không áp dụng đồng thời / cộng dồn với các chương trình khuyến mãi khác.",
+  "Chương trình không áp dụng cho thanh toán qua tài khoản credit tại InterData.",
+] as const;
 
 export const blackFridayFaqs: {
   question: string;
