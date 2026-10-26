@@ -1,3 +1,4 @@
+import { MobilePricingSlider } from "@/components/shared/mobile-pricing-slider";
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
@@ -269,7 +270,9 @@ function KubernetesOptions() {
             để xác định kiến trúc cluster và phạm vi triển khai phù hợp.
           </p>
         </div>
-        <div className={`${pricing.planGrid} ${local.optionGrid}`}>
+        <MobilePricingSlider
+          className={`${pricing.planGrid} ${local.optionGrid}`}
+        >
           {kubernetesOptions.map((option) => (
             <article
               id={`kubernetes-option-${option.id}`}
@@ -302,7 +305,7 @@ function KubernetesOptions() {
               </a>
             </article>
           ))}
-        </div>
+        </MobilePricingSlider>
       </div>
     </section>
   );

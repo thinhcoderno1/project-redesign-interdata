@@ -1,5 +1,6 @@
 "use client";
 
+import { MobilePricingSlider } from "@/components/shared/mobile-pricing-slider";
 import {
   useEffect,
   useRef,
@@ -228,7 +229,7 @@ function ProductTable({
           </p>
         </div>
       </div>
-      <div
+      <MobilePricingSlider
         className={styles.planGrid}
         id={panelId}
         role="tabpanel"
@@ -244,7 +245,7 @@ function ProductTable({
             period={selected.label}
           />
         ))}
-      </div>
+      </MobilePricingSlider>
       {filtered.length > 4 && (
         <div className={styles.center}>
           <button

@@ -37,9 +37,8 @@ try {
     const track = section.locator("#press-track");
     const slides = track.locator(':scope > [aria-roledescription="slide"]');
     const cards = track.locator("article");
-    const dots = section
-      .getByRole("group", { name: "Chọn slide báo chí" })
-      .locator("button");
+    const pagination = section.locator("[data-carousel-pagination]");
+    const dots = pagination.locator(":scope > span");
     const previous = section.getByRole("button", {
       name: "Slide báo chí trước",
       exact: true,
@@ -48,7 +47,9 @@ try {
       name: "Slide báo chí tiếp theo",
       exact: true,
     });
-    await expect(dots).toHaveCount(pageCount);
+    await expect(dots).toHaveCount(Math.min(3, pageCount));
+    await expect(pagination).toHaveAttribute("aria-hidden", "true");
+    await expect(pagination.locator("button")).toHaveCount(0);
     await expect(slides).toHaveCount(pageCount);
     await expect(cards).toHaveCount(expected.length);
     expect(await cards.locator("h3").allTextContents()).toEqual(
@@ -61,20 +62,25 @@ try {
     ).toEqual(expected.map((item) => item.href));
 
     async function selected(index) {
-      await expect(dots.nth(index)).toHaveAttribute("aria-current", "true");
+      const total = await slides.count();
+      const indicator =
+        total > 1
+          ? Math.round((index / (total - 1)) * (Math.min(3, total) - 1))
+          : 0;
+      await expect(dots.nth(indicator)).toHaveAttribute("data-active", "true");
+      await expect(pagination.locator("[data-active]")).toHaveCount(1);
+      await expect(section.locator("[data-carousel-count]")).toHaveText(
+        `Slide ${String(index + 1).padStart(2, "0")} / trên ${String(total).padStart(2, "0")}`,
+      );
       await expect
         .poll(() =>
-          track.evaluate((viewport) => {
-            const current = viewport.parentElement.querySelector(
-              'button[aria-current="true"]',
-            );
-            const buttons = [...current.parentElement.children];
-            const slide = viewport.children[buttons.indexOf(current)];
+          track.evaluate((viewport, index) => {
+            const slide = viewport.children[index];
             return Math.abs(
               slide.getBoundingClientRect().left -
                 viewport.getBoundingClientRect().left,
             );
-          }),
+          }, index),
         )
         .toBeLessThan(2);
     }
@@ -85,7 +91,7 @@ try {
     await previous.click();
     await selected(0);
     for (let index = 0; index < pageCount; index++) {
-      await dots.nth(index).click();
+      if (index > 0) await next.click();
       await selected(index);
       await expect(slides.nth(index).locator("article")).toHaveCount(
         Math.min(perSlide, expected.length - index * perSlide),
@@ -164,19 +170,25 @@ try {
       await session.detach();
     }
     if (width === 1440) {
-      await dots.nth(3).click();
-      await selected(3);
+      await track.focus();
+      await page.keyboard.press("Home");
+      await selected(0);
+      for (let index = 1; index <= 3; index++) {
+        await page.keyboard.press("ArrowRight");
+        await selected(index);
+      }
       await page.setViewportSize({ width: 390, height: 1100 });
-      await expect(dots).toHaveCount(expected.length);
+      await expect(dots).toHaveCount(3);
       await selected(9);
       await page.setViewportSize({ width: 768, height: 1100 });
-      await expect(dots).toHaveCount(Math.ceil(expected.length / 2));
+      await expect(dots).toHaveCount(3);
       await selected(4);
       await page.setViewportSize({ width, height: 1100 });
-      await expect(dots).toHaveCount(pageCount);
+      await expect(dots).toHaveCount(3);
       await selected(2);
     }
-    await dots.first().click();
+    await track.focus();
+    await page.keyboard.press("Home");
     await selected(0);
     await track.focus();
     await page.keyboard.press("Tab");

@@ -44,6 +44,11 @@ export function PressCarousel({
     (_, index) => items.slice(index * perSlide, (index + 1) * perSlide),
   );
   const slideCount = slides.length;
+  const indicatorCount = Math.min(3, slideCount);
+  const activeIndicator =
+    slideCount > 1
+      ? Math.round((active / (slideCount - 1)) * (indicatorCount - 1))
+      : 0;
 
   function slidePosition(index: number) {
     const viewport = track.current;
@@ -323,20 +328,14 @@ export function PressCarousel({
         <div
           className={styles.pagination}
           data-carousel-pagination
-          role="group"
-          aria-label="Chọn slide báo chí"
+          aria-hidden="true"
         >
-          {slides.map((group, index) => (
-            <button
-              key={group[0].href}
-              type="button"
-              aria-label={`Xem slide báo chí ${index + 1}: ${group.map((item) => item.publication).join(", ")}`}
-              aria-current={active === index ? "true" : undefined}
-              aria-controls="press-track"
-              onClick={() => goTo(index)}
-            >
-              <span />
-            </button>
+          {Array.from({ length: indicatorCount }, (_, index) => (
+            <span
+              className={styles.dot}
+              key={index}
+              data-active={activeIndicator === index || undefined}
+            />
           ))}
         </div>
         <div className={styles.arrows} data-carousel-arrows>

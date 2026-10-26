@@ -15,6 +15,7 @@
     "test:testimonials": "node scripts/verify-testimonials.mjs",
     "test:press": "node scripts/verify-press.mjs",
     "test:promotions": "node scripts/verify-promotions.mjs",
+    "test:pricing-mobile": "node scripts/verify-mobile-pricing.mjs",
     "test:links": "node scripts/verify-links.mjs",
     "test:resources:data": "node scripts/verify-resource-data.mjs",
     "test:resources": "node scripts/verify-resources.mjs",

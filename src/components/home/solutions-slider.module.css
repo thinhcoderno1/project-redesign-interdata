@@ -312,21 +312,30 @@
     gap: 12px;
   }
   .card {
-    min-height: 620px;
-    padding-top: 220px;
+    min-height: 360px;
+    padding-top: 40px;
     border-radius: 18px;
   }
   .content {
     padding: 22px;
   }
+  .content::before {
+    inset: -64px 0 0;
+    background: linear-gradient(
+      180deg,
+      transparent,
+      rgb(3 14 32 / 76%) 64px,
+      rgb(3 14 32 / 94%) 100%
+    );
+  }
   .content h3,
   .title {
-    font-size: 24px;
+    font-size: 22px;
   }
   .content p {
     font-size: 16px;
-    line-height: 1.75;
-    margin-bottom: 22px;
+    line-height: 1.65;
+    margin: 10px 0 18px;
   }
   .cta {
     font-size: 14px;

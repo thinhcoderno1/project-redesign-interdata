@@ -64,6 +64,12 @@ const browser = await chromium.launch({ headless: true });
 const results = [];
 try {
   for (const width of [320, 390, 768, 1024, 1440, 1920]) {
+    const cardsPerSlide = width >= 960 ? 3 : 1;
+    const expectedGroups = Array.from(
+      { length: Math.ceil(expected.length / cardsPerSlide) },
+      (_, index) =>
+        expected.slice(index * cardsPerSlide, (index + 1) * cardsPerSlide),
+    );
     const context = await browser.newContext({
       viewport: { width, height: 1100 },
       reducedMotion: width === 1440 ? "no-preference" : "reduce",
@@ -77,14 +83,14 @@ try {
     const track = page.locator(".testimonial-track");
     const slides = track.locator(".testimonial-slide");
     const cards = track.locator(".testimonial-card");
-    const dots = page.locator(".testimonial-pagination button");
+    const dots = page.locator(".testimonial-pagination .testimonial-dot");
     const arrows = page.locator(".testimonial-arrows button");
     await expect(page.locator(".testimonial-carousel")).toHaveAttribute(
       "data-enhanced",
       "true",
     );
     await expect(slides).toHaveCount(expectedGroups.length);
-    await expect(dots).toHaveCount(expectedGroups.length);
+    await expect(dots).toHaveCount(Math.min(3, expectedGroups.length));
     await expect(cards).toHaveCount(expected.length);
     for (const [index, group] of expectedGroups.entries()) {
       await expect(slides.nth(index).locator(".testimonial-card")).toHaveCount(
@@ -129,8 +135,9 @@ try {
       expect(layout[2].y).toBeCloseTo(layout[0].y, 1);
       expect(layout[2].height).toBeCloseTo(layout[0].height, 1);
     } else {
-      expect(layout[1].y).toBeGreaterThan(layout[0].y + layout[0].height);
-      expect(layout[2].x).toBeCloseTo(layout[0].x, 1);
+      expect(layout).toHaveLength(1);
+      expect(layout[0].x).toBeCloseTo(0, 1);
+      expect(layout[0].y).toBeCloseTo(0, 1);
     }
     if (width === 390 || width === 1440) {
       const accessibility = await new AxeBuilder({ page })
@@ -140,7 +147,20 @@ try {
     }
 
     async function selected(index) {
-      await expect(dots.nth(index)).toHaveAttribute("aria-current", "true");
+      const total = await slides.count();
+      const indicator =
+        total > 1
+          ? Math.round((index / (total - 1)) * (Math.min(3, total) - 1))
+          : 0;
+      await expect(dots.nth(indicator)).toHaveAttribute("data-active", "true");
+      await expect(page.locator(".testimonial-dot[data-active]")).toHaveCount(
+        1,
+      );
+      await expect(
+        page.locator(".testimonial-carousel [data-carousel-count]"),
+      ).toHaveText(
+        `Slide ${String(index + 1).padStart(2, "0")} / trên ${String(total).padStart(2, "0")}`,
+      );
       await expect
         .poll(() =>
           track.evaluate((element) => {
@@ -161,7 +181,7 @@ try {
     await arrows.first().click();
     await selected(0);
     for (let index = 0; index < expectedGroups.length; index++) {
-      await dots.nth(index).click();
+      if (index > 0) await arrows.last().click();
       await selected(index);
       for (const image of await slides.nth(index).locator("img").all()) {
         await image.scrollIntoViewIfNeeded();
@@ -284,17 +304,21 @@ try {
     expect(
       await page.evaluate(() => document.documentElement.scrollWidth),
     ).toBeLessThanOrEqual(width);
-    await dots.first().click();
+    await track.focus();
+    await page.keyboard.press("Home");
     await selected(0);
     await page
       .locator("#khach-hang")
       .screenshot({ path: `artifacts/testimonials-${width}.png` });
     if (width === 1440) {
-      await dots.nth(2).click();
+      await track.focus();
+      await page.keyboard.press("End");
       await selected(2);
       await page.setViewportSize({ width: 390, height: 1100 });
-      await selected(2);
+      await expect(dots).toHaveCount(3);
+      await selected(6);
       await page.setViewportSize({ width: 1440, height: 1100 });
+      await expect(dots).toHaveCount(3);
       await selected(2);
     }
     expect(errors).toEqual([]);
@@ -302,7 +326,7 @@ try {
       width,
       sourceContentMatches: true,
       cardsPerSlide: expectedGroups.map((group) => group.length),
-      cardLayout: width >= 960 ? "three columns" : "stacked",
+      cardLayout: width >= 960 ? "three columns" : "one card per slide",
       accessibility: width === 390 || width === 1440 ? true : "not tested",
       controls: true,
       keyboard: true,

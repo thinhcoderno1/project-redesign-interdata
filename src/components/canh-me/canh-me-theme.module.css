@@ -144,6 +144,19 @@
   border-width: 1px;
   border-style: solid;
 }
+
+@media (max-width: 639px) {
+  .theme
+    :global(
+      .cm-deal-grid[data-pricing-slider] > .cm-deal-card:not(.is-featured)
+    ) {
+    margin-top: 0;
+  }
+  .theme
+    :global(.cm-deal-grid[data-pricing-slider] > .cm-deal-card.is-featured) {
+    transform: none;
+  }
+}
 .theme.theme :global(.cm-deal-grid .cm-deal-card h3) {
   font-weight: 800;
 }

@@ -13,7 +13,7 @@ const applications = [
 const browser = await chromium.launch();
 const results = [];
 await fs.mkdir("artifacts/hero-heading", { recursive: true });
-async function checkSingleLine(page) {
+async function checkHeadingLayout(page) {
   const layout = await page.evaluate(() => {
     const row = document.querySelector("h1 .hero-heading-row");
     const parts = [...row.children].map((part) =>
@@ -22,6 +22,7 @@ async function checkSingleLine(page) {
     return {
       parts,
       fontSize: getComputedStyle(document.querySelector("h1")).fontSize,
+      direction: getComputedStyle(row).flexDirection,
       gap: parseFloat(getComputedStyle(row).gap),
       width: document.documentElement.clientWidth,
       scrollWidth: document.documentElement.scrollWidth,
@@ -31,18 +32,30 @@ async function checkSingleLine(page) {
   expect(layout.scrollWidth).toBeLessThanOrEqual(layout.width);
   expect(layout.parts[0].left).toBeGreaterThanOrEqual(0);
   expect(layout.parts[2].right).toBeLessThanOrEqual(layout.width);
+  const stacked = layout.width <= 639;
+  expect(layout.direction).toBe(stacked ? "column" : "row");
+  if (stacked) {
+    expect(parseFloat(layout.fontSize)).toBeGreaterThanOrEqual(25);
+    expect(parseFloat(layout.fontSize)).toBeLessThanOrEqual(38);
+  }
   for (const part of layout.parts) {
-    expect(part.top).toBeCloseTo(layout.parts[0].top, 1);
+    if (stacked) {
+      expect(part.left + part.width / 2).toBeCloseTo(layout.width / 2, 1);
+    } else {
+      expect(part.top).toBeCloseTo(layout.parts[0].top, 1);
+    }
     expect(part.height).toBeCloseTo(layout.parts[0].height, 1);
   }
-  expect(layout.parts[1].left - layout.parts[0].right).toBeCloseTo(
-    layout.gap,
-    1,
-  );
-  expect(layout.parts[2].left - layout.parts[1].right).toBeCloseTo(
-    layout.gap,
-    1,
-  );
+  expect(
+    stacked
+      ? layout.parts[1].top - layout.parts[0].bottom
+      : layout.parts[1].left - layout.parts[0].right,
+  ).toBeCloseTo(layout.gap, 1);
+  expect(
+    stacked
+      ? layout.parts[2].top - layout.parts[1].bottom
+      : layout.parts[2].left - layout.parts[1].right,
+  ).toBeCloseTo(layout.gap, 1);
   return layout;
 }
 async function checkRoll(page) {
@@ -111,19 +124,27 @@ async function checkRoll(page) {
     expect(sample.whiteAnimations).toEqual([0, 0]);
     expect(sample.parts[0].left).toBeGreaterThanOrEqual(0);
     expect(sample.parts[2].right).toBeLessThanOrEqual(sample.viewportWidth);
+    const stacked = sample.viewportWidth <= 639;
+    for (const part of sample.parts) {
+      if (stacked) {
+        expect(part.left + part.width / 2).toBeCloseTo(
+          sample.viewportWidth / 2,
+          1,
+        );
+      } else {
+        expect(part.top).toBeCloseTo(sample.parts[0].top, 1);
+      }
+    }
     expect(
-      sample.parts.every(
-        (part) => Math.abs(part.top - sample.parts[0].top) < 0.1,
-      ),
-    ).toBe(true);
-    expect(sample.parts[1].left - sample.parts[0].right).toBeCloseTo(
-      sample.gap,
-      1,
-    );
-    expect(sample.parts[2].left - sample.parts[1].right).toBeCloseTo(
-      sample.gap,
-      1,
-    );
+      stacked
+        ? sample.parts[1].top - sample.parts[0].bottom
+        : sample.parts[1].left - sample.parts[0].right,
+    ).toBeCloseTo(sample.gap, 1);
+    expect(
+      stacked
+        ? sample.parts[2].top - sample.parts[1].bottom
+        : sample.parts[2].left - sample.parts[1].right,
+    ).toBeCloseTo(sample.gap, 1);
     if (index > 0) {
       const previous = roll.samples[index - 1].width;
       expect(
@@ -181,7 +202,7 @@ async function checkDiacritics(page, width) {
   };
 }
 try {
-  for (const width of [320, 390, 768, 1024, 1440, 1920]) {
+  for (const width of [320, 390, 430, 639, 640, 768, 1024, 1440, 1920]) {
     const context = await browser.newContext({
       viewport: { width, height: 960 },
       reducedMotion: "reduce",
@@ -197,7 +218,7 @@ try {
     );
     await expect(page.locator(".hero-application")).toHaveText(applications);
     await expect(page.locator(".hero-heading button")).toHaveCount(0);
-    const singleLine = await checkSingleLine(page);
+    const headingLayout = await checkHeadingLayout(page);
     const layout = await page.evaluate(() => {
       const suffix = document.querySelector(".hero-heading-suffix");
       const range = document.createRange();
@@ -240,7 +261,7 @@ try {
       path: `artifacts/hero-heading/static-${width}.png`,
     });
     expect(errors).toEqual([]);
-    results.push({ width, layout, singleLine, errors });
+    results.push({ width, layout, headingLayout, errors });
     await context.close();
   }
 
@@ -259,7 +280,7 @@ try {
     await expect(heading).toHaveAttribute("data-running", "true");
     const start = applications.indexOf(await active.textContent());
     const originalBox = await page.locator("h1").boundingBox();
-    const originalLine = await checkSingleLine(page);
+    const originalLine = await checkHeadingLayout(page);
     await page.evaluate(() => {
       window.headingWhiteNodes = [
         document.querySelector(".hero-heading-prefix"),
@@ -277,7 +298,7 @@ try {
         results.push({ diacritics: await checkDiacritics(page, width) });
       }
       expect(await page.locator("h1").boundingBox()).toEqual(originalBox);
-      const line = await checkSingleLine(page);
+      const line = await checkHeadingLayout(page);
       expect(line.fontSize).toBe(originalLine.fontSize);
       expect(line.gap).toBe(originalLine.gap);
       await expect(heading.locator("button")).toHaveCount(0);
@@ -324,10 +345,10 @@ try {
       height: 960,
     });
     await page.clock.runFor(500);
-    await checkSingleLine(page);
+    await checkHeadingLayout(page);
     await page.setViewportSize({ width, height: 960 });
     await page.clock.runFor(500);
-    await checkSingleLine(page);
+    await checkHeadingLayout(page);
     await context.close();
   }
 
@@ -343,7 +364,7 @@ try {
       applications[0],
     );
     await expect(page.locator(".hero-heading button")).toHaveCount(0);
-    await checkSingleLine(page);
+    await checkHeadingLayout(page);
     await context.close();
   }
   await fs.writeFile(
@@ -351,7 +372,7 @@ try {
     JSON.stringify(results, null, 2),
   );
   console.log(
-    "Hero heading passed: complete Vietnamese diacritics compared against unclipped text at mobile/desktop and 125% pixel scale; upward roll, smooth width changes, no white-text fading, single line at 320–1920px, reduced motion and no-JavaScript fallback.",
+    "Hero heading passed: complete Vietnamese diacritics compared against unclipped text at mobile/desktop and 125% pixel scale; upward roll, smooth width changes, no white-text fading, stacked mobile heading and single-line desktop heading at 320–1920px, reduced motion and no-JavaScript fallback.",
   );
 } finally {
   await browser.close();

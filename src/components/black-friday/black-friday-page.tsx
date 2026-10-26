@@ -1,5 +1,6 @@
 "use client";
 
+import { MobilePricingSlider } from "@/components/shared/mobile-pricing-slider";
 import {
   useEffect,
   useRef,
@@ -391,7 +392,7 @@ export function BlackFridayPage({
                   </li>
                 ))}
               </ul>
-              <div
+              <MobilePricingSlider
                 id="bf-plans"
                 className={styles.planGrid}
                 role="tabpanel"
@@ -473,7 +474,7 @@ export function BlackFridayPage({
                     </article>
                   );
                 })}
-              </div>
+              </MobilePricingSlider>
             </>
           ) : (
             <div className={styles.unavailable}>

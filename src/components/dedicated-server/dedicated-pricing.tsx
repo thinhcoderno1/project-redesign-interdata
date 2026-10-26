@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { MobilePricingSlider } from "@/components/shared/mobile-pricing-slider";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import {
   ArrowDownUp,
@@ -198,7 +199,7 @@ export function DedicatedPricing({
                   </div>
                 </div>
               </div>
-              <div
+              <MobilePricingSlider
                 className={styles.planGrid}
                 id="dedicated-plans"
                 role="tabpanel"
@@ -292,7 +293,7 @@ export function DedicatedPricing({
                     </article>
                   );
                 })}
-              </div>
+              </MobilePricingSlider>
               {products.some((p) => !p.available) && (
                 <div className={styles.center}>
                   <button

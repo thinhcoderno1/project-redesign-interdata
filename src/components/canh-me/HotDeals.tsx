@@ -1,5 +1,6 @@
 "use client";
 
+import { MobilePricingSlider } from "@/components/shared/mobile-pricing-slider";
 import { useEffect, useMemo, useState } from "react";
 import { ORIGINAL_PRICE_BY_PID, type DealProgram } from "./data";
 import type { ApiProduct, PricingPeriod } from "@/lib/canh-me-pricing";
@@ -370,7 +371,10 @@ export default function HotDeals({
                     ))}
                   </div>
                 ) : null}
-                <div className={`cm-deal-grid ${gridClass}`} id={pricingGridId}>
+                <MobilePricingSlider
+                  className={`cm-deal-grid ${gridClass}`}
+                  id={pricingGridId}
+                >
                   {visibleApiProducts.length === 0 && (
                     <p className="cm-pricing-unavailable" role="status">
                       Bảng giá đang được cập nhật. Vui lòng liên hệ InterData để
@@ -424,7 +428,7 @@ export default function HotDeals({
                       />
                     );
                   })}
-                </div>
+                </MobilePricingSlider>
               </>
             )}
           </div>

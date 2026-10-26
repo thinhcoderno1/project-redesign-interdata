@@ -1,3 +1,4 @@
+import { MobilePricingSlider } from "@/components/shared/mobile-pricing-slider";
 import {
   ArrowDownUp,
   ArrowRight,
@@ -62,7 +63,7 @@ export function ColocationPricing() {
           </a>
         </div>
         <div className={styles.pricingBody}>
-          <div className={styles.planGrid}>
+          <MobilePricingSlider className={styles.planGrid}>
             {colocationPlans.map((plan) => (
               <article
                 key={plan.id}
@@ -106,7 +107,7 @@ export function ColocationPricing() {
                 </a>
               </article>
             ))}
-          </div>
+          </MobilePricingSlider>
         </div>
         <ul
           className={styles.pricingBenefits}

@@ -254,8 +254,21 @@
   }
   .vpsGrid,
   .twoGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    /* Leave a preview of the next service to make swiping discoverable. */
+    grid-auto-columns: calc(100% - 32px);
     gap: 16px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--brand-primary) var(--border-default);
+    padding-block: 4px 16px;
+  }
+  .card {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
   .group + .group {
     margin-top: 40px;

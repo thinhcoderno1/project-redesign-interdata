@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { MobilePricingSlider } from "@/components/shared/mobile-pricing-slider";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import {
   ArrowDownUp,
@@ -188,7 +189,7 @@ export function PlatinumCloudPricing({
                   </div>
                 </div>
               </div>
-              <div
+              <MobilePricingSlider
                 className={styles.planGrid}
                 id="platinum-cloud-plans"
                 role="tabpanel"
@@ -256,7 +257,7 @@ export function PlatinumCloudPricing({
                     </article>
                   );
                 })}
-              </div>
+              </MobilePricingSlider>
               {products.length > 4 && (
                 <div className={styles.center}>
                   <button

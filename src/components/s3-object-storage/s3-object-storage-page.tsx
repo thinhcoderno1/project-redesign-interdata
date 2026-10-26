@@ -1,3 +1,4 @@
+import { MobilePricingSlider } from "@/components/shared/mobile-pricing-slider";
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
@@ -259,7 +260,9 @@ function S3Options() {
             phù hợp.
           </p>
         </div>
-        <div className={`${pricing.planGrid} ${local.optionGrid}`}>
+        <MobilePricingSlider
+          className={`${pricing.planGrid} ${local.optionGrid}`}
+        >
           {s3Options.map((option) => (
             <article
               id={`s3-option-${option.id}`}
@@ -292,7 +295,7 @@ function S3Options() {
               </a>
             </article>
           ))}
-        </div>
+        </MobilePricingSlider>
       </div>
     </section>
   );

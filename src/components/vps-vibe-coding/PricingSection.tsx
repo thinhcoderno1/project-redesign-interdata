@@ -1,5 +1,6 @@
 "use client";
 
+import { MobilePricingSlider } from "@/components/shared/mobile-pricing-slider";
 import {
   ArrowDownUp,
   ArrowRight,
@@ -151,7 +152,7 @@ export default function PricingSection({
                   </div>
                 </div>
               </div>
-              <div
+              <MobilePricingSlider
                 className={linuxStyles.planGrid}
                 id="vibe-plans"
                 role="tabpanel"
@@ -231,7 +232,7 @@ export default function PricingSection({
                     )}
                   </article>
                 ))}
-              </div>
+              </MobilePricingSlider>
             </>
           ) : (
             <div

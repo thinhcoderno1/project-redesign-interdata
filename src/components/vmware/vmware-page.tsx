@@ -1,3 +1,4 @@
+import { MobilePricingSlider } from "@/components/shared/mobile-pricing-slider";
 import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
@@ -268,7 +269,9 @@ function VmwareOptions() {
             bạn.
           </p>
         </div>
-        <div className={`${pricing.planGrid} ${local.optionGrid}`}>
+        <MobilePricingSlider
+          className={`${pricing.planGrid} ${local.optionGrid}`}
+        >
           {vmwareOptions.map((option) => (
             <article
               id={`vmware-option-${option.id}`}
@@ -301,7 +304,7 @@ function VmwareOptions() {
               </a>
             </article>
           ))}
-        </div>
+        </MobilePricingSlider>
       </div>
     </section>
   );

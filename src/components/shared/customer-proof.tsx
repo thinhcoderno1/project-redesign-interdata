@@ -1,4 +1,4 @@
-import { TestimonialCarousel } from "@/components/home/testimonial-carousel";
+import { TestimonialCarousel } from "./testimonial-carousel";
 import { PressCarousel } from "@/components/home/press-carousel";
 import { testimonials, press } from "@/data/content";
 import { MessageSquareQuote, Newspaper } from "lucide-react";

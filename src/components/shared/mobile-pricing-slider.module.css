@@ -1,0 +1,30 @@
+@media (max-width: 639px) {
+  /* Flex takes over from each page's grid without changing its card styles. */
+  div.track[data-pricing-slider] {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 16px;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 2px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--brand-primary) var(--border-default);
+    /* Keep raised recommendation badges, card shadows and focus rings visible. */
+    padding: 22px 2px 18px;
+  }
+
+  div.track[data-pricing-slider] > * {
+    flex: 0 0 calc(100% - 32px);
+    min-width: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  div.track[data-pricing-slider] > :only-child {
+    flex-basis: 100%;
+  }
+}

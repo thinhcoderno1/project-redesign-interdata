@@ -8,9 +8,10 @@ import {
   ChevronRight,
   Star,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { KeyboardEvent, PointerEvent } from "react";
 import cardControls from "@/components/shared/carousel-card-controls.module.css";
+import styles from "./testimonial-carousel.module.css";
 
 type Testimonial = {
   name: string;
@@ -30,6 +31,20 @@ function previewQuote(quote: string) {
   return `${excerpt}…`;
 }
 
+function subscribeLayout(onChange: () => void) {
+  const query = window.matchMedia("(min-width: 960px)");
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
+
+function getCardsPerSlide() {
+  return window.matchMedia("(min-width: 960px)").matches ? 3 : 1;
+}
+
+function getServerCardsPerSlide() {
+  return 3;
+}
+
 export function TestimonialCarousel({
   items,
   controlsOnCards = false,
@@ -37,18 +52,30 @@ export function TestimonialCarousel({
   items: Testimonial[];
   controlsOnCards?: boolean;
 }) {
+  const cardsPerSlide = useSyncExternalStore(
+    subscribeLayout,
+    getCardsPerSlide,
+    getServerCardsPerSlide,
+  );
   const slides = Array.from(
-    { length: Math.ceil(items.length / 3) },
-    (_, index) => items.slice(index * 3, index * 3 + 3),
+    { length: Math.ceil(items.length / cardsPerSlide) },
+    (_, index) =>
+      items.slice(index * cardsPerSlide, (index + 1) * cardsPerSlide),
   );
   const slideCount = slides.length;
   const carousel = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const activeIndex = useRef(0);
+  const previousCardsPerSlide = useRef(cardsPerSlide);
   const drag = useRef<{ pointer: number; x: number; scroll: number } | null>(
     null,
   );
   const [active, setActive] = useState(0);
+  const indicatorCount = Math.min(3, slideCount);
+  const activeIndicator =
+    slideCount > 1
+      ? Math.round((active / (slideCount - 1)) * (indicatorCount - 1))
+      : 0;
 
   function slidePosition(index: number) {
     const viewport = track.current;
@@ -76,8 +103,27 @@ export function TestimonialCarousel({
     const viewport = track.current;
     const root = carousel.current;
     if (!viewport || !root) return;
+    // Keep the first visible customer in view when crossing the breakpoint.
+    const firstItem = activeIndex.current * previousCardsPerSlide.current;
+    activeIndex.current = Math.min(
+      slideCount - 1,
+      Math.floor(firstItem / cardsPerSlide),
+    );
+    previousCardsPerSlide.current = cardsPerSlide;
     root.dataset.enhanced = "true";
-    let frame = 0;
+    let frame = requestAnimationFrame(() => {
+      const slide = viewport.children[activeIndex.current];
+      if (slide) {
+        viewport.scrollTo({
+          left:
+            slide.getBoundingClientRect().left -
+            viewport.getBoundingClientRect().left +
+            viewport.scrollLeft,
+          behavior: "instant",
+        });
+      }
+      update();
+    });
     let settle = 0;
     let touching = false;
     function update() {
@@ -154,7 +200,7 @@ export function TestimonialCarousel({
       window.clearTimeout(settle);
       delete root.dataset.enhanced;
     };
-  }, [slideCount]);
+  }, [cardsPerSlide, slideCount]);
 
   function onKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     if (event.target !== event.currentTarget) return;
@@ -209,7 +255,7 @@ export function TestimonialCarousel({
 
   return (
     <div
-      className={`testimonial-carousel${controlsOnCards ? ` ${cardControls.carousel}` : ""}`}
+      className={`testimonial-carousel ${styles.carousel}${controlsOnCards ? ` ${cardControls.carousel}` : ""}`}
       ref={carousel}
       role="region"
       aria-roledescription="bộ trình chiếu"
@@ -304,20 +350,14 @@ export function TestimonialCarousel({
         <div
           className="testimonial-pagination"
           data-carousel-pagination
-          role="group"
-          aria-label="Chọn slide phản hồi"
+          aria-hidden="true"
         >
-          {slides.map((group, index) => (
-            <button
-              key={group[0].company}
-              type="button"
-              aria-label={`Xem slide ${index + 1}: ${group.map((item) => item.company).join(", ")}`}
-              aria-current={active === index ? "true" : undefined}
-              aria-controls="testimonial-track"
-              onClick={() => goTo(index)}
-            >
-              <span />
-            </button>
+          {Array.from({ length: indicatorCount }, (_, index) => (
+            <span
+              className="testimonial-dot"
+              key={index}
+              data-active={activeIndicator === index || undefined}
+            />
           ))}
         </div>
         <div className="testimonial-arrows" data-carousel-arrows>

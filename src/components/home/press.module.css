@@ -168,25 +168,19 @@
   gap: 4px;
 }
 
-.pagination button {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
+.pagination {
+  gap: 10px;
 }
 
-.pagination button span {
+.dot {
+  display: block;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: var(--border-control);
 }
 
-.pagination button[aria-current="true"] span {
+.dot[data-active] {
   width: 20px;
   border-radius: 8px;
   background: var(--brand-primary);
@@ -247,13 +241,7 @@
     grid-row: 2;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 2px;
     max-width: 100%;
-  }
-
-  .pagination button {
-    width: 28px;
-    height: 28px;
   }
 }
 
