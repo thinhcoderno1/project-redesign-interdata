@@ -41,7 +41,7 @@
 
 ## Verification
 
-The FAQ section follows the consultation CTA and includes eight native details/summary accordions. Its light, rounded panel uses a centered blue uppercase heading, an orange icon badge and a subtle CSS geometric backdrop. Questions are split into two independent columns of four, with thin separators and circular plus/minus controls; below 801px they stack into one column in the original reading order. All answers start collapsed. The former sidebar and its contact button are removed; the original eight questions, answers and answer links remain unchanged. Keyboard focus is visible and the accordions work without JavaScript. The heading retains the page-wide H2 font size.
+The FAQ section follows the consultation CTA and includes eight native details/summary accordions. Its light, rounded panel uses a centered blue uppercase heading, an orange icon badge and a subtle CSS geometric backdrop. Questions are split into two independent columns of four, with thin separators and circular plus/minus controls; below 801px they stack into one column in the original reading order. All answers start collapsed. The former sidebar and its contact button are removed; the eight questions and existing answer links remain in place. The cycle-selection answer objectively compares 1/2/3 years, recommends 3 years for stable long-term needs and clarifies that Best Plans grants an extra year on a 3-year order. Keyboard focus is visible and the accordions work without JavaScript. The heading retains the page-wide H2 font size.
 
 ```powershell
 npm run build

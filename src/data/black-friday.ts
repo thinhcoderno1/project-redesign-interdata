@@ -238,7 +238,7 @@ export const blackFridayFaqs: {
   {
     question: "Nên đăng ký 1, 2 hay 3 năm để tối ưu chi phí?",
     answer:
-      "Chu kỳ 1 năm phù hợp khi bạn muốn linh hoạt ngân sách hoặc nhu cầu sử dụng còn có thể thay đổi. Chu kỳ 2 năm là lựa chọn cân bằng nếu bạn đã có kế hoạch sử dụng lâu hơn nhưng chưa muốn thanh toán cho 3 năm. Nếu nhu cầu đã ổn định và ngân sách cho phép, InterData khuyên bạn chọn chu kỳ 3 năm để được tặng thêm 1 năm sử dụng. Bạn có tổng cộng 4 năm sử dụng với chi phí của chu kỳ 3 năm, giúp giảm chi phí bình quân theo thời gian và lùi thời điểm cần gia hạn. Đây là lựa chọn đáng ưu tiên cho website, ứng dụng hoặc hệ thống cần vận hành lâu dài.",
+      "Chu kỳ 1 năm phù hợp khi bạn muốn linh hoạt ngân sách hoặc nhu cầu sử dụng còn có thể thay đổi. Chu kỳ 2 năm là lựa chọn cân bằng nếu đã có kế hoạch sử dụng tương đối ổn định và muốn cân đối khoản thanh toán ban đầu. Nếu dự kiến vận hành website, ứng dụng hoặc hệ thống lâu dài và ngân sách cho phép, bạn nên ưu tiên chu kỳ 3 năm để tận dụng ưu đãi dài hạn và chủ động kế hoạch chi phí. Riêng tại Best Plans, đăng ký chu kỳ 3 năm còn được tặng thêm 1 năm sử dụng: thanh toán cho 3 năm và nhận tổng cộng 4 năm sử dụng, giúp tối ưu chi phí bình quân theo tháng.",
   },
   {
     question: "Tôi nhận và sử dụng mã ưu đãi như thế nào?",
