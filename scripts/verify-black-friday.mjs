@@ -200,15 +200,11 @@ try {
     await expect(cards.last().locator('[class*="planUpgrade"]')).toHaveCount(0);
     for (const cardIndex of [0, 1]) {
       const upgrade = cards.nth(cardIndex).locator('[class*="planUpgrade"]');
-      const readPrice = async (i) =>
-        Number(
-          (
-            await cards.nth(i).locator('[class*="price"] > strong').innerText()
-          ).replace(/\D/g, ""),
-        );
+      // Every tab promotes the 3-year offer, including its extra year.
       const difference =
-        (await readPrice(cardIndex + 1)) - (await readPrice(cardIndex));
-      const months = [12, 24, 36][index];
+        Number(plans[cardIndex + 1].pricing.VND.triennially) -
+        Number(plans[cardIndex].pricing.VND.triennially);
+      const months = 48;
       await expect(upgrade.locator('[class*="upgradeTitle"]')).toHaveText(
         "Chỉ thêm",
       );

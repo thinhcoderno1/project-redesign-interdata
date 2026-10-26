@@ -80,7 +80,8 @@ export function getBlackFridayUpgrade(
   previous: VpsProduct | undefined,
   cycle: BillingCycle,
 ) {
-  const months = { annually: 12, biennially: 24, triennially: 36 }[
+  // Include the extra year of service offered with the 3-year cycle.
+  const months = { annually: 12, biennially: 24, triennially: 48 }[
     cycle as "annually" | "biennially" | "triennially"
   ];
   const plan = getBlackFridayPlan(product);
@@ -233,7 +234,7 @@ export const blackFridayFaqs: {
     question:
       "Giá trong Best Plans là giá mỗi tháng hay tổng tiền theo chu kỳ?",
     answer:
-      "Số tiền chính trên mỗi gói là tổng tiền cho chu kỳ 12, 24 hoặc 36 tháng đang chọn. Dòng “+…đ/tháng” trong khối nâng cấp là khoản chênh lệch giữa hai gói quy đổi theo tháng, không phải số tiền thanh toán hằng tháng hay báo giá nâng cấp một dịch vụ đang dùng. Kiểm tra tổng tiền và chu kỳ trên trang đăng ký trước khi thanh toán.",
+      "Số tiền chính trên mỗi gói là tổng tiền cho chu kỳ 12, 24 hoặc 36 tháng đang chọn. Dòng “Chỉ thêm …đ/tháng” trong khối nâng cấp ở cả ba chu kỳ là khoản chênh lệch giữa hai gói khi đăng ký 3 năm, chia cho tổng 48 tháng sử dụng (đã gồm 1 năm được tặng), không phải số tiền thanh toán hằng tháng hay báo giá nâng cấp một dịch vụ đang dùng. Kiểm tra tổng tiền và chu kỳ trên trang đăng ký trước khi thanh toán.",
   },
   {
     question: "Nên đăng ký 1, 2 hay 3 năm để tối ưu chi phí?",

@@ -163,13 +163,12 @@ function Specs({ product }: { product: VpsProduct }) {
 function PlanUpgrade({
   product,
   next,
-  cycle,
 }: {
   product: VpsProduct;
   next: VpsProduct | undefined;
-  cycle: BillingCycle;
 }) {
-  const upgrade = next && getBlackFridayUpgrade(next, product, cycle);
+  // Promote the 3-year offer (48 months of service) on every billing tab.
+  const upgrade = next && getBlackFridayUpgrade(next, product, "triennially");
   if (!next || !upgrade) return null;
   return (
     <div className={styles.planUpgrade}>
@@ -466,7 +465,6 @@ export function BlackFridayPage({
                       <PlanUpgrade
                         product={product}
                         next={products[index + 1]}
-                        cycle={selectedCycle}
                       />
                       <Specs product={product} />
                       <a

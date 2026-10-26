@@ -71,11 +71,12 @@ const plans = [
 for (const [i, cycle] of cycles.entries()) {
   const first = compare(plans[1], plans[0], cycle);
   const second = compare(plans[2], plans[1], cycle);
-  assert.equal(first.months, [12, 24, 36][i]);
+  assert.equal(first.months, [12, 24, 48][i]);
+  assert.equal(second.months, [12, 24, 48][i]);
   assert.equal(first.difference, 1668000 * (i + 1));
-  assert.equal(first.monthlyEquivalent, 139000);
+  assert.equal(first.monthlyEquivalent, [139000, 139000, 104250][i]);
   assert.equal(second.difference, 3222000 * (i + 1));
-  assert.equal(second.monthlyEquivalent, 268500);
+  assert.equal(second.monthlyEquivalent, [268500, 268500, 201375][i]);
   assert.deepEqual(
     first.resources.map(({ value }) => value),
     [3, 5, 40],
