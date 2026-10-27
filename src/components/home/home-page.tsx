@@ -1,4 +1,5 @@
 import homeStyles from "./home.module.css";
+import companyJourneyStyles from "./company-journey.module.css";
 import Image from "next/image";
 import { Consultation } from "@/components/home/consultation";
 import { ConsultationCta } from "@/components/home/consultation-cta";
@@ -114,9 +115,11 @@ export function HomePage() {
             <SolutionsCarousel />
           </div>
         </section>
-        <CapacitySection withBadgeIcons animateNumbers emphasizeHeading />
-        <CompanyProofSections withBadgeIcons />
-        <TechnologyPartners withBadgeIcons />
+        <div className={companyJourneyStyles.journey}>
+          <CapacitySection withBadgeIcons animateNumbers emphasizeHeading />
+          <CompanyProofSections withBadgeIcons />
+          <TechnologyPartners withBadgeIcons />
+        </div>
         <HomeInfrastructure />
         <Consultation />
         <ConsultationCta

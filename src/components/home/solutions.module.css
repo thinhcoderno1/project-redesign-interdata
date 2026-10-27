@@ -2,20 +2,48 @@
   position: relative;
   isolation: isolate;
   container-type: inline-size;
+  overflow: clip;
+}
+
+.section:global(.dark) {
+  background:
+    radial-gradient(
+      ellipse at 0% 15%,
+      color-mix(in srgb, var(--brand-primary) 38%, transparent),
+      transparent 48%
+    ),
+    radial-gradient(
+      ellipse at 100% 85%,
+      color-mix(in srgb, var(--brand-primary) 28%, transparent),
+      transparent 50%
+    ),
+    var(--brand-strong);
+}
+
+.section::before,
+.section::after {
+  content: "";
+  position: absolute;
+  width: clamp(640px, 58vw, 1000px);
+  aspect-ratio: 9 / 8;
+  background: url("/images/solutions-infrastructure-layers.svg") center /
+    contain no-repeat;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(ellipse, #000 25%, transparent 72%);
 }
 
 .section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: min(900px, 80%);
-  aspect-ratio: 15 / 8;
-  background: url("/images/solutions-data-flow.svg") top left / contain
-    no-repeat;
-  pointer-events: none;
-  opacity: 0.7;
-  z-index: 0;
+  top: -220px;
+  left: -360px;
+  opacity: 0.65;
+}
+
+.section::after {
+  right: -300px;
+  bottom: -200px;
+  opacity: 0.8;
+  transform: rotate(180deg);
 }
 
 .layout {
@@ -68,8 +96,15 @@
 
 @media (max-width: 639px) {
   .section::before {
-    width: 100%;
-    opacity: 0.6;
+    width: 560px;
+    left: auto;
+    right: -340px;
+    top: -140px;
+    opacity: 0.45;
+  }
+
+  .section::after {
+    display: none;
   }
 
   .layout {
