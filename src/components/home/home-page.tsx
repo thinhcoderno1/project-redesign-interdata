@@ -68,24 +68,26 @@ export function HomePage() {
             )}
           </div>
         </section>
-        <section
-          id="uu-dai"
-          className={`promotions container${featureClaims.length > 0 ? " promotions-with-features" : ""}`}
-          aria-label="Chương trình ưu đãi"
-        >
-          {featureClaims.length > 0 && (
-            <ul className="hero-features">
-              {featureClaims.map((c, i) => (
-                <li key={c.id}>
-                  <Icon name={["shield", "headphones", "network"][i]} />
-                  <span>{c.text}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-          <PromotionCarousel href={links.promotion} />
-        </section>
-        <InfrastructureServices />
+        <div className={homeStyles.serviceJourney}>
+          <section
+            id="uu-dai"
+            className={`promotions container${featureClaims.length > 0 ? " promotions-with-features" : ""}`}
+            aria-label="Chương trình ưu đãi"
+          >
+            {featureClaims.length > 0 && (
+              <ul className="hero-features">
+                {featureClaims.map((c, i) => (
+                  <li key={c.id}>
+                    <Icon name={["shield", "headphones", "network"][i]} />
+                    <span>{c.text}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <PromotionCarousel href={links.promotion} />
+          </section>
+          <InfrastructureServices />
+        </div>
         <section
           id="giai-phap"
           className={`solutions dark section ${solutionStyles.section}`}
