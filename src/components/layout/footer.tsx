@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Mail, MapPin, Phone, ReceiptText } from "lucide-react";
 import {
   links,
@@ -10,7 +9,7 @@ import {
 } from "@/data/content";
 import { legalDocuments } from "@/data/legal-documents";
 import styles from "./footer.module.css";
-import { FooterSocialLinks } from "./footer-social-links";
+import { FooterAssurances } from "./footer-assurances";
 
 export function Footer() {
   return (
@@ -35,21 +34,6 @@ export function Footer() {
               <ReceiptText size={18} strokeWidth={1.6} aria-hidden="true" />
               <span>MST: 0316918910</span>
             </span>
-            <a
-              className={styles.companyCertificate}
-              href="https://online.gov.vn/nen-tang/f334417e-c23e-42c6-8a77-38320b876977"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Bộ Công Thương — Xem thông tin website InterData"
-            >
-              <Image
-                src="/images/footer/bo-cong-thuong.png"
-                alt="Đã thông báo Bộ Công Thương"
-                width={148}
-                height={56}
-                unoptimized
-              />
-            </a>
           </div>
           <div>
             <h2>Dịch vụ</h2>
@@ -98,9 +82,9 @@ export function Footer() {
             ))}
           </div>
         </nav>
+        <FooterAssurances />
         <div className="footer-bottom">
-          <span>© 2026 InterData</span>
-          <FooterSocialLinks />
+          <span>Copyright © 2026 Inter Group JSC. All Rights Reserved</span>
         </div>
         {reviewMode && showEditorialNotes && (
           <div className="review-footer">

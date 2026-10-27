@@ -260,7 +260,7 @@ export function Navigation() {
             height={174}
             alt="InterData"
             priority
-            sizes="180px"
+            sizes="(max-width: 359px) 120px, (max-width: 639px) 140px, (max-width: 1199px) 152px, 160px"
           />
         </Link>
         <nav className="desktop-nav" aria-label="Điều hướng chính">

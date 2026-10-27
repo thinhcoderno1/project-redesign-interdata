@@ -8,15 +8,6 @@
 .companyDetail > svg {
   margin-top: 0.25em;
 }
-.companyCertificate {
-  display: inline-flex;
-  margin-top: 16px;
-}
-.companyCertificate img {
-  width: 148px;
-  height: 56px;
-  object-fit: contain;
-}
 .policies {
   padding: 24px 0;
   border-top: 1px solid var(--border-on-dark);
@@ -39,10 +30,113 @@
   color: var(--text-on-dark-secondary);
   font-size: 14px;
 }
+.assurances {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, 0.9fr);
+  gap: 40px;
+  padding-block: 32px 36px;
+  border-top: 1px solid var(--border-on-dark);
+}
+.assurances h2 {
+  margin-bottom: 20px;
+  color: var(--text-on-brand);
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+.certificateList,
+.paymentList {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.certificateList {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 280px;
+}
+.certificateItem,
+.paymentCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+.certificateItem {
+  justify-content: flex-start;
+  height: 44px;
+}
+.certificateItem img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+a.certificateItem:hover {
+  outline: 2px solid var(--text-on-brand);
+  outline-offset: 3px;
+}
+.brandLogo {
+  position: relative;
+  display: block;
+  max-width: 100%;
+}
+.brandLogo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* Light wordmarks retain the supplied artwork and the colored brand symbols. */
+.brandLogo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    transparent var(--wordmark-start),
+    var(--text-on-brand) var(--wordmark-start)
+  );
+  mask: var(--logo-mask) center / contain no-repeat;
+  pointer-events: none;
+}
+.hostAdvice {
+  --wordmark-start: 24%;
+  --logo-mask: url("/images/footer/hostadvice.webp");
+  width: 128px;
+}
+.trustpilot {
+  --wordmark-start: 28%;
+  --logo-mask: url("/images/footer/trustpilot.png");
+  width: 100px;
+}
+.trustpilot::after {
+  clip-path: inset(0 0 44% 0);
+}
+.paymentList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  max-width: 260px;
+}
+.paymentCard {
+  border: 1px solid var(--border-on-dark);
+  border-radius: 5px;
+  background: var(--surface-canvas);
+  flex: 0 0 56px;
+  width: 56px;
+  height: 36px;
+  padding: 4px;
+  color: var(--brand-strong);
+}
+.paymentCard img {
+  max-width: 100%;
+  object-fit: contain;
+}
 .socialLinks {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  max-width: 280px;
   gap: 12px;
 }
 .socialLink {
@@ -51,6 +145,7 @@
   justify-content: center;
   width: 44px;
   height: 44px;
+  flex: 0 0 44px;
   border: 1px solid var(--border-on-dark);
   border-radius: 50%;
   background: rgb(255 255 255 / 8%);
@@ -65,27 +160,41 @@
   border-color: var(--text-on-brand);
   background: rgb(255 255 255 / 18%);
 }
-@media (min-width: 640px) and (max-width: 1407px) {
-  .socialLinks {
-    margin-inline-end: 64px;
+@media (max-width: 1407px) {
+  .assurances {
+    gap: 28px;
+    padding-inline-end: 48px;
   }
 }
 @media (max-width: 959px) {
+  .assurances {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+  }
+  .assurances > section:last-child {
+    grid-column: 1 / -1;
+  }
+  .socialLinks {
+    max-width: none;
+  }
   .policies > div {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 639px) {
+  .assurances {
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: 28px;
+    padding-inline-end: 44px;
+  }
+  .assurances h2 {
+    margin-bottom: 16px;
+  }
   .policies > div {
     grid-template-columns: minmax(0, 1fr);
   }
   .socialLinks {
     justify-content: flex-start;
     gap: 8px;
-    margin-top: 16px;
-  }
-  .socialLink {
-    width: 40px;
-    height: 40px;
   }
 }
