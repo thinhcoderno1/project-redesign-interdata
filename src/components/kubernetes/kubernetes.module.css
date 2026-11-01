@@ -3,16 +3,27 @@
   --cluster-surface: #06142d;
 }
 .heroStage {
+  --hero-color-wash:
+    radial-gradient(
+      ellipse 55% 95% at 0% 12%,
+      #0066ed59 0%,
+      #0066ed24 42%,
+      transparent 76%
+    ),
+    radial-gradient(ellipse 42% 70% at 24% 100%, #00b8d938 0%, transparent 72%),
+    radial-gradient(ellipse 38% 65% at 58% 0%, #6366f12e 0%, transparent 75%);
   background: var(--cluster-surface);
 }
 .heroStage::after {
-  background: linear-gradient(
-    90deg,
-    var(--cluster-surface) 0%,
-    color-mix(in srgb, var(--cluster-surface) 95%, transparent) 28%,
-    color-mix(in srgb, var(--cluster-surface) 65%, transparent) 45%,
-    transparent 70%
-  );
+  background:
+    var(--hero-color-wash),
+    linear-gradient(
+      90deg,
+      var(--cluster-surface) 0%,
+      color-mix(in srgb, var(--cluster-surface) 95%, transparent) 28%,
+      color-mix(in srgb, var(--cluster-surface) 65%, transparent) 45%,
+      transparent 70%
+    );
 }
 .heroStage .heroBackground {
   object-fit: contain;
@@ -41,12 +52,14 @@
 }
 @media (max-width: 899px) {
   .heroStage::after {
-    background: linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--cluster-surface) 98%, transparent),
-      color-mix(in srgb, var(--cluster-surface) 90%, transparent) 55%,
-      color-mix(in srgb, var(--cluster-surface) 65%, transparent)
-    );
+    background:
+      var(--hero-color-wash),
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--cluster-surface) 98%, transparent),
+        color-mix(in srgb, var(--cluster-surface) 90%, transparent) 55%,
+        color-mix(in srgb, var(--cluster-surface) 65%, transparent)
+      );
   }
   .heroStage .heroBackground {
     object-fit: cover;

@@ -149,7 +149,7 @@
   position: relative;
   z-index: 3;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4, auto);
   align-items: center;
   width: min(1248px, calc(100% - 96px));
   margin: -56px auto 0;
@@ -163,8 +163,8 @@
 .benefit {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding-inline: 16px;
+  gap: 10px;
+  padding-inline: 10px;
   min-width: 0;
 }
 .benefit:first-child {
@@ -188,11 +188,12 @@
 }
 .benefitBar .benefit h2 {
   margin: 0;
-  font-size: var(--vps-font-benefit);
+  font-size: clamp(16px, 1.25vw, 18px);
   line-height: 1.5;
   font-weight: 700;
   letter-spacing: -0.025em;
   text-wrap: initial;
+  white-space: nowrap;
   color: #0b1d3c;
 }
 .benefitIcon svg {
@@ -235,8 +236,11 @@
     padding: 24px;
   }
   .benefit {
-    gap: 12px;
+    gap: 10px;
     padding-inline: 15px;
+  }
+  .benefitBar .benefit h2 {
+    font-size: var(--vps-font-benefit);
   }
   .benefitIcon {
     width: 48px;
@@ -335,28 +339,37 @@
   .benefitBar {
     width: calc(100% - 40px);
     align-items: stretch;
-    padding: 20px 14px;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 20px 12px;
     border-radius: 17px;
-    gap: 22px 0;
+    gap: 18px;
     margin-top: -24px;
   }
   .benefit {
-    padding-inline: 12px;
+    padding-inline: 0;
     align-items: center;
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;
+    gap: 8px;
+  }
+  .benefit + .benefit {
+    border-left: 0;
   }
   .benefitIcon {
-    width: 42px;
-    height: 42px;
+    width: 36px;
+    height: 36px;
   }
   .benefitIcon svg {
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
   }
   .benefitBar .benefit h2 {
-    font-size: var(--vps-font-benefit);
-    text-align: center;
+    font-size: 16px;
+    text-align: left;
+  }
+}
+@media (min-width: 600px) and (max-width: 767px) {
+  .benefit {
+    flex-direction: column;
   }
 }
 @media (min-width: 600px) and (max-width: 639px) {
