@@ -6,7 +6,7 @@ export const proxmoxCephOptions = [
       "Ảo hóa trên một máy chủ, tổ chức máy ảo và Linux container theo nhu cầu ứng dụng. Khởi đầu gọn, có kế hoạch sao lưu và mở rộng.",
     audience:
       "Doanh nghiệp nhỏ, môi trường phát triển hoặc hệ thống chấp nhận cửa sổ bảo trì.",
-    image: "/images/vps/infrastructure-v4/cpu.webp",
+    image: "/images/proxmox-ceph/architecture-standalone-dark-v2.webp",
     href: "#proxmox-ceph-option-doc-lap",
     featured: false,
     features: [
@@ -23,7 +23,7 @@ export const proxmoxCephOptions = [
       "Kết nối nhiều node thành cụm quản trị tập trung. Thiết kế quorum, tài nguyên dự phòng và lưu trữ để cấu hình HA cho workload phù hợp.",
     audience:
       "Hệ thống cần phục hồi dịch vụ khi node gặp sự cố và chủ động bảo trì theo kế hoạch.",
-    image: "/images/solutions/server-racks.webp",
+    image: "/images/proxmox-ceph/architecture-cluster-ha-dark-v2.webp",
     href: "#proxmox-ceph-option-cluster-ha",
     featured: false,
     features: [
@@ -40,7 +40,7 @@ export const proxmoxCephOptions = [
       "Kết hợp ảo hóa và lưu trữ phân tán trên cụm máy chủ. Thiết kế Ceph RBD, mạng lưu trữ và chính sách dữ liệu theo tải thực tế.",
     audience:
       "Hạ tầng nhiều node cần lưu trữ dùng chung và lộ trình mở rộng tài nguyên theo cụm.",
-    image: "/images/solutions/giai-phap-private-cloud.jpg",
+    image: "/images/proxmox-ceph/architecture-hci-ceph-dark-v2.webp",
     href: "#proxmox-ceph-option-hci-ceph",
     featured: true,
     features: [
@@ -118,7 +118,9 @@ export const proxmoxCephInfrastructure = [
     title: "Thiết kế ",
     accent: "node & tài nguyên",
     text: "Kiểm tra CPU, RAM, ổ đĩa và khả năng tương thích. Phân bổ tài nguyên cho máy ảo, dịch vụ cụm và phần dự phòng khi một node dừng hoạt động.",
-    image: "/images/solutions/server-racks.webp",
+    image: "/images/proxmox-ceph/component-compute-v1.webp",
+    imageAlt:
+      "Minh họa các node Proxmox với máy ảo, CPU, RAM và tài nguyên dự phòng được phân bổ theo từng host",
     benefits: ["CPU / RAM", "Dư địa dự phòng", "Khả năng mở rộng"],
   },
   {
@@ -126,7 +128,9 @@ export const proxmoxCephInfrastructure = [
     title: "Lựa chọn ",
     accent: "lưu trữ & Ceph",
     text: "Chọn local, shared storage hoặc Ceph theo yêu cầu. Với Ceph, quy hoạch OSD, pool, số bản sao và failure domain; dung lượng sử dụng không bằng tổng dung lượng ổ đĩa.",
-    image: "/images/vps/infrastructure-v4/storage.webp",
+    image: "/images/proxmox-ceph/component-ceph-storage-v1.webp",
+    imageAlt:
+      "Minh họa các node lưu trữ Ceph với ổ đĩa OSD và các khối dữ liệu phân bố trên những host riêng biệt",
     benefits: ["OSD / Pool", "Failure domain", "Dung lượng thực dùng"],
   },
   {
@@ -134,7 +138,9 @@ export const proxmoxCephInfrastructure = [
     title: "Tách luồng ",
     accent: "mạng cụm & dữ liệu",
     text: "Quy hoạch luồng quản trị, Corosync, migration và storage. Đánh giá băng thông, độ trễ và đường dự phòng theo lưu lượng vận hành và phục hồi.",
-    image: "/images/vps/infrastructure-v4/network.webp",
+    image: "/images/proxmox-ceph/component-cluster-network-v1.webp",
+    imageAlt:
+      "Minh họa các luồng kết nối mạng cụm và truyền dữ liệu được tách riêng giữa các node Proxmox qua switch",
     benefits: ["Corosync", "Migration", "Storage network"],
   },
   {
@@ -142,7 +148,9 @@ export const proxmoxCephInfrastructure = [
     title: "Kiểm thử ",
     accent: "HA, backup & restore",
     text: "Thử các tình huống đã thống nhất: dừng node, khôi phục máy ảo và bảo trì cụm. Bàn giao cảnh báo, tài liệu và trách nhiệm vận hành từng thành phần.",
-    image: "/images/home/infrastructure/protection-monitoring.webp",
+    image: "/images/proxmox-ceph/component-recovery-v1.webp",
+    imageAlt:
+      "Minh họa phục hồi máy ảo trong cụm Proxmox và khôi phục từ thiết bị backup tách biệt",
     benefits: ["Thử failover", "Kiểm tra restore", "Tài liệu vận hành"],
   },
 ] as const;

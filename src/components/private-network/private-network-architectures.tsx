@@ -6,6 +6,7 @@ import type { CSSProperties, KeyboardEvent, PointerEvent } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { privateNetworkOptions } from "@/data/private-network";
 import styles from "@/components/vps/service-range.module.css";
+import local from "./private-network.module.css";
 
 const subscribe = () => () => {};
 const clientSnapshot = () => true;
@@ -87,7 +88,7 @@ export function NetworkArchitectures() {
 
   return (
     <section
-      className={styles.range}
+      className={`${styles.range} ${local.architectures}`}
       aria-labelledby="private-network-architecture-title"
       aria-roledescription={enhanced ? "băng chuyền" : undefined}
     >
@@ -168,7 +169,7 @@ export function NetworkArchitectures() {
           return (
             <div
               key={service.id}
-              className={styles.slide}
+              className={`${styles.slide} ${local.architectureSlide}`}
               data-active={selected}
               data-visible={Math.abs(position) <= 1}
               id={`private-network-architecture-panel-${service.id}`}
@@ -187,7 +188,7 @@ export function NetworkArchitectures() {
                 alt=""
                 fill
                 sizes="(min-width: 1000px) 840px, (min-width: 640px) calc(100vw - 128px), calc(100vw - 40px)"
-                className={styles.background}
+                className={`${styles.background} ${local.architectureBackground}`}
               />
               <article
                 className={styles.slideContent}

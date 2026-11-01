@@ -1,0 +1,28 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="800"
+  height="520"
+  viewBox="0 0 800 520"
+  fill="none"
+>
+  <defs>
+    <pattern id="grid" width="160" height="92" patternUnits="userSpaceOnUse">
+      <path d="m0 0 160 92M0 92 160 0" stroke="white" stroke-width="1" />
+    </pattern>
+    <radialGradient id="fade" cx=".43" cy=".46" r=".65">
+      <stop offset=".15" stop-color="white" />
+      <stop offset="1" stop-color="white" stop-opacity="0" />
+    </radialGradient>
+    <mask id="edge-fade">
+      <path fill="url(#fade)" d="M0 0h800v520H0z" />
+    </mask>
+  </defs>
+  <g mask="url(#edge-fade)">
+    <path fill="url(#grid)" d="M0 0h800v520H0z" />
+    <g stroke="white" stroke-width="1.5" stroke-linejoin="round">
+      <path d="m160 230 160-92 160 92-160 92z" />
+      <path d="m160 250 160 92 160-92M160 270l160 92 160-92" />
+      <path d="M160 230v40m160 52v40m160-132v40" />
+    </g>
+  </g>
+</svg>

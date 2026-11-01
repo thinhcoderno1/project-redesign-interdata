@@ -43,14 +43,22 @@ Menu desktop/mobile và CTA của thẻ Private Network trên trang chủ dẫn 
 mới. Các giải pháp khác giữ liên kết và hành vi hiện tại. Hash `/#private-network`
 trên trang chủ vẫn tồn tại cho carousel, không thêm mục giải pháp trùng lặp.
 
-Hero dùng ảnh thiết bị mạng `home/infrastructure/protection-monitoring.webp`.
+Hero dùng ảnh topology mạng riêng được tạo riêng
+`private-network/hero-private-network-v1.webp`.
 Hình trung tâm lợi ích dùng ảnh 3D minimal nền trong suốt
 `public/images/private-network/advantages-network-v1.webp` (1000×1000, khoảng
 103 KiB), cùng phong cách ảnh Thuê VPS. Ba máy chủ kết nối qua switch trung tâm
 và biểu tượng kiểm soát truy cập; không có chữ VPS. Giữ CSS vòng trang trí và
 sáu thẻ nội dung của section. Ảnh được tạo bằng công cụ imagegen tích hợp;
 prompt lưu tại `docs/private-network-image-prompt.md`.
-Ảnh các phần còn lại tái sử dụng tài nguyên phù hợp hiện có; đều là minh họa,
+Section “Đa dạng lựa chọn” dùng ba ảnh riêng cho mạng nội bộ ứng dụng, phân vùng
+hệ thống và kết nối đa điểm. Bốn hàng “Các thành phần của một mạng riêng” có ảnh
+riêng cho IP/subnet, phân vùng, kiểm soát truy cập/định tuyến và kiểm thử/bàn giao.
+Bộ tám ảnh nền mới dùng tông navy–cyan và được tối ưu WebP (khoảng 34–76 KiB/ảnh).
+Tài nguyên nằm trong `public/images/private-network/`; prompt đầy đủ được lưu
+trong `docs/private-network-background-prompts.md`. CSS riêng của Private Network
+điều chỉnh lớp phủ Hero/carousel và giữ trọn hình carousel trên mobile.
+Ảnh các phần còn lại tái sử dụng tài nguyên hiện có. Tất cả đều là minh họa,
 không được trình bày như bằng chứng về dự án hoặc thiết bị cấp cho khách hàng.
 
 Canonical, Open Graph và Service JSON-LD dùng URL mới. FAQPage schema khớp mười
@@ -83,3 +91,10 @@ ba phương án và toàn bộ FAQ. Production local ở 390/1440px đạt HTTP 
 CTA, carousel và liên kết trang chủ, không có lỗi runtime. Server production tạm
 đã dừng; dev preview cổng 3100 được giữ lại. Snapshot xác nhận các trang và dữ liệu
 có sẵn được giữ nguyên ngoài thay đổi tích hợp Private Network đã nêu.
+
+Cập nhật ảnh ngày 31/10/2026: thay tám ảnh ở Hero, ba mô hình và bốn hàng
+thành phần bằng bộ minh họa Private Network tạo riêng. Bộ kiểm tra Private Network
+đạt ở bảy viewport (320–1920px), ảnh tải đủ, không tràn ngang, không lỗi runtime
+và không phát hiện vi phạm axe WCAG A/AA. Lint, TypeScript và build production
+đạt. Giữ nguyên nội dung và các tương tác hiện có. Dev preview hiện tại:
+http://localhost:3000/trien-khai-private-network/.

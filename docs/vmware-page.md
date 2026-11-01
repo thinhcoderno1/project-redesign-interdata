@@ -50,15 +50,29 @@ phương án thương mại hoặc cam kết dịch vụ cụ thể của InterD
 ## Tài nguyên và metadata
 
 Ảnh tạo mới bằng imagegen tích hợp, tối ưu WebP;
-prompt tại `docs/vmware-image-prompts.md`:
+prompt ban đầu tại `docs/vmware-image-prompts.md`, bộ ảnh nền cập nhật ngày
+01/11/2026 tại `docs/vmware-background-prompts.md`; Hero minh họa giải pháp mới nhất
+tại `docs/vmware-hero-solution-prompt.md`:
 
-- `public/images/vmware/hero-vmware-v1.webp`: 2160×720, khoảng 115 KiB;
-  datacenter với cụm máy chủ bên phải, nền tối bên trái cho nội dung.
+- `public/images/vmware/hero-vmware-solution-v4.webp`: 2160×900, khoảng 125 KiB;
+  kiến trúc giải pháp với các lớp ứng dụng, nhóm máy ảo, hypervisor và tài nguyên
+  dùng chung; quản trị tập trung và luồng di chuyển workload. Chất liệu kính
+  sapphire, viền kim loại và ánh sáng studio tạo chiều sâu.
+  Nền navy bên trái cho nội dung. Open Graph dùng cùng ảnh và kích thước.
+  Giữ cách căn ảnh desktop/mobile hiện có để thấy lớp ảo hóa và đọc rõ CTA.
 - `public/images/vmware/advantages-virtualization-v1.webp`: 1000×1000, alpha,
   khoảng 95 KiB; cụm host và máy ảo 3D minimal trắng/xanh.
+- Ba ảnh `architecture-*-v1.webp`: 1536×1024, khoảng 65–86 KiB/ảnh;
+  vSphere cơ bản, Cluster HA / vMotion và HCI với vSAN. Nền navy tách khỏi
+  section xanh; vùng dưới chừa cho chữ, ảnh thu vừa khung trên mobile.
+- Bốn ảnh `component-*-v1.webp`: 1536×768, khoảng 57–75 KiB/ảnh;
+  tài nguyên host, mạng/quản trị, datastore/vSAN và HA/backup/restore.
+  Nền royal blue hòa với section; khung ảnh riêng của VMware tránh lấn vào chữ.
 
-Các ảnh còn lại dùng tài nguyên minh họa hiện có, không được trình bày
-như ảnh dự án đã triển khai hoặc bằng chứng cấu hình cấp cho khách hàng.
+Tám ảnh nền đang sử dụng tổng khoảng 597 KiB, dùng `next/image` và `sizes` theo khung.
+CSS điều chỉnh nằm riêng trong module VMware, không thay CSS dùng chung.
+Ảnh là minh họa khái niệm, không được trình bày như ảnh dự án đã triển khai
+hoặc bằng chứng cấu hình cấp cho khách hàng.
 
 Canonical, Open Graph và Service JSON-LD dùng URL mới. FAQPage schema khớp
 mười FAQ; năm câu sau mở bằng “Xem tất cả”. Giữ robots noindex/nofollow

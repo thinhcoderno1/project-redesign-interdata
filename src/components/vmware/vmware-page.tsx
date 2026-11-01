@@ -50,15 +50,15 @@ import local from "./vmware.module.css";
 function VmwareHero() {
   return (
     <section className={hero.hero} aria-labelledby="vmware-title">
-      <div className={`${hero.stage} dark`}>
+      <div className={`${hero.stage} ${local.heroStage} dark`}>
         <Image
-          src="/images/vmware/hero-vmware-v1.webp"
+          src="/images/vmware/hero-vmware-solution-v4.webp"
           alt=""
           fill
           sizes="100vw"
           loading="eager"
           fetchPriority="high"
-          className={hero.backgroundImage}
+          className={`${hero.backgroundImage} ${local.heroBackground}`}
         />
         <div className={hero.container}>
           <nav className={hero.breadcrumb} aria-label="Đường dẫn trang">
@@ -315,7 +315,7 @@ function VmwareInfrastructure() {
   return (
     <section
       id="thanh-phan"
-      className={infrastructure.section}
+      className={`${infrastructure.section} ${local.foundation}`}
       aria-labelledby="vmware-infrastructure-title"
     >
       <div className={infrastructure.container}>
@@ -340,7 +340,7 @@ function VmwareInfrastructure() {
             const Icon = icons[index];
             return (
               <article
-                className={infrastructure.row}
+                className={`${infrastructure.row} ${local.componentRow}`}
                 key={item.id}
                 aria-labelledby={`vmware-infrastructure-${item.id}`}
               >
@@ -379,12 +379,14 @@ function VmwareInfrastructure() {
                     </ul>
                   </div>
                 </div>
-                <figure className={infrastructure.imageFrame}>
+                <figure
+                  className={`${infrastructure.imageFrame} ${local.componentImage}`}
+                >
                   <Image
                     src={item.image}
                     alt={`Hình ảnh minh họa cho ${item.title}${item.accent}`}
                     fill
-                    sizes="(min-width: 1384px) 722px, (min-width: 1000px) 56vw, (min-width: 640px) 720px, calc(100vw - 40px)"
+                    sizes="(min-width: 1384px) 620px, (min-width: 1000px) 48vw, (min-width: 640px) 720px, calc(100vw - 40px)"
                   />
                 </figure>
               </article>

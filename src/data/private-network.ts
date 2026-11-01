@@ -6,7 +6,7 @@ export const privateNetworkOptions = [
       "Kết nối các máy chủ trong một hệ thống để ứng dụng, database và dịch vụ nền giao tiếp qua mạng riêng.",
     audience:
       "Website, API và hệ thống có các thành phần cần trao đổi dữ liệu nội bộ.",
-    image: "/images/vps/infrastructure-v4/network.webp",
+    image: "/images/private-network/architecture-internal-v1.webp",
     href: "#private-network-option-noi-bo",
     featured: false,
     features: [
@@ -23,7 +23,7 @@ export const privateNetworkOptions = [
       "Tổ chức các vùng ứng dụng, dữ liệu và quản trị. Kiểm soát luồng truy cập giữa các thành phần theo vai trò.",
     audience:
       "Doanh nghiệp cần tách môi trường production, staging hoặc các nhóm dịch vụ.",
-    image: "/images/home/infrastructure/protection-monitoring.webp",
+    image: "/images/private-network/architecture-segmentation-v1.webp",
     href: "#private-network-option-phan-vung",
     featured: true,
     features: [
@@ -40,7 +40,7 @@ export const privateNetworkOptions = [
       "Lập phương án kết nối văn phòng, datacenter hoặc hạ tầng hiện có, phù hợp với đường truyền và thiết bị hai đầu.",
     audience:
       "Hệ thống có nhiều địa điểm hoặc cần kết nối giữa hạ tầng tại chỗ và máy chủ bên ngoài.",
-    image: "/images/solutions/giai-phap-private-cloud.jpg",
+    image: "/images/private-network/architecture-multisite-v1.webp",
     href: "#private-network-option-da-diem",
     featured: false,
     features: [
@@ -118,7 +118,9 @@ export const privateNetworkInfrastructure = [
     title: "Quy hoạch ",
     accent: "dải IP & subnet",
     text: "Rà soát mạng đang dùng, tách subnet theo chức năng và dự trù không gian địa chỉ cho các hệ thống cần kết nối.",
-    image: "/images/vps/infrastructure-v4/network.webp",
+    image: "/images/private-network/component-ip-subnets-v1.webp",
+    imageAlt:
+      "Minh họa quy hoạch các nhóm địa chỉ trong những subnet riêng biệt, không chồng lấn và có vùng dự trù mở rộng",
     benefits: ["IP plan", "Không chồng lấn", "Dự trù mở rộng"],
   },
   {
@@ -126,7 +128,9 @@ export const privateNetworkInfrastructure = [
     title: "Phân vùng ",
     accent: "theo hệ thống",
     text: "Lựa chọn cách phân đoạn phù hợp với nền tảng, như VLAN hoặc các mạng ảo. Tách môi trường và giới hạn phạm vi giao tiếp.",
-    image: "/images/solutions/server-racks.webp",
+    image: "/images/private-network/component-segmentation-v1.webp",
+    imageAlt:
+      "Minh họa các vùng ứng dụng, dữ liệu và quản trị được phân tách, kết nối qua thiết bị định tuyến",
     benefits: ["Theo vai trò", "Theo môi trường", "Theo nền tảng"],
   },
   {
@@ -134,7 +138,9 @@ export const privateNetworkInfrastructure = [
     title: "Kiểm soát ",
     accent: "truy cập & định tuyến",
     text: "Xác định nguồn, đích, cổng và chiều kết nối. Thống nhất firewall, route và phương án mã hóa cho các luồng cần bảo vệ.",
-    image: "/images/home/infrastructure/protection-monitoring.webp",
+    image: "/images/private-network/component-routing-access-v1.webp",
+    imageAlt:
+      "Minh họa router và firewall kiểm soát đường đi giữa máy chủ ứng dụng, cơ sở dữ liệu và các nút mạng",
     benefits: ["Firewall / ACL", "Routing", "Mã hóa theo luồng"],
   },
   {
@@ -142,7 +148,9 @@ export const privateNetworkInfrastructure = [
     title: "Kiểm thử ",
     accent: "& bàn giao vận hành",
     text: "Đối chiếu kết quả với ma trận truy cập, ghi nhận cấu hình và thống nhất kịch bản thay đổi hoặc khôi phục khi cần.",
-    image: "/images/vps/infrastructure-v4/datacenter.webp",
+    image: "/images/private-network/component-validation-handover-v1.webp",
+    imageAlt:
+      "Minh họa kiểm tra kết nối mạng riêng trên màn hình giám sát và bàn giao tài liệu sơ đồ cấu hình",
     benefits: ["Kiểm tra hai chiều", "Tài liệu cấu hình", "Kịch bản bảo trì"],
   },
 ] as const;

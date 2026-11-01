@@ -50,15 +50,15 @@ import local from "./proxmox-ceph.module.css";
 function ProxmoxHero() {
   return (
     <section className={hero.hero} aria-labelledby="proxmox-ceph-title">
-      <div className={`${hero.stage} dark`}>
+      <div className={`${hero.stage} ${local.heroStage} dark`}>
         <Image
-          src="/images/proxmox-ceph/hero-proxmox-ceph-v1.webp"
+          src="/images/proxmox-ceph/hero-proxmox-ceph-v2.webp"
           alt=""
           fill
           sizes="100vw"
           loading="eager"
           fetchPriority="high"
-          className={hero.backgroundImage}
+          className={`${hero.backgroundImage} ${local.heroBackground}`}
         />
         <div className={hero.container}>
           <nav className={hero.breadcrumb} aria-label="Đường dẫn trang">
@@ -315,7 +315,7 @@ function ProxmoxInfrastructure() {
   return (
     <section
       id="thanh-phan"
-      className={infrastructure.section}
+      className={`${infrastructure.section} ${local.foundation}`}
       aria-labelledby="proxmox-ceph-infrastructure-title"
     >
       <div className={infrastructure.container}>
@@ -340,7 +340,7 @@ function ProxmoxInfrastructure() {
             const Icon = icons[index];
             return (
               <article
-                className={infrastructure.row}
+                className={`${infrastructure.row} ${local.componentRow}`}
                 key={item.id}
                 aria-labelledby={`proxmox-ceph-infrastructure-${item.id}`}
               >
@@ -379,10 +379,12 @@ function ProxmoxInfrastructure() {
                     </ul>
                   </div>
                 </div>
-                <figure className={infrastructure.imageFrame}>
+                <figure
+                  className={`${infrastructure.imageFrame} ${local.componentImage}`}
+                >
                   <Image
                     src={item.image}
-                    alt={`Hình ảnh minh họa cho ${item.title}${item.accent}`}
+                    alt={item.imageAlt}
                     fill
                     sizes="(min-width: 1384px) 722px, (min-width: 1000px) 56vw, (min-width: 640px) 720px, calc(100vw - 40px)"
                   />

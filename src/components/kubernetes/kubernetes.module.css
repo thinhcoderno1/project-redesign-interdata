@@ -1,5 +1,69 @@
 .page {
   --brand-primary: #0066ed;
+  --cluster-surface: #06142d;
+}
+.heroStage {
+  background: var(--cluster-surface);
+}
+.heroStage::after {
+  background: linear-gradient(
+    90deg,
+    var(--cluster-surface) 0%,
+    color-mix(in srgb, var(--cluster-surface) 95%, transparent) 28%,
+    color-mix(in srgb, var(--cluster-surface) 65%, transparent) 45%,
+    transparent 70%
+  );
+}
+.heroStage .heroBackground {
+  object-fit: contain;
+  object-position: right center;
+}
+.architectures .architectureSlide {
+  background: var(--cluster-surface);
+}
+.architectures .architectureBackground {
+  object-position: center top;
+}
+.architectures .architectureSlide::after {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--cluster-surface) 10%, transparent) 30%,
+    color-mix(in srgb, var(--cluster-surface) 70%, transparent) 55%,
+    var(--cluster-surface) 78%
+  );
+}
+.page .componentImage {
+  grid-column: 1 / 49;
+}
+.page .componentRow:nth-child(even) .componentImage {
+  grid-column: 53 / -1;
+}
+@media (max-width: 899px) {
+  .heroStage::after {
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--cluster-surface) 98%, transparent),
+      color-mix(in srgb, var(--cluster-surface) 90%, transparent) 55%,
+      color-mix(in srgb, var(--cluster-surface) 65%, transparent)
+    );
+  }
+  .heroStage .heroBackground {
+    object-fit: cover;
+    object-position: 72% center;
+  }
+}
+@media (max-width: 639px) {
+  .options .optionTag {
+    max-width: calc(100% - 16px);
+    gap: 5px;
+    padding-inline: 10px;
+    font-size: 12px;
+  }
+  .architectures .architectureBackground {
+    object-fit: contain;
+    object-position: center 16px;
+  }
 }
 .options .optionGrid {
   grid-template-columns: repeat(3, minmax(0, 1fr));

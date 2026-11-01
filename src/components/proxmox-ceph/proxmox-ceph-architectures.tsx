@@ -6,6 +6,7 @@ import type { CSSProperties, KeyboardEvent, PointerEvent } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { proxmoxCephOptions } from "@/data/proxmox-ceph";
 import styles from "@/components/vps/service-range.module.css";
+import local from "./proxmox-ceph.module.css";
 
 const subscribe = () => () => {};
 const clientSnapshot = () => true;
@@ -87,7 +88,7 @@ export function ProxmoxArchitectures() {
 
   return (
     <section
-      className={styles.range}
+      className={`${styles.range} ${local.architectures}`}
       aria-labelledby="proxmox-ceph-architecture-title"
       aria-roledescription={enhanced ? "băng chuyền" : undefined}
     >
@@ -164,7 +165,7 @@ export function ProxmoxArchitectures() {
           return (
             <div
               key={service.id}
-              className={styles.slide}
+              className={`${styles.slide} ${local.architectureSlide}`}
               data-active={selected}
               data-visible={Math.abs(position) <= 1}
               id={`proxmox-ceph-architecture-panel-${service.id}`}
@@ -183,7 +184,7 @@ export function ProxmoxArchitectures() {
                 alt=""
                 fill
                 sizes="(min-width: 1000px) 840px, (min-width: 640px) calc(100vw - 128px), calc(100vw - 40px)"
-                className={styles.background}
+                className={`${styles.background} ${local.architectureBackground}`}
               />
               <article
                 className={styles.slideContent}

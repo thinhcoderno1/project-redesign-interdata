@@ -10,6 +10,32 @@
   line-height: 1.75;
 }
 
+.section:global(.dark)::before,
+.section:global(.dark)::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: min(1120px, 96vw);
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 0;
+  background: url("/images/proxmox-ceph/pattern-circuit-nodes.svg") center /
+    contain no-repeat;
+  mask-image: none;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.section:global(.dark)::before {
+  inset: auto auto -200px -260px;
+  transform: rotate(180deg);
+}
+
+.section:global(.dark)::after {
+  inset: -200px -260px auto auto;
+  transform: none;
+}
+
 .section h2 {
   text-transform: uppercase;
 }
@@ -42,6 +68,20 @@
 }
 
 @media (max-width: 639px) {
+  .section:global(.dark)::before,
+  .section:global(.dark)::after {
+    width: 840px;
+    opacity: 0.4;
+  }
+
+  .section:global(.dark)::before {
+    inset: auto auto -120px -420px;
+  }
+
+  .section:global(.dark)::after {
+    inset: -160px -430px auto auto;
+  }
+
   .footer a {
     width: 100%;
   }

@@ -19,10 +19,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://interdata.vn/images/proxmox-ceph/hero-proxmox-ceph-v1.webp",
-        width: 2160,
-        height: 720,
-        alt: "Minh họa cụm máy chủ trong trung tâm dữ liệu",
+        url: "https://interdata.vn/images/proxmox-ceph/hero-proxmox-ceph-v2.webp",
+        width: 1920,
+        height: 800,
+        alt: "Minh họa cụm ảo hóa Proxmox kết hợp lưu trữ phân tán Ceph",
       },
     ],
   },

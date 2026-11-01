@@ -43,15 +43,26 @@ Tài liệu dùng để kiểm chứng khái niệm, không thay cho cam kết d
 
 ## Tài nguyên và metadata
 
-Tạo bằng imagegen tích hợp, tối ưu WebP; prompt tại `docs/kubernetes-image-prompts.md`:
+Bộ tám ảnh nền được tạo mới bằng imagegen tích hợp ngày 31/10/2026, tối ưu
+WebP và lưu trong `public/images/kubernetes/`. Prompt và đường dẫn từng ảnh
+được ghi tại `docs/kubernetes-background-prompts.md`:
 
-- `public/images/kubernetes/hero-kubernetes-v1.webp`: 2160×720, khoảng 125 KiB;
-  ảnh datacenter, cụm máy chủ bên phải, khoảng tối bên trái dành cho nội dung.
-- `public/images/kubernetes/advantages-containers-v1.webp`: 1000×1000, alpha,
-  khoảng 85 KiB; 3D minimal các node và container cùng tông trắng/xanh Thuê VPS.
+- Hero `hero-kubernetes-v2.webp`: 1920×800, minh họa tầng control plane và các
+  worker chạy Pod; khoảng trống bên trái dành cho nội dung. Open Graph dùng
+  cùng ảnh với kích thước và alt được cập nhật.
+- Ba ảnh `architecture-*.webp`: Dev/Staging, Production và Production HA có
+  topology riêng; nền navy `#06142d` để tách thẻ khỏi section xanh.
+- Bốn ảnh `component-*.webp`: control plane/worker, kết nối dịch vụ, storage
+  và bảo mật/vận hành. Nền xanh `#031677` đồng bộ với section thành phần.
 
-Các ảnh còn lại tái sử dụng tài nguyên minh họa phù hợp hiện có, không được trình bày
-như ảnh dự án đã triển khai hoặc bằng chứng cấu hình cấp cho khách hàng.
+Phần cứng trắng/bạc, panel cobalt `#0043ec`, xanh nhạt `#cbd5f7` và điểm nhấn
+cyan theo bảng màu project. CSS riêng căn Hero, lớp phủ carousel, khung ảnh
+thành phần và giữ trọn các node trong carousel trên mobile.
+
+Ảnh trung tâm lợi ích giữ `advantages-containers-v1.webp`: 1000×1000, alpha,
+khoảng 85 KiB, prompt tại `docs/kubernetes-image-prompts.md`. Các phần còn lại
+tái sử dụng tài nguyên hiện có. Tất cả là minh họa, không được trình bày như
+ảnh dự án thực tế hoặc bằng chứng cấu hình, khả năng HA cấp cho khách hàng.
 
 Canonical, Open Graph và Service JSON-LD dùng URL mới đúng chữ hoa.
 FAQPage schema khớp mười FAQ; năm câu sau mở bằng “Xem tất cả”.
@@ -70,4 +81,11 @@ Script kiểm tra route, metadata/schema, ba phương án không giá, CTA, các
 menu, liên kết trang chủ, carousel bàn phím/vuốt, FAQ, no-JS, ảnh tải thành công,
 overflow và WCAG A/AA tại 320, 390, 768, 900, 1024, 1440, 1920px.
 Bằng chứng tại `artifacts/kubernetes/`. Không gửi form liên hệ.
-Chưa deploy hoặc kiểm chứng trên production.
+Chưa deploy hoặc kiểm chứng trên website công khai.
+
+Cập nhật ảnh ngày 31/10/2026: bộ kiểm tra Kubernetes đạt ở cả bảy viewport,
+ảnh tải đủ, không tràn ngang, carousel bàn phím/vuốt và no-JS hoạt động,
+không lỗi runtime và không phát hiện vi phạm axe WCAG A/AA. Đã thu gọn nhãn
+phương án HA trên mobile để vừa thẻ ở 320px. Lint, TypeScript, Prettier và
+build production đạt. Dev preview:
+http://localhost:3000/trien-khai-Kubernetes-k8s/.

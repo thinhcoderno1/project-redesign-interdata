@@ -24,9 +24,9 @@
 .section::after {
   content: "";
   position: absolute;
-  width: clamp(640px, 58vw, 1000px);
-  aspect-ratio: 9 / 8;
-  background: url("/images/solutions-infrastructure-layers.svg") center /
+  width: min(1000px, 85vw);
+  aspect-ratio: 900 / 650;
+  background: url("/images/private-network/pattern-linked-nodes.svg") center /
     contain no-repeat;
   pointer-events: none;
   z-index: 0;
@@ -34,15 +34,15 @@
 }
 
 .section::before {
-  top: -220px;
-  left: -360px;
-  opacity: 0.65;
+  top: -90px;
+  left: -200px;
+  opacity: 0.8;
 }
 
 .section::after {
-  right: -300px;
-  bottom: -200px;
-  opacity: 0.8;
+  right: -210px;
+  bottom: -130px;
+  opacity: 0.65;
   transform: rotate(180deg);
 }
 
@@ -95,16 +95,20 @@
 }
 
 @media (max-width: 639px) {
+  .section::before,
+  .section::after {
+    width: 620px;
+    opacity: 0.55;
+  }
+
   .section::before {
-    width: 560px;
-    left: auto;
-    right: -340px;
-    top: -140px;
-    opacity: 0.45;
+    top: -45px;
+    left: -290px;
   }
 
   .section::after {
-    display: none;
+    right: -280px;
+    bottom: -95px;
   }
 
   .layout {

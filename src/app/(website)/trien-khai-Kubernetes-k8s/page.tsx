@@ -19,10 +19,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://interdata.vn/images/kubernetes/hero-kubernetes-v1.webp",
-        width: 2160,
-        height: 720,
-        alt: "Minh họa hạ tầng máy chủ cho cụm Kubernetes",
+        url: "https://interdata.vn/images/kubernetes/hero-kubernetes-v2.webp",
+        width: 1920,
+        height: 800,
+        alt: "Minh họa control plane và worker chạy các nhóm Pod trong cluster Kubernetes",
       },
     ],
   },

@@ -6,7 +6,7 @@ export const vmwareOptions = [
       "Khởi đầu ảo hóa trên một host hoặc nhóm host theo nhu cầu. Tổ chức máy ảo, mạng và datastore, kết hợp quản trị tập trung bằng vCenter khi phù hợp với phạm vi và bản quyền.",
     audience:
       "Doanh nghiệp cần hợp nhất máy chủ, chuẩn hóa máy ảo và quy trình quản trị ban đầu.",
-    image: "/images/vps/infrastructure-v4/cpu.webp",
+    image: "/images/vmware/architecture-vsphere-v1.webp",
     href: "#vmware-option-vsphere",
     featured: false,
     features: [
@@ -23,7 +23,7 @@ export const vmwareOptions = [
       "Thiết kế cụm vSphere cho quản trị nhiều host, dự phòng máy ảo và bảo trì theo kế hoạch. Đánh giá điều kiện HA, vMotion và tài nguyên còn lại khi một host dừng hoạt động.",
     audience:
       "Hệ thống cần phục hồi máy ảo khi host gặp sự cố và chủ động di chuyển workload để bảo trì.",
-    image: "/images/solutions/server-racks.webp",
+    image: "/images/vmware/architecture-cluster-ha-v1.webp",
     href: "#vmware-option-cluster-ha",
     featured: false,
     features: [
@@ -40,7 +40,7 @@ export const vmwareOptions = [
       "Kết hợp tài nguyên ảo hóa với lưu trữ vSAN theo kiến trúc phù hợp. Quy hoạch phần cứng, mạng, storage policy và miền lỗi trước khi đưa máy ảo vào vận hành.",
     audience:
       "Hạ tầng nhiều host cần lưu trữ dùng chung và lộ trình mở rộng theo cụm.",
-    image: "/images/solutions/giai-phap-private-cloud.jpg",
+    image: "/images/vmware/architecture-vsan-hci-v1.webp",
     href: "#vmware-option-vsan-hci",
     featured: true,
     features: [
@@ -118,7 +118,7 @@ export const vmwareInfrastructure = [
     title: "Đối chiếu ",
     accent: "host & tài nguyên",
     text: "Rà soát CPU, RAM, NIC, controller và firmware theo nền tảng được chọn. Phân bổ tài nguyên cho máy ảo, lớp quản trị và phần dự phòng khi một host ngừng hoạt động.",
-    image: "/images/solutions/server-racks.webp",
+    image: "/images/vmware/component-host-resources-v1.webp",
     benefits: ["CPU / RAM", "Tương thích phần cứng", "Dư địa dự phòng"],
   },
   {
@@ -126,7 +126,7 @@ export const vmwareInfrastructure = [
     title: "Quy hoạch ",
     accent: "mạng & quản trị",
     text: "Tách và kiểm thử luồng quản trị, máy ảo, vMotion và storage theo thiết kế. Thống nhất VLAN, uplink, DNS, đồng bộ thời gian và quyền truy cập vCenter.",
-    image: "/images/vps/infrastructure-v4/network.webp",
+    image: "/images/vmware/component-network-management-v1.webp",
     benefits: ["VLAN / Uplink", "vMotion network", "Phân quyền vCenter"],
   },
   {
@@ -134,7 +134,7 @@ export const vmwareInfrastructure = [
     title: "Thiết kế ",
     accent: "datastore & vSAN",
     text: "Lựa chọn NAS / SAN, datastore cục bộ hoặc vSAN theo phạm vi. Với vSAN, kiểm tra cấu hình được hỗ trợ, storage policy, failure domain và dung lượng cần để phục hồi.",
-    image: "/images/vps/infrastructure-v4/storage.webp",
+    image: "/images/vmware/component-datastore-vsan-v1.webp",
     benefits: ["Datastore", "Storage policy", "Failure domain"],
   },
   {
@@ -142,7 +142,7 @@ export const vmwareInfrastructure = [
     title: "Kiểm thử ",
     accent: "HA, backup & restore",
     text: "Thử failover, di chuyển máy ảo và khôi phục dữ liệu theo kịch bản đã thống nhất. Bàn giao cấu hình, cảnh báo và hướng dẫn bảo trì phù hợp với quyền sử dụng hiện có.",
-    image: "/images/home/infrastructure/protection-monitoring.webp",
+    image: "/images/vmware/component-recovery-v1.webp",
     benefits: ["Thử failover", "Kiểm tra restore", "Runbook vận hành"],
   },
 ] as const;

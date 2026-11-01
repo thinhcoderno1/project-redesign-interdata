@@ -1,6 +1,159 @@
 .page {
   --brand-primary: #0066ed;
 }
+.heroStage {
+  background: var(--brand-strong);
+}
+.heroStage::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: -90px;
+  width: min(760px, 56vw);
+  aspect-ratio: 260 / 250;
+  background: url("/images/proxmox-ceph/pattern-hexagon-links.svg") center /
+    contain no-repeat;
+  opacity: 0.14;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.heroStage::after {
+  background: linear-gradient(
+    90deg,
+    var(--brand-strong) 0%,
+    color-mix(in srgb, var(--brand-strong) 95%, transparent) 28%,
+    color-mix(in srgb, var(--brand-strong) 65%, transparent) 45%,
+    transparent 70%
+  );
+}
+.heroStage .heroBackground {
+  object-fit: contain;
+  object-position: right center;
+}
+.architectures {
+  --architecture-surface: #06142d;
+}
+.page .architectures::before,
+.page .architectures::after,
+.page .foundation::before,
+.page .foundation::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  aspect-ratio: auto;
+  border-radius: 0;
+  background: var(--text-on-dark-secondary);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+.page .architectures::before,
+.page .architectures::after {
+  width: min(1000px, 85vw);
+  height: auto;
+  aspect-ratio: 900 / 650;
+  background: url("/images/private-network/pattern-linked-nodes.svg") center /
+    contain no-repeat;
+  mask-image: none;
+}
+.page .architectures::before {
+  inset: -90px auto auto -200px;
+  opacity: 0.8;
+  transform: none;
+}
+.page .architectures::after {
+  inset: auto -210px -130px auto;
+  opacity: 0.65;
+  transform: rotate(180deg);
+}
+.page .foundation::before,
+.page .foundation::after {
+  width: min(1120px, 96vw);
+  height: auto;
+  aspect-ratio: 1;
+  background: url("/images/proxmox-ceph/pattern-circuit-nodes.svg") center /
+    contain no-repeat;
+  mask-image: none;
+  opacity: 0.5;
+}
+.page .foundation::before {
+  inset: auto auto -200px -260px;
+  transform: rotate(180deg);
+}
+.page .foundation::after {
+  inset: -200px -260px auto auto;
+  transform: none;
+}
+.architectures .architectureSlide {
+  background: var(--architecture-surface);
+}
+.architectures .architectureBackground {
+  object-position: center top;
+}
+.architectures .architectureSlide::after {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--architecture-surface) 10%, transparent) 30%,
+    color-mix(in srgb, var(--architecture-surface) 70%, transparent) 55%,
+    var(--architecture-surface) 78%
+  );
+}
+.page .componentImage {
+  grid-column: 1 / 49;
+}
+.page .componentRow:nth-child(even) .componentImage {
+  grid-column: 53 / -1;
+}
+@media (max-width: 899px) {
+  .heroStage::before {
+    left: -140px;
+    width: 620px;
+    opacity: 0.1;
+  }
+  .heroStage::after {
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--brand-strong) 98%, transparent),
+      color-mix(in srgb, var(--brand-strong) 90%, transparent) 55%,
+      color-mix(in srgb, var(--brand-strong) 65%, transparent)
+    );
+  }
+  .heroStage .heroBackground {
+    object-fit: cover;
+    object-position: 72% center;
+  }
+}
+@media (max-width: 639px) {
+  .page .architectures::before,
+  .page .architectures::after {
+    width: 620px;
+    opacity: 0.55;
+  }
+  .page .architectures::before {
+    inset: -45px auto auto -290px;
+  }
+  .page .architectures::after {
+    inset: auto -280px -95px auto;
+  }
+  .page .foundation::before,
+  .page .foundation::after {
+    width: 840px;
+    opacity: 0.34;
+  }
+  .page .foundation::before {
+    inset: auto auto -120px -420px;
+  }
+  .page .foundation::after {
+    inset: -160px -430px auto auto;
+  }
+  .architectures .architectureBackground {
+    object-fit: contain;
+    object-position: center 16px;
+  }
+}
 .options .optionGrid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   padding-top: 18px;

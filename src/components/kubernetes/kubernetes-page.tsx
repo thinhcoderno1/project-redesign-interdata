@@ -50,15 +50,15 @@ import local from "./kubernetes.module.css";
 function KubernetesHero() {
   return (
     <section className={hero.hero} aria-labelledby="kubernetes-title">
-      <div className={`${hero.stage} dark`}>
+      <div className={`${hero.stage} ${local.heroStage} dark`}>
         <Image
-          src="/images/kubernetes/hero-kubernetes-v1.webp"
+          src="/images/kubernetes/hero-kubernetes-v2.webp"
           alt=""
           fill
           sizes="100vw"
           loading="eager"
           fetchPriority="high"
-          className={hero.backgroundImage}
+          className={`${hero.backgroundImage} ${local.heroBackground}`}
         />
         <div className={hero.container}>
           <nav className={hero.breadcrumb} aria-label="Đường dẫn trang">
@@ -281,7 +281,7 @@ function KubernetesOptions() {
               className={`${pricing.plan} ${option.featured ? pricing.accentPlan : ""}`}
             >
               {option.featured && (
-                <span className={pricing.popularTag}>
+                <span className={`${pricing.popularTag} ${local.optionTag}`}>
                   <Layers3 size={16} aria-hidden="true" />
                   DỰ PHÒNG THEO KIẾN TRÚC
                 </span>
@@ -339,7 +339,7 @@ function KubernetesInfrastructure() {
             const Icon = icons[index];
             return (
               <article
-                className={infrastructure.row}
+                className={`${infrastructure.row} ${local.componentRow}`}
                 key={item.id}
                 aria-labelledby={`kubernetes-infrastructure-${item.id}`}
               >
@@ -378,10 +378,12 @@ function KubernetesInfrastructure() {
                     </ul>
                   </div>
                 </div>
-                <figure className={infrastructure.imageFrame}>
+                <figure
+                  className={`${infrastructure.imageFrame} ${local.componentImage}`}
+                >
                   <Image
                     src={item.image}
-                    alt={`Hình ảnh minh họa cho ${item.title}${item.accent}`}
+                    alt={item.imageAlt}
                     fill
                     sizes="(min-width: 1384px) 722px, (min-width: 1000px) 56vw, (min-width: 640px) 720px, calc(100vw - 40px)"
                   />

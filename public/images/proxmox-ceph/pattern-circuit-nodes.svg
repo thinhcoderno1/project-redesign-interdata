@@ -1,0 +1,83 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1000"
+  height="1000"
+  viewBox="0 0 1000 1000"
+  fill="none"
+>
+  <defs>
+    <linearGradient
+      id="trace"
+      x1="80"
+      y1="80"
+      x2="920"
+      y2="920"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#3288ff" stop-opacity=".25" />
+      <stop offset=".45" stop-color="#64deff" stop-opacity=".7" />
+      <stop offset="1" stop-color="#3288ff" stop-opacity=".3" />
+    </linearGradient>
+    <radialGradient id="halo">
+      <stop stop-color="#b4f5ff" stop-opacity=".9" />
+      <stop offset=".2" stop-color="#47cfff" stop-opacity=".45" />
+      <stop offset="1" stop-color="#24aaff" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="fade">
+      <stop offset=".35" stop-color="white" />
+      <stop offset="1" stop-color="white" stop-opacity="0" />
+    </radialGradient>
+    <mask id="edges">
+      <rect width="1000" height="1000" fill="url(#fade)" />
+    </mask>
+    <g id="node">
+      <circle r="27" fill="url(#halo)" />
+      <circle r="8" stroke="#62dcff" stroke-opacity=".5" />
+      <circle r="3.5" fill="#9aeaff" />
+      <circle r="1.4" fill="white" />
+    </g>
+  </defs>
+  <g mask="url(#edges)">
+    <g stroke="url(#trace)" stroke-width="1.5" stroke-linejoin="miter">
+      <path d="M40 120h80l120 120h270l140 140h100l130-130h80" />
+      <path d="M40 420h110l90-90v-90M240 240V90l50-50" />
+      <path
+        d="M510 240V110l70-70M510 240v120l100 100v60L510 620H240L110 750H40"
+      />
+      <path d="M750 380v160l-80 80H510v160l-90 90v90" />
+      <path d="M240 620V480l-60-60H150M240 620v160l80 80v100" />
+      <path d="M750 380V160l90-90h120M750 540l110 110h100" />
+      <path d="M510 780h240l110-110v-20M750 780v110l70 70" />
+      <path d="M240 480h120l70-70h130M670 620v100l60 60" />
+    </g>
+    <g
+      stroke="#3eabff"
+      stroke-width="1"
+      stroke-opacity=".28"
+      stroke-linejoin="miter"
+    >
+      <path d="M40 140h72l120 120h270l140 140h116l130-130h72" />
+      <path d="M40 100h88l120 120h270l140 140h84l130-130h88" />
+      <path d="M40 770h78l130-130h270l100-100v-88L530 352V110l70-70" />
+      <path d="M40 790h86l130-130h270l112-112v-104L550 344V110l70-70" />
+      <path d="M770 160v372l110 110h80M790 160v364l110 110h60" />
+      <path d="M530 960v-82l78-78h150l122-122M550 960v-74l66-66h150l114-114" />
+      <path d="M220 960V788l-40-40v-94M200 960V796l-40-40v-94" />
+    </g>
+    <use href="#node" x="120" y="120" />
+    <use href="#node" x="240" y="240" />
+    <use href="#node" x="510" y="240" />
+    <use href="#node" x="750" y="380" />
+    <use href="#node" x="150" y="420" />
+    <use href="#node" x="240" y="480" />
+    <use href="#node" x="610" y="460" />
+    <use href="#node" x="750" y="540" />
+    <use href="#node" x="240" y="620" />
+    <use href="#node" x="510" y="620" />
+    <use href="#node" x="670" y="620" />
+    <use href="#node" x="860" y="650" />
+    <use href="#node" x="510" y="780" />
+    <use href="#node" x="750" y="780" />
+    <use href="#node" x="420" y="870" />
+  </g>
+</svg>

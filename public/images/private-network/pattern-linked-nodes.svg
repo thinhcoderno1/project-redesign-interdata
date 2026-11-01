@@ -1,0 +1,75 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="900"
+  height="650"
+  viewBox="0 0 900 650"
+  fill="none"
+>
+  <defs>
+    <radialGradient id="halo">
+      <stop stop-color="#7be9ff" stop-opacity=".75" />
+      <stop offset=".25" stop-color="#35bfff" stop-opacity=".3" />
+      <stop offset="1" stop-color="#35bfff" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="fade">
+      <stop offset=".35" stop-color="white" />
+      <stop offset="1" stop-color="white" stop-opacity="0" />
+    </radialGradient>
+    <mask id="edges">
+      <ellipse cx="450" cy="325" rx="450" ry="325" fill="url(#fade)" />
+    </mask>
+    <g id="node">
+      <circle r="19" fill="url(#halo)" />
+      <circle r="3" fill="#a0efff" />
+      <circle r="1.25" fill="white" />
+    </g>
+    <g id="hub">
+      <circle r="32" fill="url(#halo)" />
+      <circle r="9" stroke="#56d5ff" stroke-opacity=".5" />
+      <circle r="4.5" fill="#b6f4ff" />
+      <circle r="2" fill="white" />
+    </g>
+  </defs>
+  <g mask="url(#edges)">
+    <g
+      stroke="#4dcaff"
+      stroke-width="1"
+      stroke-opacity=".32"
+      stroke-linejoin="round"
+    >
+      <path d="M35 175 155 100 290 145 415 65 560 125 710 80 845 175" />
+      <path d="M55 360 185 290 320 335 455 255 600 310 735 245 865 355" />
+      <path d="M75 525 215 475 355 540 490 455 635 515 775 455 855 555" />
+      <path
+        d="M35 175 55 360 75 525M155 100 185 290 215 475M290 145 320 335 355 540M415 65 455 255 490 455M560 125 600 310 635 515M710 80 735 245 775 455M845 175 865 355 855 555"
+      />
+      <path
+        d="M35 175 185 290 290 145 455 255 560 125 735 245 845 175M55 360 215 475 320 335 490 455 600 310 775 455 865 355"
+      />
+    </g>
+    <g stroke="#7be9ff" stroke-width="1.5" stroke-opacity=".4">
+      <path d="m185 290 105-145 165 110 145 55 135-65M320 335l170 120 145 60" />
+    </g>
+    <use href="#node" x="35" y="175" />
+    <use href="#node" x="155" y="100" />
+    <use href="#hub" x="290" y="145" />
+    <use href="#node" x="415" y="65" />
+    <use href="#node" x="560" y="125" />
+    <use href="#node" x="710" y="80" />
+    <use href="#node" x="845" y="175" />
+    <use href="#node" x="55" y="360" />
+    <use href="#hub" x="185" y="290" />
+    <use href="#node" x="320" y="335" />
+    <use href="#hub" x="455" y="255" />
+    <use href="#node" x="600" y="310" />
+    <use href="#hub" x="735" y="245" />
+    <use href="#node" x="865" y="355" />
+    <use href="#node" x="75" y="525" />
+    <use href="#node" x="215" y="475" />
+    <use href="#node" x="355" y="540" />
+    <use href="#hub" x="490" y="455" />
+    <use href="#node" x="635" y="515" />
+    <use href="#node" x="775" y="455" />
+    <use href="#node" x="855" y="555" />
+  </g>
+</svg>

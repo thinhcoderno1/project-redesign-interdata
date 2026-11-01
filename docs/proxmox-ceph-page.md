@@ -41,12 +41,38 @@ mọi khả năng của nền tảng hoặc có quan hệ đối tác với hãn
 
 ## Tài nguyên và metadata
 
-Hero dùng ảnh mới `public/images/proxmox-ceph/hero-proxmox-ceph-v1.webp`
-(2160×720), tạo bằng imagegen tích hợp theo phong cách ảnh datacenter thực tế.
-Cụm máy chủ nằm bên phải, khoảng tối bên trái dành cho tiêu đề và CTA.
-Prompt tại `docs/proxmox-ceph-hero-prompt.md`. Giữ CSS Hero và nội dung hiện có;
-Open Graph dùng cùng ảnh mới. Các section còn lại
-dùng ảnh minh họa phù hợp hiện có. Ảnh trung tâm mới:
+Hero dùng ảnh `public/images/proxmox-ceph/hero-proxmox-ceph-v2.webp`
+(1920×800), tạo bằng imagegen tích hợp: cụm ảo hóa với máy ảo và lưu trữ
+phân tán trên từng node. Cụm nằm bên phải, khoảng trống bên trái dành cho
+tiêu đề và CTA. Open Graph dùng cùng ảnh mới, đúng kích thước và mô tả.
+
+Section “Đa dạng lựa chọn” dùng ba ảnh riêng cho Proxmox độc lập, Cluster HA
+và Proxmox + Ceph HCI, dùng bộ `architecture-*-dark-v2.webp` với nền navy tối
+`#06142d` để tách rõ thẻ khỏi section xanh. Lớp phủ và nền thẻ dùng cùng navy;
+ảnh được căn trên để tránh cắt khối máy ảo. Bộ prompt carousel hiện tại nằm tại
+`docs/proxmox-ceph-carousel-dark-prompts.md` (ba ảnh, tổng khoảng 250 KiB).
+Bốn hàng “Nền tảng cho cụm ảo hóa của bạn” dùng ảnh
+riêng cho compute, lưu trữ Ceph, mạng cụm và phục hồi. Bộ tám ảnh nền dùng
+color system của project: xanh `#0043ec`, nền `#031677`, thẻ `#102681`,
+xanh nhạt `#cbd5f7` và trắng. Tất cả được tối ưu WebP và lưu tại
+`public/images/proxmox-ceph/`. Prompt đầy đủ tại
+`docs/proxmox-ceph-background-prompts.md`. CSS riêng điều chỉnh lớp phủ,
+cách căn Hero, khung ảnh thành phần và giữ trọn mô hình carousel trên mobile.
+
+Hai section có pattern SVG/CSS riêng: “Đa dạng lựa chọn” dùng sóng chấm theo
+ảnh tham chiếu, các hàng chấm uốn cong và lớn dần về phía gần để tạo chiều sâu.
+Gradient xanh lam–cyan được đặt ở hai bên và phía dưới, mờ dần quanh tiêu đề.
+“Nền tảng cho
+cụm ảo hóa của bạn” dùng các đường mạch điện song song, góc gấp 45° và chân
+tiếp xúc tối giản quanh các hàng nội dung. Tài nguyên hiện tại là
+`pattern-dotted-wave-v1.svg` và `pattern-circuit-traces-v1.svg` trong cùng
+thư mục ảnh Proxmox / Ceph. Sóng dùng `--brand-primary`, cyan `#35c3ff` hiện có
+ở Hero và `--text-on-dark-secondary`; CSS opacity 32%/24% ở hai góc desktop,
+22%/18% trên mobile, kết hợp độ mờ theo chiều sâu trong SVG. Đường mạch dùng
+`--text-on-dark-secondary`, độ đậm 6%/4,5%. Pattern tĩnh, không bắt sự kiện trỏ,
+không thêm nội dung vào cây accessibility và chỉ áp dụng cho trang Proxmox / Ceph.
+
+Các section khác dùng ảnh minh họa hiện có. Ảnh trung tâm lợi ích:
 `public/images/proxmox-ceph/advantages-cluster-v1.webp`, 1000×1000, alpha,
 khoảng 110 KiB, tạo bằng imagegen tích hợp. Prompt tại
 `docs/proxmox-ceph-image-prompt.md`. Không ghi chữ VPS hoặc số liệu trên ảnh.
@@ -68,4 +94,16 @@ Script kiểm tra phương án không có giá, CTA, metadata/schema, anchor, me
 liên kết trang chủ, carousel bàn phím/vuốt, FAQ, no-JS, hình tải thành công,
 overflow và WCAG A/AA ở 320, 390, 768, 900, 1024, 1440, 1920px.
 Bằng chứng local tại `artifacts/proxmox-ceph/`. Không gửi form liên hệ.
-Chưa deploy hoặc kiểm chứng trên production.
+Chưa deploy hoặc kiểm chứng trên website công khai.
+
+Cập nhật ảnh ngày 31/10/2026: bộ tám ảnh được tạo bằng imagegen tích hợp và
+tối ưu WebP. Ba ảnh carousel được thay tiếp bằng bản navy tối v2, đồng bộ nền
+thẻ và lớp phủ navy để tạo độ tương phản với section. Bộ kiểm tra Proxmox / Ceph đạt
+ở bảy viewport, ảnh tải đủ, không tràn ngang, không lỗi runtime và không phát hiện
+vi phạm axe WCAG A/AA. Carousel bàn phím/vuốt, FAQ và no-JS đều đạt. Lint,
+TypeScript, Prettier và build production đạt. Đối chiếu production local ở
+390/1440px đạt HTTP 200, ảnh, Open Graph, carousel và không lỗi runtime.
+Sau thay pattern, bộ kiểm tra bảy viewport và kiểm tra production local vẫn đạt;
+hai SVG tải đúng MIME, CSS mask áp dụng đúng cho từng section. Đối chiếu trang
+Private Network xác nhận pattern sóng và vòng nền hiện có vẫn được giữ nguyên.
+Dev preview: http://localhost:3000/trien-khai-proxmox-ceph/.

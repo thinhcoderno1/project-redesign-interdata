@@ -1,5 +1,150 @@
 .page {
   --brand-primary: #0066ed;
+  --virtualization-surface: #06142d;
+}
+.heroStage {
+  --hero-color-wash:
+    radial-gradient(
+      ellipse 56% 100% at 5% 18%,
+      #165dff3d 0%,
+      #165dff14 42%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 40% 85% at 30% 100%,
+      #00b9df29 0%,
+      #008ae60a 46%,
+      transparent 74%
+    );
+  background: var(--virtualization-surface);
+}
+.heroStage::after {
+  background:
+    var(--hero-color-wash),
+    linear-gradient(
+      90deg,
+      var(--virtualization-surface) 0%,
+      color-mix(in srgb, var(--virtualization-surface) 95%, transparent) 28%,
+      color-mix(in srgb, var(--virtualization-surface) 65%, transparent) 45%,
+      transparent 70%
+    );
+}
+.heroStage .heroBackground {
+  object-fit: contain;
+  object-position: right center;
+}
+.page .architectures::before,
+.page .architectures::after {
+  width: min(1760px, 140vw);
+  aspect-ratio: 1600 / 720;
+  background: url("/images/vmware/pattern-pixel-data-wave-v1.svg") center /
+    contain no-repeat;
+}
+.page .architectures::before {
+  top: -180px;
+  left: -230px;
+  opacity: 0.5;
+}
+.page .architectures::after {
+  right: -260px;
+  bottom: -230px;
+  opacity: 0.4;
+}
+.architectures .architectureSlide {
+  background: var(--virtualization-surface);
+}
+.architectures .architectureBackground {
+  object-position: center top;
+}
+.architectures .architectureSlide::after {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--virtualization-surface) 10%, transparent) 30%,
+    color-mix(in srgb, var(--virtualization-surface) 70%, transparent) 55%,
+    var(--virtualization-surface) 78%
+  );
+}
+.page .foundation::before,
+.page .foundation::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: auto;
+  width: min(1120px, 96vw);
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 0;
+  background: url("/images/vmware/pattern-circuit-traces-v1.svg") center /
+    contain no-repeat;
+  mask-image: none;
+  opacity: 0.32;
+  pointer-events: none;
+}
+.page .foundation::before {
+  top: -240px;
+  right: -260px;
+  transform: none;
+}
+.page .foundation::after {
+  bottom: -240px;
+  left: -260px;
+  transform: rotate(180deg);
+}
+.page .componentImage {
+  grid-column: 1 / 49;
+}
+.page .componentRow:nth-child(even) .componentImage {
+  grid-column: 53 / -1;
+}
+@media (max-width: 899px) {
+  .heroStage::after {
+    background:
+      var(--hero-color-wash),
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--virtualization-surface) 98%, transparent),
+        color-mix(in srgb, var(--virtualization-surface) 90%, transparent) 55%,
+        color-mix(in srgb, var(--virtualization-surface) 65%, transparent)
+      );
+  }
+  .heroStage .heroBackground {
+    object-fit: cover;
+    object-position: 72% center;
+  }
+}
+@media (max-width: 639px) {
+  .page .foundation::before,
+  .page .foundation::after {
+    width: 840px;
+    opacity: 0.24;
+  }
+  .page .foundation::before {
+    top: -160px;
+    right: -430px;
+  }
+  .page .foundation::after {
+    bottom: -120px;
+    left: -420px;
+  }
+  .page .architectures::before,
+  .page .architectures::after {
+    width: 1000px;
+  }
+  .page .architectures::before {
+    top: -120px;
+    left: -390px;
+    opacity: 0.4;
+  }
+  .page .architectures::after {
+    right: -400px;
+    bottom: -150px;
+    opacity: 0.3;
+  }
+  .architectures .architectureBackground {
+    object-fit: contain;
+    object-position: center 16px;
+  }
 }
 @media (min-width: 900px) {
   .page .heroTitle {

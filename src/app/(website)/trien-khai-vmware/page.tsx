@@ -19,10 +19,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://interdata.vn/images/vmware/hero-vmware-v1.webp",
+        url: "https://interdata.vn/images/vmware/hero-vmware-solution-v4.webp",
         width: 2160,
-        height: 720,
-        alt: "Minh họa hạ tầng máy chủ cho hệ thống ảo hóa VMware",
+        height: 900,
+        alt: "Minh họa kiến trúc ứng dụng, máy ảo và tài nguyên dùng chung của giải pháp VMware",
       },
     ],
   },

@@ -1,0 +1,50 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="900"
+  height="900"
+  viewBox="0 0 900 900"
+  fill="none"
+>
+  <defs>
+    <radialGradient id="fade" cx=".5" cy=".5" r=".6">
+      <stop offset=".3" stop-color="white" />
+      <stop offset="1" stop-color="white" stop-opacity="0" />
+    </radialGradient>
+    <mask id="edge-fade">
+      <path fill="url(#fade)" d="M0 0h900v900H0z" />
+    </mask>
+  </defs>
+  <g
+    mask="url(#edge-fade)"
+    stroke="white"
+    stroke-width="1.25"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M80 190h130q20 0 20 20v120q0 20 20 20h180q20 0 20 20v90" />
+    <path d="M450 460h170q20 0 20-20V210q0-20 20-20h170" />
+    <path d="M450 460v210q0 20-20 20H220q-20 0-20 20v120" />
+    <path d="M450 460H190q-20 0-20 20v70q0 20-20 20H70" />
+    <path d="M640 330h100q20 0 20 20v320q0 20 20 20h60" />
+    <path d="M450 570h110q20 0 20 20v200" />
+    <path d="M310 350V130q0-20 20-20h140" />
+    <path d="M310 690v-90q0-20 20-20h120" />
+    <g fill="white" stroke="none">
+      <circle cx="80" cy="190" r="3" />
+      <circle cx="830" cy="190" r="3" />
+      <circle cx="200" cy="830" r="3" />
+      <circle cx="70" cy="570" r="3" />
+      <circle cx="840" cy="690" r="3" />
+      <circle cx="580" cy="790" r="3" />
+      <circle cx="470" cy="110" r="3" />
+      <circle cx="450" cy="460" r="4" />
+      <circle cx="310" cy="350" r="3" />
+      <circle cx="640" cy="330" r="3" />
+      <circle cx="310" cy="690" r="3" />
+    </g>
+    <circle cx="450" cy="460" r="14" />
+    <circle cx="310" cy="350" r="9" />
+    <circle cx="640" cy="330" r="9" />
+    <circle cx="310" cy="690" r="9" />
+  </g>
+</svg>

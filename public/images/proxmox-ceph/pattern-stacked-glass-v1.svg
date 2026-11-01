@@ -1,0 +1,47 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="800"
+  height="520"
+  viewBox="0 0 800 520"
+  fill="none"
+>
+  <defs>
+    <linearGradient id="glass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop stop-color="white" stop-opacity=".4" />
+      <stop offset=".48" stop-color="white" stop-opacity=".12" />
+      <stop offset="1" stop-color="white" stop-opacity=".025" />
+    </linearGradient>
+    <linearGradient id="rim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop stop-color="white" stop-opacity=".9" />
+      <stop offset=".55" stop-color="white" stop-opacity=".4" />
+      <stop offset="1" stop-color="white" stop-opacity=".08" />
+    </linearGradient>
+    <radialGradient id="fade" cx=".44" cy=".45" r=".65">
+      <stop offset=".3" stop-color="white" />
+      <stop offset="1" stop-color="white" stop-opacity="0" />
+    </radialGradient>
+    <mask id="edge-fade"><path fill="url(#fade)" d="M0 0h800v520H0z" /></mask>
+    <g id="pane" transform="matrix(.87 -.5 .87 .5 65 255)">
+      <rect
+        width="400"
+        height="220"
+        rx="22"
+        fill="url(#glass)"
+        stroke="url(#rim)"
+        stroke-width="1.6"
+      />
+      <path
+        d="M30 34h190M30 46h100"
+        stroke="white"
+        stroke-opacity=".2"
+        stroke-width="1.2"
+        stroke-linecap="round"
+      />
+    </g>
+  </defs>
+  <g mask="url(#edge-fade)">
+    <use href="#pane" y="72" opacity=".45" />
+    <use href="#pane" y="36" opacity=".7" />
+    <use href="#pane" />
+  </g>
+</svg>

@@ -6,7 +6,7 @@ export const kubernetesOptions = [
       "Xây dựng môi trường phát triển và kiểm thử container. Chuẩn hóa manifest, cấu hình truy cập và quy trình đưa ứng dụng lên Kubernetes trước khi vận hành production.",
     audience:
       "Đội phát triển cần thử nghiệm ứng dụng, pipeline và cách vận hành Kubernetes.",
-    image: "/images/vps/infrastructure-v4/cpu.webp",
+    image: "/images/kubernetes/architecture-dev-staging-v1.webp",
     href: "#kubernetes-option-dev-staging",
     featured: false,
     features: [
@@ -23,7 +23,7 @@ export const kubernetesOptions = [
       "Đưa ứng dụng container vào vận hành với kiến trúc cluster, kết nối dịch vụ và lưu trữ được thiết kế theo tải. Xác định rõ yêu cầu dự phòng và trách nhiệm quản trị.",
     audience:
       "Website, API và dịch vụ doanh nghiệp cần một nền tảng triển khai container có quy trình.",
-    image: "/images/solutions/server-racks.webp",
+    image: "/images/kubernetes/architecture-production-v1.webp",
     href: "#kubernetes-option-production",
     featured: false,
     features: [
@@ -40,7 +40,7 @@ export const kubernetesOptions = [
       "Thiết kế control plane dự phòng và phân bố workload theo khả năng chịu lỗi. Đánh giá cả đường truy cập, storage, dữ liệu và tài nguyên còn lại khi có sự cố.",
     audience:
       "Hệ thống cần giảm điểm lỗi đơn và có kịch bản bảo trì, phục hồi được kiểm thử.",
-    image: "/images/solutions/giai-phap-private-cloud.jpg",
+    image: "/images/kubernetes/architecture-production-ha-v1.webp",
     href: "#kubernetes-option-production-ha",
     featured: true,
     features: [
@@ -118,7 +118,9 @@ export const kubernetesInfrastructure = [
     title: "Quy hoạch ",
     accent: "control plane & worker",
     text: "Chọn topology theo workload, tài nguyên và yêu cầu phục hồi. Với HA, thiết kế API endpoint, quorum etcd và miền lỗi; nhiều worker không tự làm control plane có dự phòng.",
-    image: "/images/solutions/server-racks.webp",
+    image: "/images/kubernetes/component-cluster-topology-v1.webp",
+    imageAlt:
+      "Minh họa control plane điều phối các worker node chạy những nhóm Pod chứa container trong cluster Kubernetes",
     benefits: ["Control plane", "Worker nodes", "Failure domain"],
   },
   {
@@ -126,7 +128,9 @@ export const kubernetesInfrastructure = [
     title: "Kết nối ",
     accent: "dịch vụ & truy cập",
     text: "Đánh giá CNI, DNS, dải mạng và đường công bố dịch vụ. Lựa chọn Gateway hoặc Ingress theo nền tảng, cấu hình TLS và NetworkPolicy với plugin hỗ trợ thực thi.",
-    image: "/images/vps/infrastructure-v4/network.webp",
+    image: "/images/kubernetes/component-services-network-v1.webp",
+    imageAlt:
+      "Minh họa luồng truy cập qua Gateway và Service tới các nhóm Pod trong mạng Kubernetes",
     benefits: ["CNI / DNS", "Gateway / Ingress", "TLS / NetworkPolicy"],
   },
   {
@@ -134,7 +138,9 @@ export const kubernetesInfrastructure = [
     title: "Thiết kế ",
     accent: "storage & dữ liệu",
     text: "Đối chiếu CSI, StorageClass và PVC với ứng dụng. Làm rõ access mode, hiệu năng, khả năng phục hồi của storage và cách sao lưu dữ liệu bên ngoài vòng đời Pod.",
-    image: "/images/vps/infrastructure-v4/storage.webp",
+    image: "/images/kubernetes/component-persistent-storage-v1.webp",
+    imageAlt:
+      "Minh họa Pod kết nối với volume và hệ thống lưu trữ tách biệt, cùng thiết bị lưu bản sao dữ liệu",
     benefits: ["CSI / PVC", "Dữ liệu ứng dụng", "Backup / Restore"],
   },
   {
@@ -142,7 +148,9 @@ export const kubernetesInfrastructure = [
     title: "Chuẩn bị ",
     accent: "bảo mật & vận hành",
     text: "Thống nhất RBAC, quản lý secret, quan sát hệ thống và kế hoạch nâng cấp. Kiểm thử triển khai, khôi phục và bàn giao cấu hình cùng trách nhiệm vận hành.",
-    image: "/images/home/infrastructure/protection-monitoring.webp",
+    image: "/images/kubernetes/component-security-operations-v1.webp",
+    imageAlt:
+      "Minh họa phạm vi truy cập Pod, màn hình quan sát cluster và tài liệu bàn giao vận hành Kubernetes",
     benefits: ["RBAC / Secret", "Metrics / Log", "Runbook vận hành"],
   },
 ] as const;

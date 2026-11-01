@@ -6,6 +6,7 @@ import type { CSSProperties, KeyboardEvent, PointerEvent } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { vmwareOptions } from "@/data/vmware";
 import styles from "@/components/vps/service-range.module.css";
+import local from "./vmware.module.css";
 
 const subscribe = () => () => {};
 const clientSnapshot = () => true;
@@ -87,7 +88,7 @@ export function VmwareArchitectures() {
 
   return (
     <section
-      className={styles.range}
+      className={`${styles.range} ${local.architectures}`}
       aria-labelledby="vmware-architecture-title"
       aria-roledescription={enhanced ? "băng chuyền" : undefined}
     >
@@ -166,7 +167,7 @@ export function VmwareArchitectures() {
           return (
             <div
               key={service.id}
-              className={styles.slide}
+              className={`${styles.slide} ${local.architectureSlide}`}
               data-active={selected}
               data-visible={Math.abs(position) <= 1}
               id={`vmware-architecture-panel-${service.id}`}
@@ -185,7 +186,7 @@ export function VmwareArchitectures() {
                 alt=""
                 fill
                 sizes="(min-width: 1000px) 840px, (min-width: 640px) calc(100vw - 128px), calc(100vw - 40px)"
-                className={styles.background}
+                className={`${styles.background} ${local.architectureBackground}`}
               />
               <article
                 className={styles.slideContent}
