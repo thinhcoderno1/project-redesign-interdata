@@ -1,378 +1,137 @@
-import { chromium, expect } from "@playwright/test";
+﻿import { chromium, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import fs from "node:fs/promises";
-import sharp from "sharp";
 
 const base = process.env.TEST_BASE_URL || "http://localhost:3100";
-const applications = [
-  "Lưu Trữ Web",
-  "Hạ Tầng Self-Host",
-  "Triển Khai Ứng Dụng",
-  "Ảo Hóa Máy Chủ",
-];
+const output = "artifacts/hero-heading";
+await fs.mkdir(output, { recursive: true });
 const browser = await chromium.launch();
 const results = [];
-await fs.mkdir("artifacts/hero-heading", { recursive: true });
-async function checkHeadingLayout(page) {
-  const layout = await page.evaluate(() => {
-    const row = document.querySelector("h1 .hero-heading-row");
-    const parts = [...row.children].map((part) =>
-      part.getBoundingClientRect().toJSON(),
-    );
-    return {
-      parts,
-      fontSize: getComputedStyle(document.querySelector("h1")).fontSize,
-      direction: getComputedStyle(row).flexDirection,
-      gap: parseFloat(getComputedStyle(row).gap),
-      width: document.documentElement.clientWidth,
-      scrollWidth: document.documentElement.scrollWidth,
-    };
-  });
-  expect(layout.parts).toHaveLength(3);
-  expect(layout.scrollWidth).toBeLessThanOrEqual(layout.width);
-  expect(layout.parts[0].left).toBeGreaterThanOrEqual(0);
-  expect(layout.parts[2].right).toBeLessThanOrEqual(layout.width);
-  const stacked = layout.width <= 639;
-  expect(layout.direction).toBe(stacked ? "column" : "row");
-  if (stacked) {
-    expect(parseFloat(layout.fontSize)).toBeGreaterThanOrEqual(25);
-    expect(parseFloat(layout.fontSize)).toBeLessThanOrEqual(38);
-  }
-  for (const part of layout.parts) {
-    if (stacked) {
-      expect(part.left + part.width / 2).toBeCloseTo(layout.width / 2, 1);
-    } else {
-      expect(part.top).toBeCloseTo(layout.parts[0].top, 1);
-    }
-    expect(part.height).toBeCloseTo(layout.parts[0].height, 1);
-  }
-  expect(
-    stacked
-      ? layout.parts[1].top - layout.parts[0].bottom
-      : layout.parts[1].left - layout.parts[0].right,
-  ).toBeCloseTo(layout.gap, 1);
-  expect(
-    stacked
-      ? layout.parts[2].top - layout.parts[1].bottom
-      : layout.parts[2].left - layout.parts[1].right,
-  ).toBeCloseTo(layout.gap, 1);
-  return layout;
-}
-async function checkRoll(page) {
-  const roll = await page.evaluate(() => {
-    const viewport = document.querySelector(".hero-applications");
-    const incoming = viewport.querySelector("[data-active]");
-    const outgoing = viewport.querySelector("[data-outgoing]");
-    const animations = viewport.getAnimations({ subtree: true });
-    if (!outgoing || animations.length !== 3) return null;
-    animations.forEach((animation) => animation.pause());
-    const duration = animations[0].effect.getTiming().duration;
-    const from = outgoing.getBoundingClientRect().width;
-    const to = incoming.getBoundingClientRect().width;
-    const samples = [0, 0.25, 0.5, 0.75, 1].map((progress) => {
-      animations.forEach((animation) => {
-        animation.currentTime = duration * progress;
-      });
-      const y = (element) =>
-        new DOMMatrixReadOnly(getComputedStyle(element).transform).m42;
-      const whites = [
-        document.querySelector(".hero-heading-prefix"),
-        document.querySelector(".hero-heading-suffix"),
-      ];
-      const parts = [
-        ...document.querySelector("h1 .hero-heading-row").children,
-      ].map((element) => element.getBoundingClientRect().toJSON());
-      return {
-        progress,
-        width: viewport.getBoundingClientRect().width,
-        incomingY: y(incoming),
-        outgoingY: y(outgoing),
-        opacity: [incoming, outgoing, ...whites].map((element) =>
-          Number(getComputedStyle(element).opacity),
-        ),
-        parts,
-        gap: parseFloat(
-          getComputedStyle(document.querySelector("h1 .hero-heading-row")).gap,
-        ),
-        whiteAnimations: whites.map(
-          (element) => element.getAnimations().length,
-        ),
-        sameNodes: whites.every(
-          (element, index) => element === window.headingWhiteNodes[index],
-        ),
-        viewportWidth: document.documentElement.clientWidth,
-      };
-    });
-    animations.forEach((animation) => animation.play());
-    return { duration, from, to, samples };
-  });
-  expect(roll).not.toBeNull();
-  expect(roll.duration).toBeGreaterThanOrEqual(500);
-  expect(roll.duration).toBeLessThanOrEqual(1000);
-  expect(roll.samples[0].width).toBeCloseTo(roll.from, 1);
-  expect(roll.samples[4].width).toBeCloseTo(roll.to, 1);
-  expect(roll.samples[0].incomingY).toBeGreaterThan(0);
-  expect(roll.samples[0].outgoingY).toBe(0);
-  expect(roll.samples[2].incomingY).toBeGreaterThan(0);
-  expect(roll.samples[2].incomingY).toBeLessThan(roll.samples[0].incomingY);
-  expect(roll.samples[2].outgoingY).toBeLessThan(0);
-  expect(roll.samples[4].incomingY).toBe(0);
-  expect(roll.samples[4].outgoingY).toBeLessThan(roll.samples[2].outgoingY);
-  for (const [index, sample] of roll.samples.entries()) {
-    expect(sample.opacity).toEqual([1, 1, 1, 1]);
-    expect(sample.sameNodes).toBe(true);
-    expect(sample.whiteAnimations).toEqual([0, 0]);
-    expect(sample.parts[0].left).toBeGreaterThanOrEqual(0);
-    expect(sample.parts[2].right).toBeLessThanOrEqual(sample.viewportWidth);
-    const stacked = sample.viewportWidth <= 639;
-    for (const part of sample.parts) {
-      if (stacked) {
-        expect(part.left + part.width / 2).toBeCloseTo(
-          sample.viewportWidth / 2,
-          1,
-        );
-      } else {
-        expect(part.top).toBeCloseTo(sample.parts[0].top, 1);
-      }
-    }
-    expect(
-      stacked
-        ? sample.parts[1].top - sample.parts[0].bottom
-        : sample.parts[1].left - sample.parts[0].right,
-    ).toBeCloseTo(sample.gap, 1);
-    expect(
-      stacked
-        ? sample.parts[2].top - sample.parts[1].bottom
-        : sample.parts[2].left - sample.parts[1].right,
-    ).toBeCloseTo(sample.gap, 1);
-    if (index > 0) {
-      const previous = roll.samples[index - 1].width;
-      expect(
-        (sample.width - previous) * Math.sign(roll.to - roll.from),
-      ).toBeGreaterThanOrEqual(-0.1);
-    }
-  }
-  return roll;
-}
-async function checkDiacritics(page, width) {
-  await expect(page.locator(".hero-application[data-outgoing]")).toHaveCount(0);
-  const box = await page
-    .locator(".hero-application[data-active]")
-    .boundingBox();
-  const clip = {
-    x: Math.floor(box.x - 12),
-    y: Math.floor(box.y - 12),
-    width: Math.ceil(box.width + 24),
-    height: Math.ceil(box.height + 24),
-  };
-  const rendered = await page.screenshot({ clip });
-  const override = await page.addStyleTag({
-    content:
-      ".hero-applications { overflow: visible !important; clip-path: none !important; }",
-  });
-  const reference = await page.screenshot({ clip });
-  await override.evaluate((element) => element.remove());
-  const actualPixels = await sharp(rendered).removeAlpha().raw().toBuffer();
-  const referencePixels = await sharp(reference).removeAlpha().raw().toBuffer();
-  let lostPixels = 0;
-  for (let index = 0; index < actualPixels.length; index += 3) {
-    if (
-      Math.max(
-        ...[0, 1, 2].map((channel) =>
-          Math.abs(
-            actualPixels[index + channel] - referencePixels[index + channel],
-          ),
-        ),
-      ) > 8
-    )
-      lostPixels++;
-  }
-  expect(
-    lostPixels,
-    "Vietnamese marks must match the same text with clipping completely removed",
-  ).toBe(0);
-  await fs.writeFile(
-    `artifacts/hero-heading/diacritics-${width}.png`,
-    rendered,
-  );
-  return {
-    width,
-    deviceScaleFactor: await page.evaluate(() => devicePixelRatio),
-    lostPixels,
-  };
-}
+const overlap = (a, b) =>
+  Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1 &&
+  Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 1;
+
 try {
-  for (const width of [320, 390, 430, 639, 640, 768, 1024, 1440, 1920]) {
+  for (const width of [320, 360, 390, 640, 768, 959, 1024, 1199, 1440, 1920]) {
     const context = await browser.newContext({
-      viewport: { width, height: 960 },
+      viewport: { width, height: 1100 },
       reducedMotion: "reduce",
     });
     const page = await context.newPage();
     const errors = [];
     page.on("pageerror", (error) => errors.push(error.message));
-    await page.goto(base, { waitUntil: "domcontentloaded" });
+    await page.goto(base, { waitUntil: "networkidle" });
     await page.evaluate(() => document.fonts.ready);
+    const hero = page.locator("[data-home-hero]");
+    const title = hero.locator("h1");
+    const benefits = hero.getByRole("list", {
+      name: "Lợi ích hạ tầng InterData",
+    });
     await expect(page.locator("h1")).toHaveCount(1);
-    await expect(page.locator(".hero-application[data-active]")).toHaveText(
-      applications[0],
-    );
-    await expect(page.locator(".hero-application")).toHaveText(applications);
-    await expect(page.locator(".hero-heading button")).toHaveCount(0);
-    const headingLayout = await checkHeadingLayout(page);
-    const layout = await page.evaluate(() => {
-      const suffix = document.querySelector(".hero-heading-suffix");
-      const range = document.createRange();
-      range.selectNodeContents(suffix);
+    await expect(title).toHaveText("Hạ tầng vững mạnh. Bứt phá mọi giới hạn.");
+    await expect(benefits.locator(":scope > li")).toHaveCount(4);
+    await expect(benefits).toContainText("240Gbps+");
+    await expect(benefits).toContainText("L3-L4-L7-WAF");
+    await expect(
+      hero.getByRole("link", { name: "Dùng thử miễn phí" }),
+    ).toHaveAttribute("href", "/thue-vps/#pricing");
+    const layout = await hero.evaluate((root) => {
+      const rect = (element) => element.getBoundingClientRect().toJSON();
+      const heading = root.querySelector("h1");
+      const list = root.querySelector(
+        'ul[aria-label="Lợi ích hạ tầng InterData"]',
+      );
+      const panels = root.querySelector('ul[aria-label="Nền tảng hạ tầng"]')
+        .parentElement.parentElement;
+      const image = root.querySelector("img");
+      const visual = image.parentElement;
       return {
-        width: innerWidth,
+        font: getComputedStyle(heading).fontFamily,
+        fontSize: parseFloat(getComputedStyle(heading).fontSize),
+        columns: getComputedStyle(list).gridTemplateColumns.split(" ").length,
+        heading: rect(heading),
+        accent: rect(heading.querySelector("span")),
+        description: rect(heading.nextElementSibling),
+        actions: [...root.querySelectorAll("a")].map(rect),
+        panels: [...panels.children].map(rect),
+        benefits: rect(list),
+        visual: rect(visual),
+        imageLoaded: image.complete && image.naturalWidth > 0,
+        imageSrc: image.currentSrc,
         scrollWidth: document.documentElement.scrollWidth,
-        heading: document.querySelector("h1").getBoundingClientRect().toJSON(),
-        words: document
-          .querySelector(".hero-applications")
-          .getBoundingClientRect()
-          .toJSON(),
-        suffix: range.getBoundingClientRect().toJSON(),
-        color: getComputedStyle(document.querySelector(".hero-applications"))
-          .color,
-        animation: getComputedStyle(
-          document.querySelector(".hero-application[data-active]"),
-        ).animationName,
-        cta: document
-          .querySelector(".hero-trial")
-          .getBoundingClientRect()
-          .toJSON(),
-        features: document
-          .querySelector(".hero-features")
-          .getBoundingClientRect()
-          .toJSON(),
+        textOverflow: [...list.querySelectorAll("p")].flatMap((element) => {
+          const range = document.createRange();
+          range.selectNodeContents(element);
+          const cell = element.closest("li").getBoundingClientRect();
+          return [...range.getClientRects()]
+            .filter(
+              (box) => box.right > cell.right + 1 || box.left < cell.left - 1,
+            )
+            .map(() => element.textContent);
+        }),
       };
     });
+    expect(layout.font).toContain("Be Vietnam Pro");
+    expect(layout.fontSize).toBeGreaterThanOrEqual(28);
+    expect(layout.fontSize).toBeLessThanOrEqual(54);
+    expect(layout.columns).toBe(width <= 959 ? 2 : 4);
+    expect(layout.accent.bottom).toBeLessThan(layout.description.top);
     expect(layout.scrollWidth).toBeLessThanOrEqual(width);
-    expect(layout.words.x).toBeGreaterThanOrEqual(0);
-    expect(layout.words.right).toBeLessThanOrEqual(width);
-    expect(layout.color).toBe("rgb(143, 197, 255)");
-    expect(layout.animation).toBe("none");
-    expect(layout.cta.bottom).toBeLessThan(layout.features.top);
-    expect(
-      (await new AxeBuilder({ page }).include(".hero-shell").analyze())
-        .violations,
-    ).toEqual([]);
-    await page.screenshot({
-      path: `artifacts/hero-heading/static-${width}.png`,
-    });
-    expect(errors).toEqual([]);
-    results.push({ width, layout, headingLayout, errors });
-    await context.close();
-  }
-
-  for (const width of [320, 1440]) {
-    const context = await browser.newContext({
-      viewport: { width, height: 960 },
-      reducedMotion: "no-preference",
-      deviceScaleFactor: width === 1440 ? 1.25 : 1,
-    });
-    const page = await context.newPage();
-    await page.clock.install();
-    await page.goto(base, { waitUntil: "domcontentloaded" });
-    await page.evaluate(() => document.fonts.ready);
-    const heading = page.locator(".hero-heading");
-    const active = page.locator(".hero-application[data-active]");
-    await expect(heading).toHaveAttribute("data-running", "true");
-    const start = applications.indexOf(await active.textContent());
-    const originalBox = await page.locator("h1").boundingBox();
-    const originalLine = await checkHeadingLayout(page);
-    await page.evaluate(() => {
-      window.headingWhiteNodes = [
-        document.querySelector(".hero-heading-prefix"),
-        document.querySelector(".hero-heading-suffix"),
-      ];
-    });
-    for (let step = 1; step <= applications.length; step++) {
-      await page.clock.fastForward(3200);
-      await expect(active).toHaveText(
-        applications[(start + step) % applications.length],
-      );
-      const roll = await checkRoll(page);
-      results.push({ width, application: await active.textContent(), roll });
-      if ((await active.textContent()) === applications[3]) {
-        results.push({ diacritics: await checkDiacritics(page, width) });
-      }
-      expect(await page.locator("h1").boundingBox()).toEqual(originalBox);
-      const line = await checkHeadingLayout(page);
-      expect(line.fontSize).toBe(originalLine.fontSize);
-      expect(line.gap).toBe(originalLine.gap);
-      await expect(heading.locator("button")).toHaveCount(0);
+    expect(layout.textOverflow).toEqual([]);
+    expect(layout.imageLoaded).toBe(true);
+    expect(layout.imageSrc).toContain("hero-globe-racks");
+    expect(layout.benefits.top).toBeLessThan(layout.visual.bottom);
+    expect(layout.benefits.bottom).toBeGreaterThan(layout.visual.bottom);
+    for (const panel of layout.panels) {
+      for (const action of layout.actions)
+        expect(overlap(panel, action), `Panel overlaps CTA at ${width}px`).toBe(
+          false,
+        );
+      expect(panel.bottom).toBeLessThan(layout.benefits.top);
     }
-    await page.emulateMedia({ reducedMotion: "reduce" });
-    await expect(heading).toHaveAttribute("data-running", "false");
-    await expect(heading.locator("button")).toHaveCount(0);
-    expect(
-      await active.evaluate(
-        (element) => getComputedStyle(element).animationName,
-      ),
-    ).toBe("none");
-    expect(
-      await active.evaluate((element) => getComputedStyle(element).transform),
-    ).toBe("none");
-    await expect(page.locator(".hero-application[data-outgoing]")).toHaveCount(
-      0,
-    );
-    const reduced = await active.textContent();
-    await page.clock.fastForward(12800);
-    await expect(active).toHaveText(reduced);
-    await page.emulateMedia({ reducedMotion: "no-preference" });
-    await expect(heading).toHaveAttribute("data-running", "true");
-
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await expect(heading).toHaveAttribute("data-running", "false");
-    const offscreen = await active.textContent();
-    await page.clock.fastForward(12800);
-    await expect(active).toHaveText(offscreen);
-    await page.evaluate(() => window.scrollTo(0, 0));
-    await page.clock.runFor(500);
-    await expect(heading).toHaveAttribute("data-running", "true");
-    await expect(heading.locator("button")).toHaveCount(0);
-    expect(
-      (await new AxeBuilder({ page }).include(".hero-shell").analyze())
-        .violations,
-    ).toEqual([]);
-    await page.screenshot({
-      path: `artifacts/hero-heading/rotating-${width}.png`,
-      animations: "disabled",
+    expect(errors).toEqual([]);
+    if ([390, 1440].includes(width)) {
+      const accessibility = await new AxeBuilder({ page })
+        .include("[data-home-hero]")
+        .analyze();
+      expect(accessibility.violations).toEqual([]);
+      await page.screenshot({ path: `${output}/reference-${width}.png` });
+      const explore = hero.getByRole("link", { name: "Khám phá hạ tầng" });
+      await explore.focus();
+      await expect(explore).toBeFocused();
+      await explore.press("Enter");
+      await expect(page).toHaveURL(/#ha-tang$/);
+      await expect(page.locator("#ha-tang")).toBeInViewport();
+    }
+    results.push({
+      width,
+      fontSize: layout.fontSize,
+      columns: layout.columns,
+      errors,
     });
-    await page.setViewportSize({
-      width: width === 320 ? 1440 : 320,
-      height: 960,
-    });
-    await page.clock.runFor(500);
-    await checkHeadingLayout(page);
-    await page.setViewportSize({ width, height: 960 });
-    await page.clock.runFor(500);
-    await checkHeadingLayout(page);
     await context.close();
   }
-
   for (const width of [320, 1440]) {
-    const context = await browser.newContext({
+    const page = await browser.newPage({
       javaScriptEnabled: false,
-      viewport: { width, height: 960 },
+      viewport: { width, height: 1100 },
     });
-    const page = await context.newPage();
-    await page.goto(base, { waitUntil: "domcontentloaded" });
-    await expect(page.locator("h1")).toHaveCount(1);
-    await expect(page.locator(".hero-application[data-active]")).toHaveText(
-      applications[0],
-    );
-    await expect(page.locator(".hero-heading button")).toHaveCount(0);
-    await checkHeadingLayout(page);
-    await context.close();
+    await page.goto(base, { waitUntil: "networkidle" });
+    await expect(page.locator("#hero-title")).toBeVisible();
+    await expect(
+      page.getByRole("list", { name: "Lợi ích hạ tầng InterData" }),
+    ).toBeVisible();
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth),
+    ).toBeLessThanOrEqual(width);
+    await page.close();
   }
   await fs.writeFile(
-    "artifacts/hero-heading/results.json",
+    `${output}/results.json`,
     JSON.stringify(results, null, 2),
   );
   console.log(
-    "Hero heading passed: complete Vietnamese diacritics compared against unclipped text at mobile/desktop and 125% pixel scale; upward roll, smooth width changes, no white-text fading, stacked mobile heading and single-line desktop heading at 320–1920px, reduced motion and no-JavaScript fallback.",
+    "Hero passed: 320–1920px, site typography, two-line Vietnamese heading, four benefits, no overlap or overflow, background loading, CTA/anchor, keyboard focus, accessibility and no-JavaScript rendering.",
   );
 } finally {
   await browser.close();

@@ -1,172 +1,50 @@
-import { chromium, expect } from "@playwright/test";
-import fs from "node:fs/promises";
+﻿import { chromium, expect } from "@playwright/test";
 
+// The supplied globe reference uses a static background. Keep this entry point
+// to check that scrolling and motion preferences never shift the hero artwork.
 const base = process.env.TEST_BASE_URL || "http://localhost:3100";
 const browser = await chromium.launch();
-const results = [];
-await fs.mkdir("artifacts", { recursive: true });
-
-const settle = (page) =>
-  page.evaluate(
-    () =>
-      new Promise((resolve) => {
-        let remaining = 5;
-        const next = () =>
-          --remaining ? requestAnimationFrame(next) : resolve();
-        requestAnimationFrame(next);
-      }),
-  );
-const scroll = async (page, y) => {
-  await page.evaluate((top) => window.scrollTo(0, Math.max(0, top)), y);
-  await settle(page);
-};
-const measure = (page, selector) =>
-  page.locator(selector).evaluate((section) => {
-    const rect = (element) => element.getBoundingClientRect().toJSON();
-    return {
-      scrollY,
-      section: rect(section),
-      photo: rect(section.querySelector("img")),
-      content: rect(section.querySelector(".hero-content")),
-    };
-  });
-const covered = ({ section, photo }) => {
-  expect(photo.top).toBeLessThanOrEqual(section.top + 1);
-  expect(photo.bottom).toBeGreaterThanOrEqual(section.bottom - 1);
-  expect(photo.left).toBeLessThanOrEqual(section.left + 1);
-  expect(photo.right).toBeGreaterThanOrEqual(section.right - 1);
-};
-const content = (page) =>
-  page.evaluate(() => ({
-    text: document.body.innerText,
-    links: [...document.querySelectorAll("a")].map((a) =>
-      a.getAttribute("href"),
-    ),
-    heights: [...document.querySelectorAll("main > section")].map(
-      (s) => s.getBoundingClientRect().height,
-    ),
-  }));
-
 try {
   for (const width of [320, 390, 768, 1024, 1440, 1920]) {
-    const context = await browser.newContext({
-      viewport: { width, height: 960 },
-      reducedMotion: "no-preference",
-    });
-    const page = await context.newPage();
-    const errors = [];
-    page.on("pageerror", (error) => errors.push(error.message));
-    await page.goto(base, { waitUntil: "domcontentloaded" });
-    await page.evaluate(() => document.fonts.ready);
-    await expect(page.locator(".hero .parallax-background")).toHaveAttribute(
-      "data-parallax-active",
-      "true",
-    );
-    // Infrastructure now uses the static alternating panels from /thue-vps/.
-    await expect(page.locator("#ha-tang .parallax-background")).toHaveCount(0);
+    const page = await browser.newPage({ viewport: { width, height: 1100 } });
+    await page.goto(base, { waitUntil: "networkidle" });
     await page.evaluate(() => {
       document.documentElement.style.scrollBehavior = "auto";
     });
-    const original = await content(page);
-    const motions = [];
-    for (const selector of [".hero"]) {
-      const position = await page.locator(selector).evaluate((s) => ({
-        top: s.getBoundingClientRect().top + scrollY,
-        height: s.getBoundingClientRect().height,
-      }));
-      const start = selector === ".hero" ? 0 : position.top - 480;
-      await scroll(page, start);
-      await page.locator(`${selector} img`).evaluate((img) => img.decode());
-      const before = await measure(page, selector);
-      await scroll(page, start + 180);
-      const after = await measure(page, selector);
-      covered(before);
-      covered(after);
-      const sectionDelta = after.section.top - before.section.top;
-      const photoDelta = after.photo.top - before.photo.top;
-      expect(photoDelta).toBeGreaterThan(sectionDelta + 1);
-      expect(photoDelta).toBeLessThan(0);
-      expect(after.content.top - before.content.top).toBeCloseTo(
-        sectionDelta,
-        1,
-      );
-      motions.push({ selector, sectionDelta, photoDelta });
-      for (const y of [
-        position.top - 958,
-        position.top,
-        position.top + position.height - 2,
-      ]) {
-        await scroll(page, y);
-        covered(await measure(page, selector));
-      }
+    const hero = page.locator("[data-home-hero]");
+    const image = hero.locator("img");
+    await image.evaluate((element) => element.decode());
+    const measure = () =>
+      image.evaluate((element) => {
+        const photo = element.getBoundingClientRect();
+        const section = element.parentElement.getBoundingClientRect();
+        return {
+          offset: photo.top - section.top,
+          width: photo.width,
+          height: photo.height,
+          sectionWidth: section.width,
+          sectionHeight: section.height,
+          transform: getComputedStyle(element).transform,
+        };
+      });
+    const original = await measure();
+    expect(original.width).toBe(original.sectionWidth);
+    expect(original.height).toBe(original.sectionHeight);
+    expect(original.offset).toBe(0);
+    expect(original.transform).toBe("none");
+    for (const reducedMotion of ["reduce", "no-preference"]) {
+      await page.emulateMedia({ reducedMotion });
+      await page.evaluate(() => window.scrollTo(0, 180));
+      expect(await measure()).toEqual(original);
+      await expect(hero.locator(".parallax-background")).toHaveCount(0);
+      await page.evaluate(() => window.scrollTo(0, 0));
+      expect(await measure()).toEqual(original);
     }
-    await page.emulateMedia({ reducedMotion: "reduce" });
-    await settle(page);
-    for (const selector of [".hero"]) {
-      const value = await measure(page, selector);
-      expect(value.photo).toEqual(value.section);
-      await expect(page.locator(`${selector} .parallax-background`)).toHaveCSS(
-        "transform",
-        "none",
-      );
-    }
-    expect(await content(page)).toEqual(original);
-    await scroll(page, 0);
-    await page.emulateMedia({ reducedMotion: "no-preference" });
-    await settle(page);
-    const before = await measure(page, ".hero");
-    await scroll(page, 180);
-    const after = await measure(page, ".hero");
-    expect(after.photo.top - before.photo.top).toBeGreaterThan(
-      after.section.top - before.section.top + 1,
-    );
-    if (width === 1440) {
-      await page.setViewportSize({ width: 390, height: 844 });
-      await settle(page);
-      covered(await measure(page, ".hero"));
-      await page.setViewportSize({ width, height: 960 });
-      await settle(page);
-    }
-    expect(
-      await page.evaluate(() => document.documentElement.scrollWidth),
-    ).toBeLessThanOrEqual(width);
-    expect(errors).toEqual([]);
-    await scroll(page, 0);
-    await page.screenshot({ path: `artifacts/parallax-${width}-hero.png` });
-    await page.locator("#ha-tang").scrollIntoViewIfNeeded();
-    await settle(page);
-    await page
-      .locator("#ha-tang")
-      .screenshot({ path: `artifacts/parallax-${width}-infrastructure.png` });
-    results.push({
-      width,
-      motions,
-      reducedMotion: "passed",
-      resumedMotion: "passed",
-      errors,
-    });
-    await context.close();
+    await page.close();
   }
-  const context = await browser.newContext({ javaScriptEnabled: false });
-  const page = await context.newPage();
-  await page.goto(base, { waitUntil: "domcontentloaded" });
-  for (const selector of [".hero"]) {
-    const value = await measure(page, selector);
-    expect(value.photo).toEqual(value.section);
-    await expect(page.locator(`${selector} .parallax-background`)).toHaveCSS(
-      "transform",
-      "none",
-    );
-  }
-  results.push({ javaScriptDisabled: "static backgrounds passed" });
-  await context.close();
-} finally {
-  await fs.writeFile(
-    "artifacts/parallax-results.json",
-    JSON.stringify(results, null, 2),
+  console.log(
+    "Static hero background passed at 320–1920px: full coverage and stable artwork while scrolling with either motion preference.",
   );
+} finally {
   await browser.close();
 }
-console.log(
-  "Parallax passed: 320–1920px, photo coverage, static content, reduced motion toggle, resize and no-JavaScript fallback.",
-);

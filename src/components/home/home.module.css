@@ -3,39 +3,8 @@
  * Shared section/parallax rules are scoped here too to preserve the original cascade.
  */
 
-:where(.home) :global(.hero :focus-visible) {
-  outline-color: var(--focus-dark);
-}
 :where(.home) :global(.section) {
   padding-block: 88px;
-}
-:where(.home) :global(.hero-shell) {
-  background: var(--surface-hero);
-}
-:where(.home) :global(.hero) {
-  position: relative;
-  isolation: isolate;
-  width: 100%;
-  overflow: hidden;
-  background: #08111f;
-  color: var(--text-on-brand);
-  min-height: 592px;
-  display: grid;
-  place-items: center;
-}
-:where(.home) :global(.hero-photo) {
-  object-fit: cover;
-  object-position: center;
-}
-:where(.home) :global(.hero-background) {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-}
-:where(.home) :global(.hero-background.parallax-background) {
-  --parallax-travel: 0px;
-  inset-block: calc(-1 * var(--parallax-travel));
 }
 :where(.home) :global(.infra-background.parallax-background) {
   --parallax-travel: 0px;
@@ -47,210 +16,6 @@
 }
 :where(.home) :global(.parallax-background[data-parallax-visible="true"]) {
   will-change: transform;
-}
-:where(.home) :global(.hero-overlay) {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--hero-overlay);
-}
-:where(.home) :global(.hero-content) {
-  width: 100%;
-  padding: 64px 24px 50px;
-  text-align: center;
-}
-:where(.home) :global(.hero-badge) {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  border: 1px solid rgb(255 255 255 / 28%);
-  background: rgb(255 255 255 / 6%);
-  padding: 7px 13px;
-  border-radius: 6px;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.09em;
-  margin-bottom: 22px;
-}
-:where(.home) :global(.hero-badge svg) {
-  width: 15px;
-  height: 15px;
-}
-:where(.home) :global(.hero h1) {
-  font-size: var(--hero-heading-size, min(54px, 4cqw));
-  line-height: 1.27;
-  letter-spacing: -0.045em;
-  max-width: none;
-  margin: auto;
-}
-:where(.home) :global(.hero-heading) {
-  --hero-heading-max-size: 54;
-  position: relative;
-  container-type: inline-size;
-  max-width: 1200px;
-  margin-inline: auto;
-}
-:where(.home) :global(.hero-heading-row) {
-  display: inline-flex;
-  flex-wrap: nowrap;
-  gap: 0.22em;
-  justify-content: center;
-  align-items: center;
-  white-space: nowrap;
-}
-:where(.home) :global(.hero-heading-row > span) {
-  flex: none;
-}
-:where(.home) :global(.hero-heading-measure) {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  visibility: hidden;
-  pointer-events: none;
-  font-size: calc(var(--hero-heading-max-size) * 1px);
-  font-weight: 700;
-  line-height: 1.27;
-  letter-spacing: -0.045em;
-}
-:where(.home) :global(.hero-heading-measure .hero-heading-row) {
-  display: flex;
-  width: max-content;
-}
-:where(.home) :global(.hero-applications) {
-  --hero-word-bleed: 0.12em;
-  position: relative;
-  display: inline-block;
-  height: 1lh;
-  /* Leave room for Vietnamese marks and glyph overhang without changing gaps. */
-  overflow: visible;
-  clip-path: inset(calc(-1 * var(--hero-word-bleed)));
-  color: #8fc5ff;
-}
-:where(.home) :global(.hero-application) {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  width: max-content;
-  visibility: hidden;
-  overflow-wrap: normal;
-}
-:where(.home) :global(.hero-application[data-active]) {
-  position: relative;
-  visibility: visible;
-}
-:where(.home) :global(.hero-application[data-outgoing]) {
-  visibility: visible;
-}
-:where(.home) :global(.hero-content > p) {
-  font-size: 16px;
-  color: #e2e8f0;
-  margin: 20px auto 0;
-  line-height: 1.8;
-  max-width: 640px;
-}
-:where(.home) :global(.hero-actions) {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 28px;
-}
-:global(main):where(.home) :global(.hero-actions .button.hero-trial) {
-  min-height: 66px;
-  max-width: 100%;
-  padding: 7px 26px 7px 7px;
-  gap: 16px;
-  border-color: transparent;
-  border-radius: 999px;
-  background: var(--brand-primary);
-  color: var(--text-on-brand);
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.35;
-  box-shadow: 0 6px 24px rgb(0 67 236 / 28%);
-  transition:
-    background-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-:global(main):where(.home) :global(.hero-actions .button.hero-trial:hover) {
-  background: var(--brand-hover);
-  box-shadow: 0 8px 28px rgb(0 67 236 / 36%);
-}
-:where(.home) :global(.hero-trial-icon) {
-  display: grid;
-  place-items: center;
-  width: 50px;
-  height: 50px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: var(--surface-canvas);
-  color: var(--brand-primary);
-  transition: color 0.2s ease;
-}
-:where(.home) :global(.hero-trial-icon svg) {
-  width: 24px;
-  height: 24px;
-}
-:where(.home) :global(.hero-trial:hover .hero-trial-icon) {
-  color: var(--brand-hover);
-}
-:where(.home) :global(.hero-trial-label) {
-  white-space: nowrap;
-}
-:where(.home) :global(.hero-features) {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  width: min(880px, 100%);
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  transform: translateY(-50%);
-  border: 1px solid var(--border-default);
-  background: var(--surface-canvas);
-  color: var(--text-primary);
-  border-radius: 14px;
-  min-height: 96px;
-  padding: 20px 8px;
-  box-shadow: 0 12px 28px rgb(23 32 51 / 10%);
-}
-:where(.home) :global(.hero-features li) {
-  display: flex;
-  flex: 1;
-  min-width: 0;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 8px 24px;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.5;
-  border-right: 1px solid var(--border-default);
-}
-:where(.home) :global(.hero-features li:last-child) {
-  border: 0;
-}
-:where(.home) :global(.hero-features svg) {
-  width: 26px;
-  height: 26px;
-  flex-shrink: 0;
-  color: var(--brand-primary);
-}
-:where(.home) :global(.hero-content > .review-note) {
-  font-size: 10px;
-  line-height: 1.6;
-  margin-top: 12px;
-  color: #e2e8f0;
-}
-:where(.home) :global(.photo-credit) {
-  position: absolute;
-  left: 24px;
-  bottom: 14px;
-  font-size: 9px;
-  color: var(--text-on-dark-secondary);
 }
 :where(.home) :global(.mobile-break) {
   display: none;
@@ -313,9 +78,6 @@
 :where(.home) :global(.promotions) {
   padding-top: 30px;
   padding-bottom: 24px;
-}
-:where(.home) :global(.promotions.promotions-with-features) {
-  padding-top: 0;
 }
 :where(.home) :global(.promotion-artwork) {
   display: block;
@@ -989,11 +751,7 @@
 :where(.home) :global(.final-cta > .button) {
   flex-shrink: 0;
 }
-@media (min-width: 1600px) {
-  :where(.home) :global(.hero) {
-    min-height: 640px;
-  }
-}
+
 @media (max-width: 1199px) {
   :where(.home) :global(.solution-layout) {
     gap: 48px;
@@ -1059,28 +817,6 @@
   }
   :where(.home) :global(.service-top) {
     gap: 18px;
-  }
-  :where(.home) :global(.hero-heading) {
-    --hero-heading-max-size: 44;
-  }
-  :where(.home) :global(.hero) {
-    min-height: 580px;
-  }
-  :where(.home) :global(.hero-content) {
-    padding-inline: 28px;
-  }
-  :where(.home) :global(.hero-features) {
-    min-height: 88px;
-    padding: 18px 4px;
-  }
-  :where(.home) :global(.hero-features li) {
-    gap: 10px;
-    padding: 4px 12px;
-    font-size: 14px;
-  }
-  :where(.home) :global(.hero-features svg) {
-    width: 24px;
-    height: 24px;
   }
   :where(.home) :global(.solution-layout) {
     grid-template-columns: 1fr 1.3fr;
@@ -1192,97 +928,8 @@
   :where(.home) :global(.section) {
     padding-block: 52px;
   }
-  :where(.home) :global(.hero) {
-    min-height: 620px;
-  }
-  :where(.home) :global(.hero-content) {
-    padding: 40px 20px 48px;
-  }
-  :where(.home) :global(.hero-badge) {
-    font-size: 8px;
-    letter-spacing: 0.035em;
-    padding: 7px 9px;
-    gap: 6px;
-    margin-bottom: 24px;
-  }
-  :where(.home) :global(.hero-badge svg) {
-    width: 13px;
-  }
-  :where(.home) :global(.hero h1) {
-    font-size: var(--hero-heading-size, min(38px, 9cqw));
-    line-height: 1.32;
-  }
-  :where(.home) :global(.hero-heading) {
-    --hero-heading-max-size: 38;
-  }
-  :where(.home) :global(.hero-heading-row) {
-    /* Stack complete phrases so the heading can stay prominent on phones. */
-    flex-direction: column;
-    gap: 0.08em;
-  }
   :where(.home) :global(.mobile-break) {
     display: block;
-  }
-  :where(.home) :global(.hero-content > p) {
-    font-size: 13px;
-    line-height: 1.85;
-    margin-top: 20px;
-  }
-  :where(.home) :global(.hero-actions) {
-    margin-top: 24px;
-    gap: 10px;
-  }
-  :where(.home) :global(.hero-actions .button) {
-    padding: 12px 18px;
-    gap: 16px;
-    font-size: 12px;
-  }
-  :global(main):where(.home) :global(.hero-actions .button.hero-trial) {
-    min-height: 58px;
-    padding: 6px 20px 6px 6px;
-    gap: 12px;
-    font-size: 16px;
-  }
-  :where(.home) :global(.hero-trial-icon) {
-    width: 44px;
-    height: 44px;
-  }
-  :where(.home) :global(.hero-trial-icon svg) {
-    width: 22px;
-    height: 22px;
-  }
-  :where(.home) :global(.hero-features) {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    padding: 8px 16px;
-    width: 100%;
-    max-width: 360px;
-    margin-bottom: -40px;
-  }
-  :where(.home) :global(.hero-features li) {
-    border-right: 0;
-    border-bottom: 1px solid var(--border-default);
-    padding: 12px 8px;
-    min-height: 52px;
-    width: 100%;
-    font-size: 14px;
-    justify-content: flex-start;
-    gap: 14px;
-  }
-  :where(.home) :global(.hero-features svg) {
-    width: 22px;
-    height: 22px;
-  }
-  :where(.home) :global(.hero-content > .review-note) {
-    font-size: 8px;
-    max-width: 265px;
-    margin: 10px auto 0;
-  }
-  :where(.home) :global(.photo-credit) {
-    left: 20px;
-    bottom: 12px;
-    font-size: 7px;
   }
   :where(.home) :global(.promotions) {
     padding-top: 24px;
@@ -1590,11 +1237,7 @@
     justify-content: space-between;
   }
 }
-@media (max-width: 359px) {
-  :where(.home) :global(.hero-content) {
-    padding-bottom: 96px;
-  }
-}
+
 :where(.home) :global(.promotion-banner) {
   display: flex;
   align-items: center;
@@ -1785,10 +1428,6 @@
   font-size: var(--font-content-lead);
   line-height: 1.8;
 }
-:global(main):where(.home) :global(.hero-content > p) {
-  font-size: var(--font-content-lead);
-  line-height: 1.8;
-}
 :global(main):where(.home) :global(.need-panel > p) {
   font-size: var(--font-content);
   line-height: 1.8;
@@ -1815,9 +1454,6 @@
 :global(main):where(.home) :global(.button) {
   font-size: var(--font-content-ui);
 }
-:global(main):where(.home) :global(.hero-actions .button) {
-  font-size: var(--font-content-ui);
-}
 :global(main):where(.home) :global(.final-cta > .button) {
   font-size: var(--font-content-ui);
 }
@@ -1834,9 +1470,6 @@
   font-size: var(--font-content-ui);
 }
 :global(main):where(.home) :global(.resource-bottom .text-link) {
-  font-size: var(--font-content-ui);
-}
-:global(main):where(.home) :global(.hero-features li) {
   font-size: var(--font-content-ui);
 }
 :global(main):where(.home) :global(.need-tabs button) {
@@ -1898,12 +1531,6 @@
 }
 :global(main):where(.home) :global(.consultation > .container > .eyebrow) {
   font-size: calc(var(--font-content-meta) - 1px);
-}
-:global(main):where(.home) :global(.hero-badge) {
-  font-size: calc(var(--font-content-meta) - 1px);
-}
-:global(main):where(.home) :global(.hero-badge) {
-  max-width: 100%;
 }
 :global(main):where(.home) :global(.infra-items h3) {
   font-size: 18px;
