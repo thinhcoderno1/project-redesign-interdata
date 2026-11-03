@@ -54,12 +54,12 @@ import local from "./s3-object-storage.module.css";
 function S3Hero() {
   return (
     <section className={hero.hero} aria-labelledby="s3-title">
-      <div className={`${hero.stage} dark`}>
+      <div className={`${hero.stage} ${local.heroStage} dark`}>
         <Image
-          src="/images/s3-object-storage/hero-object-storage-v1.webp"
+          src="/images/s3-object-storage/hero-object-storage-v2.webp"
           alt=""
           fill
-          sizes="(max-width: 899px) 300vw, (max-width: 1199px) 150vw, 100vw"
+          sizes="100vw"
           loading="eager"
           fetchPriority="high"
           className={`${hero.backgroundImage} ${local.heroImage}`}

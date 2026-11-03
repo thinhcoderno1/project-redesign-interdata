@@ -52,7 +52,7 @@ function NetworkHero() {
     <section className={hero.hero} aria-labelledby="private-network-title">
       <div className={`${hero.stage} ${local.heroStage} dark`}>
         <Image
-          src="/images/private-network/hero-private-network-v1.webp"
+          src="/images/private-network/hero-private-network-v2.webp"
           alt=""
           fill
           sizes="100vw"

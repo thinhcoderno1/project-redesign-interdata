@@ -6,8 +6,8 @@ import {
   type BlackFridayCouponGroup,
 } from "@/data/black-friday";
 
-// Enable only after the user explicitly authorizes publishing the real codes.
-const publishCouponCodes = false;
+// Real coupon codes are published at the user's request.
+const publishCouponCodes = true;
 
 const privateCouponCodes = {
   VPS: {

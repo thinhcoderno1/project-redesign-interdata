@@ -41,10 +41,16 @@ mọi khả năng của nền tảng hoặc có quan hệ đối tác với hãn
 
 ## Tài nguyên và metadata
 
-Hero dùng ảnh `public/images/proxmox-ceph/hero-proxmox-ceph-v2.webp`
-(1920×800), tạo bằng imagegen tích hợp: cụm ảo hóa với máy ảo và lưu trữ
-phân tán trên từng node. Cụm nằm bên phải, khoảng trống bên trái dành cho
-tiêu đề và CTA. Open Graph dùng cùng ảnh mới, đúng kích thước và mô tả.
+Hero dùng ảnh `public/images/proxmox-ceph/hero-proxmox-ceph-v5.webp`
+(1920×800), tạo bằng imagegen tích hợp theo ảnh tham chiếu người dùng gửi:
+ba node compute với khối máy ảo trong suốt ở trên, ba node lưu trữ Ceph phân
+tán phía dưới, đường kết nối cyan và nhãn Proxmox/Ceph rõ ràng.
+Cụm nằm bên phải, khoảng trống bên trái dành cho tiêu đề và CTA. Nền hero
+và lớp phủ dùng navy tối `#031324`, bỏ pattern lục giác riêng của hero.
+Desktop dùng `object-fit: contain` để giữ trọn sơ đồ và nhãn công nghệ;
+mobile giữ lớp phủ đậm và crop nền để ưu tiên nội dung.
+Open Graph dùng cùng ảnh mới, đúng kích thước và mô tả. Prompt đầy đủ
+tại `docs/proxmox-ceph-hero-v5-prompt.md`.
 
 Section “Đa dạng lựa chọn” dùng ba ảnh riêng cho Proxmox độc lập, Cluster HA
 và Proxmox + Ceph HCI, dùng bộ `architecture-*-dark-v2.webp` với nền navy tối

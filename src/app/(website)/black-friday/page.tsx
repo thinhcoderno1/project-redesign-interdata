@@ -6,17 +6,28 @@ import { getBlackFridayCoupons } from "@/lib/black-friday-coupons";
 
 export const revalidate = 60;
 
+const title = "Black Friday VPS & Cloud Server 2026 - Tiết Kiệm Đến 75%";
+const description =
+  "Săn ưu đãi Black Friday 2026 tại InterData: VPS giảm đến 71%, Cloud Server đến 61%. Best Plans đăng ký 3 năm, nhận 4 năm sử dụng. Chọn gói, lấy mã ngay!";
+
 export const metadata: Metadata = {
-  title: "Black Friday | Ưu đãi VPS & Cloud Server InterData",
-  description:
-    "Khám phá Black Friday tại InterData. Lựa chọn cấu hình VPS, Cloud Server, khung giờ Flash Sale và ưu đãi theo chu kỳ đăng ký.",
+  title,
+  description,
   alternates: { canonical: "https://interdata.vn/black-friday/" },
   openGraph: {
-    title: "Black Friday | InterData",
-    description: "Nâng cấp hạ tầng. Tối ưu chi phí. Ưu đãi VPS & Cloud Server.",
+    title,
+    description,
     url: "https://interdata.vn/black-friday/",
     locale: "vi_VN",
     type: "website",
+    images: [
+      {
+        url: "/images/black-friday/og-image.png",
+        width: 1733,
+        height: 908,
+        alt: title,
+      },
+    ],
   },
 };
 

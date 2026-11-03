@@ -18,10 +18,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://interdata.vn/images/home/infrastructure/protection-monitoring.webp",
-        width: 1800,
-        height: 600,
-        alt: "Minh họa thiết bị mạng và hệ thống theo dõi kết nối",
+        url: "https://interdata.vn/images/private-network/hero-private-network-v2.webp",
+        width: 1920,
+        height: 800,
+        alt: "Minh họa switch mạng riêng kết nối máy chủ trong các phân vùng VLAN",
       },
     ],
   },

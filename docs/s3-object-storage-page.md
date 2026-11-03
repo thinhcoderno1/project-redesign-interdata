@@ -8,8 +8,11 @@
 - Content and options: `src/data/s3-object-storage.ts`.
 - Local styles: `src/components/s3-object-storage/s3-object-storage.module.css`.
 - Original bucket illustration: `public/images/s3-object-storage/object-storage.svg`.
-- Generated S3 hero: `public/images/s3-object-storage/hero-object-storage-v1.webp`;
-  generation prompt and provenance: `docs/s3-object-storage-hero-image-prompt.json`.
+- Generated S3 hero: `public/images/s3-object-storage/hero-object-storage-v2.webp`,
+  1920×800; applications access object buckets through an S3 API layer above
+  distributed storage nodes. Dark navy, graphite hardware and cyan connections
+  match the selected Proxmox/Ceph hero. Hero and Open Graph use the same asset;
+  generation prompt: `docs/solution-hero-navy-series-prompts.md`.
 - Reuse the VPS use-case illustrations and infrastructure images.
 - Three generated option backgrounds are stored in `public/images/s3-object-storage/`
   as `option-application-media-v1.webp`, `option-backup-storage-v1.webp` and

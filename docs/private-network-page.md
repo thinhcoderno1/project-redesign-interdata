@@ -44,7 +44,10 @@ mới. Các giải pháp khác giữ liên kết và hành vi hiện tại. Hash
 trên trang chủ vẫn tồn tại cho carousel, không thêm mục giải pháp trùng lặp.
 
 Hero dùng ảnh topology mạng riêng được tạo riêng
-`private-network/hero-private-network-v1.webp`.
+`private-network/hero-private-network-v2.webp` (1920×800): switch và các nhóm
+máy chủ phân vùng VLAN, nền navy tối và kết nối cyan theo ảnh Proxmox/Ceph
+đã chọn. Hero/Open Graph dùng cùng ảnh. Prompt tại
+`docs/solution-hero-navy-series-prompts.md`.
 Hình trung tâm lợi ích dùng ảnh 3D minimal nền trong suốt
 `public/images/private-network/advantages-network-v1.webp` (1000×1000, khoảng
 103 KiB), cùng phong cách ảnh Thuê VPS. Ba máy chủ kết nối qua switch trung tâm

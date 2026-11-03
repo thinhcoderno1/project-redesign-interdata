@@ -52,12 +52,12 @@ phương án thương mại hoặc cam kết dịch vụ cụ thể của InterD
 Ảnh tạo mới bằng imagegen tích hợp, tối ưu WebP;
 prompt ban đầu tại `docs/vmware-image-prompts.md`, bộ ảnh nền cập nhật ngày
 01/11/2026 tại `docs/vmware-background-prompts.md`; Hero minh họa giải pháp mới nhất
-tại `docs/vmware-hero-solution-prompt.md`:
+tại `docs/solution-hero-navy-series-prompts.md`:
 
-- `public/images/vmware/hero-vmware-solution-v4.webp`: 2160×900, khoảng 125 KiB;
-  kiến trúc giải pháp với các lớp ứng dụng, nhóm máy ảo, hypervisor và tài nguyên
-  dùng chung; quản trị tập trung và luồng di chuyển workload. Chất liệu kính
-  sapphire, viền kim loại và ánh sáng studio tạo chiều sâu.
+- `public/images/vmware/hero-vmware-solution-v5.webp`: 1920×800;
+  vCenter quản trị cụm host ESXi chạy các nhóm máy ảo, lưu trữ vSAN từ ổ đĩa
+  trên từng host. Phần cứng graphite, khối máy ảo trong suốt và đường nối cyan
+  theo phong cách ảnh Proxmox/Ceph đã chọn.
   Nền navy bên trái cho nội dung. Open Graph dùng cùng ảnh và kích thước.
   Giữ cách căn ảnh desktop/mobile hiện có để thấy lớp ảo hóa và đọc rõ CTA.
 - `public/images/vmware/advantages-virtualization-v1.webp`: 1000×1000, alpha,

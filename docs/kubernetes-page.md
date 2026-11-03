@@ -47,9 +47,11 @@ Bộ tám ảnh nền được tạo mới bằng imagegen tích hợp ngày 31/
 WebP và lưu trong `public/images/kubernetes/`. Prompt và đường dẫn từng ảnh
 được ghi tại `docs/kubernetes-background-prompts.md`:
 
-- Hero `hero-kubernetes-v2.webp`: 1920×800, minh họa tầng control plane và các
+- Hero `hero-kubernetes-v3.webp`: 1920×800, minh họa tầng control plane và các
   worker chạy Pod; khoảng trống bên trái dành cho nội dung. Open Graph dùng
-  cùng ảnh với kích thước và alt được cập nhật.
+  cùng ảnh với kích thước và alt được cập nhật. Hero dùng nền navy tối,
+  phần cứng graphite và kết nối cyan theo ảnh Proxmox/Ceph đã chọn;
+  prompt hiện tại tại `docs/solution-hero-navy-series-prompts.md`.
 - Ba ảnh `architecture-*.webp`: Dev/Staging, Production và Production HA có
   topology riêng; nền navy `#06142d` để tách thẻ khỏi section xanh.
 - Bốn ảnh `component-*.webp`: control plane/worker, kết nối dịch vụ, storage

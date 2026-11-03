@@ -52,7 +52,7 @@ function VmwareHero() {
     <section className={hero.hero} aria-labelledby="vmware-title">
       <div className={`${hero.stage} ${local.heroStage} dark`}>
         <Image
-          src="/images/vmware/hero-vmware-solution-v4.webp"
+          src="/images/vmware/hero-vmware-solution-v5.webp"
           alt=""
           fill
           sizes="100vw"

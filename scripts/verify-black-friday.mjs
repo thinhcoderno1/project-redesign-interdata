@@ -316,9 +316,14 @@ try {
     "41%",
   ]);
   await expect(page.locator("#ma-giam-gia article a")).toHaveCount(6);
-  await expect(page.locator('#ma-giam-gia [class*="couponCode"]')).toHaveText(
-    Array(6).fill("BF26-XXXXX"),
-  );
+  await expect(page.locator('#ma-giam-gia [class*="couponCode"]')).toHaveText([
+    "BF26-VPS71",
+    "BF26-VPS61",
+    "BF26-VPS51",
+    "BF26-CLOUD61",
+    "BF26-CLOUD51",
+    "BF26-CLOUD41",
+  ]);
   for (const [index, action] of (
     await page.locator("#ma-giam-gia article a").all()
   ).entries()) {
@@ -379,9 +384,9 @@ try {
     "Chọn đúng gói. Tối ưu chi phí.",
   );
   await expect(consultation.locator("a")).toHaveCount(2);
-  await expect(consultation.locator('a[href="/lien-he/"]')).toHaveText(
-    "Nhận tư vấn ưu đãi",
-  );
+  await expect(
+    consultation.locator('a[href="https://www.facebook.com/interdata.com.vn"]'),
+  ).toHaveText("Nhận tư vấn ưu đãi");
   await expect(consultation.locator('a[href="#best-plans"]')).toHaveText(
     "Xem lại Best Plans",
   );
@@ -565,7 +570,14 @@ try {
   await expect(staticPage.locator("#best-plans article")).toHaveCount(3);
   await expect(
     staticPage.locator('#ma-giam-gia [class*="couponCode"]'),
-  ).toHaveText(Array(6).fill("BF26-XXXXX"));
+  ).toHaveText([
+    "BF26-VPS71",
+    "BF26-VPS61",
+    "BF26-VPS51",
+    "BF26-CLOUD61",
+    "BF26-CLOUD51",
+    "BF26-CLOUD41",
+  ]);
   await expect(
     staticPage.locator("#best-plans article").first().locator("a"),
   ).toHaveAttribute("href", /billingcycle=triennially$/);

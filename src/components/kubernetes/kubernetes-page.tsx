@@ -52,7 +52,7 @@ function KubernetesHero() {
     <section className={hero.hero} aria-labelledby="kubernetes-title">
       <div className={`${hero.stage} ${local.heroStage} dark`}>
         <Image
-          src="/images/kubernetes/hero-kubernetes-v2.webp"
+          src="/images/kubernetes/hero-kubernetes-v3.webp"
           alt=""
           fill
           sizes="100vw"

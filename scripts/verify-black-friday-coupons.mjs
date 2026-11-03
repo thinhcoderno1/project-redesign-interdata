@@ -38,7 +38,13 @@ const expected = [
   ["Cloud Server", 24, 51, "BF26-CLOUD51"],
   ["Cloud Server", 12, 41, "BF26-CLOUD41"],
 ];
-const hidden = load(source, imports).getBlackFridayCoupons();
+const hidden = load(
+  source.replace(
+    "const publishCouponCodes = true;",
+    "const publishCouponCodes = false;",
+  ),
+  imports,
+).getBlackFridayCoupons();
 assert.deepEqual(
   hidden.flatMap((group) =>
     group.offers.map((offer) => [
@@ -59,14 +65,8 @@ for (const [, , , code] of expected)
   assert(!JSON.stringify(hidden).includes(code));
 assert.equal(data.blackFridayCouponConditions.length, 3);
 
-// Exercise future publication in memory, without changing the disabled source flag.
-const published = load(
-  source.replace(
-    "const publishCouponCodes = false;",
-    "const publishCouponCodes = true;",
-  ),
-  imports,
-).getBlackFridayCoupons();
+// The active configuration publishes the exact code for each service and cycle.
+const published = load(source, imports).getBlackFridayCoupons();
 assert.deepEqual(
   published.flatMap((group) =>
     group.offers.map((offer) => [
@@ -101,14 +101,14 @@ if (process.argv.includes("--built")) {
     ".next/server/app/black-friday.rsc",
   ]) {
     const content = await fs.readFile(file, "utf8");
-    assert(content.includes("BF26-XXXXX"));
+    assert(!content.includes("BF26-XXXXX"));
     for (const [, , , code] of expected)
-      assert(!content.includes(code), `Unpublished coupon exposed in ${file}`);
+      assert(content.includes(code), `Published coupon missing in ${file}`);
   }
   console.log(
-    `Coupon privacy: ${checked} production client assets, prerendered HTML and RSC contain no unpublished codes.`,
+    `Coupons: ${checked} production client assets keep code definitions server-side; prerendered HTML and RSC contain all published codes.`,
   );
 }
 console.log(
-  "Coupons: exact service/cycle/discount mapping, hidden placeholders and future publication passed.",
+  "Coupons: exact published service/cycle/discount mapping and disabled-mode placeholders passed.",
 );

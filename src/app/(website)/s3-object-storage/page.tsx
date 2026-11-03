@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://interdata.vn/images/s3-object-storage/hero-object-storage-v1.webp",
-        width: 2172,
-        height: 724,
+        url: "https://interdata.vn/images/s3-object-storage/hero-object-storage-v2.webp",
+        width: 1920,
+        height: 800,
         alt: "Minh họa bucket lưu trữ đối tượng kết nối tệp ảnh, video, tài liệu và bản sao lưu",
       },
     ],

@@ -161,7 +161,8 @@ export function getBlackFridayUpgrade(
 // Set all dates and switch to "scheduled" when the official schedule is ready.
 // Scheduled mode shows the section from visibleFrom until endsAt; "hidden" hides it.
 export const blackFridayFlashSale: FlashSaleSchedule = {
-  mode: "preview",
+  // Keep Flash Sale hidden until explicitly requested to reopen.
+  mode: "hidden",
   visibleFrom: null,
   startsAt: null,
   endsAt: null,

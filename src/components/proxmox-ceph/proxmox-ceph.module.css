@@ -2,28 +2,18 @@
   --brand-primary: #0066ed;
 }
 .heroStage {
-  background: var(--brand-strong);
+  --hero-surface: #031324;
+  background: var(--hero-surface);
 }
 .heroStage::before {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  top: 50%;
-  left: -90px;
-  width: min(760px, 56vw);
-  aspect-ratio: 260 / 250;
-  background: url("/images/proxmox-ceph/pattern-hexagon-links.svg") center /
-    contain no-repeat;
-  opacity: 0.14;
-  transform: translateY(-50%);
-  pointer-events: none;
+  content: none;
 }
 .heroStage::after {
   background: linear-gradient(
     90deg,
-    var(--brand-strong) 0%,
-    color-mix(in srgb, var(--brand-strong) 95%, transparent) 28%,
-    color-mix(in srgb, var(--brand-strong) 65%, transparent) 45%,
+    var(--hero-surface) 0%,
+    color-mix(in srgb, var(--hero-surface) 95%, transparent) 28%,
+    color-mix(in srgb, var(--hero-surface) 65%, transparent) 45%,
     transparent 70%
   );
 }
@@ -108,17 +98,12 @@
   grid-column: 53 / -1;
 }
 @media (max-width: 899px) {
-  .heroStage::before {
-    left: -140px;
-    width: 620px;
-    opacity: 0.1;
-  }
   .heroStage::after {
     background: linear-gradient(
       90deg,
-      color-mix(in srgb, var(--brand-strong) 98%, transparent),
-      color-mix(in srgb, var(--brand-strong) 90%, transparent) 55%,
-      color-mix(in srgb, var(--brand-strong) 65%, transparent)
+      color-mix(in srgb, var(--hero-surface) 98%, transparent),
+      color-mix(in srgb, var(--hero-surface) 90%, transparent) 55%,
+      color-mix(in srgb, var(--hero-surface) 65%, transparent)
     );
   }
   .heroStage .heroBackground {

@@ -52,7 +52,7 @@ function ProxmoxHero() {
     <section className={hero.hero} aria-labelledby="proxmox-ceph-title">
       <div className={`${hero.stage} ${local.heroStage} dark`}>
         <Image
-          src="/images/proxmox-ceph/hero-proxmox-ceph-v2.webp"
+          src="/images/proxmox-ceph/hero-proxmox-ceph-v5.webp"
           alt=""
           fill
           sizes="100vw"

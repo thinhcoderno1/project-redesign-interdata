@@ -760,7 +760,10 @@ export function BlackFridayPage({
           title="Chọn đúng gói. Tối ưu chi phí."
           description="Chia sẻ nhu cầu sử dụng VPS hoặc Cloud Server. InterData sẽ giúp bạn chọn cấu hình, chu kỳ và ưu đãi Black Friday phù hợp."
           image="/images/cta/consultation-woman-upper-body.webp"
-          primaryAction={{ label: "Nhận tư vấn ưu đãi", href: links.contact }}
+          primaryAction={{
+            label: "Nhận tư vấn ưu đãi",
+            href: contactDetails.facebook,
+          }}
           secondaryAction={{ label: "Xem lại Best Plans", href: "#best-plans" }}
         />
       </div>
