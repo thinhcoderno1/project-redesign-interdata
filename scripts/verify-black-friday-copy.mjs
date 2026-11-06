@@ -13,7 +13,7 @@ try {
   const page = await context.newPage();
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto(`${base}/black-friday/`);
+  await page.goto(`${base}/blackfriday/`);
   const buttons = page.getByRole("button", { name: /^Sao chép mã/ });
   await expect(buttons).toHaveCount(8);
   const expected = ["BF-XXXX", "BF-XXXX", ...Array(6).fill("BF26-XXXXX")];

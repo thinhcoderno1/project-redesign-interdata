@@ -31,14 +31,14 @@ try {
   const page = await context.newPage();
   await page.emulateMedia({ reducedMotion: "reduce" });
   page.on("pageerror", (error) => errors.push(error.message));
-  const response = await page.goto(`${base}/black-friday/`);
+  const response = await page.goto(`${base}/blackfriday/`);
   assert.equal(response.status(), 200);
   await expect(page.locator("h1")).toHaveCount(1);
   await expect(page.locator(".site-header")).toHaveCount(1);
   await expect(page.locator("footer")).toHaveCount(1);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
-    "https://interdata.vn/black-friday/",
+    "https://interdata.vn/blackfriday/",
   );
   await expect(page.locator("#best-plans article")).toHaveCount(3);
   await expect(page.locator('#best-plans [class*="planHeader"] p')).toHaveCount(
@@ -558,7 +558,7 @@ try {
     viewport: { width: 390, height: 844 },
   });
   const staticPage = await noJs.newPage();
-  await staticPage.goto(`${base}/black-friday/`);
+  await staticPage.goto(`${base}/blackfriday/`);
   await expect(
     staticPage.locator('#gia-han [class*="renewalOffer"] > strong'),
   ).toHaveText(["50%", "6"]);

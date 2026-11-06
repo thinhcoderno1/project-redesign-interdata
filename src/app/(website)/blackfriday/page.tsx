@@ -13,11 +13,11 @@ const description =
 export const metadata: Metadata = {
   title,
   description,
-  alternates: { canonical: "https://interdata.vn/black-friday/" },
+  alternates: { canonical: "https://interdata.vn/blackfriday/" },
   openGraph: {
     title,
     description,
-    url: "https://interdata.vn/black-friday/",
+    url: "https://interdata.vn/blackfriday/",
     locale: "vi_VN",
     type: "website",
     images: [
@@ -41,4 +41,4 @@ async function Page() {
   );
 }
 
-export default withPageSchema(Page, { path: "/black-friday/", metadata });
+export default withPageSchema(Page, { path: "/blackfriday/", metadata });

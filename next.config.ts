@@ -6,6 +6,11 @@ const config: NextConfig = {
   redirects() {
     return [
       {
+        source: "/black-friday/",
+        destination: "/blackfriday/",
+        permanent: true,
+      },
+      {
         source: "/vietnam-co-location/",
         destination: "/vietnam-colocation/",
         permanent: true,

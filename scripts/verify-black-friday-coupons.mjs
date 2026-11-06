@@ -97,8 +97,8 @@ if (process.argv.includes("--built")) {
   }
   assert(checked > 0);
   for (const file of [
-    ".next/server/app/black-friday.html",
-    ".next/server/app/black-friday.rsc",
+    ".next/server/app/blackfriday.html",
+    ".next/server/app/blackfriday.rsc",
   ]) {
     const content = await fs.readFile(file, "utf8");
     assert(!content.includes("BF26-XXXXX"));

@@ -21,7 +21,7 @@ const routes = [
   "/trien-khai-vmware/",
   "/s3-object-storage/",
   "/canhme/",
-  "/black-friday/",
+  "/blackfriday/",
 ];
 const directory = "artifacts/pricing-mobile";
 await fs.mkdir(directory, { recursive: true });

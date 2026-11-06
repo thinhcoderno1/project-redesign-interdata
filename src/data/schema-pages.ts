@@ -47,7 +47,7 @@ const faqByPath: Record<string, readonly FaqItem[]> = {
   "/trien-khai-Kubernetes-k8s/": kubernetesFaq,
   "/trien-khai-vmware/": vmwareFaq,
   "/s3-object-storage/": s3Faq,
-  "/black-friday/": blackFridayFaqs,
+  "/blackfriday/": blackFridayFaqs,
   "/canhme/": canhMeFaq.map(([question, answer]) => ({ question, answer })),
 };
 const serviceNames: Record<string, string> = {
@@ -106,7 +106,7 @@ export function pageProfile(path: string): PageProfile {
   if (path === "/gioi-thieu/") return { type: "AboutPage", name: "Giới thiệu" };
   if (path === "/lien-he/") return { type: "ContactPage", name: "Liên hệ" };
   if (path === "/chinh-sach-bao-mat/") return { name: "Chính sách bảo mật" };
-  if (path === "/canhme/" || path === "/black-friday/")
+  if (path === "/canhme/" || path === "/blackfriday/")
     return {
       type: "CollectionPage",
       name: path === "/canhme/" ? "Canh Me" : "Black Friday",
