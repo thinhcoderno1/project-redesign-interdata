@@ -8,9 +8,13 @@
   position: relative;
   isolation: isolate;
   min-height: 560px;
-  padding-block: 44px 80px;
+  padding-block: 76px 80px;
   background: #04152d;
   color: var(--text-on-brand);
+}
+
+.picture {
+  display: contents;
 }
 
 .background {
@@ -44,18 +48,6 @@
   font-size: calc(var(--font-content-meta) - 1px);
   font-weight: 500;
   letter-spacing: 0.09em;
-}
-
-.title {
-  margin: 16px auto 0;
-  font-size: 54px;
-  line-height: 1.27;
-  letter-spacing: -0.045em;
-}
-
-.title span {
-  display: block;
-  color: #8fc5ff;
 }
 
 .description {
@@ -294,11 +286,7 @@
 
 @media (max-width: 1199px) {
   .visual {
-    padding-top: 40px;
-  }
-
-  .title {
-    font-size: 44px;
+    padding-top: 64px;
   }
 
   .benefits li {
@@ -369,7 +357,7 @@
 @media (max-width: 639px) {
   .visual {
     min-height: 0;
-    padding-block: 28px 88px;
+    padding-block: 40px 88px;
   }
 
   .shade {
@@ -379,11 +367,6 @@
   .badge {
     padding: 8px 12px;
     letter-spacing: 0.035em;
-  }
-
-  .title {
-    font-size: clamp(28px, 8.8vw, 38px);
-    line-height: 1.32;
   }
 
   .description {

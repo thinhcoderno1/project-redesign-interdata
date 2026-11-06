@@ -1,0 +1,92 @@
+.heading {
+  --hero-heading-max-size: 54;
+  position: relative;
+  container-type: inline-size;
+  max-width: 1200px;
+  margin: 16px auto 0;
+}
+
+.heading h1 {
+  font-size: var(--hero-heading-size, min(54px, 4cqw));
+  line-height: 1.27;
+  letter-spacing: -0.045em;
+}
+
+.heading :global(.hero-heading-row) {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  gap: 0.22em;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.heading :global(.hero-heading-row > span) {
+  flex: none;
+}
+
+.heading :global(.hero-heading-measure) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+  font-size: calc(var(--hero-heading-max-size) * 1px);
+  font-weight: 700;
+  line-height: 1.27;
+  letter-spacing: -0.045em;
+}
+
+.heading :global(.hero-heading-measure .hero-heading-row) {
+  display: flex;
+  width: max-content;
+}
+
+.heading :global(.hero-applications) {
+  --hero-word-bleed: 0.12em;
+  position: relative;
+  display: inline-block;
+  height: 1lh;
+  /* Preserve Vietnamese marks and glyph overhang without changing the gaps. */
+  overflow: visible;
+  clip-path: inset(calc(-1 * var(--hero-word-bleed)));
+  color: #8fc5ff;
+}
+
+.heading :global(.hero-application) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: max-content;
+  visibility: hidden;
+  overflow-wrap: normal;
+}
+
+.heading :global(.hero-application[data-active]) {
+  position: relative;
+  visibility: visible;
+}
+
+.heading :global(.hero-application[data-outgoing]) {
+  visibility: visible;
+}
+
+@media (max-width: 1199px) {
+  .heading {
+    --hero-heading-max-size: 44;
+  }
+}
+
+@media (max-width: 639px) {
+  .heading {
+    --hero-heading-max-size: 33;
+  }
+
+  .heading h1 {
+    line-height: 1.32;
+  }
+}

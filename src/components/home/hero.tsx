@@ -28,14 +28,33 @@ export function HomeHero() {
       data-home-hero
     >
       <div className={styles.visual}>
-        <Image
-          src="/images/home/hero-globe-racks.webp"
-          alt=""
-          fill
-          preload
-          sizes="100vw"
-          className={styles.background}
-        />
+        <picture className={styles.picture}>
+          <source
+            media="(max-width: 639px)"
+            type="image/avif"
+            srcSet="/images/home/hero-globe-racks-mobile.avif"
+          />
+          <source
+            media="(max-width: 639px)"
+            type="image/webp"
+            srcSet="/images/home/hero-globe-racks-mobile.webp"
+          />
+          <source
+            type="image/avif"
+            srcSet="/images/home/hero-globe-racks-desktop-1400.avif 1400w, /images/home/hero-globe-racks-desktop-1902.avif 1902w"
+            sizes="(max-width: 1287px) 1288px, 100vw"
+          />
+          <Image
+            src="/images/home/hero-globe-racks.webp"
+            alt=""
+            fill
+            loading="eager"
+            fetchPriority="high"
+            quality={82}
+            sizes="(max-width: 1287px) 1288px, 100vw"
+            className={styles.background}
+          />
+        </picture>
         <div className={styles.shade} aria-hidden="true" />
         <div className={`${styles.content} container`}>
           <span className={styles.badge}>HẠ TẦNG MẠNH MẼ · BẢO MẬT ĐA LỚP</span>
