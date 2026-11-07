@@ -19,10 +19,8 @@ import {
   Workflow,
 } from "lucide-react";
 import { ConsultationCta } from "@/components/home/consultation-cta";
-import {
-  CapacitySection,
-  EducationSection,
-} from "@/components/home/company-sections";
+import { CapacitySection } from "@/components/shared/capacity-section";
+import { EducationSection } from "@/components/home/company-sections";
 import { TechnologyPartners } from "@/components/home/technology-partners";
 import { CustomerProof } from "@/components/shared/customer-proof";
 import { links } from "@/data/content";

@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { CompanyProofSections } from "@/components/shared/company-proof-sections";
 import { N8nDeploymentProcess } from "./deployment-process";
-import { CapacitySection } from "@/components/home/company-sections";
+import { CapacitySection } from "@/components/shared/capacity-section";
 import { TechnologyPartners } from "@/components/home/technology-partners";
 import homeStyles from "@/components/home/home.module.css";
 import { ParallaxBackground } from "@/components/ui/parallax-background";
@@ -508,7 +508,7 @@ export function N8nPage({ prices }: { prices: N8nPrices }) {
         <span className={styles.photoCaption}>Ảnh minh họa datacenter</span>
       </section>
       <div className={`${homeStyles.home} ${styles.companySection}`}>
-        <CapacitySection withBadgeIcons />
+        <CapacitySection />
       </div>
       <CompanyProofSections withBadgeIcons />
       <div className={`${homeStyles.home} ${styles.companySection}`}>

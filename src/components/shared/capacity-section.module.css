@@ -1,0 +1,79 @@
+/* Own the presentation here so host-page typography cannot change it. */
+.section:global(.capacity) {
+  --brand-primary: #0043ec;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 440px;
+  padding-block: 36px 52px;
+  color: var(--text-primary);
+  font-size: var(--font-content);
+  line-height: 1.7;
+  overflow-wrap: normal;
+  background: var(--surface-canvas);
+}
+
+.content {
+  position: relative;
+  text-align: center;
+}
+
+.section .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  margin-bottom: 16px;
+  color: var(--brand-primary);
+  font-size: calc(var(--font-content-meta) - 1px);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+}
+
+.section .heading {
+  max-width: 670px;
+  margin: auto;
+  color: var(--text-primary);
+  font-size: clamp(30px, 3.2vw, 44px);
+  font-weight: 700;
+  line-height: 1.28;
+  letter-spacing: -0.045em;
+  text-transform: none;
+  text-wrap: initial;
+}
+
+.highlight {
+  color: var(--brand-primary);
+  white-space: nowrap;
+}
+
+.section .description {
+  max-width: 680px;
+  margin: 22px auto 0;
+  color: var(--text-secondary);
+  font-size: var(--font-content-lead);
+  line-height: 1.8;
+}
+
+.section :global(.review-note) {
+  margin-top: 28px;
+  font-size: 10px;
+}
+
+@media (max-width: 639px) {
+  .section:global(.capacity) {
+    min-height: 0;
+    padding-block: 36px;
+  }
+
+  .section .heading {
+    font-size: clamp(24px, 7.4vw, 29px);
+    line-height: 1.4;
+  }
+
+  .section :global(.review-note) {
+    margin-top: 24px;
+    font-size: 8px;
+  }
+}

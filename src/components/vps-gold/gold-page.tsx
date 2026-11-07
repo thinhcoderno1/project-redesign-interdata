@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { CompanyProofSections } from "@/components/shared/company-proof-sections";
 import { Environments } from "@/components/vps/environments";
-import { CapacitySection } from "@/components/home/company-sections";
+import { CapacitySection } from "@/components/shared/capacity-section";
 import { TechnologyPartners } from "@/components/home/technology-partners";
 import homeStyles from "@/components/home/home.module.css";
 import { ParallaxBackground } from "@/components/ui/parallax-background";
@@ -506,7 +506,7 @@ export function GoldPage({ products }: { products: VpsProduct[] | null }) {
         <span className={styles.photoCaption}>Ảnh minh họa datacenter</span>
       </section>
       <div className={`${homeStyles.home} ${styles.companySection}`}>
-        <CapacitySection withBadgeIcons />
+        <CapacitySection />
       </div>
       <CompanyProofSections withBadgeIcons />
       <div className={`${homeStyles.home} ${styles.companySection}`}>

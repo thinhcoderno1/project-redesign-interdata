@@ -32,15 +32,6 @@
   padding-block: 52px;
 }
 
-.journey :global(.capacity) {
-  padding-top: 36px;
-  min-height: 440px;
-}
-
-.journey :global(.world-map) {
-  mask-image: linear-gradient(transparent, #000 20%, #000 65%, transparent);
-}
-
 .journey :global(#doi-tac) {
   padding-block: 48px;
 }
@@ -78,10 +69,6 @@
 
   .journey :global(.section) {
     padding-block: 36px;
-  }
-
-  .journey :global(.capacity) {
-    min-height: 0;
   }
 
   .journey :global(#doi-tac) {

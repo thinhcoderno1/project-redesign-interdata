@@ -15,10 +15,8 @@ import {
   CircleHelp,
 } from "lucide-react";
 import { ConsultationCta } from "@/components/home/consultation-cta";
-import {
-  CapacitySection,
-  EducationSection,
-} from "@/components/home/company-sections";
+import { CapacitySection } from "@/components/shared/capacity-section";
+import { EducationSection } from "@/components/home/company-sections";
 import { CustomerProof } from "@/components/shared/customer-proof";
 import { TechnologyPartners } from "@/components/home/technology-partners";
 import homeStyles from "@/components/home/home.module.css";
@@ -340,7 +338,7 @@ export function CloudServerPage({ prices }: { prices: CloudPrices }) {
       <CloudComparison />
       <CloudDeployment />
       <div className={`${homeStyles.home} ${base.homeSections}`}>
-        <CapacitySection withBadgeIcons />
+        <CapacitySection />
       </div>
       <CustomerProof controlsOnCards centerHeadings withBadgeIcons />
       <div className={`${homeStyles.home} ${base.homeSections}`}>

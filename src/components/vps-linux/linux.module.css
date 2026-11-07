@@ -54,15 +54,11 @@
 .companySection p {
   color: var(--text-secondary);
 }
-.companySection :global(.capacity-content) > p,
 .companySection :global(#doi-tac-cong-nghe) p {
   font-size: var(--font-content-lead);
   line-height: 1.8;
 }
-.companySection :global(.stat-grid) span {
-  font-size: calc(var(--font-content-meta) + 1px);
-  line-height: 1.65;
-}
+
 .companySection section :global(.eyebrow) {
   display: inline-flex;
   font-size: calc(var(--font-content-meta) - 1px);

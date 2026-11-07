@@ -1,9 +1,7 @@
 import Image from "next/image";
 import { CustomerProof } from "@/components/shared/customer-proof";
-import {
-  CapacitySection,
-  EducationSection,
-} from "@/components/home/company-sections";
+import { CapacitySection } from "@/components/shared/capacity-section";
+import { EducationSection } from "@/components/home/company-sections";
 import { TechnologyPartners } from "@/components/home/technology-partners";
 import homeStyles from "@/components/home/home.module.css";
 import { Check } from "lucide-react";

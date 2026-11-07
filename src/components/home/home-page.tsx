@@ -3,7 +3,7 @@ import companyJourneyStyles from "./company-journey.module.css";
 import { Consultation } from "@/components/home/consultation";
 import { ConsultationCta } from "@/components/home/consultation-cta";
 import { Icon } from "@/components/ui/icon";
-import { CapacitySection } from "./company-sections";
+import { CapacitySection } from "@/components/shared/capacity-section";
 import { CompanyProofSections } from "@/components/shared/company-proof-sections";
 import { HomeHero } from "@/components/home/hero";
 import { InfrastructureServices } from "@/components/home/infrastructure-services";
@@ -57,7 +57,7 @@ export function HomePage() {
           </div>
         </section>
         <div className={companyJourneyStyles.journey}>
-          <CapacitySection withBadgeIcons animateNumbers emphasizeHeading />
+          <CapacitySection />
           <CompanyProofSections withBadgeIcons />
           <TechnologyPartners withBadgeIcons />
         </div>

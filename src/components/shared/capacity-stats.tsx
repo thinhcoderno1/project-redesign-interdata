@@ -88,7 +88,7 @@ export function CapacityStats({ items }: { items: CapacityStat[] }) {
   }, [items]);
 
   return (
-    <div className="stat-grid" ref={container}>
+    <div className={`stat-grid ${styles.grid}`} ref={container}>
       {items.map((item) => (
         <div key={item.id}>
           <strong
@@ -101,7 +101,7 @@ export function CapacityStats({ items }: { items: CapacityStat[] }) {
             </span>
           </strong>
           <span className="sr-only">{item.value}</span>
-          <span>{item.label}</span>
+          <span className={styles.label}>{item.label}</span>
         </div>
       ))}
     </div>

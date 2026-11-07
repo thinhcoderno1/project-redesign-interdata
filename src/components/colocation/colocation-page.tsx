@@ -19,7 +19,7 @@ import {
 import { CompanyProofSections } from "@/components/shared/company-proof-sections";
 import { ConsultationCta } from "@/components/home/consultation-cta";
 import { ColocationProcess } from "./colocation-process";
-import { CapacitySection } from "@/components/home/company-sections";
+import { CapacitySection } from "@/components/shared/capacity-section";
 import { TechnologyPartners } from "@/components/home/technology-partners";
 import homeStyles from "@/components/home/home.module.css";
 import { ParallaxBackground } from "@/components/ui/parallax-background";
@@ -253,7 +253,7 @@ export function ColocationPage() {
       <ColocationProcess />
 
       <div className={`${homeStyles.home} ${styles.companySection}`}>
-        <CapacitySection withBadgeIcons />
+        <CapacitySection />
       </div>
       <CompanyProofSections withBadgeIcons />
       <div className={`${homeStyles.home} ${styles.companySection}`}>

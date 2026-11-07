@@ -1,0 +1,135 @@
+/* Decorative network layer shared by every capacity section. */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  color: var(--brand-primary);
+  mask-image: linear-gradient(transparent, #000 12%, #000 80%, transparent);
+}
+
+.ambient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 17% 52%, rgb(0 100 236 / 7%), transparent 38%),
+    radial-gradient(ellipse at 83% 48%, rgb(32 159 236 / 8%), transparent 36%);
+}
+
+.plane {
+  position: absolute;
+  width: clamp(1040px, 100vw, 1640px);
+  height: auto;
+  aspect-ratio: 2;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -47%) perspective(1100px) rotateX(22deg)
+    rotateZ(-5deg);
+}
+
+.map {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  opacity: 0.65;
+}
+
+.grid {
+  opacity: 0.065;
+}
+
+.shadow {
+  opacity: 0.045;
+}
+
+.edge {
+  opacity: 0.09;
+}
+
+.land {
+  opacity: 0.27;
+}
+
+.routes {
+  opacity: 0.3;
+}
+
+.signals {
+  opacity: 0.65;
+  stroke-linecap: round;
+  stroke-dasharray: 2 98;
+  animation: transmit 12s linear infinite;
+}
+
+.halo {
+  opacity: 0.45;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulse 6s ease-out infinite;
+}
+
+/* Keep the map visible at the edges while protecting the central copy. */
+.veil {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 36% 80% at 50% 45%,
+    var(--surface-canvas) 10%,
+    rgb(255 255 255 / 94%) 40%,
+    rgb(255 255 255 / 60%) 70%,
+    transparent 100%
+  );
+}
+
+@keyframes transmit {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.3);
+  }
+}
+
+@media (max-width: 639px) {
+  .plane {
+    width: 850px;
+    top: 56%;
+    transform: translate(-57%, -50%) perspective(900px) rotateX(25deg)
+      rotateZ(-8deg);
+  }
+
+  .map {
+    opacity: 0.48;
+  }
+
+  .veil {
+    background: radial-gradient(
+      ellipse 60% 80% at 50% 42%,
+      rgb(255 255 255 / 95%) 10%,
+      rgb(255 255 255 / 78%) 55%,
+      rgb(255 255 255 / 25%) 100%
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signals {
+    animation: none;
+    stroke-dasharray: none;
+    opacity: 0.15;
+  }
+  .halo {
+    animation: none;
+  }
+}

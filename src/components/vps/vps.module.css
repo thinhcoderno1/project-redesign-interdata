@@ -77,21 +77,15 @@
   color: var(--text-primary);
   font-size: var(--vps-font-body);
 }
-.page :global(.capacity) h2 {
-  font-size: var(--vps-font-h2);
-}
+
 .homeSections p {
   color: var(--text-secondary);
 }
-.homeSections :global(.capacity-content) > p,
 .homeSections :global(.education-heading) p {
   font-size: var(--vps-font-lead);
   line-height: 1.8;
 }
-.homeSections :global(.stat-grid) span {
-  font-size: var(--vps-font-small);
-  line-height: 1.75;
-}
+
 .homeSections :global(.eyebrow) {
   color: var(--brand-primary);
   letter-spacing: 0.14em;
@@ -110,8 +104,7 @@
   font-size: var(--vps-font-body);
 }
 .page :global(.testimonial-author) span,
-.page :global(.testimonial-details) summary,
-.page :global(.stat-grid) span {
+.page :global(.testimonial-details) summary {
   font-size: var(--vps-font-small);
   line-height: 1.65;
 }

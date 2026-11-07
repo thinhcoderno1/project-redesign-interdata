@@ -21,7 +21,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { CompanyProofSections } from "@/components/shared/company-proof-sections";
-import { CapacitySection } from "@/components/home/company-sections";
+import { CapacitySection } from "@/components/shared/capacity-section";
 import { TechnologyPartners } from "@/components/home/technology-partners";
 import homeStyles from "@/components/home/home.module.css";
 import { ParallaxBackground } from "@/components/ui/parallax-background";
