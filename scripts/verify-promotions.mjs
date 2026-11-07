@@ -6,6 +6,7 @@ const base = process.env.TEST_BASE_URL || "http://localhost:3100";
 const bannerLinks = (root) =>
   root.getByRole("link").and(root.locator("[data-promotion-link]"));
 const expectedImages = [
+  "/images/promotion/black-friday-2026-gift-vouchers-tech.webp",
   "/images/promotion/vps-cloud-warm.webp",
   "/images/promotion/vps-platinum-viettel-idc.jpg",
   "/images/promotion/vps-n8n.jpg",
@@ -26,7 +27,25 @@ try {
     await page.goto(base, { waitUntil: "domcontentloaded" });
     const root = page.locator('#uu-dai [aria-roledescription="slideshow"]');
     await expect(root).toHaveAttribute("data-enhanced", "true");
+    await expect(root).toHaveAttribute("data-active-slide", "1");
+    await expect(bannerLinks(root)).toHaveAttribute("href", "/blackfriday/");
+    const campaignImage = bannerLinks(root).locator("img");
+    await expect(campaignImage).toHaveAttribute(
+      "alt",
+      /3 voucher.*71%.*83K\/Tháng.*1 năm sử dụng.*50% phí gia hạn/,
+    );
+    await expect(campaignImage).toHaveAttribute(
+      "alt",
+      /SĂN VPS GIÁ TỐT - CHỐT CLOUD GIÁ HỜI/,
+    );
     await root.scrollIntoViewIfNeeded();
+    const benefitsBox = await page
+      .getByRole("list", { name: "Lợi ích hạ tầng InterData" })
+      .boundingBox();
+    const promotionBox = await page.locator("#uu-dai").boundingBox();
+    expect(promotionBox.y).toBeGreaterThanOrEqual(
+      benefitsBox.y + benefitsBox.height,
+    );
     expect(
       await root.evaluate((element) => {
         const css = getComputedStyle(element);
@@ -57,9 +76,9 @@ try {
         ),
     ).toBe(width < 640 ? 8 : 12);
     const slides = root.locator('[aria-roledescription="slide"]');
-    await expect(slides).toHaveCount(4);
+    await expect(slides).toHaveCount(expectedImages.length);
     await expect(bannerLinks(root)).toHaveCount(1);
-    for (let index = 0; index < 4; index++) {
+    for (let index = 0; index < expectedImages.length; index++) {
       const thumbnail = root.getByRole("button", {
         name: new RegExp(`^Xem banner ${index + 1}:`),
       });
@@ -71,7 +90,10 @@ try {
       );
       await expect(bannerLinks(root)).toHaveCount(1);
       const link = bannerLinks(root);
-      await expect(link).toHaveAttribute("href", "/canhme/");
+      await expect(link).toHaveAttribute(
+        "href",
+        index === 0 ? "/blackfriday/" : "/canhme/",
+      );
       const image = link.locator("img");
       expect(
         new URL(await image.getAttribute("src"), base).searchParams.get("url"),
@@ -100,14 +122,22 @@ try {
     await root
       .getByRole("button", { name: "Banner trước", exact: true })
       .click();
-    await expect(root).toHaveAttribute("data-active-slide", "4");
+    await expect(root).toHaveAttribute(
+      "data-active-slide",
+      String(expectedImages.length),
+    );
     await bannerLinks(root).first().focus();
     await page.keyboard.press("ArrowRight");
     await expect(root).toHaveAttribute("data-active-slide", "1");
     await expect(bannerLinks(root).first()).toBeFocused();
     await page.keyboard.press("ArrowLeft");
-    await expect(root).toHaveAttribute("data-active-slide", "4");
-    await expect(root.getByRole("button")).toHaveCount(6);
+    await expect(root).toHaveAttribute(
+      "data-active-slide",
+      String(expectedImages.length),
+    );
+    await expect(root.getByRole("button")).toHaveCount(
+      expectedImages.length + 2,
+    );
     await expect(
       root.getByRole("button", { name: /Tạm dừng|Phát tự động/ }),
     ).toHaveCount(0);
@@ -139,8 +169,14 @@ try {
       1,
     );
     for (const box of [previousBox, nextBox]) {
+      const controlsBox =
+        width < 1200
+          ? await root
+              .getByRole("group", { name: "Chọn chương trình ưu đãi" })
+              .boundingBox()
+          : frameBox;
       expect(box.y + box.height / 2).toBeCloseTo(
-        frameBox.y + frameBox.height / 2,
+        controlsBox.y + controlsBox.height / 2,
         1,
       );
     }
@@ -185,12 +221,22 @@ try {
   await page.evaluate(() => document.activeElement.blur());
   await page.clock.fastForward(30000);
   await expect(root).toHaveAttribute("data-active-slide", "2");
-  await root.getByRole("button", { name: /^Xem banner 4:/ }).click();
-  await expect(root).toHaveAttribute("data-active-slide", "4");
+  await root
+    .getByRole("button", {
+      name: new RegExp(`^Xem banner ${expectedImages.length}:`),
+    })
+    .click();
+  await expect(root).toHaveAttribute(
+    "data-active-slide",
+    String(expectedImages.length),
+  );
   await page.mouse.move(0, 0);
   await page.evaluate(() => document.activeElement.blur());
   await page.clock.fastForward(30000);
-  await expect(root).toHaveAttribute("data-active-slide", "4");
+  await expect(root).toHaveAttribute(
+    "data-active-slide",
+    String(expectedImages.length),
+  );
   await root
     .getByRole("button", { name: "Banner tiếp theo", exact: true })
     .click();
@@ -253,7 +299,7 @@ try {
   const fallbackRoot = fallback.locator(
     '#uu-dai [aria-roledescription="slideshow"]',
   );
-  await expect(bannerLinks(fallbackRoot)).toHaveCount(4);
+  await expect(bannerLinks(fallbackRoot)).toHaveCount(expectedImages.length);
   await expect(fallbackRoot.getByRole("button")).toHaveCount(0);
   for (const link of await bannerLinks(fallbackRoot).all()) {
     await link.focus();

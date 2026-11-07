@@ -1,0 +1,22 @@
+{
+  "campaign": "InterData Black Friday 2026",
+  "asset": "/images/promotion/black-friday-2026-gift-vouchers-tech.webp",
+  "dimensions": {
+    "width": 2048,
+    "height": 432
+  },
+  "generation": "Built-in ImageGen; technology-pattern, 3D-space and typography revision",
+  "delivery": "2048x432 crop of the generated artwork, shifted up 8 source pixels to preserve the full ribbon; WebP quality 88",
+  "placement": "First slide of #uu-dai below the homepage benefits bar",
+  "destination": "/blackfriday/",
+  "design": "Open gift with three vouchers in a layered 3D technology space, perspective grid and circuit patterns. BLACK FRIDAY stays on one line. No InterData logo or wordmark.",
+  "copy": [
+    "BLACK FRIDAY",
+    "2026",
+    "SĂN VPS GIÁ TỐT - CHỐT CLOUD GIÁ HỜI",
+    "VPS / Cloud Server — Giảm đến 71%",
+    "VPS Platinum — Chỉ từ 83K/Tháng + Tặng thêm 1 năm sử dụng",
+    "Giảm 50% phí gia hạn"
+  ],
+  "final_prompt": "Edit Image 1 (edit target: the current Black Friday 2026 gift-voucher banner). Retain the three exact offers, the open black gift box with orange ribbon, three glowing ivory vouchers, orange/blue palette, and no branding. Improve the background and composition with professional technology patterns and stronger 3D spatial depth.\n\nREQUIRED TEXT CHANGES:\n1. \"BLACK FRIDAY\" MUST appear as ONE SINGLE CONTINUOUS HORIZONTAL LINE, with the two words on the SAME baseline. NO line break, NO stacking BLACK over FRIDAY. Give the headline a wider left text area, with bold condensed white dimensional sans-serif lettering.\n2. Keep the separate orange year badge \"2026\".\n3. Replace the old orange CTA text completely with EXACTLY \"SĂN VPS GIÁ TỐT - CHỐT CLOUD GIÁ HỜI\". Accurate Vietnamese accents. Make this a wide orange capsule beneath the headline/year, large enough to hold this whole sentence clearly, preferably in one line. Do not retain KHÁM PHÁ ƯU ĐÃI anywhere.\n\nLAYOUT: left approximately 40% for the single-line BLACK FRIDAY headline, 2026 badge, and new wide CTA. Right approximately 58% contains the full open gift and exactly three distinct vouchers fanning out side by side. Give the central voucher enough width for the bonus text. No overlap over any coupon lettering. Keep the gift, floating lid and ribbon fully visible. Keep all three offers exactly:\nVoucher 1: \"VPS / Cloud Server\", \"Giảm đến\", \"71%\".\nVoucher 2: \"VPS Platinum\", \"Chỉ từ\", \"83K/Tháng\", \"+ Tặng thêm 1 năm sử dụng\".\nVoucher 3: \"GIẢM\", \"50%\", \"PHÍ GIA HẠN\".\n\nTECHNOLOGY PATTERNS AND DEPTH: build a dimensional dark futuristic space rather than a flat black surface. Add fine electric-blue circuit-board traces and restrained orange data nodes on the side/background planes. A delicate luminous perspective grid floor converges behind the gift, with reflected light and a few shallow 3D stepped platforms. Layer faint wireframe hexagons, tiny softly glowing particles and glass-like translucent geometric panels at different distances. Cooler soft blue light in the far background, crisp warm gift/voucher edges in the middle plane, subtle foreground floor lines and reflection create atmospheric perspective. Technology details must remain understated behind the typography; avoid visual noise or patterns across text/ticket faces. Not a generic all-neon cyberpunk scene.\n\nMANDATORY DELIVERY SAFETY: final delivery is 2048x432, ratio 4.74:1. If rendering on a 2172x724 canvas, keep ALL meaningful text, three vouchers, full lid, ribbon and box inside the central strip y=160..565; rows 0..149 and 575..723 must be only matching dark technology background that can be cropped away. Do not enlarge the meaningful design to fill the full canvas height. Example layout on that canvas: headline x140..890 at y230..325 on ONE line, year at y350..405, wide CTA x140..900 at y445..500; three ticket faces x950..2020 at y210..435; compact lid at y170..205 and gift box at y460..550. Preserve ample left/right safe padding.\n\nNo InterData wording or logos, no server towers, no new offers, no extra percentages, no fabricated prices or terms, no watermark. The result should feel polished, layered and spatial, while every campaign word remains legible."
+}

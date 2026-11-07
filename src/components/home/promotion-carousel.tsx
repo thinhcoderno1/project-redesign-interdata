@@ -7,6 +7,12 @@ import styles from "./promotion-carousel.module.css";
 
 const banners = [
   {
+    title: "Black Friday 2026",
+    image: "/images/promotion/black-friday-2026-gift-vouchers-tech.webp",
+    alt: "Black Friday 2026 — hộp quà mở ra 3 voucher: VPS / Cloud Server giảm đến 71%; VPS Platinum chỉ từ 83K/Tháng và tặng thêm 1 năm sử dụng; giảm 50% phí gia hạn. SĂN VPS GIÁ TỐT - CHỐT CLOUD GIÁ HỜI.",
+    href: "/blackfriday/",
+  },
+  {
     title: "Ưu đãi VPS / Cloud Server",
     image: "/images/promotion/vps-cloud-warm.webp",
     alt: "Săn ưu đãi VPS / Cloud Server – tối ưu đến 80% chi phí",
@@ -116,7 +122,11 @@ export function PromotionCarousel({ href }: { href: string }) {
                 aria-hidden={enhanced && active !== index ? true : undefined}
                 inert={enhanced && active !== index ? true : undefined}
               >
-                <a className={styles.banner} href={href} data-promotion-link>
+                <a
+                  className={styles.banner}
+                  href={banner.href ?? href}
+                  data-promotion-link
+                >
                   <Image
                     src={banner.image}
                     alt={banner.alt}

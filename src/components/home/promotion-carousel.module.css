@@ -116,6 +116,12 @@
     transform: translateY(-4px);
   }
 }
+@media (max-width: 1199px) {
+  .arrows {
+    top: calc(100% + 12px);
+    transform: none;
+  }
+}
 @media (max-width: 639px) {
   .viewport {
     border-radius: 8px;
