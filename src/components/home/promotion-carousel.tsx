@@ -8,8 +8,8 @@ import styles from "./promotion-carousel.module.css";
 const banners = [
   {
     title: "Black Friday 2026",
-    image: "/images/promotion/black-friday-2026-gift-vouchers-tech.webp",
-    alt: "Black Friday 2026 — hộp quà mở ra 3 voucher: VPS / Cloud Server giảm đến 71%; VPS Platinum chỉ từ 83K/Tháng và tặng thêm 1 năm sử dụng; giảm 50% phí gia hạn. SĂN VPS GIÁ TỐT - CHỐT CLOUD GIÁ HỜI.",
+    image: "/images/promotion/black-friday-2026-gift-vouchers-5x1-v2.webp",
+    alt: "Black Friday 2026 — hộp quà mở ra 3 voucher: VPS / Cloud Server giảm đến 71%; VPS Platinum chỉ từ 83K và tặng thêm 1 năm; giảm 50% phí gia hạn.",
     href: "/blackfriday/",
   },
   {
@@ -128,10 +128,11 @@ export function PromotionCarousel({ href }: { href: string }) {
                   data-promotion-link
                 >
                   <Image
+                    className={index === 0 ? styles.campaignImage : undefined}
                     src={banner.image}
                     alt={banner.alt}
-                    width={2048}
-                    height={432}
+                    width={index === 0 ? 2000 : 2048}
+                    height={index === 0 ? 400 : 432}
                     sizes="(max-width: 1343px) calc(100vw - 40px), 1248px"
                     loading={index < 2 ? "eager" : "lazy"}
                     draggable={false}

@@ -158,6 +158,16 @@ try {
   await expect(page.locator('article [data-article-cta="deals"]')).toHaveCount(
     1,
   );
+  await expect(page.locator("article [data-article-cta-source]")).toHaveCount(
+    3,
+  );
+  await expect(page.locator('article [data-article-cta="deals"]')).toHaveCSS(
+    "background-image",
+    /linear-gradient/,
+  );
+  await expect(
+    page.locator('article [data-article-cta="vps"] [data-article-button]'),
+  ).toHaveCSS("background-image", /linear-gradient/);
   await expect(
     page.locator('article [data-article-section="faq"]'),
   ).toHaveCount(1);
@@ -166,6 +176,35 @@ try {
   );
   const { parseDocument, DomUtils } = await import("htmlparser2");
   const original = parseDocument(sourceArticle[0].content.rendered);
+  const sourcePlans = DomUtils.findAll(
+    (node) => node.attribs.class === "interdata-bf26-plan-card",
+    original.children,
+  ).map((node) => ({
+    title: DomUtils.textContent(
+      DomUtils.findOne((child) => child.name === "h3", node.children),
+    ).trim(),
+    href: DomUtils.findOne((child) => child.name === "a", node.children).attribs
+      .href,
+  }));
+  const planBlock = page.locator('[data-article-plan-theme="bf26"]');
+  await expect(planBlock).toHaveCount(1);
+  assert.deepEqual(
+    await planBlock.locator(".interdata-plan-card").evaluateAll((cards) =>
+      cards.map((card) => ({
+        title: card.querySelector("h3").textContent.trim(),
+        href: card.querySelector("a").getAttribute("href"),
+      })),
+    ),
+    sourcePlans,
+  );
+  await expect(planBlock.locator(".interdata-plan-icon-cpu").first()).toHaveCSS(
+    "mask-image",
+    /plan-cpu\.svg/,
+  );
+  await expect(planBlock.locator(".interdata-plan-button").first()).toHaveCSS(
+    "background-color",
+    "rgb(0, 91, 234)",
+  );
   for (const element of DomUtils.findAll(
     (node) =>
       node.attribs.id === "ez-toc-container" ||
@@ -236,10 +275,71 @@ try {
         `Sidebar above article at ${width}px`,
       );
     assert.equal(await overflow(), false, `Post overflow ${width}`);
+    const planLayout = await planBlock.evaluate((block) => {
+      const viewport = block.querySelector(".interdata-plan-viewport");
+      const cards = [...block.querySelectorAll(".interdata-plan-card")];
+      return {
+        visible: Math.round(
+          viewport.clientWidth / cards[0].getBoundingClientRect().width,
+        ),
+        clipped: cards.some((card) => card.scrollWidth > card.clientWidth + 1),
+      };
+    });
+    assert.equal(planLayout.visible, width <= 480 ? 1 : width <= 800 ? 2 : 3);
+    assert.equal(
+      planLayout.clipped,
+      false,
+      `UX Block card overflow at ${width}px`,
+    );
+    assert.equal(
+      await page
+        .locator("article [data-article-cta-source]")
+        .evaluateAll((panels) =>
+          panels.some((panel) => panel.scrollWidth > panel.clientWidth + 1),
+        ),
+      false,
+      `Source CTA content must not be clipped at ${width}px`,
+    );
+    if (width <= 600)
+      await expect(page.locator('article [data-article-cta="vps"]')).toHaveCSS(
+        "flex-direction",
+        "column",
+      );
     results.push({ route: "post", width, overflow: false });
     if ([390, 1440].includes(width))
       await page.screenshot({ path: `artifacts/blog/post-${width}.png` });
   }
+  await page.setViewportSize({ width: 390, height: 1000 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const planViewport = planBlock.locator(".interdata-plan-viewport");
+  const nextPlan = planBlock.locator(".interdata-carousel-next");
+  const previousPlan = planBlock.locator(".interdata-carousel-prev");
+  await nextPlan.click();
+  await expect
+    .poll(() => planViewport.evaluate((node) => node.scrollLeft))
+    .toBeGreaterThan(200);
+  await previousPlan.click();
+  await expect
+    .poll(() => planViewport.evaluate((node) => node.scrollLeft))
+    .toBeLessThan(2);
+  await previousPlan.click();
+  await expect
+    .poll(() => planViewport.evaluate((node) => node.scrollLeft))
+    .toBeGreaterThan(400);
+  await nextPlan.click();
+  await expect
+    .poll(() => planViewport.evaluate((node) => node.scrollLeft))
+    .toBeLessThan(2);
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await expect(nextPlan).toBeDisabled();
+  await expect(previousPlan).toBeDisabled();
+  const staticPlanFixture = await planBlock.evaluate((block) => ({
+    html: block.outerHTML,
+    articleClass: block.closest("article").className,
+    stylesheets: [...document.querySelectorAll('link[rel="stylesheet"]')].map(
+      (link) => link.href,
+    ),
+  }));
   const missing = await page.goto(`${baseUrl}/blog/no-such-post-9927/`, {
     waitUntil: "domcontentloaded",
   });
@@ -257,6 +357,27 @@ try {
   await expect(staticPage.locator("main article")).toHaveCount(
     careerPosts.length,
   );
+  await staticPage.setViewportSize({ width: 390, height: 1000 });
+  // Isolate the server-rendered block: the route's existing Suspense stream
+  // requires JavaScript to reveal its completed page, independently of UX Blocks.
+  await staticPage.setContent(
+    `<!doctype html><html><head>${staticPlanFixture.stylesheets.map((href) => `<link rel="stylesheet" href="${href}">`).join("")}</head><body><article class="${staticPlanFixture.articleClass}">${staticPlanFixture.html}</article></body></html>`,
+    { waitUntil: "load" },
+  );
+  const staticPlans = staticPage.locator('[data-article-plan-theme="bf26"]');
+  await expect(staticPlans.locator(".interdata-plan-card")).toHaveCount(
+    sourcePlans.length,
+  );
+  await expect(staticPlans.locator(".interdata-plan-track")).toHaveCSS(
+    "display",
+    "grid",
+  );
+  const staticViewport = staticPlans.locator(".interdata-plan-viewport");
+  await staticViewport.focus();
+  await staticPage.keyboard.press("ArrowRight");
+  await expect
+    .poll(() => staticViewport.evaluate((node) => node.scrollLeft))
+    .toBeGreaterThan(0);
   await noJs.close();
   assert.deepEqual(errors, []);
   await fs.writeFile(
@@ -264,7 +385,7 @@ try {
     JSON.stringify({ results, accessibility: "passed", errors }, null, 2),
   );
   console.log(
-    "Blog UI: live posts, search, categories, pagination, legacy links, TOC, JSON-LD, 404, no-JS, responsive layout and accessibility passed.",
+    "Blog UI: live posts, search, TOC, CTA, UX Block pricing, carousel controls, no-JS scrolling, responsive layout and accessibility passed.",
   );
 } finally {
   await context.close();

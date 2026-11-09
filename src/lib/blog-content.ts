@@ -3,6 +3,12 @@ import { Parser } from "htmlparser2";
 import { htmlToText } from "./interdata-blog";
 import { localBlogHref } from "./blog-links";
 import type { BlogCategory } from "@/data/blog";
+import {
+  articleButtonKind,
+  articleCtaAllowedStyles,
+  prepareBlogCtaMarkup,
+} from "./blog-cta";
+import { prepareBlogPlans } from "./blog-plans";
 
 export type TocEntry = { id: string; title: string; level: number };
 const tags = [
@@ -17,13 +23,21 @@ const tags = [
 ];
 const allowedClasses = {
   "*": [
-    /^interdata-(?:plan-(?:carousel|viewport|track|card|title|price|badge|features|icon|button)|carousel-(?:heading|arrow|prev|next|mark))$/,
+    /^interdata-(?:plan-(?:carousel|viewport|track|card|title|price|badge|features|icon(?:-(?:cpu|ram|storage|network|gift))?|spacer|button)|carousel-(?:heading|arrow|prev|next|mark))$/,
   ],
 };
 const attributes = {
-  "*": ["id", "class"],
+  "*": ["id", "class", "style", "data-article-cta", "data-article-cta-source"],
   a: ["href", "target", "rel", "title", "data-article-button"],
-  div: ["data-article-panel", "data-article-section"],
+  div: [
+    "data-article-panel",
+    "data-article-section",
+    "data-article-plan-theme",
+    "role",
+    "aria-label",
+    "tabindex",
+  ],
+  span: ["aria-hidden"],
   button: ["type", "aria-label"],
   img: ["src", "alt", "width", "height", "loading", "decoding"],
   iframe: [
@@ -39,37 +53,6 @@ const attributes = {
   th: ["colspan", "rowspan", "scope"],
   ol: ["start", "reversed"],
 };
-function serviceButton(attrs: Record<string, string>) {
-  if (
-    !/(?:background(?:-color)?\s*:|display\s*:\s*inline-block)/i.test(
-      attrs.style || "",
-    ) &&
-    !/\b(?:button|btn|wp-block-button__link)\b/.test(attrs.class || "")
-  )
-    return "";
-  try {
-    const url = new URL(attrs.href, "https://interdata.vn");
-    if (
-      url.hostname !== "interdata.vn" ||
-      !/^https?:$/.test(url.protocol) ||
-      url.username ||
-      url.password ||
-      url.port
-    )
-      return "";
-    return (
-      (
-        {
-          "/thue-vps/": "vps",
-          "/canhme/": "deals",
-          "/cloud-server/": "cloud",
-        } as Record<string, string>
-      )[`${url.pathname.replace(/\/$/, "")}/`] || ""
-    );
-  } catch {
-    return "";
-  }
-}
 function safeImage(value: string | undefined) {
   if (!value) return "";
   try {
@@ -89,10 +72,11 @@ export function prepareBlogContent(
   raw: string,
   categories: BlogCategory[] = [],
 ) {
-  const safe = sanitizeHtml(raw, {
+  const safe = sanitizeHtml(prepareBlogPlans(prepareBlogCtaMarkup(raw)), {
     allowedTags: tags,
     allowedAttributes: attributes,
     allowedClasses,
+    allowedStyles: articleCtaAllowedStyles,
     allowedSchemes: ["https", "http", "mailto", "tel"],
     allowProtocolRelative: false,
     allowedIframeHostnames: [
@@ -103,23 +87,6 @@ export function prepareBlogContent(
     exclusiveFilter: (frame) => frame.attribs.id === "ez-toc-container",
     transformTags: {
       h1: "h2",
-      div: (tagName, attrs) => ({
-        tagName,
-        attribs: {
-          ...attrs,
-          "data-article-panel":
-            /(?:background(?:-color)?|border(?:-left)?)\s*:/i.test(
-              attrs.style || "",
-            )
-              ? "true"
-              : "",
-          "data-article-section": /border-top\s*:[^;]*dashed/i.test(
-            attrs.style || "",
-          )
-            ? "conclusion"
-            : "",
-        },
-      }),
       a: (tagName, attrs) => {
         const href = attrs.href?.startsWith("#")
           ? attrs.href
@@ -129,7 +96,7 @@ export function prepareBlogContent(
           attribs: {
             ...attrs,
             href,
-            "data-article-button": serviceButton(attrs),
+            "data-article-button": articleButtonKind(attrs),
             ...(attrs.target === "_blank"
               ? { rel: "noopener noreferrer" }
               : {}),
@@ -143,6 +110,7 @@ export function prepareBlogContent(
           alt: attrs.alt || "",
           loading: "lazy",
           decoding: "async",
+          ...(attrs.style ? { style: attrs.style } : {}),
           ...(/^\d+$/.test(attrs.width || "") ? { width: attrs.width } : {}),
           ...(/^\d+$/.test(attrs.height || "") ? { height: attrs.height } : {}),
         },
@@ -202,6 +170,7 @@ export function prepareBlogContent(
     allowedTags: tags,
     allowedAttributes: attributes,
     allowedClasses,
+    allowedStyles: articleCtaAllowedStyles,
     allowedSchemes: ["https", "http", "mailto", "tel"],
     allowProtocolRelative: false,
     allowedIframeHostnames: [

@@ -1,0 +1,46 @@
+{
+  "campaign": "Black Friday 2026 homepage banner",
+  "generation": "Built-in image_gen, localized edit of the existing 5:1 raster banner",
+  "previous_spec": "docs/home-black-friday-gift-5x1.json",
+  "asset": "/images/promotion/black-friday-2026-gift-vouchers-5x1-v2.webp",
+  "download_png": "output/imagegen/black-friday-2026-gift-vouchers-5x1-v2.png",
+  "dimensions": {
+    "width": 2000,
+    "height": 400,
+    "aspect_ratio": "5:1"
+  },
+  "changes": [
+    "Remove the InterData logo and wordmark from the artwork.",
+    "Replace '+ Tặng thêm 1 năm sử dụng' with 'Tặng thêm 1 năm'."
+  ],
+  "unchanged": "Campaign title, 2026 badge, three vouchers, other offer text, open blue gift box, yellow ribbons, color palette and 5:1 layout.",
+  "copy": [
+    "BLACK FRIDAY",
+    "2026",
+    "VPS / Cloud Server — Giảm Đến 71%",
+    "VPS Platinum — Chỉ Từ 83K",
+    "Tặng thêm 1 năm",
+    "Giảm 50% phí gia hạn"
+  ],
+  "destination": "/blackfriday/",
+  "delivery": {
+    "source": "artifacts/black-friday-gift-5x1/generated-source-v2.png",
+    "source_dimensions": {
+      "width": 2171,
+      "height": 724
+    },
+    "crop": {
+      "left": 0,
+      "top": 145,
+      "width": 2170,
+      "height": 434
+    },
+    "resize": {
+      "width": 2000,
+      "height": 400
+    },
+    "webp_quality": 92,
+    "postprocessing": "Remove renderer padding, resize and encode only. Logo removal and text replacement performed by image_gen."
+  },
+  "edit_prompt": "Use case: text-localization / precise-object-edit.\nImage 1 is the EDIT TARGET: the existing finished 2000 x 400 Black Friday 2026 banner.\nMake exactly TWO localized changes:\n1. Remove the entire white InterData logo AND the word \"InterData\" from the upper-left area (approximately x=200..435, y=28..72 in the 2000x400 image). Seamlessly reconstruct the existing dark navy background and subtle diagonal blue lighting behind it. Leave this area empty; do not replace it with any new symbol or words.\n2. In the yellow pill at the bottom of the middle \"VPS Platinum\" voucher, replace \"+ Tặng thêm 1 năm sử dụng\" with EXACTLY \"Tặng thêm 1 năm\". Accurate Vietnamese diacritics. There must be NO plus sign and NO \"sử dụng\". Center the shorter phrase in the same yellow pill, retaining its dark bold italic sans-serif lettering and overall pill styling. You can make this shorter text slightly larger to stay clear.\n\nPreserve EVERYTHING ELSE: same navy/royal-blue/cyan/yellow palette, exact BLACK FRIDAY title, 2026 badge, open blue gift box, yellow bow/ribbons and raised lid, exactly three vouchers, every other offer word and every percentage/number, all 3D materials, positions, sizes and lighting. Do not redesign, recenter, zoom or rearrange any element. Voucher 1 stays \"VPS / Cloud Server\", \"Giảm Đến\", \"71%\"; middle stays \"VPS Platinum\", \"Chỉ Từ\", \"83K\"; right stays \"Giảm\", \"50%\", \"phí gia hạn\". No logos or brand wordmarks anywhere.\nReturn the same panorama, EXACT aspect ratio 5:1 and preferably exactly 2000x400 pixels. If your renderer requires a 3:1 outer canvas, place the COMPLETE UNCHANGED 5:1 panorama in the center strip with only matching dark navy padding above and below; never stretch or crop the banner to fill a 3:1 canvas. No border or crop guides. The deliverable is an edited bitmap image, not HTML or a webpage mockup."
+}

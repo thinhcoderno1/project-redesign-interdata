@@ -1,0 +1,47 @@
+{
+  "campaign": "InterData Black Friday 2026",
+  "generation": "Built-in image_gen; new raster artwork using the user-supplied image as style/brand reference, followed by a composition refinement",
+  "reference_image": "Khuyến mãi Black Friday InterData 50%.png (provided by user)",
+  "asset": "/images/promotion/black-friday-2026-gift-vouchers-5x1.webp",
+  "download_png": "output/imagegen/black-friday-2026-gift-vouchers-5x1.png",
+  "dimensions": {
+    "width": 2000,
+    "height": 400,
+    "aspect_ratio": "5:1"
+  },
+  "design": "Dark navy, royal blue and cyan technology lighting; white/silver BLACK, yellow/gold FRIDAY; InterData brand and 2026 tag; one open blue gift with a yellow ribbon and exactly three vouchers.",
+  "copy": [
+    "BLACK FRIDAY",
+    "2026",
+    "VPS / Cloud Server — Giảm Đến 71%",
+    "VPS Platinum — Chỉ Từ 83K",
+    "+ Tặng thêm 1 năm sử dụng",
+    "Giảm 50% phí gia hạn"
+  ],
+  "destination": "/blackfriday/",
+  "delivery": {
+    "source": "artifacts/black-friday-gift-5x1/generated-source.png",
+    "source_dimensions": {
+      "width": 2172,
+      "height": 724
+    },
+    "crop": {
+      "left": 0,
+      "top": 128,
+      "width": 2172,
+      "height": 434
+    },
+    "resize": {
+      "width": 2000,
+      "height": 400,
+      "fit": "cover"
+    },
+    "webp": {
+      "quality": 92,
+      "bytes": 124326
+    },
+    "postprocessing": "Crop, resize and encoding only; all artwork, branding and lettering generated with image_gen."
+  },
+  "prompt": "Use case: ads-marketing.\nAsset type: a finished bitmap Black Friday 2026 homepage banner for InterData, final aspect ratio EXACTLY 5:1.\nImage 1 is a STYLE AND BRAND REFERENCE ONLY. Create a NEW composition based closely on its visual language. Preserve its dark navy background, saturated royal blue, bright cyan edge lighting, polished 3D white/silver and yellow/gold typography, glossy technology materials and dimensional blue stage. Use the supplied InterData logo/wordmark faithfully and quietly in the upper-left of the design. This is not the previous dark brushed-metal corporate composition.\n\nPRIMARY SCENE: a luxurious ROYAL-BLUE OPEN GIFT BOX with a bright YELLOW RIBBON, its lid lifted upward behind the contents. EXACTLY THREE large distinct vouchers emerge from the open box, arranged side by side in a gentle fan. All three vouchers must clearly belong to this one open gift. The vouchers have attractive ticket-shaped notched edges, glossy cobalt blue faces, luminous cyan outlines and refined yellow highlights. Their lettering is large and extremely readable, frontal and not distorted by perspective. The left and right vouchers can tilt very slightly, without hiding any lettering. Show the complete open gift, complete lifted lid, complete ribbon and all three complete ticket faces. The scene sits on a low dimensional blue platform with tasteful luminous reflections, matching the reference's technology advertising style. Replace the server tower and shopping cart from the reference with this open gift and vouchers. Do not retain its feature-icon sidebar.\n\nLAYOUT: new extra-wide 5:1 composition. Left approximately 36% contains the small InterData brand and a prominent 3D campaign title. On the left, \"BLACK\" in white/silver and \"FRIDAY\" in rich yellow/gold, with a small blue ticket-shaped \"2026\" badge. These may be two tightly balanced lines, as in the reference. Right approximately 58% contains the open gift with three vouchers, spreading horizontally so each offer has its own clear area. No extra subtitle or CTA button is necessary. Keep the background readable and structured, with restrained diagonal blue light ribbons and a luminous perspective floor, not noisy circuit clutter.\n\nEXACT VIETNAMESE TEXT — no paraphrasing, correct diacritics, no extra offer terms:\nCampaign:\n\"BLACK FRIDAY\"\n\"2026\"\n\nVoucher 1:\n\"VPS / Cloud Server\"\n\"Giảm Đến\"\n\"71%\"\n\nVoucher 2:\n\"VPS Platinum\"\n\"Chỉ Từ\"\n\"83K\"\n\"+ Tặng thêm 1 năm sử dụng\"\nMake 83K large, and render the entire bonus line legibly inside the voucher. Do NOT add \"/Tháng\", billing periods, a new price or conditions.\n\nVoucher 3:\n\"Giảm\"\n\"50%\"\n\"phí gia hạn\"\n\nTYPOGRAPHY: strong, professional, polished dimensional sans serif inspired by the attached design. Campaign title is substantial but must leave room for the three exact offers. The three numerical benefits 71%, 83K and 50% are each large focal points. All diacritics must be correct. No logo or voucher text may be overlapped by the box, lid or ribbon.\n\nCRITICAL PRODUCTION COMPOSITION: final delivery will be a center crop to 5:1. Prefer an actual 5:1 canvas if possible. If output uses a 3:1 canvas (e.g. 2172x724), keep ALL important content — logo, title, year, voucher wording, full gift and lid — within x=140..2030 and y=185..540. Top and bottom outer regions show only a matching continuous blue background and light atmosphere, with NO important objects or text, so they can be cropped away. The final 5:1 crop of a 2172x724 canvas is y=145..579. Leave ample breathing room inside that crop. This is one full-bleed composition: no inset border, no visible safe-area guides, no crop marks.\n\nAvoid: extra vouchers or floating percent tickets, extra percentages, extra numbers, invented copy, 24/7 claims, best-of-year claims, server towers, shopping carts, feature columns, beige/gold-on-black corporate panels, flat webpage UI cards, browser chrome, watermarks, cropped wording or missing parts of the gift. Create an actual polished raster advertising image, ready to use in the website's image carousel.",
+  "composition_refinement_prompt": "Edit Image 1, preserving its successful blue/yellow 3D style and EXACT wording. There is ONE critical layout correction: the current artwork fills a 3:1 canvas, but the delivered banner MUST be 5:1 without cropping any meaningful content. RECOMPOSE THE ARTWORK INTO A SHORT CENTRAL HORIZONTAL STRIP.\n\nCanvas is 2172x724. FINAL CROP will be x=0..2172, y=145..579. ALL logo, campaign title, year, entire gift box, entire lid and ribbon, all three entire voucher faces, and every word MUST be comfortably within y=180..540. Rows y=0..170 and y=550..724 must show ONLY continuous matching dark navy/blue atmosphere and subtle background lines, no logo, no text, no part of the gift or ribbon. These are sacrificial background regions for cropping; do not draw borders, crop marks, or a framed inset. In particular: the gold bow must NOT be near the top of the canvas anymore.\n\nLAYOUT CHANGES NEEDED: uniformly reduce the complete gift+lid+bow+three-voucher group by approximately 43%, preserving their proportions and all lettering, and place it centered around x=1570,y=360. Its highest point is y=180 and lowest point y=535, with full ribbon visible. It should occupy approximately x=1110..2030. You may modestly spread the three tickets sideways to make the short gift grouping wider while keeping the same typography and exact offers. Keep all three vouchers clearly emerging from the SAME open gift. No extra tickets.\nReduce the left headline group so it occupies approximately x=150..980 and y=255..500. \"BLACK\" in silver/white above \"FRIDAY\" in gold, small blue \"2026\" tag beside it. Place the small faithful white InterData logo at x=160..440,y=195..235, not at the top of the canvas. There is generous horizontal spacing between the heading and the gift.\nKeep the glowing blue stage under the gift compact and inside the crop. Keep the reference's rich saturated royal blue, cyan rim lights, 3D white and gold title, yellow ribbon and polished materials. Do not change to muted corporate cards.\nEvery original word must remain correct: BLACK FRIDAY; 2026; InterData; voucher 1 \"VPS / Cloud Server\", \"Giảm Đến\", \"71%\"; voucher 2 \"VPS Platinum\", \"Chỉ Từ\", \"83K\", \"+ Tặng thêm 1 năm sử dụng\"; voucher 3 \"Giảm\", \"50%\", \"phí gia hạn\". No \"/Tháng\", no new copy, no extra promises.\nThe central 5:1 strip must be a complete, balanced, finished banner. Outside this strip is just matching dark blue background that can be removed."
+}

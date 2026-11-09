@@ -35,6 +35,12 @@
   aspect-ratio: 2048 / 432;
   object-fit: contain;
 }
+.banner .campaignImage {
+  aspect-ratio: 5 / 1;
+}
+.carousel[data-enhanced][data-active-slide="1"] .viewport {
+  aspect-ratio: 5 / 1;
+}
 .banner:focus-visible {
   outline: 3px solid var(--brand-primary);
   outline-offset: -4px;

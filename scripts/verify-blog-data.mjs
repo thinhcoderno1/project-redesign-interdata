@@ -205,6 +205,100 @@ const hostile = frameBlogContent(
   ).html,
 );
 assert.ok(!/onclick|class="evil"|data-article-cta=/.test(hostile.body));
+
+// WordPress campaigns and support CTAs keep their styles through both passes.
+const sourceCta = prepareBlogContent(`
+  <p style="color:red;position:fixed">Ordinary article text</p>
+  <section style="background:linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);border:2px dashed #2563eb;border-radius:14px;padding:30px;text-align:center">
+    <p><!-- wpautop comment --></p>
+    <span style="background:#10b981;color:#ffffff;font-size:11px;padding:4px 10px;border-radius:20px">Original badge</span>
+    <h3 style="color:#ffffff;font-size:28px;line-height:1.2">Original campaign title</h3>
+    <p style="color:#bfdbfe">Original campaign copy</p>
+    <a href="https://interdata.vn/blackfriday/#best-plans" target="_blank" style="display:inline-block;background:linear-gradient(90deg, #F97316 0%, #DC2626 100%);color:#fff;padding:12px 30px;border-radius:8px;box-shadow:0 5px 15px rgba(220,38,38,0.3);position:fixed;z-index:999999;background-image:url(https://evil.example/track);width:expression(alert(1));--unsafe:red;transform:scale(50)" onclick="alert(1)">Original campaign button</a>
+    <a href="https://support.interdata.vn/" style="display:inline-flex;background:#2563eb;color:#fff">Contact support</a>
+  </section>`);
+const sourceCtaFrame = frameBlogContent(sourceCta.html);
+const sourceCtaHtml = sourceCtaFrame.opening + sourceCtaFrame.body;
+assert.match(sourceCtaHtml, /data-article-cta="service"/);
+assert.match(sourceCtaHtml, /data-article-cta-source/);
+assert.match(
+  sourceCtaHtml,
+  /background:linear-gradient\(135deg, #0f172a 0%, #1e3a8a 100%\)/,
+);
+assert.match(sourceCtaHtml, /border:2px dashed #2563eb/);
+assert.match(sourceCtaHtml, /box-shadow:0 5px 15px rgba\(220,38,38,0.3\)/);
+assert.match(sourceCtaHtml, /color:#ffffff;font-size:28px;line-height:1.2/);
+assert.match(
+  sourceCtaHtml,
+  /href="https:\/\/interdata.vn\/blackfriday\/#best-plans"/,
+);
+assert.match(sourceCtaHtml, /href="https:\/\/support.interdata.vn\/"/);
+assert.match(sourceCtaHtml, /rel="noopener noreferrer"/);
+assert.match(sourceCtaHtml, /<p>Ordinary article text<\/p>/);
+assert.ok(
+  !/position:|z-index|url\(|expression\(|--unsafe|transform:|onclick|evil\.example|<p>\s*<\/p>/.test(
+    sourceCtaHtml,
+  ),
+);
+assert.equal(htmlToText(sourceCtaHtml), htmlToText(sourceCta.html));
+const forgedCta = prepareBlogContent(
+  '<div data-article-cta="deals" data-article-cta-source style="background:red"><p style="color:red">Forged panel</p></div>',
+);
+assert.ok(!/style=|data-article-cta/.test(forgedCta.html));
+const externalCta = prepareBlogContent(
+  '<div style="background:red"><a href="https://interdata.vn.evil.example/" style="background:red">External button</a></div>',
+);
+assert.ok(!/data-article-cta|style=/.test(externalCta.html));
+
+const uxBlock = fs.readFileSync("scripts/fixtures/blog-ux-bf26.html", "utf8");
+const uxPrepared = prepareBlogContent(
+  `<style>body{display:none}</style>${uxBlock}`,
+);
+const uxFrame = frameBlogContent(uxPrepared.html);
+assert.equal(htmlToText(uxPrepared.html), htmlToText(uxBlock));
+assert.match(uxFrame.body, /data-article-plan-theme="bf26"/);
+assert.ok(!uxFrame.opening.includes("interdata-plan-carousel"));
+assert.equal(
+  (uxPrepared.html.match(/class="interdata-plan-card"/g) || []).length,
+  3,
+);
+assert.equal(
+  (uxPrepared.html.match(/class="interdata-plan-button"/g) || []).length,
+  3,
+);
+assert.equal(
+  (uxPrepared.html.match(/interdata-plan-icon-cpu/g) || []).length,
+  3,
+);
+assert.equal(
+  (uxPrepared.html.match(/interdata-plan-icon-network/g) || []).length,
+  9,
+);
+assert.match(uxPrepared.html, /class="interdata-plan-spacer"/);
+assert.match(uxPrepared.html, /tabindex="0"/);
+assert.match(uxPrepared.html, /role="region"/);
+assert.match(uxPrepared.html, /aria-hidden="true"/);
+assert.match(uxPrepared.html, /bf26-start&amp;billingcycle=annually/);
+assert.match(uxPrepared.html, /rel="noopener noreferrer"/);
+assert.ok(
+  !/<style|<script|<svg|<use|onclick|data-inline-page|id-bf26-icon-|class="interdata-bf26/.test(
+    uxPrepared.html,
+  ),
+);
+const repeatedUx = prepareBlogContent(uxBlock + uxBlock);
+assert.equal(
+  (repeatedUx.html.match(/data-article-plan-theme="bf26"/g) || []).length,
+  2,
+);
+assert.equal(
+  new Set(repeatedUx.toc.map((entry) => entry.id)).size,
+  repeatedUx.toc.length,
+);
+const legacyPlans = prepareBlogContent(
+  '<div class="interdata-plan-carousel"><div class="interdata-plan-viewport"><div class="interdata-plan-track"><article class="interdata-plan-card"><h3 class="interdata-plan-title">Legacy plan</h3><a class="interdata-plan-button" href="https://support.interdata.vn/">Register</a></article></div></div></div>',
+);
+assert.match(legacyPlans.html, /class="interdata-plan-card"/);
+assert.ok(!legacyPlans.html.includes('data-article-plan-theme="bf26"'));
 console.log(
-  "Blog data: live-source query contract, failure states, unpublished/protected posts, sanitization, TOC and internal links passed.",
+  "Blog data: queries, protected posts, sanitization, TOC, links, CTA styles and service UX Blocks passed.",
 );

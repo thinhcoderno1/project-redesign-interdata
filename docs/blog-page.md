@@ -15,11 +15,19 @@
 
 The featured image is hidden on single posts; images within the article and social-sharing image metadata are retained. The H2 table of contents sits at the top of the left sticky sidebar, above its existing service CTA. The sidebar has its own scrolling area for long contents lists. Below 960px, the TOC appears above the article in a single column.
 
-`sanitize-html` filters incoming HTML and removes HTML comments, scripts, styles, event handlers and unsafe URLs. `htmlparser2` extracts headings and applies presentation wrappers to existing content. A small allowlist retains source service-carousel markup with scoped styling; React handles its scrolling controls without executing source inline scripts. It remains horizontally scrollable without JavaScript. Source text is compared with rendered text during verification. Tables, lists, code and approved YouTube/Vimeo embeds retain responsive formatting.
+`sanitize-html` filters incoming HTML and removes HTML comments, scripts, style elements, event handlers and unsafe URLs. `htmlparser2` extracts headings and applies presentation wrappers to existing content. CTA panels with styled InterData service, campaign or support buttons retain allowlisted inline presentation (colors, gradients, borders, spacing, typography and flex layout). Inline styles outside these detected panels are removed; CSS URLs, positioning, transforms and custom properties are rejected. Local CTA fallback styles do not override the source designs, and mobile rules stack columns and constrain widths. A small allowlist retains source service-carousel markup with scoped styling; React handles its scrolling controls without executing source inline scripts. It remains horizontally scrollable without JavaScript. Source text is compared with rendered text during verification. Tables, lists, code and approved YouTube/Vimeo embeds retain responsive formatting.
 
 Canonical/Open Graph metadata and BlogPosting JSON-LD are generated from the source article. The project's existing preview noindex setting remains inherited. Missing articles use Next.js `notFound()` and a custom empty page; Next.js may return an HTTP 200 shell for streamed not-found responses, with noindex metadata.
 
 Blog links from shared navigation, homepage resource feeds and article content point to local routes. Existing one-segment category URLs such as `/blog/tuyen-dung/` redirect to their local category view. Uploads and third-party references retain their source URLs. Featured images use the existing trusted Next Image host configuration, with a visual fallback when unavailable.
+
+## Service UX Blocks
+
+The current Flatsome service offer block (`interdata-bf26-*`) is adapted to the existing `interdata-plan-*` carousel markup by `src/lib/blog-plans.ts`. Titles, prices, badges, specifications and registration URLs remain sourced from the rendered WordPress API response. Its design is maintained locally under the `bf26` theme marker; source style elements, inline handlers and SVG are not executed or permitted. Known decorative icons use local SVG masks. Heading and badge reds have sufficient contrast for small text.
+
+The block displays three cards above 800px, two at 481–800px and one up to 480px. Native horizontal scrolling supports touch and keyboard; React buttons move between pages, wrap at the ends and become disabled when all plans fit. Controls are scoped per block and reinitialize after article navigation. The legacy unprefixed carousel remains supported. Other UX Block templates need their own markup adapter and scoped styles rather than loading the whole WordPress theme.
+
+The browser check verifies actual API plans and links, responsive card counts, local icons, navigation controls and accessibility. It also isolates the rendered block in a JavaScript-disabled document to verify native keyboard scrolling; the article route's existing Suspense streaming still requires JavaScript to reveal its completed page.
 
 ## Verification
 

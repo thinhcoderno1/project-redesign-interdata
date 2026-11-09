@@ -6,7 +6,7 @@ const base = process.env.TEST_BASE_URL || "http://localhost:3100";
 const bannerLinks = (root) =>
   root.getByRole("link").and(root.locator("[data-promotion-link]"));
 const expectedImages = [
-  "/images/promotion/black-friday-2026-gift-vouchers-tech.webp",
+  "/images/promotion/black-friday-2026-gift-vouchers-5x1-v2.webp",
   "/images/promotion/vps-cloud-warm.webp",
   "/images/promotion/vps-platinum-viettel-idc.jpg",
   "/images/promotion/vps-n8n.jpg",
@@ -32,12 +32,9 @@ try {
     const campaignImage = bannerLinks(root).locator("img");
     await expect(campaignImage).toHaveAttribute(
       "alt",
-      /3 voucher.*71%.*83K\/Tháng.*1 năm sử dụng.*50% phí gia hạn/,
+      /3 voucher.*71%.*83K.*tặng thêm 1 năm;.*50% phí gia hạn/,
     );
-    await expect(campaignImage).toHaveAttribute(
-      "alt",
-      /SĂN VPS GIÁ TỐT - CHỐT CLOUD GIÁ HỜI/,
-    );
+    await expect(campaignImage).toHaveAttribute("alt", /Black Friday 2026/);
     await root.scrollIntoViewIfNeeded();
     const benefitsBox = await page
       .getByRole("list", { name: "Lợi ích hạ tầng InterData" })
@@ -104,7 +101,10 @@ try {
         )
         .toBe(true);
       const imageBox = await image.boundingBox();
-      expect(imageBox.width / imageBox.height).toBeCloseTo(2048 / 432, 2);
+      expect(imageBox.width / imageBox.height).toBeCloseTo(
+        index === 0 ? 5 : 2048 / 432,
+        2,
+      );
       expect(
         await image.evaluate((img) => getComputedStyle(img).objectFit),
       ).toBe("contain");
