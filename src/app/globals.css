@@ -251,13 +251,73 @@ article[id] {
   border-bottom: 1px solid var(--brand-primary);
 }
 .utility-inner {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 24px;
   align-items: center;
   min-height: 40px;
   font-size: 14px;
   line-height: 1.5;
   color: var(--text-on-brand);
+}
+.utility-promotion {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+.utility-promotion-viewport {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 12px,
+    #000 calc(100% - 12px),
+    transparent
+  );
+}
+.utility-promotion-track {
+  display: flex;
+  width: max-content;
+  animation: utility-promotion-scroll 24s linear infinite;
+}
+.utility-promotion-copy {
+  flex-shrink: 0;
+  padding-right: 48px;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.utility-promotion-toggle {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  min-height: 40px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+.utility-promotion-toggle:hover {
+  background: rgb(255 255 255 / 12%);
+}
+.utility-promotion-viewport:focus-visible,
+.utility-promotion-toggle:focus-visible {
+  outline: 2px solid var(--focus-dark);
+  outline-offset: -2px;
+}
+.utility-promotion:hover .utility-promotion-track,
+.utility-promotion:has(.utility-promotion-viewport:focus-visible)
+  .utility-promotion-track,
+.utility-promotion[data-paused] .utility-promotion-track {
+  animation-play-state: paused;
+}
+@keyframes utility-promotion-scroll {
+  to {
+    transform: translateX(-50%);
+  }
 }
 .utility-links {
   display: flex;
@@ -999,6 +1059,18 @@ th {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .utility-promotion-viewport {
+    overflow-x: auto;
+    scrollbar-width: none;
+    mask-image: none;
+  }
+  .utility-promotion-copy {
+    padding-right: 0;
+  }
+  .utility-promotion-copy[aria-hidden],
+  .utility-promotion-toggle {
+    display: none;
+  }
   .parallax-background[data-parallax-active="true"] {
     --parallax-travel: 0px;
     transform: none;

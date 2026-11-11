@@ -11,6 +11,7 @@ import {
 } from "@/data/service-catalog";
 import { Icon } from "@/components/ui/icon";
 import { TopbarMenu } from "./topbar-menu";
+import { TopbarPromotion } from "./topbar-promotion";
 
 const serviceMenus = [
   {
@@ -236,6 +237,7 @@ export function Navigation() {
             <a href={links.careers}>Tuyển Dụng</a>
             <a href={links.contact}>Hợp tác</a>
           </nav>
+          <TopbarPromotion />
           <nav className="utility-links" aria-label="Tài khoản và hỗ trợ">
             <TopbarMenu
               id="account-topbar-navigation"
