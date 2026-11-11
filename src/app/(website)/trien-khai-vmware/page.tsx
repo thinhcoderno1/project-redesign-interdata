@@ -3,7 +3,7 @@ import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { VmwarePage } from "@/components/vmware/vmware-page";
 
-const title = "Triển Khai VMware, vSphere & vSAN | InterData";
+const title = "Triển Khai VMware - Quản Trị Tập Trung, Tối Ưu Máy Chủ";
 const description =
   "Thiết kế và triển khai VMware cho hạ tầng doanh nghiệp. Tham khảo phương án vSphere, Cluster HA / vMotion và HCI với vSAN; liên hệ InterData để tư vấn.";
 const url = "https://interdata.vn/trien-khai-vmware/";

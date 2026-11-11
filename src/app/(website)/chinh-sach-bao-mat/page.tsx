@@ -17,12 +17,12 @@ const sections = policy.blocks.flatMap((block) =>
 );
 
 export const metadata: Metadata = {
-  title: `${policy.title} | InterData`,
+  title: policy.title,
   description,
   alternates: { canonical: "https://interdata.vn/chinh-sach-bao-mat/" },
   openGraph: {
     images: [defaultSocialImage],
-    title: `${policy.title} | InterData`,
+    title: policy.title,
     description,
     url: "https://interdata.vn/chinh-sach-bao-mat/",
     siteName: "InterData",

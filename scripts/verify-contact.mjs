@@ -48,7 +48,7 @@ try {
     await expect(page.locator("header.site-header")).toHaveCount(1);
     await expect(page.locator("footer")).toHaveCount(1);
     await expect(page).toHaveTitle(
-      "Liên hệ InterData — Tư vấn dịch vụ & hỗ trợ",
+      "Liên Hệ InterData - Tư Vấn VPS, Cloud Server & Giải Pháp",
     );
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",

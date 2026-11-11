@@ -5,7 +5,7 @@ import { VibePage } from "@/components/vps-vibe-coding/vibe-page";
 import { getVibePlans } from "@/lib/vps-vibe-coding-pricing";
 
 export const revalidate = 3600;
-const title = "Thuê VPS Vibe Coding | Tích Hợp EzyPlatform | 1-Click Deploy";
+const title = "VPS Vibe Coding - Tích Hợp EzyPlatform, Deploy 1 Click";
 const description =
   "VPS Vibe Coding tích hợp EzyPlatform với API, MCP, CMS, E-commerce, user và email, giúp AI build, deploy và vận hành trên VPS hiệu năng cao.";
 export const metadata: Metadata = {

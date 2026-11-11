@@ -6,12 +6,12 @@ import { getAmdProducts } from "@/lib/vps-amd-pricing";
 
 export const revalidate = 60;
 export const metadata: Metadata = {
-  title: "VPS AMD EPYC SSD NVMe Gen 4 | InterData",
+  title: "VPS AMD EPYC - NVMe Gen 4, Tăng Tốc Website & Ứng Dụng",
   description:
     "Thuê VPS AMD tại InterData với nền tảng AMD EPYC, SSD NVMe Gen 4 và quyền root. Xem cấu hình, bảng giá theo chu kỳ và chọn gói cho website, ứng dụng.",
   alternates: { canonical: "https://interdata.vn/vps-amd/" },
   openGraph: {
-    title: "VPS AMD EPYC SSD NVMe Gen 4 | InterData",
+    title: "VPS AMD EPYC - NVMe Gen 4, Tăng Tốc Website & Ứng Dụng",
     description:
       "Nền tảng AMD EPYC. Tài nguyên cho website và ứng dụng của bạn. Xem cấu hình và bảng giá VPS AMD tại InterData.",
     url: "https://interdata.vn/vps-amd/",

@@ -6,12 +6,12 @@ import { getPlatinumPrices } from "@/lib/vps-platinum-pricing";
 
 export const revalidate = 60;
 export const metadata: Metadata = {
-  title: "VPS PLATINUM Intel Xeon, SSD NVMe | InterData",
+  title: "VPS Platinum - Intel Xeon, NVMe, Hiệu Năng Mạnh Mẽ",
   description:
     "Thuê VPS PLATINUM Intel Xeon, SSD NVMe U.2 Gen 4 và quyền root. So sánh cấu hình FPT, Viettel, Hot Deals và giá theo chu kỳ tại InterData.",
   alternates: { canonical: "https://interdata.vn/vps-platinum/" },
   openGraph: {
-    title: "VPS PLATINUM Intel Xeon, SSD NVMe | InterData",
+    title: "VPS Platinum - Intel Xeon, NVMe, Hiệu Năng Mạnh Mẽ",
     description:
       "Nền tảng Intel Xeon Platinum cho website và ứng dụng. Xem cấu hình FPT, Viettel và bảng giá VPS PLATINUM tại InterData.",
     url: "https://interdata.vn/vps-platinum/",

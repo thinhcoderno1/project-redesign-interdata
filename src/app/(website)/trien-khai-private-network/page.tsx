@@ -3,7 +3,7 @@ import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { PrivateNetworkPage } from "@/components/private-network/private-network-page";
 
-const title = "Triển Khai Private Network, Mạng Riêng | InterData";
+const title = "Triển Khai Private Network - Kết Nối Riêng, Phân Vùng Mạng";
 const description =
   "Thiết kế Private Network cho ứng dụng, dữ liệu và hạ tầng doanh nghiệp. Tham khảo phương án mạng nội bộ, phân vùng và kết nối đa điểm tại InterData.";
 export const metadata: Metadata = {

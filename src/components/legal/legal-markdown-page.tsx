@@ -6,7 +6,7 @@ import { LegalDocumentLayout } from "./legal-document-layout";
 
 export function legalMetadata(document: LegalDocument): Metadata {
   const { description } = renderLegalDocument(document);
-  const title = `${document.label} | InterData`;
+  const title = document.label;
   const url = `https://interdata.vn/${document.slug}/`;
   return {
     title,

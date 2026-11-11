@@ -3,7 +3,7 @@ import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { ColocationPage } from "@/components/colocation/colocation-page";
 
-const title = "Thuê Chỗ Đặt Máy Chủ, Colocation Việt Nam | InterData";
+const title = "Thuê Chỗ Đặt Máy Chủ - Datacenter Việt Nam, Hỗ Trợ 24/7";
 const description =
   "Thuê chỗ đặt máy chủ tại Hà Nội và TP.HCM. Chọn Single Server 1U, 2U, 3U hoặc tủ rack 42U, xem giá và tư vấn điện, kết nối tại InterData.";
 export const metadata: Metadata = {

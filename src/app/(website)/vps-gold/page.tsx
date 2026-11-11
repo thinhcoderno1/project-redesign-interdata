@@ -6,12 +6,12 @@ import { getGoldProducts } from "@/lib/vps-gold-pricing";
 
 export const revalidate = 60;
 export const metadata: Metadata = {
-  title: "VPS Gold Intel Xeon, SSD NVMe, Cổng Mạng 1Gbps | InterData",
+  title: "VPS Gold - Intel Xeon Gold, SSD NVMe, Toàn Quyền Root",
   description:
     "Thuê VPS Gold Intel Xeon, lưu trữ SSD NVMe và quyền root. Đối chiếu cấu hình HCM, Hà Nội, lưu lượng truyền tải và tổng giá theo chu kỳ tại InterData.",
   alternates: { canonical: "https://interdata.vn/vps-gold/" },
   openGraph: {
-    title: "VPS Gold Intel Xeon, SSD NVMe | InterData",
+    title: "VPS Gold - Intel Xeon Gold, SSD NVMe, Toàn Quyền Root",
     description:
       "Nền tảng Intel Xeon Gold cho website và ứng dụng. Xem cấu hình HCM, Hà Nội, cổng mạng và bảng giá theo chu kỳ tại InterData.",
     url: "https://interdata.vn/vps-gold/",

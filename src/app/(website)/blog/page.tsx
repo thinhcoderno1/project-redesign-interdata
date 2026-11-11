@@ -34,6 +34,19 @@ function normalizeQuery(query: Query) {
         : 1,
   };
 }
+
+function blogListingTitle(
+  query: { q: string; page: number },
+  categoryName?: string,
+) {
+  const title = query.q
+    ? `Kết Quả Cho “${query.q}” - Blog Công Nghệ`
+    : categoryName
+      ? `${categoryName} - Blog Công Nghệ`
+      : "Blog Công Nghệ - Hướng Dẫn VPS, Cloud Server & Bảo Mật";
+  return query.page > 1 ? `${title} - Trang ${query.page}` : title;
+}
+
 export async function generateMetadata({
   searchParams,
 }: {
@@ -41,12 +54,19 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const query = await searchParams;
   const normalized = normalizeQuery(query);
+  const categories = normalized.category
+    ? await getBlogCategories().catch(() => [] as BlogCategory[])
+    : [];
+  const title = blogListingTitle(
+    normalized,
+    categories.find((category) => category.slug === normalized.category)?.name,
+  );
   const canonical = `https://interdata.vn${blogListingHref({
     ...normalized,
     page: normalized.page > 1 ? normalized.page : undefined,
   })}`;
   return {
-    title: "InterData Blog — Kiến thức, hướng dẫn & tin tức công nghệ",
+    title,
     description:
       "Khám phá kiến thức VPS, Cloud Server, bảo mật và lập trình. Hướng dẫn thực hành, tin tức, khuyến mãi và cơ hội nghề nghiệp từ InterData.",
     alternates: {
@@ -55,7 +75,7 @@ export async function generateMetadata({
     ...(normalized.q ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       images: [defaultSocialImage],
-      title: "InterData Blog",
+      title,
       url: canonical,
       locale: "vi_VN",
       type: "website",
@@ -123,9 +143,7 @@ export default async function BlogPage({
     category,
     page: query.page ? page : undefined,
   });
-  const schemaTitle = q
-    ? `Kết quả cho “${q}”`
-    : selected?.name || "InterData Blog";
+  const schemaTitle = blogListingTitle({ q, page }, selected?.name);
   return (
     <main id="main-content" className={styles.page}>
       <StructuredData

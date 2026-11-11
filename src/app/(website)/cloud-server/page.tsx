@@ -5,7 +5,7 @@ import { CloudServerPage } from "@/components/cloud-server/cloud-server-page";
 import { getCloudPrices } from "@/lib/cloud-server-pricing";
 
 export const revalidate = 60;
-const title = "Cloud Server – AMD EPYC Gen 3 & Intel Platinum | InterData";
+const title = "Thuê Cloud Server - NVMe U.2, Cổng Mạng 10Gbps";
 const description =
   "Thuê Cloud Server InterData với AMD EPYC Gen 3, Intel Xeon Platinum Gen 2, NVMe U.2 và Network Port 10 Gbps. Xem cấu hình, bảng giá và tư vấn triển khai.";
 export const metadata: Metadata = {

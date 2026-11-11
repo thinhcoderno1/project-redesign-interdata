@@ -5,12 +5,12 @@ import { N8nPage } from "@/components/vps-n8n/n8n-page";
 import { getN8nPrices } from "@/lib/vps-n8n-pricing";
 export const revalidate = 60;
 export const metadata: Metadata = {
-  title: "VPS n8n – Template Cài Sẵn, Tự Host Dễ Dàng | InterData",
+  title: "VPS n8n Cài Sẵn - Tự Động Hóa Workflow, Chủ Động Dữ Liệu",
   description:
     "Self-host n8n với template hệ điều hành cài sẵn trên tất cả dịch vụ VPS InterData. Chọn VPS GOLD, AMD, PLATINUM hoặc Linux và xem giá theo chu kỳ.",
   alternates: { canonical: "https://interdata.vn/vps-n8n/" },
   openGraph: {
-    title: "VPS n8n – Template Cài Sẵn | InterData",
+    title: "VPS n8n Cài Sẵn - Tự Động Hóa Workflow, Chủ Động Dữ Liệu",
     description:
       "Chọn dịch vụ VPS phù hợp và triển khai n8n bằng template có sẵn. Chủ động xây dựng workflow trên hạ tầng của bạn.",
     url: "https://interdata.vn/vps-n8n/",

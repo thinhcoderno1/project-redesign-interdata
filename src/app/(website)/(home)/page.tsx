@@ -6,7 +6,7 @@ export const revalidate = 300;
 
 export const metadata: Metadata = {
   alternates: { canonical: "https://interdata.vn/" },
-  title: "InterData — VPS, Cloud Server & Hạ tầng máy chủ",
+  title: "InterData - VPS, Cloud Server, Domain & Giải Pháp Hạ Tầng",
   description:
     "Tìm hiểu dịch vụ VPS, Cloud Server, thuê máy chủ, chỗ đặt máy chủ và các giải pháp Proxmox, Kubernetes, S3 Storage của InterData.",
 };

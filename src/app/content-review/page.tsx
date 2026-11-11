@@ -10,7 +10,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Duyệt nội dung nội bộ | InterData",
+  title: "Duyệt nội dung nội bộ",
   robots: { index: false, follow: false },
 };
 export default function ContentReview() {

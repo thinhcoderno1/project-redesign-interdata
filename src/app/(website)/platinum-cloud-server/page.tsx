@@ -6,12 +6,12 @@ import { getPlatinumCloudProducts } from "@/lib/platinum-cloud-server-pricing";
 
 export const revalidate = 60;
 export const metadata: Metadata = {
-  title: "Platinum Cloud Server Gen 2, NVMe U.2 | InterData",
+  title: "Platinum Cloud Server - Intel Xeon, Kết Nối 10Gbps",
   description:
     "Thuê Platinum Cloud Server với Intel Xeon Platinum Gen 2, NVMe U.2 và cổng mạng 10 Gbps. Chọn cấu hình và chu kỳ thanh toán phù hợp tại InterData.",
   alternates: { canonical: "https://interdata.vn/platinum-cloud-server/" },
   openGraph: {
-    title: "Platinum Cloud Server Gen 2, NVMe U.2 | InterData",
+    title: "Platinum Cloud Server - Intel Xeon, Kết Nối 10Gbps",
     description:
       "Cloud Server trên nền tảng Intel Xeon Platinum thế hệ 2. Xem cấu hình vCPU, RAM, NVMe U.2 và bảng giá theo chu kỳ tại InterData.",
     url: "https://interdata.vn/platinum-cloud-server/",

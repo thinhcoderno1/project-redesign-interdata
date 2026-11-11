@@ -34,7 +34,7 @@ try {
     await expect(page.locator("main#noi-dung")).toHaveCount(1);
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page).toHaveTitle(
-      "Giới thiệu InterData — Con người, hạ tầng & kết nối",
+      "Giới Thiệu InterData - Đối Tác Hạ Tầng Số Cho Doanh Nghiệp",
     );
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",

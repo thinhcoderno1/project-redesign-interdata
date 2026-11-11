@@ -6,12 +6,12 @@ import { getAmdCloudProducts } from "@/lib/amd-cloud-server-pricing";
 
 export const revalidate = 60;
 export const metadata: Metadata = {
-  title: "AMD Cloud Server EPYC Gen 3, NVMe U.2 | InterData",
+  title: "AMD Cloud Server - EPYC Gen 3, Tăng Tốc Ứng Dụng",
   description:
     "Thuê AMD Cloud Server với AMD EPYC Gen 3, NVMe U.2 và cổng mạng 10 Gbps. Chọn cấu hình và chu kỳ thanh toán phù hợp tại InterData.",
   alternates: { canonical: "https://interdata.vn/amd-cloud-server/" },
   openGraph: {
-    title: "AMD Cloud Server EPYC Gen 3, NVMe U.2 | InterData",
+    title: "AMD Cloud Server - EPYC Gen 3, Tăng Tốc Ứng Dụng",
     description:
       "Cloud Server trên nền tảng AMD EPYC thế hệ 3. Xem cấu hình vCPU, RAM, NVMe U.2 và bảng giá theo chu kỳ tại InterData.",
     url: "https://interdata.vn/amd-cloud-server/",

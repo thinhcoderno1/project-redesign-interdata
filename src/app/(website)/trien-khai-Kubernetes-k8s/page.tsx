@@ -3,7 +3,7 @@ import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { KubernetesPage } from "@/components/kubernetes/kubernetes-page";
 
-const title = "Triển Khai Kubernetes (K8s) Cho Doanh Nghiệp | InterData";
+const title = "Triển Khai Kubernetes (K8s) - Mở Rộng Ứng Dụng Linh Hoạt";
 const description =
   "Thiết kế và triển khai Kubernetes theo nhu cầu ứng dụng. Tham khảo phương án Dev / Staging, Production Cluster và Production HA; liên hệ InterData để tư vấn.";
 const url = "https://interdata.vn/trien-khai-Kubernetes-k8s/";

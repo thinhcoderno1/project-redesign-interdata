@@ -6,12 +6,12 @@ import { getLinuxProducts } from "@/lib/vps-linux-pricing";
 
 export const revalidate = 60;
 export const metadata: Metadata = {
-  title: "VPS Linux SSD NVMe, Toàn Quyền Root | InterData",
+  title: "Thuê VPS Linux - SSD NVMe, Toàn Quyền Root & SSH",
   description:
     "Thuê VPS Linux cho website, API và công cụ self-host. Quản trị qua SSH, toàn quyền root, lưu trữ SSD NVMe và bảng giá theo chu kỳ tại InterData.",
   alternates: { canonical: "https://interdata.vn/vps-linux/" },
   openGraph: {
-    title: "VPS Linux SSD NVMe, Toàn Quyền Root | InterData",
+    title: "Thuê VPS Linux - SSD NVMe, Toàn Quyền Root & SSH",
     description:
       "Môi trường Linux riêng cho dự án của bạn. Chọn cấu hình vCPU, RAM, SSD NVMe và chu kỳ thanh toán phù hợp tại InterData.",
     url: "https://interdata.vn/vps-linux/",

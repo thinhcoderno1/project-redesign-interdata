@@ -7,13 +7,13 @@ import { fetchAllGroupPricing } from "@/lib/canh-me-pricing";
 
 export const revalidate = 60;
 export const metadata: Metadata = {
-  title: "Canh Me — Khuyến mãi VPS & Cloud Server | InterData",
+  title: "Canh Me - Khuyến Mãi, Siêu Ưu Đãi VPS & Cloud Server",
   description:
     "Canh Me tổng hợp các chương trình khuyến mãi VPS, Cloud Server và Dedicated Server của InterData. So sánh cấu hình, bảng giá và chu kỳ thanh toán.",
   alternates: { canonical: "https://interdata.vn/canhme/" },
   openGraph: {
     images: [defaultSocialImage],
-    title: "Canh Me — Khuyến mãi VPS & Cloud Server",
+    title: "Canh Me - Khuyến Mãi, Siêu Ưu Đãi VPS & Cloud Server",
     url: "https://interdata.vn/canhme/",
     locale: "vi_VN",
     type: "website",

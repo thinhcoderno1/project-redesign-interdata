@@ -3,7 +3,7 @@ import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { ProxmoxCephPage } from "@/components/proxmox-ceph/proxmox-ceph-page";
 
-const title = "Triển Khai Ảo Hóa Proxmox / Ceph | InterData";
+const title = "Triển Khai Proxmox & Ceph - Ảo Hóa, Lưu Trữ Linh Hoạt";
 const description =
   "Triển khai Proxmox VE, Cluster HA và lưu trữ Ceph cho hạ tầng doanh nghiệp. Tham khảo mô hình ảo hóa, quy trình và liên hệ tư vấn tại InterData.";
 const url = "https://interdata.vn/trien-khai-proxmox-ceph/";

@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? { url: post.image, alt: post.imageAlt || post.title }
       : defaultSocialImage;
   return {
-    title: `${post.title} | InterData Blog`,
+    title: post.title,
     description: post.excerpt,
     alternates: { canonical: `https://interdata.vn${post.href}` },
     openGraph: {

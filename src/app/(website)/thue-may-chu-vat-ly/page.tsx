@@ -6,12 +6,12 @@ import { getDedicatedProducts } from "@/lib/dedicated-server-pricing";
 
 export const revalidate = 60;
 export const metadata: Metadata = {
-  title: "Thuê Máy Chủ Vật Lý, Dedicated Server Việt Nam | InterData",
+  title: "Thuê Máy Chủ Vật Lý - Phần Cứng Riêng, Hỗ Trợ 24/7",
   description:
     "Thuê máy chủ vật lý tại Việt Nam với CPU Intel Xeon, RAM DDR4 ECC, SSD RAID 1 và IPv4 riêng. Xem cấu hình, giá và chu kỳ đăng ký tại InterData.",
   alternates: { canonical: "https://interdata.vn/thue-may-chu-vat-ly/" },
   openGraph: {
-    title: "Thuê Máy Chủ Vật Lý, Dedicated Server Việt Nam | InterData",
+    title: "Thuê Máy Chủ Vật Lý - Phần Cứng Riêng, Hỗ Trợ 24/7",
     description:
       "Phần cứng riêng cho website, database, ERP và CRM. Chọn cấu hình Dedicated Server và chu kỳ thanh toán phù hợp.",
     url: "https://interdata.vn/thue-may-chu-vat-ly/",
