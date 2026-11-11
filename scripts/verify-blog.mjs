@@ -6,7 +6,7 @@ import AxeBuilder from "@axe-core/playwright";
 expect.configure({ timeout: 20000 });
 
 const baseUrl = process.env.QA_BASE_URL || "http://localhost:3100";
-const apiUrl = "https://interdata.vn/blog/wp-json/wp/v2/";
+const apiUrl = "https://admin.interdata.vn/wp-json/wp/v2/";
 async function api(path) {
   const response = await fetch(`${apiUrl}${path}`, {
     signal: AbortSignal.timeout(15000),

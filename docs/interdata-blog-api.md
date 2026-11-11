@@ -1,6 +1,6 @@
 # Kiến thức & Tin tức — API blog InterData
 
-Section `#tai-nguyen` dùng WordPress REST API công khai tại `https://interdata.vn/blog/wp-json/wp/v2/`. Không cần API key và không gọi API WordPress từ trình duyệt.
+Section `#tai-nguyen` dùng WordPress REST API công khai tại `https://admin.interdata.vn/wp-json/wp/v2/`. Địa chỉ nguồn dùng chung với trang blog, khai báo tại `src/lib/blog-source.ts`. Không cần API key và không gọi API WordPress từ trình duyệt.
 
 ## Các tab
 
@@ -13,7 +13,7 @@ Section `#tai-nguyen` dùng WordPress REST API công khai tại `https://interda
 
 ID chuyên mục được tìm từ API, không gắn cố định trong code. Mỗi tab lấy tối đa 4 bài đã xuất bản (`status=publish`), sắp xếp theo ngày đăng từ mới đến cũ (`orderby=date&order=desc`). Chuyên mục có ít bài sẽ hiển thị đúng số bài nguồn cung cấp; tại thời điểm kiểm tra ngày 10/10/2026, Tuyển Dụng có 2 bài.
 
-API cung cấp title, excerpt, permalink, ngày xuất bản và featured media. HTML được chuyển thành văn bản và giải mã HTML entities bằng `entities`; React hiển thị văn bản thông thường. Ngày hiển thị theo múi giờ Việt Nam. Ảnh lấy từ `large`, `medium_large` hoặc ảnh gốc và được Next Image tối ưu; chỉ cho phép ảnh HTTPS thuộc `interdata.vn/blog/wp-content/uploads/`. Ảnh khuyến mãi hiển thị trọn vẹn để tránh cắt nội dung banner.
+API cung cấp title, excerpt, permalink, ngày xuất bản và featured media. HTML được chuyển thành văn bản và giải mã HTML entities bằng `entities`; React hiển thị văn bản thông thường. Ngày hiển thị theo múi giờ Việt Nam. Permalink CMS được chuyển về `/blog/[slug]/` trên website. Ảnh lấy từ `large`, `medium_large` hoặc ảnh gốc và được Next Image tối ưu; chỉ cho phép ảnh HTTPS thuộc `admin.interdata.vn/wp-content/uploads/` hoặc nguồn cũ `interdata.vn/blog/wp-content/uploads/`. Ảnh khuyến mãi hiển thị trọn vẹn để tránh cắt nội dung banner.
 
 ## Tự động cập nhật
 
@@ -35,4 +35,4 @@ Triển khai cần Next.js server có kết nối HTTPS đến InterData; cơ ch
 - `npm run build`, `npm run lint`.
 - Ảnh chụp/kết quả lưu tại `artifacts/resources/` (Git ignore).
 
-Nguồn kiểm tra: [API categories](https://interdata.vn/blog/wp-json/wp/v2/categories?per_page=100), [WordPress Posts REST API](https://developer.wordpress.org/rest-api/reference/posts/) và tài liệu Next.js `fetch`/caching đi kèm phiên bản đang cài trong `node_modules/next/dist/docs/`.
+Nguồn kiểm tra: [API categories](https://admin.interdata.vn/wp-json/wp/v2/categories?per_page=100), [WordPress Posts REST API](https://developer.wordpress.org/rest-api/reference/posts/) và tài liệu Next.js `fetch`/caching đi kèm phiên bản đang cài trong `node_modules/next/dist/docs/`.

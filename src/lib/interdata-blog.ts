@@ -1,5 +1,7 @@
 import "server-only";
 import { decodeHTML } from "entities";
+import { BLOG_API_URL, BLOG_CMS_ORIGIN, blogImageUrl } from "./blog-source";
+import { localBlogHref } from "./blog-links";
 import {
   resourceTopics,
   type ResourceArticle,
@@ -7,7 +9,6 @@ import {
   type ResourceTopic,
 } from "../data/resource-topics";
 
-const API = "https://interdata.vn/blog/wp-json/wp/v2/";
 export const BLOG_REVALIDATE_SECONDS = 300;
 const POST_LIMIT = 4;
 const TIMEOUT_MS = 8000;
@@ -34,21 +35,23 @@ function renderedText(value: unknown): string {
 }
 
 function blogUrl(value: unknown, image = false): string | null {
+  if (image) return blogImageUrl(value);
   if (typeof value !== "string") return null;
   try {
     const url = new URL(value);
     if (
       url.protocol !== "https:" ||
-      url.hostname !== "interdata.vn" ||
+      (url.origin !== BLOG_CMS_ORIGIN &&
+        !(
+          url.hostname === "interdata.vn" && url.pathname.startsWith("/blog/")
+        )) ||
       url.port ||
       url.username ||
-      url.password ||
-      !url.pathname.startsWith(image ? "/blog/wp-content/uploads/" : "/blog/")
+      url.password
     )
       return null;
-    if (image && !/\.(avif|gif|jpe?g|png|webp)$/i.test(url.pathname))
-      return null;
-    return url.href;
+    const href = localBlogHref(url.href);
+    return /^\/blog\/[^/?#]+\/$/.test(href) ? href : null;
   } catch {
     return null;
   }
@@ -92,7 +95,7 @@ function normalizeArticle(
     title,
     excerpt:
       excerpt.length > 220 ? `${excerpt.slice(0, 217).trimEnd()}…` : excerpt,
-    href: new URL(href).pathname,
+    href,
     image: featuredImage(value),
     category: category?.name || topic.label,
     publishedAt: date.toISOString(),
@@ -106,7 +109,7 @@ function normalizeArticle(
 }
 
 async function request(path: string, fetcher: Fetcher) {
-  const response = await fetcher(`${API}${path}`, {
+  const response = await fetcher(`${BLOG_API_URL}${path}`, {
     headers: { Accept: "application/json" },
     next: { revalidate: BLOG_REVALIDATE_SECONDS, tags: ["interdata-blog"] },
     signal: AbortSignal.timeout(TIMEOUT_MS),

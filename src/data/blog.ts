@@ -28,8 +28,8 @@ export type BlogListing = {
 export const blogSections = [
   {
     id: "popular",
-    title: "Hướng dẫn phổ biến",
-    description: "Bắt đầu từ những hướng dẫn được nhiều người quan tâm.",
+    title: "Hướng dẫn mới nhất",
+    description: "Cập nhật hướng dẫn triển khai và quản trị hạ tầng từ blog.",
     label: "HỌC & THỰC HÀNH",
     category: null,
   },

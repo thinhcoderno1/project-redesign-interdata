@@ -1,9 +1,9 @@
 import "server-only";
 import { cache } from "react";
 import { htmlToText } from "./interdata-blog";
+import { BLOG_API_URL, BLOG_CMS_ORIGIN, blogImageUrl } from "./blog-source";
 import type { BlogCategory, BlogPost, BlogListing } from "@/data/blog";
 
-const API = "https://interdata.vn/blog/wp-json/wp/v2/";
 const LIST_FIELDS =
   "id,slug,status,title,excerpt,date,date_gmt,modified_gmt,categories,_links,_embedded";
 export class BlogApiError extends Error {}
@@ -25,34 +25,19 @@ function date(value: unknown) {
   const date = new Date(`${value.replace(/Z$/, "")}Z`);
   return Number.isFinite(date.getTime()) ? date.toISOString() : "";
 }
-function image(value: unknown) {
-  if (typeof value !== "string") return null;
-  try {
-    const url = new URL(value);
-    return url.protocol === "https:" &&
-      url.hostname === "interdata.vn" &&
-      !url.port &&
-      !url.username &&
-      !url.password &&
-      url.pathname.startsWith("/blog/wp-content/uploads/") &&
-      /\.(jpe?g|png|gif|webp|avif)$/i.test(url.pathname)
-      ? url.href
-      : null;
-  } catch {
-    return null;
-  }
-}
 function authorProfile(value: unknown) {
   if (typeof value !== "string") return;
   try {
     const url = new URL(value);
     if (
       url.protocol === "https:" &&
-      url.hostname === "interdata.vn" &&
       !url.port &&
       !url.username &&
       !url.password &&
-      url.pathname.startsWith("/blog/author/")
+      ((url.origin === BLOG_CMS_ORIGIN &&
+        url.pathname.startsWith("/author/")) ||
+        (url.hostname === "interdata.vn" &&
+          url.pathname.startsWith("/blog/author/")))
     )
       return url.href;
   } catch {
@@ -94,7 +79,9 @@ export function normalizeBlogPost(
     excerpt: excerpt(value.excerpt),
     publishedAt,
     modifiedAt: date(value.modified_gmt) || publishedAt,
-    image: image(large) || image(record(media) ? media.source_url : null),
+    image:
+      blogImageUrl(large) ||
+      blogImageUrl(record(media) ? media.source_url : null),
     imageAlt: record(media) ? htmlToText(media.alt_text) : "",
     author: record(author) ? htmlToText(author.name) : "",
     ...(record(author) && authorProfile(author.link)
@@ -127,11 +114,14 @@ export function createBlogSource(fetcher: typeof fetch = fetch) {
   async function request(path: string, params: Record<string, string>) {
     let response: Response;
     try {
-      response = await fetcher(`${API}${path}?${new URLSearchParams(params)}`, {
-        headers: { Accept: "application/json" },
-        next: { revalidate: 300, tags: ["interdata-blog"] },
-        signal: AbortSignal.timeout(15000),
-      });
+      response = await fetcher(
+        `${BLOG_API_URL}${path}?${new URLSearchParams(params)}`,
+        {
+          headers: { Accept: "application/json" },
+          next: { revalidate: 300, tags: ["interdata-blog"] },
+          signal: AbortSignal.timeout(15000),
+        },
+      );
     } catch {
       throw new BlogApiError("Không thể kết nối với nguồn bài viết.");
     }
@@ -212,11 +202,7 @@ export function createBlogSource(fetcher: typeof fetch = fetch) {
       page: String(Math.max(1, options.page || 1)),
       status: "publish",
       order: "desc",
-      orderby: options.popular
-        ? "post_views"
-        : options.q
-          ? "relevance"
-          : "date",
+      orderby: options.popular ? "date" : options.q ? "relevance" : "date",
       _embed: "wp:featuredmedia,author",
       _fields: LIST_FIELDS,
     };

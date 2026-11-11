@@ -101,7 +101,7 @@ const slugs = [
 const articles = [];
 for (const slug of slugs) {
   const response = await fetch(
-    `https://interdata.vn/blog/wp-json/wp/v2/posts?slug=${slug}&_embed`,
+    `https://admin.interdata.vn/wp-json/wp/v2/posts?slug=${slug}&_embed`,
   );
   if (!response.ok) throw new Error(`Article API ${response.status}: ${slug}`);
   const [post] = await response.json();
@@ -128,10 +128,10 @@ for (const slug of slugs) {
       .replace(/&#8211;/g, "–")
       .replace(/&#038;/g, "&")
       .replace(/<[^>]+>/g, ""),
-    href: post.link,
+    href: `/blog/${post.slug}/`,
     date: post.date,
     image: source ? `/images/${slug}.webp` : null,
-    source: `https://interdata.vn/blog/wp-json/wp/v2/posts/${post.id}`,
+    source: `https://admin.interdata.vn/wp-json/wp/v2/posts/${post.id}`,
   });
 }
 await fs.mkdir("src/data", { recursive: true });

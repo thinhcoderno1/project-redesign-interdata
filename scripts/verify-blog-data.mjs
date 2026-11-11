@@ -52,9 +52,46 @@ const post = {
   date_gmt: "2026-10-22T01:00:00",
   categories: [2],
   content: { rendered: "<h2>Hướng dẫn</h2>" },
+  _embedded: {
+    author: [
+      {
+        name: "InterData",
+        link: "https://admin.interdata.vn/author/interdata/",
+      },
+    ],
+    "wp:featuredmedia": [
+      {
+        source_url:
+          "https://admin.interdata.vn/wp-content/uploads/2026/11/test.jpg",
+      },
+    ],
+  },
 };
 assert.deepEqual(categoryFamily(categories, "vps"), [1, 2]);
 assert.equal(normalizeBlogPost(post, categories).href, "/blog/huong-dan-vps/");
+assert.equal(
+  normalizeBlogPost(post, categories).image,
+  post._embedded["wp:featuredmedia"][0].source_url,
+);
+assert.equal(
+  normalizeBlogPost(post, categories).authorUrl,
+  post._embedded.author[0].link,
+);
+for (const source_url of [
+  "https://admin.interdata.vn.evil.example/wp-content/uploads/test.jpg",
+  "https://admin.interdata.vn:8443/wp-content/uploads/test.jpg",
+  "https://user:password@admin.interdata.vn/wp-content/uploads/test.jpg",
+  "https://admin.interdata.vn/wp-content/plugins/test.jpg",
+  "http://admin.interdata.vn/wp-content/uploads/test.jpg",
+  "https://admin.interdata.vn/wp-content/uploads/test.svg",
+])
+  assert.equal(
+    normalizeBlogPost(
+      { ...post, _embedded: { "wp:featuredmedia": [{ source_url }] } },
+      categories,
+    ).image,
+    null,
+  );
 for (const override of [
   { status: "draft" },
   { slug: "../bad" },
@@ -86,9 +123,11 @@ assert.equal(requests.at(-1).url.searchParams.get("categories"), "1,2");
 assert.equal(requests.at(-1).url.searchParams.get("page"), "2");
 assert.equal(requests.at(-1).url.searchParams.get("search"), "VPS");
 assert.equal(requests.at(-1).url.searchParams.get("orderby"), "relevance");
+assert.equal(requests.at(-1).url.origin, "https://admin.interdata.vn");
+assert.equal(requests.at(-1).url.pathname, "/wp-json/wp/v2/posts");
 assert.equal(requests.at(-1).options.next.revalidate, 300);
 await source.listing(categories, { popular: true });
-assert.equal(requests.at(-1).url.searchParams.get("orderby"), "post_views");
+assert.equal(requests.at(-1).url.searchParams.get("orderby"), "date");
 assert.equal(
   requests.at(-1).url.searchParams.get("categories_exclude"),
   "3,4,5",
@@ -146,6 +185,36 @@ for (const item of prepared.toc)
 assert.equal(
   localBlogHref("https://external.example/blog/post/", categories),
   "https://external.example/blog/post/",
+);
+assert.equal(
+  localBlogHref("https://admin.interdata.vn/huong-dan-vps/#stable", categories),
+  "/blog/huong-dan-vps/#stable",
+);
+assert.equal(
+  localBlogHref("https://admin.interdata.vn/category/vps/", categories),
+  "/blog/?category=vps",
+);
+assert.equal(
+  localBlogHref("https://admin.interdata.vn/", categories),
+  "/blog/",
+);
+for (const path of [
+  "wp-admin/",
+  "wp-json/wp/v2/posts/",
+  "wp-content/uploads/test.jpg",
+  "author/interdata/",
+])
+  assert.equal(
+    localBlogHref(`https://admin.interdata.vn/${path}`, categories),
+    `https://admin.interdata.vn/${path}`,
+  );
+assert.equal(
+  localBlogHref("https://admin.interdata.vn.evil.example/post/", categories),
+  "https://admin.interdata.vn.evil.example/post/",
+);
+assert.match(
+  prepareBlogContent('<img src="/wp-content/uploads/test.jpg">').html,
+  /src="https:\/\/admin.interdata.vn\/wp-content\/uploads\/test.jpg"/,
 );
 assert.equal(
   localBlogHref(

@@ -4,7 +4,7 @@ import { chromium, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 const baseUrl = process.env.QA_BASE_URL || "http://localhost:3100";
-const apiUrl = "https://interdata.vn/blog/wp-json/wp/v2/";
+const apiUrl = "https://admin.interdata.vn/wp-json/wp/v2/";
 const names = ["Tin Tức - Sự Kiện", "Blog", "Khuyến Mãi", "Tuyển Dụng"];
 const topics = ["news", "blog", "promotion", "careers"];
 const slugs = ["su-kien", "khuyen-mai", "tuyen-dung"];
@@ -83,7 +83,7 @@ try {
         actual,
         posts[i].map((post) => ({
           id: post.id,
-          href: new URL(new URL(post.link).pathname, baseUrl).href,
+          href: new URL(`/blog${new URL(post.link).pathname}`, baseUrl).href,
         })),
         `Latest API posts at ${width}px/${topics[i]}`,
       );
@@ -179,10 +179,11 @@ try {
         .locator("article > a")
         .evaluateAll((links) => links.map((link) => link.href)),
       posts[i].map(
-        (post) => new URL(new URL(post.link).pathname, baseUrl).href,
+        (post) => new URL(`/blog${new URL(post.link).pathname}`, baseUrl).href,
       ),
     );
   }
+  await page.locator("#resource-tab-news").click();
   const imageSource = await page
     .locator('#resource-panel-news article [data-topic="news"] img')
     .first()
@@ -191,7 +192,7 @@ try {
   const brokenContext = await browser.newContext({
     viewport: { width: 1440, height: 1100 },
   });
-  await brokenContext.route("**/_next/image?**", (route) =>
+  await brokenContext.route(/\/_next\/image\/?\?/, (route) =>
     new URL(route.request().url()).searchParams.get("url") === targetImage
       ? route.abort()
       : route.continue(),
@@ -205,7 +206,7 @@ try {
   );
   await expect(firstCard.getByRole("link")).toHaveAttribute(
     "href",
-    posts[0][0].link,
+    `/blog${new URL(posts[0][0].link).pathname}`,
   );
   await expect(broken.locator("#resource-panel-news article")).toHaveCount(
     posts[0].length,

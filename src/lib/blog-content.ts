@@ -2,6 +2,7 @@ import sanitizeHtml from "sanitize-html";
 import { Parser } from "htmlparser2";
 import { htmlToText } from "./interdata-blog";
 import { localBlogHref } from "./blog-links";
+import { BLOG_CMS_ORIGIN } from "./blog-source";
 import type { BlogCategory } from "@/data/blog";
 import {
   articleButtonKind,
@@ -56,7 +57,7 @@ const attributes = {
 function safeImage(value: string | undefined) {
   if (!value) return "";
   try {
-    const url = new URL(value, "https://interdata.vn");
+    const url = new URL(value, BLOG_CMS_ORIGIN);
     return url.protocol === "https:" &&
       !url.username &&
       !url.password &&

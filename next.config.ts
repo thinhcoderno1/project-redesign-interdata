@@ -65,6 +65,11 @@ const config: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "admin.interdata.vn",
+        pathname: "/wp-content/uploads/**",
+      },
+      {
+        protocol: "https",
         hostname: "interdata.vn",
         pathname: "/blog/wp-content/uploads/**",
       },

@@ -1,11 +1,11 @@
 # InterData Blog
 
-`/blog/` uses the existing website layout, Header/Footer, Be Vietnam Pro fonts and blue design tokens. The page includes a hero/search form, all API categories, featured and newest posts, popular guides, News/Events, Promotions and Careers. Search, category filtering and pagination use shareable query parameters (`q`, `category`, `page`) and render on the server.
+`/blog/` uses the existing website layout, Header/Footer, Be Vietnam Pro fonts and blue design tokens. The page includes a hero/search form, all API categories, featured and newest posts, latest guides, News/Events, Promotions and Careers. Search, category filtering and pagination use shareable query parameters (`q`, `category`, `page`) and render on the server.
 
 ## Source and caching
 
-- Public WordPress REST API: `https://interdata.vn/blog/wp-json/wp/v2/`.
-- Posts and nonempty categories are discovered from the API; category IDs and article records are not hardcoded. Category filters include descendants. Popular guides use this installation's supported `orderby=post_views`, search for “hướng dẫn”, and exclude News, Promotions and Careers.
+- Public WordPress REST API: `https://admin.interdata.vn/wp-json/wp/v2/`, configured in `src/lib/blog-source.ts` for both the blog and homepage resource feeds.
+- Posts and nonempty categories are discovered from the API; category IDs and article records are not hardcoded. Category filters include descendants. Latest guides use the standard `orderby=date`, search for “hướng dẫn”, and exclude News, Promotions and Careers. The new CMS does not support `orderby=post_views`.
 - Published posts only. Requests have a 15-second timeout and 300-second Next.js data cache/revalidation. Independent blog sections stream into their own Suspense boundaries.
 - An API failure shows a retry state; an empty search shows an empty-results state. Source outages are distinct from missing posts. Protected or unpublished content is never displayed.
 
@@ -19,7 +19,7 @@ The featured image is hidden on single posts; images within the article and soci
 
 Canonical/Open Graph metadata and BlogPosting JSON-LD are generated from the source article. The project's existing preview noindex setting remains inherited. Missing articles use Next.js `notFound()` and a custom empty page; Next.js may return an HTTP 200 shell for streamed not-found responses, with noindex metadata.
 
-Blog links from shared navigation, homepage resource feeds and article content point to local routes. Existing one-segment category URLs such as `/blog/tuyen-dung/` redirect to their local category view. Uploads and third-party references retain their source URLs. Featured images use the existing trusted Next Image host configuration, with a visual fallback when unavailable.
+Blog links from shared navigation, homepage resource feeds and article content point to local routes. CMS permalinks such as `https://admin.interdata.vn/post/` become `/blog/post/`; CMS category archives become local category filters. Existing one-segment category URLs such as `/blog/tuyen-dung/` redirect to their local category view. Canonical article URLs remain on `https://interdata.vn/blog/`. Uploads and third-party references retain their source URLs; relative article images resolve against the CMS origin. Featured images allow HTTPS uploads from `admin.interdata.vn/wp-content/uploads/` and legacy `interdata.vn/blog/wp-content/uploads/`, with a visual fallback when unavailable. CMS management endpoints are not rewritten into article links.
 
 ## Service UX Blocks
 

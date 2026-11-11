@@ -52,12 +52,12 @@ function post(id, category, overrides = {}) {
     excerpt: {
       rendered: "<p>Hướng dẫn <strong>triển khai</strong> &amp; quản trị.</p>",
     },
-    link: `https://interdata.vn/blog/bai-${id}/`,
+    link: `https://admin.interdata.vn/bai-${id}/`,
     _embedded: {
       "wp:featuredmedia": [
         {
           source_url:
-            "https://interdata.vn/blog/wp-content/uploads/2026/10/test.jpg",
+            "https://admin.interdata.vn/wp-content/uploads/2026/10/test.jpg",
         },
       ],
     },
@@ -137,6 +137,10 @@ assert.equal(feeds[0].articles[0].dateLabel, "10/10/2026");
 assert.equal(feeds[0].articles[0].publishedAt, "2026-10-09T18:30:00.000Z");
 assert.equal(feeds[0].articles[0].title, "Bài 701 & “InterData”");
 assert.equal(feeds[0].articles[0].excerpt, "Hướng dẫn triển khai & quản trị.");
+assert.equal(
+  feeds[0].articles[0].image,
+  "https://admin.interdata.vn/wp-content/uploads/2026/10/test.jpg",
+);
 const postRequests = requests.filter((r) =>
   r.query.pathname.endsWith("/posts"),
 );
@@ -147,6 +151,8 @@ assert.equal(
   "701,705,702,703",
 );
 for (const { query, options } of postRequests) {
+  assert.equal(query.origin, "https://admin.interdata.vn");
+  assert.equal(query.pathname, "/wp-json/wp/v2/posts");
   assert.equal(query.searchParams.get("order"), "desc");
   assert.equal(query.searchParams.get("orderby"), "date");
   assert.equal(query.searchParams.get("per_page"), "4");

@@ -72,13 +72,13 @@ let cmsPost = {
     author: [
       {
         name: "Tác giả CMS",
-        link: "https://interdata.vn/blog/author/tac-gia-cms/",
+        link: "https://admin.interdata.vn/author/tac-gia-cms/",
       },
     ],
     "wp:featuredmedia": [
       {
         source_url:
-          "https://interdata.vn/blog/wp-content/uploads/2026/10/post.webp",
+          "https://admin.interdata.vn/wp-content/uploads/2026/10/post.webp",
         alt_text: "Ảnh bài viết",
       },
     ],
