@@ -25,7 +25,7 @@ export function Footer() {
             </address>
             <address className={styles.companyDetail}>
               <MapPin size={18} strokeWidth={1.6} aria-hidden="true" />
-              <span>VPGD: 211 đường số 5, P. Bình Trưng, TP. HCM</span>
+              <span>VPGD: 211 Đường số 5, P. Bình Trưng, TP. HCM</span>
             </address>
             <a
               className={styles.companyDetail}

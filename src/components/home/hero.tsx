@@ -16,7 +16,7 @@ import styles from "./hero.module.css";
 const benefits = [
   { label: "Hạ tầng Uplink", value: "240Gbps+", icon: Network },
   { label: "Firewall đa lớp", value: "L3-L4-L7-WAF", icon: ShieldCheck },
-  { label: "Kinh nghiệm", value: "15 Năm", icon: Award },
+  { label: "Kinh nghiệm", value: "12+ Năm", icon: Award },
   { label: "Hỗ trợ", value: "24/7", icon: Headphones },
 ] as const;
 

@@ -67,14 +67,14 @@ export const claims: {
   },
   {
     id: "customers",
-    text: "100.000+ Khách Hàng",
+    text: "50.000+ Khách Hàng",
     status: "pending",
     source: "Design brief",
     note: "Xác nhận định nghĩa khách hàng, tập dữ liệu và thời điểm.",
   },
   {
     id: "servers",
-    text: "1000+ Máy Chủ",
+    text: "500+ Máy Chủ",
     status: "pending",
     source: "Design brief",
     note: "Xác nhận máy chủ vật lý/ảo và thời điểm thống kê.",
