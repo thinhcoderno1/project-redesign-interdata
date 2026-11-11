@@ -1,7 +1,7 @@
-import { TestimonialCarousel } from "./testimonial-carousel";
+import { SuccessStories } from "./success-stories";
 import { PressCarousel } from "@/components/home/press-carousel";
-import { testimonials, press } from "@/data/content";
-import { MessageSquareQuote, Newspaper } from "lucide-react";
+import { press } from "@/data/content";
+import { Newspaper } from "lucide-react";
 import styles from "@/components/home/home.module.css";
 import proofStyles from "./customer-proof.module.css";
 
@@ -18,38 +18,11 @@ export function CustomerProof({
   const headingClass = `section-heading${centerHeadings ? ` ${proofStyles.centeredHeading}` : ""}`;
   return (
     <div className={styles.home}>
-      <section
-        id="khach-hang"
-        className="feedback section"
-        aria-labelledby="customer-proof-title"
-      >
-        <div className="container">
-          <div className={headingClass}>
-            <div>
-              <span className="eyebrow">
-                {withBadgeIcons && (
-                  <MessageSquareQuote size={16} aria-hidden="true" />
-                )}
-                GÓC NHÌN TỪ KHÁCH HÀNG
-              </span>
-              <h2
-                id="customer-proof-title"
-                className={proofStyles.customerTitle}
-              >
-                Câu Chuyện Thành Công Cùng InterData
-              </h2>
-              <p>
-                Những chia sẻ về trải nghiệm sử dụng dịch vụ và làm việc với đội
-                ngũ hỗ trợ.
-              </p>
-            </div>
-          </div>
-          <TestimonialCarousel
-            items={testimonials}
-            controlsOnCards={controlsOnCards}
-          />
-        </div>
-      </section>
+      <SuccessStories
+        controlsOnCards={controlsOnCards}
+        centerHeadings={centerHeadings}
+        withBadgeIcons={withBadgeIcons}
+      />
       <section
         id="bao-chi"
         className="press section"

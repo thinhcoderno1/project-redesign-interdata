@@ -1,12 +1,14 @@
-import TestimonialsSection from "./TestimonialsSection";
+import { SuccessStories } from "@/components/shared/success-stories";
 import PressSection from "./PressSection";
 import styles from "./canh-me-proof.module.css";
 
 export function CanhMeProof() {
   return (
-    <div className={styles.proof}>
-      <TestimonialsSection />
-      <PressSection />
-    </div>
+    <>
+      <SuccessStories withBadgeIcons />
+      <div className={styles.proof}>
+        <PressSection />
+      </div>
+    </>
   );
 }

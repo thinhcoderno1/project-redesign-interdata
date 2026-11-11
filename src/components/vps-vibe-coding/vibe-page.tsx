@@ -8,6 +8,7 @@ import UseCasesSection from "./UseCasesSection";
 import ProcessSection from "./ProcessSection";
 import RolesSection from "./RolesSection";
 import SocialProofSection from "./SocialProofSection";
+import { SuccessStories } from "@/components/shared/success-stories";
 import FAQSection from "./FAQSection";
 import InfoSection from "./InfoSection";
 import MobileCTA from "./MobileCTA";
@@ -30,6 +31,7 @@ export function VibePage({ plans }: { plans: VibePlan[] }) {
       <UseCasesSection />
       <ProcessSection />
       <RolesSection />
+      <SuccessStories withBadgeIcons />
       <SocialProofSection />
       <FAQSection />
       <InfoSection />

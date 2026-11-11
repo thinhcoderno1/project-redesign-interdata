@@ -6,7 +6,7 @@ import ts from "typescript";
 
 const base = process.env.TEST_BASE_URL || "http://localhost:3100";
 await fs.mkdir("artifacts", { recursive: true });
-const source = await fs.readFile("src/data/content.ts", "utf8");
+const source = await fs.readFile("src/data/testimonials.ts", "utf8");
 const literal = source.match(
   /export const testimonials = (\[[\s\S]*?\n\]);/,
 )[1];
@@ -17,6 +17,11 @@ const { default: expected } = await import(
   `data:text/javascript;base64,${Buffer.from(outputText).toString("base64")}`
 );
 expect(expected).toHaveLength(8);
+expect(expected.slice(0, 3).map((item) => item.company)).toEqual([
+  "Đồng Hồ Hải Triều",
+  "SEO Việt",
+  "UMIX Việt Nam",
+]);
 const expectedGroups = Array.from(
   { length: Math.ceil(expected.length / 3) },
   (_, index) => expected.slice(index * 3, index * 3 + 3),
@@ -47,13 +52,13 @@ if (
       ),
   ];
   expect(records).toHaveLength(expected.length);
-  for (const [index, match] of records.entries()) {
-    expect(expected[index].name).toBe(match[1]);
-    expect(expected[index].company).toBe(
-      sourceCompanyCorrections[match[2]] || match[2],
-    );
-    expect(expected[index].quote).toBe(match[4]);
-    expect(await fs.readFile(`public${expected[index].logo}`)).toEqual(
+  for (const match of records) {
+    const company = sourceCompanyCorrections[match[2]] || match[2];
+    const item = expected.find((item) => item.company === company);
+    expect(item, company).toBeDefined();
+    expect(item.name).toBe(match[1]);
+    expect(item.quote).toBe(match[4]);
+    expect(await fs.readFile(`public${item.logo}`)).toEqual(
       await fs.readFile(`${sourceRoot}/public${match[3]}`),
     );
   }
@@ -80,6 +85,17 @@ try {
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto(base, { waitUntil: "domcontentloaded" });
     await page.evaluate(() => document.fonts.ready);
+    const section = page.locator("#khach-hang");
+    await section.scrollIntoViewIfNeeded();
+    // Let the section's scroll reveal finish before pointer interaction.
+    await expect
+      .poll(() =>
+        section.evaluate((element) => {
+          const style = getComputedStyle(element);
+          return style.opacity === "1" && style.translate === "none";
+        }),
+      )
+      .toBe(true);
     const track = page.locator(".testimonial-track");
     const slides = track.locator(".testimonial-slide");
     const cards = track.locator(".testimonial-card");

@@ -12,6 +12,7 @@ The page uses the existing Navigation, Footer, FloatingContact, local Be Vietnam
 
 ## InterData adaptation
 
+- Customer stories now use the site's shared `SuccessStories` section and `src/data/testimonials.ts`, ordered Hải Triều → SEO Việt → UMIX → the remaining customers. The page-specific feedback array/rail was removed; `SocialProofSection.jsx` retains only its press rail and optional public ratings. Section content, styling and carousel edits apply to all 19 pages that display stories.
 - CSS is scoped under the page's CSS Module. Blue/strong blue, semantic surfaces, text, border and focus tokens replace the source purple palette. Native artwork remains unchanged.
 - Shared container width 1248px; section padding 80/64/48px; font weights limited to available 400–700 faces; button radius 8px and minimum height 52px.
 - Source header/footer CSS is removed. The coffee story moves to the left. On this page only, the mobile contact rail sits above the bottom CTA.

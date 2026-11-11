@@ -32,21 +32,6 @@
   color: #53647f;
 }
 
-.sections :global(.testimonial-copy) blockquote {
-  font-size: var(--font-content);
-  line-height: 1.75;
-}
-
-.sections :global(.testimonial-author) strong {
-  font-size: var(--font-content);
-}
-
-.sections :global(.testimonial-author) span,
-.sections :global(.testimonial-details) summary {
-  font-size: var(--proof-small);
-  line-height: 1.65;
-}
-
 .sections :global(.press) article h3 {
   font-size: var(--proof-card-heading);
   line-height: 1.5;

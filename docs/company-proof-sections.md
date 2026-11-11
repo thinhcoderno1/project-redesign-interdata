@@ -1,5 +1,26 @@
 # Đồng bộ ba section công ty từ trang Thuê VPS
 
+## Section câu chuyện thành công dùng chung
+
+Tất cả 19 trang có phản hồi khách hàng, gồm Canhme và VPS Vibe Coding, dùng
+`src/components/shared/success-stories.tsx` và CSS cùng tên. Sửa tiêu đề, mô tả,
+bố cục tại đây; sửa nội dung, logo và thứ tự tại `src/data/testimonials.ts`.
+`CustomerProof` gọi section này và giữ riêng phần báo chí. Các bản feedback
+riêng của Canhme/Vibe Coding được thay bằng cùng component và carousel.
+
+Thứ tự: Đồng Hồ Hải Triều → SEO Việt → UMIX Việt Nam → RealDev → BALICO →
+Trường Phong → Digizone Việt Nam → Jobkey. Giữ nguyên lời nhận xét và logo.
+`src/data/content.ts` tái xuất dữ liệu để các nơi đang sử dụng tiếp tục nhận
+cùng thứ tự. Dữ liệu trong `vps-content.json` là snapshot nguồn nhập ban đầu,
+không được dùng để hiển thị feedback.
+
+Chạy `npm run test:success-stories` để kiểm tra nội dung SSR trên 19 trang,
+giao diện desktop/mobile và tương tác trên trang chủ, Thuê VPS, Canhme, Vibe Coding.
+`npm run test:testimonials` kiểm tra sâu carousel và đối chiếu lời nhận xét/logo
+với nguồn theo từng khách hàng, cho phép thứ tự hiển thị mới.
+
+Phần dưới ghi lại lịch sử đồng bộ trước đây.
+
 Ngày 16/10/2026, Homepage và `/vps-amd/` dùng
 `src/components/shared/company-proof-sections.tsx` để hiển thị lần lượt:
 

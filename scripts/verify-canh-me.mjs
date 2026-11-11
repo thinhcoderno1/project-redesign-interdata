@@ -115,22 +115,26 @@ try {
   );
   await page.locator(".cm-info-toggle").click();
   await expect(page.locator(".cm-info-body")).toBeVisible();
-  await page.locator(".id-testimonial-toggle").first().click();
-  await expect(page.locator(".id-testimonial-toggle").first()).toHaveAttribute(
-    "aria-expanded",
-    "true",
+  await page.locator(".testimonial-details summary").first().click();
+  await expect(page.locator(".testimonial-details").first()).toHaveAttribute(
+    "open",
+    "",
   );
-  await page.locator(".id-testimonials-arrow.is-next").click();
+  await page
+    .getByRole("button", { name: "Slide phản hồi tiếp theo", exact: true })
+    .click();
   await expect(
-    page.locator(".id-testimonials-dots button").nth(1),
-  ).toHaveAttribute("aria-current", "true");
-  await page.locator(".id-testimonials-dots button").first().click();
+    page.locator(".testimonial-pagination .testimonial-dot").nth(1),
+  ).toHaveAttribute("data-active", "true");
+  await page
+    .getByRole("button", { name: "Slide phản hồi trước", exact: true })
+    .click();
   await expect(
-    page.locator(".id-testimonials-dots button").first(),
-  ).toHaveAttribute("aria-current", "true");
-  await expect(page.locator(".id-testimonials-dots button")).toHaveCount(8);
+    page.locator(".testimonial-pagination .testimonial-dot").first(),
+  ).toHaveAttribute("data-active", "true");
+  await expect(page.locator(".testimonial-card")).toHaveCount(8);
   assert.equal(
-    await page.locator(".id-testimonial-stars").first().locator("svg").count(),
+    await page.locator(".testimonial-stars").first().locator("svg").count(),
     5,
   );
   await expect(page.locator(".press-card")).toHaveCount(22);

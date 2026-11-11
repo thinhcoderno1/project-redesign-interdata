@@ -16,6 +16,7 @@
     "test:parallax": "node scripts/verify-parallax.mjs",
     "test:hero-heading": "node scripts/verify-hero-heading.mjs",
     "test:testimonials": "node scripts/verify-testimonials.mjs",
+    "test:success-stories": "node scripts/verify-success-stories.mjs",
     "test:press": "node scripts/verify-press.mjs",
     "test:promotions": "node scripts/verify-promotions.mjs",
     "test:pricing-mobile": "node scripts/verify-mobile-pricing.mjs",

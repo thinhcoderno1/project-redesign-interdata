@@ -36,6 +36,7 @@ const blackFriday = await loadData("src/data/black-friday.ts", {
   "./vps-content.json": content,
   "./vps-pricing": pricing,
   "./content": await loadData("src/data/content.ts", {
+    "./testimonials": await loadData("src/data/testimonials.ts", {}),
     "./articles.json": JSON.parse(
       await fs.readFile("src/data/articles.json", "utf8"),
     ),

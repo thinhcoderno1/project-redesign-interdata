@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { testimonials } from "@/data/content";
+import { testimonials } from "@/data/testimonials";
 import styles from "./vps.module.css";
 
 export function CustomerLogos() {
