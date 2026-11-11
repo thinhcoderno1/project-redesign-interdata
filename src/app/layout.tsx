@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { GoogleAnalytics } from "@/components/analytics/google-analytics";
+import { GoogleTagManager } from "@/components/analytics/google-tag-manager";
 import { FloatingContact } from "@/components/layout/floating-contact";
 import { defaultSocialImage } from "@/lib/social-image";
 import "./fonts.css";
@@ -32,9 +32,9 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <body id="dau-trang">
+        <GoogleTagManager />
         {children}
         <FloatingContact />
-        <GoogleAnalytics />
       </body>
     </html>
   );

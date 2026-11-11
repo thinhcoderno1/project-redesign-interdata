@@ -3,109 +3,124 @@ import fs from "node:fs/promises";
 import { chromium, expect } from "@playwright/test";
 
 const base = process.env.QA_BASE_URL || "http://localhost:3100";
-const measurementId = "G-BHY0XZSXPX";
+const containerId = "GTM-W5ST9ZZQ";
+const containerUrl = `https://www.googletagmanager.com/gtm.js?id=${containerId}`;
+const fallbackUrl = `https://www.googletagmanager.com/ns.html?id=${containerId}`;
 const browser = await chromium.launch();
 try {
   const context = await browser.newContext({ reducedMotion: "reduce" });
-  const pageViews = [];
-  // Load the real Google tag, but intercept every collection request so QA
-  // never adds visits or events to the site's Analytics reports.
-  await context.route(
-    (url) =>
-      /\/(?:g\/|ccm\/)?collect\/?$/.test(url.pathname) &&
-      /(?:google-analytics\.com|analytics\.google\.com|google\.com|doubleclick\.net)$/.test(
-        url.hostname,
-      ),
-    async (route) => {
-      const request = route.request();
-      const url = new URL(request.url());
-      for (const line of (request.postData() || "").split("\n")) {
-        const params = new URLSearchParams(url.search);
-        for (const [key, value] of new URLSearchParams(line))
-          params.set(key, value);
-        if (
-          params.get("tid") === measurementId &&
-          params.get("en") === "page_view"
-        )
-          pageViews.push({
-            location: params.get("dl"),
-            title: params.get("dt"),
-          });
-      }
-      await route.fulfill({ status: 204 });
-    },
-  );
-  const page = await context.newPage();
+  // Stub the container so production QA cannot execute tags or send events.
   let scriptLoads = 0;
-  page.on("request", (request) => {
-    const url = new URL(request.url());
-    if (
-      url.hostname === "www.googletagmanager.com" &&
-      url.pathname === "/gtag/js" &&
-      url.searchParams.get("id") === measurementId
-    )
-      scriptLoads++;
+  await context.route(containerUrl, async (route) => {
+    scriptLoads++;
+    await route.fulfill({
+      contentType: "application/javascript",
+      body: "window.__gtmQaLoads = (window.__gtmQaLoads || 0) + 1;",
+    });
   });
-  const checkPageViews = async (count, path) => {
-    await expect.poll(() => pageViews.length, { timeout: 20000 }).toBe(count);
-    await page.waitForTimeout(1500);
+  await context.addInitScript(() => {
+    window.dataLayer = [{ event: "qa-existing" }];
+  });
+
+  const page = await context.newPage();
+  const checks = [];
+  async function checkContainer(expectedLoads, path) {
+    await expect.poll(() => scriptLoads).toBe(expectedLoads);
+    await expect.poll(() => page.evaluate(() => window.__gtmQaLoads)).toBe(1);
+    await expect(page.locator("script#gtm-init")).toHaveCount(1);
+    await expect(page.locator("script#gtm-init")).toHaveAttribute(
+      "data-nscript",
+      "afterInteractive",
+    );
+    await expect(page.locator(`script[src="${containerUrl}"]`)).toHaveCount(1);
     assert.equal(
-      pageViews.length,
-      count,
-      "Each navigation sends one page_view",
+      await page
+        .locator(`script[src="${containerUrl}"]`)
+        .evaluate((el) => el.async),
+      true,
+    );
+    await expect(page.locator("#ga4-init, #ga4-loader")).toHaveCount(0);
+    await expect(page.locator('script[src*="/gtag/js"]')).toHaveCount(0);
+    const queue = await page.evaluate(() => window.dataLayer);
+    assert.equal(
+      queue.filter((entry) => entry.event === "qa-existing").length,
+      1,
+    );
+    assert.equal(queue.filter((entry) => entry.event === "gtm.js").length, 1);
+    assert.equal(
+      queue.filter((entry) => entry.event === "page_view").length,
+      0,
     );
     assert.equal(
-      new URL(pageViews.at(-1).location).pathname +
-        new URL(pageViews.at(-1).location).search,
+      new URL(page.url()).pathname + new URL(page.url()).search,
       path,
     );
-    await expect(page.locator("script#ga4-init")).toHaveCount(1);
-    await expect(page.locator("script#ga4-loader")).toHaveCount(1);
-  };
+    checks.push({ path, scriptLoads, bootstrapEvents: 1 });
+  }
 
   await page.goto(base, { waitUntil: "domcontentloaded" });
-  await checkPageViews(1, "/");
+  await checkContainer(1, "/");
   await page.evaluate(() => {
-    window.__ga4DocumentMarker = "same-document";
+    window.__gtmDocumentMarker = "same-document";
   });
   await Promise.all([
     page.waitForURL("**/gioi-thieu/"),
     page.locator('footer a[href="/gioi-thieu/"]').click(),
   ]);
   assert.equal(
-    await page.evaluate(() => window.__ga4DocumentMarker),
+    await page.evaluate(() => window.__gtmDocumentMarker),
     "same-document",
     "Next Link navigates without a document reload",
   );
-  await checkPageViews(2, "/gioi-thieu/");
-  await page.evaluate(() => history.pushState(null, "", "?ga4_qa=1"));
-  await checkPageViews(3, "/gioi-thieu/?ga4_qa=1");
+  await checkContainer(1, "/gioi-thieu/");
+  await page.evaluate(() => history.pushState(null, "", "?gtm_qa=1"));
+  await checkContainer(1, "/gioi-thieu/?gtm_qa=1");
   await page.goBack();
-  await checkPageViews(4, "/gioi-thieu/");
-  assert.equal(
-    scriptLoads,
-    1,
-    "Google tag loads once across client navigations",
-  );
+  await checkContainer(1, "/gioi-thieu/");
   await page.reload({ waitUntil: "domcontentloaded" });
-  await checkPageViews(5, "/gioi-thieu/");
-  assert.equal(scriptLoads, 2, "A fresh document initializes Google tag once");
+  await checkContainer(2, "/gioi-thieu/");
+
+  const noJsContext = await browser.newContext({ javaScriptEnabled: false });
+  let fallbackLoads = 0;
+  await noJsContext.route(fallbackUrl, async (route) => {
+    fallbackLoads++;
+    await route.fulfill({ contentType: "text/html", body: "<!doctype html>" });
+  });
+  const noJsPage = await noJsContext.newPage();
+  await noJsPage.goto(base, { waitUntil: "load" });
+  await expect(noJsPage.locator("body > noscript")).toHaveCount(1);
+  // Next.js may prepend a hidden streaming boundary before the layout content.
+  assert.equal(
+    await noJsPage
+      .locator("body > :not([hidden])")
+      .first()
+      .evaluate((el) => el.tagName),
+    "NOSCRIPT",
+    "Fallback precedes application content",
+  );
+  await expect(noJsPage.locator("noscript iframe")).toHaveAttribute(
+    "src",
+    fallbackUrl,
+  );
+  await expect.poll(() => fallbackLoads).toBe(1);
+
   await fs.mkdir("artifacts/analytics", { recursive: true });
   await fs.writeFile(
     "artifacts/analytics/verification.json",
     JSON.stringify(
       {
-        measurementId,
+        containerId,
         scriptLoads,
-        pageViews,
-        collectionRequestsIntercepted: true,
+        fallbackLoads,
+        checks,
+        containerStubbed: true,
       },
       null,
       2,
     ),
   );
   console.log(
-    "GA4: initial load, Next.js navigation, query changes, back and reload send one page_view each; QA collection requests intercepted.",
+    "GTM: asynchronous load once per document, Next.js/query/back navigation, reload, existing dataLayer, no direct GA4 and no-JS fallback passed. Container stubbed; no tags executed.",
   );
 } finally {
   await browser.close();
