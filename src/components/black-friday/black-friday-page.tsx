@@ -64,6 +64,14 @@ import { links } from "@/data/content";
 import { contactDetails } from "@/data/contact";
 import styles from "./black-friday.module.css";
 
+const marqueeMessages = [
+  "Black Friday 2026",
+  "Tiết Kiệm Đến 99%",
+  "Deal Đậm Giảm Sâu",
+  "Ưu Đãi Ngập Tràn",
+  "Nâng Cấp Hạ Tầng",
+];
+
 const cycles: { key: BillingCycle; label: string }[] = [
   { key: "monthly", label: "1 tháng" },
   { key: "quarterly", label: "3 tháng" },
@@ -298,12 +306,16 @@ export function BlackFridayPage({
       </section>
 
       <div className={styles.ticker} aria-hidden="true">
-        <div>
-          {Array.from({ length: 6 }, (_, index) => (
-            <span key={index}>
-              <b>BLACK FRIDAY</b>
-              <i>/</i> VPS &amp; CLOUD SERVER <i>/</i>
-            </span>
+        <div className={styles.tickerTrack}>
+          {[0, 1].map((copy) => (
+            <div className={styles.tickerGroup} key={copy}>
+              {marqueeMessages.map((message) => (
+                <span key={message}>
+                  <b>{message}</b>
+                  <i>/</i>
+                </span>
+              ))}
+            </div>
           ))}
         </div>
       </div>
