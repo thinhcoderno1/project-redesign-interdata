@@ -266,7 +266,7 @@ export const deals: DealProgram[] = [
   },
   {
     gid: 100,
-    hidden: false,
+    hidden: true,
     pricingPeriods: ["annually", "biennially", "triennially"],
     featuredPid: 530,
     gridColumns: 3,

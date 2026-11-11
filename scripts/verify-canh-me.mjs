@@ -19,7 +19,6 @@ const months = {
   triennially: 36,
 };
 const groups = [
-  { gid: 100, periods: ["annually", "biennially", "triennially"], selected: 0 },
   { gid: 87, periods: ["annually", "biennially", "triennially"], selected: 0 },
   { gid: 89, periods: ["quarterly"], selected: 0 },
   { gid: 96, periods: Object.keys(months), selected: 4 },
@@ -55,7 +54,13 @@ try {
     "href",
     "/canhme/",
   );
-  await expect(page.locator(".cm-deal-program")).toHaveCount(4);
+  await expect(page.locator(".cm-deal-program")).toHaveCount(3);
+  await expect(
+    page.getByRole("heading", {
+      name: "INTER PLATINUM SERIES 2026",
+      exact: true,
+    }),
+  ).toHaveCount(0);
   await expect(
     page.locator("#flash-sale, #renewal-bonus, .cm-service-coupons"),
   ).toHaveCount(0);
@@ -192,7 +197,7 @@ try {
   );
   assert.deepEqual(errors, []);
   console.log(
-    "Canh Me: 4 source programs, live prices for all billing cycles, checkout links, interactions, images, 7 viewport widths, Axe and no-JavaScript pricing/FAQ passed.",
+    "Canh Me: 3 visible programs, hidden Inter Platinum, live prices for all billing cycles, checkout links, interactions, images, 7 viewport widths, Axe and no-JavaScript pricing/FAQ passed.",
   );
 } finally {
   await browser.close();

@@ -6,7 +6,7 @@ Source: `D:/InterData-Website-news/canh-me`, specifically `app/page.tsx`, its ac
 
 ## Source behavior retained
 
-- Visible pricing groups remain 100 (Inter Platinum), 87 (Premium), 89 (Best Value), and 96 (Dedicated), in source order. Hidden programs and the source's disabled Flash Sale, all-service coupons and renewal sections remain absent.
+- Visible pricing groups are 87 (Premium), 89 (Best Value), and 96 (Dedicated), in source order. Group 100 (INTER PLATINUM SERIES 2026) is hidden at the user's request; its pricing is excluded from page requests. Other hidden programs and the source's disabled Flash Sale, all-service coupons and renewal sections remain absent.
 - Prices come from the same public `packages.php?gid=…&module` endpoint, with 60-second revalidation. Original prices remain sourced by PID. Program-specific billing choices, default periods, featured products and the hidden Dedicated PID 518 follow the source.
 - Dedicated prices display their monthly equivalent, rounded as in the source. An additional line makes the selected cycle's total payment explicit. Checkout URLs always include the actual product PID and selected billing cycle.
 - Program countdowns retain the source's end-of-month behavior, using Vietnam time explicitly. The separate Black Friday countdown configuration is unaffected.
