@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { PlatinumCloudPage } from "@/components/platinum-cloud-server/platinum-cloud-page";
@@ -17,14 +18,7 @@ export const metadata: Metadata = {
     siteName: "InterData",
     locale: "vi_VN",
     type: "website",
-    images: [
-      {
-        url: "https://interdata.vn/images/platinum-cloud-server/hero-xeon-cloud-v1.webp",
-        width: 1930,
-        height: 815,
-        alt: "Ảnh minh họa chip Intel Xeon Platinum trước cụm máy chủ Cloud",
-      },
-    ],
+    images: [defaultSocialImage],
   },
 };
 

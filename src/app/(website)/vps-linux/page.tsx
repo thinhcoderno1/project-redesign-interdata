@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { LinuxPage } from "@/components/vps-linux/linux-page";
@@ -17,14 +18,7 @@ export const metadata: Metadata = {
     siteName: "InterData",
     locale: "vi_VN",
     type: "website",
-    images: [
-      {
-        url: "https://interdata.vn/images/vps-linux/hero.webp",
-        width: 1672,
-        height: 941,
-        alt: "Ảnh minh họa môi trường quản trị máy chủ Linux",
-      },
-    ],
+    images: [defaultSocialImage],
   },
 };
 

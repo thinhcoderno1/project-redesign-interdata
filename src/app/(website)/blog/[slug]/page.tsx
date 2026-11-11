@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
@@ -9,7 +10,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { getBlogCategories, getBlogListing, getBlogPost } from "@/lib/blog-api";
-import { prepareBlogContent } from "@/lib/blog-content";
+import { firstBlogImage, prepareBlogContent } from "@/lib/blog-content";
 import { frameBlogContent } from "@/lib/blog-frame";
 import { PostArticle } from "@/components/blog/post-article";
 import { blogListingHref } from "@/lib/blog-links";
@@ -36,6 +37,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     redirect(blogListingHref({ category: slug }));
   const post = await getBlogPost(slug);
   if (!post) notFound();
+  const contentImage = firstBlogImage(post.content);
+  const socialImage = contentImage
+    ? { ...contentImage, alt: contentImage.alt || post.title }
+    : post.image
+      ? { url: post.image, alt: post.imageAlt || post.title }
+      : defaultSocialImage;
   return {
     title: `${post.title} | InterData Blog`,
     description: post.excerpt,
@@ -48,7 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: post.publishedAt,
       modifiedTime: post.modifiedAt,
       locale: "vi_VN",
-      ...(post.image ? { images: [{ url: post.image }] } : {}),
+      images: [socialImage],
     },
   };
 }

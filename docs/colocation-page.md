@@ -40,8 +40,8 @@ Giữ thứ tự, mô tả cấu hình, không giới hạn băng thông và Up 
 Giữ gói 2U được nhấn mạnh. Không suy ra phí khởi tạo, tổng kỳ đầu, giá gốc hoặc
 giảm giá khi nguồn không công bố. Giá và nội dung lưu tại `src/data/colocation.ts`.
 
-Bốn nút Liên hệ giữ `#support`, trỏ tới CTA tư vấn trên trang mới. Giữ hotline
-`tel:+841900636822` của section hỗ trợ nguồn; thêm đường dẫn tư vấn `/lien-he/`
+Bốn nút Liên hệ giữ `#support`, trỏ tới CTA tư vấn trên trang mới. Hotline dùng chung
+`tel:1900636822` từ `src/data/contact.ts`; thêm đường dẫn tư vấn `/lien-he/`
 theo project hiện tại. Không tạo URL checkout hoặc tự thêm tham số billingcycle.
 
 Power và Up to 40Gbps cần được đối chiếu với phương án và báo giá thực tế;

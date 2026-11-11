@@ -1,4 +1,5 @@
 import { ArrowUp, PhoneCall } from "lucide-react";
+import { contactDetails } from "@/data/contact";
 import styles from "./floating-contact.module.css";
 
 export function FloatingContact() {
@@ -57,8 +58,8 @@ export function FloatingContact() {
       </a>
       <a
         className={`${styles.action} ${styles.hotline}`}
-        href="tel:1900636822"
-        aria-label="Gọi hotline 1900 636 822"
+        href={contactDetails.hotlineHref}
+        aria-label={`Gọi hotline ${contactDetails.hotline}`}
       >
         <PhoneCall
           className={styles.lineIcon}
@@ -67,7 +68,7 @@ export function FloatingContact() {
           aria-hidden="true"
         />
         <span className={styles.label} aria-hidden="true">
-          Hotline: 1900 636 822
+          Hotline: {contactDetails.hotline}
         </span>
       </a>
       <a

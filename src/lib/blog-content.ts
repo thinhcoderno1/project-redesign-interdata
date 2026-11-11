@@ -3,6 +3,10 @@ import { Parser } from "htmlparser2";
 import { htmlToText } from "./interdata-blog";
 import { localBlogHref } from "./blog-links";
 import { BLOG_CMS_ORIGIN } from "./blog-source";
+import {
+  normalizeCompanyPhoneLink,
+  normalizeCompanyPhoneText,
+} from "./contact-hotline";
 import type { BlogCategory } from "@/data/blog";
 import {
   articleButtonKind,
@@ -69,6 +73,24 @@ function safeImage(value: string | undefined) {
   }
 }
 
+export function firstBlogImage(
+  raw: string,
+): { url: string; alt: string } | null {
+  let image: { url: string; alt: string } | null = null;
+  const parser = new Parser({
+    onopentag(name, attrs) {
+      if (image || name !== "img") return;
+      const url =
+        safeImage(attrs["data-src"]) ||
+        safeImage(attrs["data-lazy-src"]) ||
+        safeImage(attrs.src);
+      if (url) image = { url, alt: htmlToText(attrs.alt) };
+    },
+  });
+  parser.end(raw);
+  return image;
+}
+
 export function prepareBlogContent(
   raw: string,
   categories: BlogCategory[] = [],
@@ -80,6 +102,7 @@ export function prepareBlogContent(
     allowedStyles: articleCtaAllowedStyles,
     allowedSchemes: ["https", "http", "mailto", "tel"],
     allowProtocolRelative: false,
+    textFilter: normalizeCompanyPhoneText,
     allowedIframeHostnames: [
       "www.youtube.com",
       "www.youtube-nocookie.com",
@@ -96,7 +119,10 @@ export function prepareBlogContent(
           tagName,
           attribs: {
             ...attrs,
-            href,
+            href: normalizeCompanyPhoneLink(href),
+            ...(attrs.title
+              ? { title: normalizeCompanyPhoneText(attrs.title) }
+              : {}),
             "data-article-button": articleButtonKind(attrs),
             ...(attrs.target === "_blank"
               ? { rel: "noopener noreferrer" }
@@ -108,7 +134,7 @@ export function prepareBlogContent(
         tagName,
         attribs: {
           src: safeImage(attrs["data-src"]) || safeImage(attrs.src),
-          alt: attrs.alt || "",
+          alt: normalizeCompanyPhoneText(attrs.alt || ""),
           loading: "lazy",
           decoding: "async",
           ...(attrs.style ? { style: attrs.style } : {}),
@@ -140,7 +166,9 @@ export function prepareBlogContent(
     },
     onclosetag(name) {
       if (!heading || name !== heading.tag) return;
-      const title = heading.title.replace(/\s+/g, " ").trim();
+      const title = normalizeCompanyPhoneText(
+        heading.title.replace(/\s+/g, " ").trim(),
+      );
       const base =
         heading.id ||
         `noi-dung-${
@@ -174,6 +202,8 @@ export function prepareBlogContent(
     allowedStyles: articleCtaAllowedStyles,
     allowedSchemes: ["https", "http", "mailto", "tel"],
     allowProtocolRelative: false,
+    // The first pass decodes entities that can split a phone across text callbacks.
+    textFilter: normalizeCompanyPhoneText,
     allowedIframeHostnames: [
       "www.youtube.com",
       "www.youtube-nocookie.com",

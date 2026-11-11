@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { CanhMePage } from "@/components/canh-me/canh-me-page";
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
     "Canh Me tổng hợp các chương trình khuyến mãi VPS, Cloud Server và Dedicated Server của InterData. So sánh cấu hình, bảng giá và chu kỳ thanh toán.",
   alternates: { canonical: "https://interdata.vn/canhme/" },
   openGraph: {
+    images: [defaultSocialImage],
     title: "Canh Me — Khuyến mãi VPS & Cloud Server",
     url: "https://interdata.vn/canhme/",
     locale: "vi_VN",

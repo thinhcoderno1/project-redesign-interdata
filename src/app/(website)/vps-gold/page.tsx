@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { GoldPage } from "@/components/vps-gold/gold-page";
@@ -17,14 +18,7 @@ export const metadata: Metadata = {
     siteName: "InterData",
     locale: "vi_VN",
     type: "website",
-    images: [
-      {
-        url: "https://interdata.vn/images/vps-gold/hero.webp",
-        width: 1672,
-        height: 941,
-        alt: "Ảnh minh họa hạ tầng máy chủ VPS Gold Intel Xeon",
-      },
-    ],
+    images: [defaultSocialImage],
   },
 };
 

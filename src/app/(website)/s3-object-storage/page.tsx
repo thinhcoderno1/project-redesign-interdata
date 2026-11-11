@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { S3ObjectStoragePage } from "@/components/s3-object-storage/s3-object-storage-page";
@@ -18,14 +19,7 @@ export const metadata: Metadata = {
     siteName: "InterData",
     locale: "vi_VN",
     type: "website",
-    images: [
-      {
-        url: "https://interdata.vn/images/s3-object-storage/hero-object-storage-v2.webp",
-        width: 1920,
-        height: 800,
-        alt: "Minh họa bucket lưu trữ đối tượng kết nối tệp ảnh, video, tài liệu và bản sao lưu",
-      },
-    ],
+    images: [defaultSocialImage],
   },
 };
 

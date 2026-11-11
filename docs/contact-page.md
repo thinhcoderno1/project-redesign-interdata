@@ -4,7 +4,7 @@ Route `/lien-he/` thay thế `/contact` trong ứng dụng Next.js này. Trang n
 
 ## Thông tin đã đối chiếu ngày 10/10/2026
 
-[Contact chính thức](https://interdata.vn/contact) xác nhận hai địa điểm, hotline 1900 636 822, số tư vấn 0966 039 166, email info@interdata.vn và giờ làm việc văn phòng Thứ 2–Thứ 7, 9:00–18:00. Email được đối chiếu cả nội dung HTML của trang và footer hiện có.
+Theo yêu cầu của người dùng, website chỉ sử dụng hotline **1900 636 822** (`tel:1900636822`), khai báo tập trung tại `src/data/contact.ts`. [Contact chính thức](https://interdata.vn/contact) là nguồn đối chiếu hai địa điểm, email info@interdata.vn và giờ làm việc văn phòng Thứ 2–Thứ 7, 9:00–18:00. Nội dung blog từ CMS được chuẩn hóa số điện thoại cũ khi hiển thị; không sửa URL ảnh hoặc đường dẫn ngoài chỉ vì có chứa chữ số.
 
 - Văn phòng giao dịch: Số 211 Đường số 5, Khu đô thị Lakeview City, Phường Bình Trưng, TP. Hồ Chí Minh. Link [Google Maps chính thức từ footer blog](https://maps.app.goo.gl/JdnrU5N9xWYKShqt5) dẫn đến InterData - VPGD, tọa độ 10.7952477, 106.778797.
 - Văn phòng đại diện: 240 Nguyễn Đình Chính, Phường Phú Nhuận, TP. Hồ Chí Minh. Link [Google Maps từ Contact](https://maps.app.goo.gl/ZxSPDiAQerFgVw5RA) dẫn đến InterData - Trụ Sở Chính, tọa độ 10.795176, 106.674237. Nhãn trên trang dùng “Văn phòng đại diện” theo nội dung Contact, không tự đổi tên Google Place.

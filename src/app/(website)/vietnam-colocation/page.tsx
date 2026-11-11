@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { ColocationPage } from "@/components/colocation/colocation-page";
@@ -16,14 +17,7 @@ export const metadata: Metadata = {
     siteName: "InterData",
     locale: "vi_VN",
     type: "website",
-    images: [
-      {
-        url: "https://interdata.vn/images/vps/hero-datacenter-photo-v3.webp",
-        width: 1672,
-        height: 941,
-        alt: "Minh họa tủ máy chủ trong datacenter",
-      },
-    ],
+    images: [defaultSocialImage],
   },
 };
 function Page() {

@@ -32,10 +32,68 @@ function load(file) {
 }
 const { createBlogSource, categoryFamily, normalizeBlogPost, BlogApiError } =
   load("src/lib/blog-api.ts");
-const { prepareBlogContent } = load("src/lib/blog-content.ts");
+const { prepareBlogContent, firstBlogImage } = load("src/lib/blog-content.ts");
 const { frameBlogContent } = load("src/lib/blog-frame.ts");
 const { htmlToText } = load("src/lib/interdata-blog.ts");
 const { localBlogHref } = load("src/lib/blog-links.ts");
+for (const number of [
+  "0966039166",
+  "0966 039 166",
+  "096.603.9166",
+  "+84 (966) 039 166",
+  "0966&nbsp;039&nbsp;166",
+  "+84 1900 636 822",
+]) {
+  assert.equal(htmlToText(`<p>Hotline ${number}</p>`), "Hotline 1900 636 822");
+  assert.equal(
+    prepareBlogContent(`<p>Hotline ${number}</p>`).html,
+    "<p>Hotline 1900 636 822</p>",
+  );
+}
+for (const number of ["0966039166", "+84966039166", "+841900636822"]) {
+  const phoneContent = prepareBlogContent(
+    `<a href="tel:${number}" title="Call 0966 039 166">0966039166</a>`,
+  ).html;
+  assert.match(phoneContent, /href="tel:1900636822"/);
+  assert.match(phoneContent, /title="Call 1900 636 822"/);
+  assert.match(phoneContent, />1900 636 822<\/a>/);
+}
+const unrelatedPhoneContent = prepareBlogContent(
+  '<a href="tel:18001234">18001234</a><a href="https://example.com/0966039166/">External</a><img src="https://example.com/0966039166.jpg" alt="Hotline 0966039166">',
+).html;
+assert.match(unrelatedPhoneContent, /href="tel:18001234"/);
+assert.match(
+  unrelatedPhoneContent,
+  /href="https:\/\/example.com\/0966039166\/"/,
+);
+assert.match(
+  unrelatedPhoneContent,
+  /src="https:\/\/example.com\/0966039166.jpg"/,
+);
+assert.match(unrelatedPhoneContent, /alt="Hotline 1900 636 822"/);
+assert.equal(htmlToText("109660391660"), "109660391660");
+assert.deepEqual(
+  firstBlogImage(
+    '<p>Opening</p><img data-src="/wp-content/uploads/first.jpg" src="data:image/gif;base64,placeholder" alt="First &amp; image"><img src="https://example.com/second.jpg">',
+  ),
+  {
+    url: "https://admin.interdata.vn/wp-content/uploads/first.jpg",
+    alt: "First & image",
+  },
+);
+assert.deepEqual(
+  firstBlogImage(
+    '<img data-lazy-src="https://example.com/first.webp"><img src="https://example.com/second.jpg">',
+  ),
+  { url: "https://example.com/first.webp", alt: "" },
+);
+assert.equal(
+  firstBlogImage(
+    '<script>"<img src=\"https://example.com/tracker.jpg\">"</script><img src="javascript:alert(1)"><img src="https://example.com/icon.svg">',
+  ),
+  null,
+);
+assert.equal(firstBlogImage("<p>No images</p>"), null);
 const categories = [
   { id: 1, slug: "vps", name: "VPS", count: 5, parent: 0 },
   { id: 2, slug: "linux", name: "Linux", count: 2, parent: 1 },

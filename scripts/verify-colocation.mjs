@@ -116,9 +116,9 @@ try {
   await expect(page).toHaveURL(/#support$/);
   await expect(page.locator("#support")).toBeInViewport();
   await expect(page.locator('#support a[href="/lien-he/"]')).toHaveCount(1);
-  await expect(
-    page.locator('#support a[href="tel:+841900636822"]'),
-  ).toHaveCount(1);
+  await expect(page.locator('#support a[href="tel:1900636822"]')).toHaveCount(
+    1,
+  );
   await expect(page.locator("#quy-trinh article")).toHaveCount(4);
   await expect(page.locator("#ung-dung article")).toHaveCount(6);
   await expect(page.locator("#cau-hoi details")).toHaveCount(16);

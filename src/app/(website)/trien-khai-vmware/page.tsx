@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { VmwarePage } from "@/components/vmware/vmware-page";
@@ -17,14 +18,7 @@ export const metadata: Metadata = {
     siteName: "InterData",
     locale: "vi_VN",
     type: "website",
-    images: [
-      {
-        url: "https://interdata.vn/images/vmware/hero-vmware-solution-v5.webp",
-        width: 1920,
-        height: 800,
-        alt: "Minh họa vCenter quản trị cụm ESXi chạy máy ảo và lớp lưu trữ vSAN",
-      },
-    ],
+    images: [defaultSocialImage],
   },
 };
 function Page() {

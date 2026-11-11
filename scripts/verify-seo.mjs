@@ -7,16 +7,55 @@ const base = process.env.QA_BASE_URL || "http://localhost:3100";
 const { publicPagePaths } = loadProjectModule("src/lib/seo-sitemap.ts");
 function inspect(html) {
   const robots = [];
+  const ogImages = [];
+  const twitterImages = [];
+  const telephoneLinks = [];
+  let text = "";
+  let scriptDepth = 0;
+  let firstArticleImage;
+  let articleDepth = 0;
   let canonical;
   const parser = new Parser({
     onopentag(name, attrs) {
+      if (name === "script" || name === "style") scriptDepth++;
+      if (name === "a" && /^tel:/i.test(attrs.href || ""))
+        telephoneLinks.push(attrs.href);
       if (name === "meta" && ["robots", "googlebot"].includes(attrs.name))
         robots.push(attrs.content);
       if (name === "link" && attrs.rel === "canonical") canonical = attrs.href;
+      if (name === "meta" && attrs.property === "og:image")
+        ogImages.push(attrs.content);
+      if (name === "meta" && attrs.name === "twitter:image")
+        twitterImages.push(attrs.content);
+      if (
+        name === "article" &&
+        (articleDepth || attrs["aria-label"] === "Nội dung bài viết")
+      )
+        articleDepth++;
+      if (articleDepth && name === "img" && !firstArticleImage && attrs.src)
+        firstArticleImage = attrs.src;
+    },
+    onclosetag(name) {
+      if (name === "script" || name === "style") scriptDepth--;
+      if (name === "article" && articleDepth) articleDepth--;
+    },
+    ontext(value) {
+      if (!scriptDepth) text += value;
     },
   });
   parser.end(html);
-  return { robots, canonical };
+  return {
+    robots,
+    canonical,
+    ogImages,
+    twitterImages,
+    firstArticleImage,
+    telephoneLinks,
+    hasRetiredPhone:
+      /(?:0|\+?84)[\s.()-]*9[\s.()-]*6[\s.()-]*6[\s.()-]*0[\s.()-]*3[\s.()-]*9[\s.()-]*1[\s.()-]*6[\s.()-]*6/.test(
+        text,
+      ),
+  };
 }
 async function page(path) {
   const response = await fetch(`${base}${path}`, {
@@ -73,6 +112,13 @@ for (const path of [
 ]) {
   const metadata = await page(path);
   assert.equal(metadata.status, 200, path);
+  assert.equal(metadata.hasRetiredPhone, false, `No retired phone on ${path}`);
+  assert.ok(metadata.telephoneLinks.includes("tel:1900636822"), path);
+  if (publicPagePaths.includes(path))
+    assert.ok(
+      metadata.telephoneLinks.every((href) => href === "tel:1900636822"),
+      `One company hotline on ${path}`,
+    );
   assert.ok(
     !/noindex|nofollow/i.test(metadata.httpRobots || ""),
     `No blocking HTTP header on ${path}`,
@@ -83,8 +129,45 @@ for (const path of [
     `Indexable page ${path}`,
   );
   assert.equal(metadata.canonical, `https://interdata.vn${path}`, path);
+  if (path.startsWith("/blog/") && path !== "/blog/") {
+    assert.equal(metadata.ogImages.length, 1);
+    if (metadata.firstArticleImage)
+      assert.deepEqual(metadata.ogImages, [metadata.firstArticleImage]);
+  } else {
+    assert.deepEqual(
+      metadata.ogImages,
+      [
+        `https://interdata.vn${path === "/blackfriday/" ? "/images/black-friday/og-image.png" : "/images/og/interdata.png"}`,
+      ],
+      path,
+    );
+  }
+  assert.deepEqual(
+    metadata.twitterImages,
+    metadata.ogImages,
+    `Consistent Twitter/OG image on ${path}`,
+  );
   results.push({ path, ...metadata });
 }
+const imagePost = await page(
+  "/blog/cach-va-php-tren-aapanel-directadmin-cloudpanel/",
+);
+assert.equal(imagePost.status, 200);
+assert.ok(imagePost.firstArticleImage);
+assert.deepEqual(
+  imagePost.ogImages,
+  [imagePost.firstArticleImage],
+  "Blog sharing uses its first content image",
+);
+assert.deepEqual(imagePost.twitterImages, imagePost.ogImages);
+const sharedImage = await fetch(`${base}/images/og/interdata.png`);
+assert.equal(sharedImage.status, 200);
+assert.match(sharedImage.headers.get("content-type"), /image\/png/);
+assert.ok(
+  (await fs.readFile("public/images/og/interdata.png")).equals(
+    Buffer.from(await sharedImage.arrayBuffer()),
+  ),
+);
 const search = await page("/blog/?q=VPS");
 assert.ok(search.robots.some((value) => /noindex/.test(value)));
 assert.ok(search.robots.every((value) => !/nofollow/.test(value)));

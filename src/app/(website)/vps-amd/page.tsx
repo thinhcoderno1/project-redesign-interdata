@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { AmdPage } from "@/components/vps-amd/amd-page";
@@ -17,14 +18,7 @@ export const metadata: Metadata = {
     siteName: "InterData",
     locale: "vi_VN",
     type: "website",
-    images: [
-      {
-        url: "https://interdata.vn/images/vps-amd/epyc.webp",
-        width: 1920,
-        height: 1280,
-        alt: "Minh họa CPU AMD EPYC",
-      },
-    ],
+    images: [defaultSocialImage],
   },
 };
 

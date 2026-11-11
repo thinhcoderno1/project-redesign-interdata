@@ -2,6 +2,7 @@ import "server-only";
 import { decodeHTML } from "entities";
 import { BLOG_API_URL, BLOG_CMS_ORIGIN, blogImageUrl } from "./blog-source";
 import { localBlogHref } from "./blog-links";
+import { normalizeCompanyPhoneText } from "./contact-hotline";
 import {
   resourceTopics,
   type ResourceArticle,
@@ -21,13 +22,15 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 export function htmlToText(value: unknown): string {
   if (typeof value !== "string") return "";
-  return decodeHTML(
-    value
-      .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, " ")
-      .replace(/<[^>]*>/g, " "),
-  )
-    .replace(/\s+/g, " ")
-    .trim();
+  return normalizeCompanyPhoneText(
+    decodeHTML(
+      value
+        .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, " ")
+        .replace(/<[^>]*>/g, " "),
+    )
+      .replace(/\s+/g, " ")
+      .trim(),
+  );
 }
 
 function renderedText(value: unknown): string {

@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { AboutPage } from "@/components/about/about-page";
@@ -15,14 +16,7 @@ export const metadata: Metadata = {
     description:
       "Cùng InterData kết nối công nghệ với nhu cầu thực tế của doanh nghiệp và cộng đồng.",
     url: "https://interdata.vn/gioi-thieu/",
-    images: [
-      {
-        url: "https://interdata.vn/images/about/workshop-group.webp",
-        width: 1600,
-        height: 1200,
-        alt: "Hoạt động kết nối cộng đồng tại InterData",
-      },
-    ],
+    images: [defaultSocialImage],
   },
 };
 

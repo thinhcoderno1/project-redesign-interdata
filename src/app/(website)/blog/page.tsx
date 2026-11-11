@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -53,6 +54,7 @@ export async function generateMetadata({
     },
     ...(normalized.q ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
+      images: [defaultSocialImage],
       title: "InterData Blog",
       url: canonical,
       locale: "vi_VN",

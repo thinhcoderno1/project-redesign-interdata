@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { CloudServerPage } from "@/components/cloud-server/cloud-server-page";
@@ -18,14 +19,7 @@ export const metadata: Metadata = {
     siteName: "InterData",
     locale: "vi_VN",
     type: "website",
-    images: [
-      {
-        url: "https://interdata.vn/images/cloud-server/hero.webp",
-        width: 1672,
-        height: 941,
-        alt: "Minh họa hạ tầng Cloud Server",
-      },
-    ],
+    images: [defaultSocialImage],
   },
 };
 async function Page() {

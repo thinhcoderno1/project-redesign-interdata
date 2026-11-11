@@ -748,7 +748,7 @@ article[id] {
 .footer-grid {
   display: grid;
   grid-template-columns:
-    minmax(380px, 2.2fr) minmax(0, 0.85fr) minmax(0, 1.25fr)
+    minmax(430px, 2.2fr) minmax(0, 0.85fr) minmax(0, 1.25fr)
     minmax(0, 0.85fr) minmax(0, 1.25fr);
   gap: 24px;
   padding-bottom: 44px;
@@ -757,6 +757,7 @@ article[id] {
   display: flex;
   flex-direction: column;
   align-items: start;
+  min-width: 0;
 }
 .footer-logo {
   display: block;

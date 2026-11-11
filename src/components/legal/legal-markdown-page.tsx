@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import type { Metadata } from "next";
 import type { LegalDocument } from "@/data/legal-documents";
 import { renderLegalDocument } from "@/lib/legal-markdown";
@@ -12,6 +13,7 @@ export function legalMetadata(document: LegalDocument): Metadata {
     description,
     alternates: { canonical: url },
     openGraph: {
+      images: [defaultSocialImage],
       title,
       description,
       url,

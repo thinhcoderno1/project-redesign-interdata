@@ -1,11 +1,9 @@
-// Verified against the official Contact page and its Google Maps links on 2026-10-10.
+// One company hotline, standardized at the user's request.
 export const contactDetails = {
   source: "https://interdata.vn/contact",
   email: "info@interdata.vn",
   hotline: "1900 636 822",
   hotlineHref: "tel:1900636822",
-  mobile: "0966 039 166",
-  mobileHref: "tel:0966039166",
   hours: "Thứ 2 – Thứ 7: 9:00 – 18:00",
   zalo: "https://zalo.me/2009180325727970604",
   facebook: "https://www.facebook.com/interdata.com.vn",

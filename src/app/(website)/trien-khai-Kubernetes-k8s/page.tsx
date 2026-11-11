@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { KubernetesPage } from "@/components/kubernetes/kubernetes-page";
@@ -17,14 +18,7 @@ export const metadata: Metadata = {
     siteName: "InterData",
     locale: "vi_VN",
     type: "website",
-    images: [
-      {
-        url: "https://interdata.vn/images/kubernetes/hero-kubernetes-v3.webp",
-        width: 1920,
-        height: 800,
-        alt: "Minh họa control plane và worker chạy các nhóm Pod trong cluster Kubernetes",
-      },
-    ],
+    images: [defaultSocialImage],
   },
 };
 function Page() {

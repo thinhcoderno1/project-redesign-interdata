@@ -12,6 +12,10 @@ Exceptions:
 
 Canonical URLs remain on `https://interdata.vn/`, including blog posts fetched from `admin.interdata.vn`. Blog pagination has its own canonical URL; `page=1`, tracking parameters and unused query parameters are removed from the canonical. Search/category state is preserved when relevant. Existing URL redirects remain unchanged.
 
+## Sharing images
+
+The default OG image is the supplied 800 × 800 PNG at `/images/og/interdata.png`, configured in `src/lib/social-image.ts`. Routes with their own Open Graph objects explicitly reuse that descriptor because Next.js replaces nested metadata rather than deep-merging it. Twitter cards use the same image. Black Friday retains its own `/images/black-friday/og-image.png`. Blog articles use their first valid content image, then their featured image or the default brand image when no content image exists.
+
 ## Sitemap
 
 The native Next.js sitemap includes all public static routes, discovered from the same service, solution and legal-document collections used by the site, plus every published, unprotected WordPress post. It does not list API endpoints, internal review pages, search results, tracking URLs or redirect aliases.

@@ -8,6 +8,7 @@ import {
   solutions,
 } from "@/data/content";
 import { legalDocuments } from "@/data/legal-documents";
+import { contactDetails } from "@/data/contact";
 import styles from "./footer.module.css";
 import { FooterAssurances } from "./footer-assurances";
 
@@ -20,11 +21,20 @@ export function Footer() {
             <p>CÔNG TY CỔ PHẦN INTER GROUP</p>
             <address className={styles.companyDetail}>
               <MapPin size={18} strokeWidth={1.6} aria-hidden="true" />
-              <span>240 Nguyễn Đình Chính, P. Phú Nhuận, TP. HCM</span>
+              <span>VPĐD: 240 Nguyễn Đình Chính, P. Phú Nhuận, TP. HCM</span>
             </address>
-            <a className={styles.companyDetail} href="tel:1900636822">
+            <address className={styles.companyDetail}>
+              <MapPin size={18} strokeWidth={1.6} aria-hidden="true" />
+              <span>
+                VPGD: 211 đường số 5, KĐT Lakeview City, P. Bình Trưng, TP. HCM
+              </span>
+            </address>
+            <a
+              className={styles.companyDetail}
+              href={contactDetails.hotlineHref}
+            >
               <Phone size={18} strokeWidth={1.6} aria-hidden="true" />
-              <span>1900 636 822</span>
+              <span>{contactDetails.hotline}</span>
             </a>
             <a className={styles.companyDetail} href="mailto:info@interdata.vn">
               <Mail size={18} strokeWidth={1.6} aria-hidden="true" />

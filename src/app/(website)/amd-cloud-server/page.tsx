@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { AmdCloudPage } from "@/components/amd-cloud-server/amd-cloud-page";
@@ -17,14 +18,7 @@ export const metadata: Metadata = {
     siteName: "InterData",
     locale: "vi_VN",
     type: "website",
-    images: [
-      {
-        url: "https://interdata.vn/images/amd-cloud-server/hero-epyc-cloud-v1.webp",
-        width: 1930,
-        height: 815,
-        alt: "Ảnh minh họa chip AMD EPYC trước cụm máy chủ Cloud",
-      },
-    ],
+    images: [defaultSocialImage],
   },
 };
 

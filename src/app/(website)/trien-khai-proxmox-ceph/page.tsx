@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { ProxmoxCephPage } from "@/components/proxmox-ceph/proxmox-ceph-page";
@@ -17,14 +18,7 @@ export const metadata: Metadata = {
     siteName: "InterData",
     locale: "vi_VN",
     type: "website",
-    images: [
-      {
-        url: "https://interdata.vn/images/proxmox-ceph/hero-proxmox-ceph-v5.webp",
-        width: 1920,
-        height: 800,
-        alt: "Minh họa cụm ảo hóa Proxmox kết hợp lưu trữ phân tán Ceph",
-      },
-    ],
+    images: [defaultSocialImage],
   },
 };
 function Page() {

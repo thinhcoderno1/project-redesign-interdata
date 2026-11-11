@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { N8nPage } from "@/components/vps-n8n/n8n-page";
@@ -16,14 +17,7 @@ export const metadata: Metadata = {
     siteName: "InterData",
     locale: "vi_VN",
     type: "website",
-    images: [
-      {
-        url: "https://interdata.vn/images/vps-n8n/hero-v2.webp",
-        width: 1672,
-        height: 941,
-        alt: "Minh họa workflow n8n trên hạ tầng VPS",
-      },
-    ],
+    images: [defaultSocialImage],
   },
 };
 async function Page() {

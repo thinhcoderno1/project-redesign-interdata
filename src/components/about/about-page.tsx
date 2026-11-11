@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@/components/ui/icon";
 import { links } from "@/data/content";
+import { contactDetails } from "@/data/contact";
 import {
   aboutMilestones,
   aboutPhotos,
@@ -414,7 +415,9 @@ export function AboutPage() {
                 <div>
                   <dt>Hotline</dt>
                   <dd>
-                    <a href="tel:1900636822">1900 636 822</a>
+                    <a href={contactDetails.hotlineHref}>
+                      {contactDetails.hotline}
+                    </a>
                   </dd>
                 </div>
                 <div>

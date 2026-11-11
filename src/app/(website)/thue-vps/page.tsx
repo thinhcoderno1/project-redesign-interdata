@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import content from "@/data/vps-content.json";
@@ -16,12 +17,7 @@ export const metadata: Metadata = {
     siteName: "InterData",
     locale: "vi_VN",
     type: "website",
-    images: [
-      {
-        url: "https://interdata.vn/images/vps/assets/images/hero-datacenter.jpg",
-        alt: "Thuê VPS Việt Nam tại InterData",
-      },
-    ],
+    images: [defaultSocialImage],
   },
 };
 

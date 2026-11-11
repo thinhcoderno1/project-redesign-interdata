@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { VibePage } from "@/components/vps-vibe-coding/vibe-page";
@@ -18,20 +19,13 @@ export const metadata: Metadata = {
     siteName: "InterData",
     locale: "vi_VN",
     type: "website",
-    images: [
-      {
-        url: "https://interdata.vn/assets/og-images/interdata-og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "VPS Vibe Coding tại InterData",
-      },
-    ],
+    images: [defaultSocialImage],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
-    images: ["https://interdata.vn/assets/og-images/interdata-og-image.jpg"],
+    images: [defaultSocialImage.url],
   },
 };
 async function Page() {

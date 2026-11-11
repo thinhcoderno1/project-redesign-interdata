@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { ContactPage } from "@/components/contact/contact-page";
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
     "Kết nối InterData qua hotline, email, Zalo hoặc Facebook. Xem địa chỉ văn phòng, Google Maps và soạn yêu cầu tư vấn dịch vụ hạ tầng.",
   alternates: { canonical: "https://interdata.vn/lien-he/" },
   openGraph: {
+    images: [defaultSocialImage],
     title: "Liên hệ InterData — Tư vấn dịch vụ & hỗ trợ",
     description:
       "Trao đổi nhu cầu hạ tầng, kết nối đội ngũ InterData và tìm đường đến văn phòng.",

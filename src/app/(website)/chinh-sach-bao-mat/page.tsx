@@ -1,3 +1,4 @@
+import { defaultSocialImage } from "@/lib/social-image";
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import policy from "@/data/privacy-policy.json";
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
   description,
   alternates: { canonical: "https://interdata.vn/chinh-sach-bao-mat/" },
   openGraph: {
+    images: [defaultSocialImage],
     title: `${policy.title} | InterData`,
     description,
     url: "https://interdata.vn/chinh-sach-bao-mat/",

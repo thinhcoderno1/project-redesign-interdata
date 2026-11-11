@@ -1,5 +1,6 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
+import { contactDetails } from "@/data/contact";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -306,8 +307,8 @@ export function ColocationPage() {
         image="/images/cta/consultation-woman-upper-body.webp"
         primaryAction={{ label: "Liên hệ tư vấn", href: links.contact }}
         secondaryAction={{
-          label: "Hotline 1900 636 822",
-          href: "tel:+841900636822",
+          label: `Hotline ${contactDetails.hotline}`,
+          href: contactDetails.hotlineHref,
         }}
       />
     </main>

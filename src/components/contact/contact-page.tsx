@@ -199,8 +199,8 @@ export function ContactPage() {
                 <p>{contactDetails.hours}</p>
               </div>
             </div>
-            <a className={styles.textLink} href={contactDetails.mobileHref}>
-              Gọi số tư vấn {contactDetails.mobile} <Icon name="arrow" />
+            <a className={styles.textLink} href={contactDetails.hotlineHref}>
+              Gọi hotline {contactDetails.hotline} <Icon name="arrow" />
             </a>
           </div>
           <ContactRequest />
