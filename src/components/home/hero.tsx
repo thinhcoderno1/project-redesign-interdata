@@ -95,10 +95,10 @@ export function HomeHero() {
           </div>
           <div className={`${styles.panel} ${styles.network}`}>
             <p className={styles.panelLabel}>CORE NETWORK</p>
-            <p className={styles.networkTitle}>Kết nối. Dự phòng. Bảo vệ.</p>
+            <p className={styles.networkTitle}>HA dự phòng cao</p>
             <p className={styles.networkDetail}>
               <span aria-hidden="true" />
-              Hạ tầng mạng &amp; bảo mật đa lớp
+              Multi-Network P2P Viettel - FPT
             </p>
           </div>
         </div>

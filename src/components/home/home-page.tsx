@@ -3,6 +3,7 @@ import companyJourneyStyles from "./company-journey.module.css";
 import { Consultation } from "@/components/home/consultation";
 import { ConsultationCta } from "@/components/home/consultation-cta";
 import { Icon } from "@/components/ui/icon";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { CapacitySection } from "@/components/shared/capacity-section";
 import { CompanyProofSections } from "@/components/shared/company-proof-sections";
 import { HomeHero } from "@/components/home/hero";
@@ -68,6 +69,7 @@ export function HomePage() {
           image="/images/cta/consultation-woman-upper-body.webp"
         />
         <KnowledgeResources />
+        <ScrollReveal rootId="noi-dung" />
       </main>
     </>
   );
