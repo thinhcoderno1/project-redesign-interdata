@@ -83,9 +83,8 @@ try {
     "https://interdata.vn/vietnam-colocation/",
   );
   assert(
-    (
-      await page.locator('meta[name="robots"]').getAttribute("content")
-    ).includes("noindex"),
+    (await page.locator('meta[name="robots"]').getAttribute("content")) ===
+      "index, follow",
   );
   const schemas = (await readSchemaNodes(page)).map((node) =>
     JSON.stringify(node),

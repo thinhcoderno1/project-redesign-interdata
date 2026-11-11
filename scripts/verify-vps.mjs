@@ -141,7 +141,7 @@ try {
   );
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     "content",
-    "noindex, nofollow",
+    "index, follow",
   );
   expect(
     await page

@@ -65,7 +65,7 @@ trong `docs/private-network-background-prompts.md`. CSS riêng của Private Net
 không được trình bày như bằng chứng về dự án hoặc thiết bị cấp cho khách hàng.
 
 Canonical, Open Graph và Service JSON-LD dùng URL mới. FAQPage schema khớp mười
-FAQ hiển thị; năm mục sau mở bằng “Xem tất cả”. Giữ noindex/nofollow của project.
+FAQ hiển thị; năm mục sau mở bằng “Xem tất cả”. Giữ index/follow của project.
 Không có API giá hoặc yêu cầu mạng ngoài để tải phương án.
 
 ## Kiểm tra

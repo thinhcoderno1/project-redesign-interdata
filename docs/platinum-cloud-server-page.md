@@ -16,7 +16,7 @@ CTA tái sử dụng `ConsultationCta` cùng ảnh tư vấn viên của trang T
   sản phẩm hoặc trang dịch vụ song song.
 - `/intel-platinum-gen2-cloud/` chuyển hướng 308 về route mới.
 - Canonical, Open Graph và Service JSON-LD dùng URL mới.
-- Giữ chính sách noindex/nofollow của project. Chưa deploy lên website công khai.
+- Giữ chính sách index/follow của project. Chưa deploy lên website công khai.
 
 ## Nội dung và nguồn
 

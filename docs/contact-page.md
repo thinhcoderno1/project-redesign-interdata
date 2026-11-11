@@ -34,7 +34,7 @@ Thông báo ghi rõ yêu cầu chưa được gửi; người dùng phải bấm
 
 - `links.contact` dùng `/lien-he/`, cập nhật CTA và liên kết dùng chung dữ liệu. Header menu và footer hỗ trợ điều hướng nội bộ; các link section giải pháp ở trang con vẫn trở về homepage.
 - `/contact` và `/contact/` chuyển hướng vĩnh viễn tới `/lien-he/`, giữ query string. `/lien-he` được chuẩn hóa slash theo cấu hình đã có.
-- Metadata title, description, canonical và Open Graph riêng; giữ `noindex,nofollow` của bản review.
+- Metadata title, description, canonical và Open Graph riêng; cho phép `index,follow` theo chính sách SEO công khai.
 - Việc thay trang Contact tại domain công khai cần deploy source mới; thay đổi hiện tại chỉ ở máy cục bộ.
 
 ## Kiểm tra

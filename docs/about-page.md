@@ -25,7 +25,7 @@ Hero dùng ảnh hoạt động và một ảnh nhỏ tại ngày hội việc l
 - `links.about` đổi thành `/gioi-thieu/`, header/footer dùng liên kết nội bộ Next.js.
 - `next.config.ts` bật `trailingSlash: true` để URL chính có dấu `/` cuối, phù hợp route yêu cầu. Các route trang khác cũng được chuẩn hóa có slash; homepage `/` và file tĩnh không đổi.
 - `/about-us/` chuyển hướng vĩnh viễn 308 sang `/gioi-thieu/` trong ứng dụng này. `/about-us` được chuẩn hóa slash rồi chuyển hướng. Việc thay đổi website đang chạy tại interdata.vn cần triển khai source mới.
-- Title, description, canonical và Open Graph được khai báo ở file route. Trang kế thừa `noindex,nofollow` của bản review hiện tại.
+- Title, description, canonical và Open Graph được khai báo ở file route. Trang kế thừa `index,follow` cho nội dung công khai.
 
 ## Kiểm tra
 

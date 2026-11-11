@@ -77,7 +77,7 @@ try {
     );
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
       "content",
-      /noindex/,
+      /^index, follow$/,
     );
     await expect(page.locator(".hero-vibe-proof-typed")).toContainText(
       "Cafe Robusta kết hợp cùng Arabica",

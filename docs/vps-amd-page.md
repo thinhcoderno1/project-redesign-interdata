@@ -111,7 +111,7 @@ Tình trạng cung cấp, thuế và tùy chọn phải được kiểm tra tạ
 QA không đặt hàng. Khi tắt JavaScript, bốn gói đầu, link đăng ký và FAQ vẫn
 đọc được; đổi chu kỳ, lọc, mở rộng và retry cần JavaScript.
 
-Metadata có canonical, Open Graph và Service JSON-LD. Giữ noindex/nofollow
+Metadata có canonical, Open Graph và Service JSON-LD. Giữ index/follow
 của project; không gán đánh giá homepage hoặc giá cố định vào schema dịch vụ.
 
 ## Kiểm tra

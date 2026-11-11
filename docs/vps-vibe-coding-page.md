@@ -47,6 +47,6 @@ npm run build
 npm run test:vps-vibe-coding
 ```
 
-The browser check defaults to the existing preview at port 3100. Set `TEST_BASE_URL` for a production preview on another port. It verifies 3 plans × 5 cycles × 6 widths (320, 390, 768, 1024, 1440, 1920), checkout destinations, annual offers, default/featured state, use cases, process accordions, FAQ, expanded Info, story widget, proof pause control, images, overflow, JavaScript errors, canonical/noindex, axe WCAG A/AA and a JavaScript-disabled pass.
+The browser check defaults to the existing preview at port 3100. Set `TEST_BASE_URL` for a production preview on another port. It verifies 3 plans × 5 cycles × 6 widths (320, 390, 768, 1024, 1440, 1920), checkout destinations, annual offers, default/featured state, use cases, process accordions, FAQ, expanded Info, story widget, proof pause control, images, overflow, JavaScript errors, canonical/index, axe WCAG A/AA and a JavaScript-disabled pass.
 
 Artifacts are written to `artifacts/vps-vibe-coding/`, including screenshots, per-width accessibility results, pricing snapshot and copy comparison. These checks are local validation; no deployment is performed.

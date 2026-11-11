@@ -64,6 +64,6 @@ Danh sách 5 giải pháp được cập nhật theo yêu cầu demo ngày 08/10
 
 ## Bản review và bản public
 
-`NEXT_PUBLIC_CONTENT_MODE` mặc định review. `/content-review` và chú thích review chỉ hiện trong chế độ này. Bản review và cả metadata hiện để `noindex,nofollow`, chưa xuất bản.
+`NEXT_PUBLIC_CONTENT_MODE` mặc định review. `/content-review` và chú thích review chỉ hiện trong chế độ này. Các trang công khai cho phép `index,follow`; riêng báo cáo nội bộ, kết quả tìm kiếm và trang không tìm thấy giữ `noindex`. Xem `docs/seo.md` về robots và sitemap. Thay đổi mã nguồn không tự triển khai lên VPS.
 
 Đặt `NEXT_PUBLIC_CONTENT_MODE=public` trước build để không trình bày pending claims/campaigns/infrastructure như dữ liệu đã duyệt. Public mode chưa build/test trong lượt này. Để giữ các section đầy đủ khi public, cần đưa content thật đã duyệt vào model; không đổi status chỉ để làm đầy giao diện. Việc deploy/indexing nằm ngoài phạm vi được yêu cầu.

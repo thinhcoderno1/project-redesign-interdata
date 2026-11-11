@@ -98,7 +98,7 @@ try {
   );
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     "content",
-    "noindex, nofollow",
+    "index, follow",
   );
   const localResponse = await page.request.get(`${base}/api/vps-amd-pricing/`);
   expect(localResponse.status()).toBe(200);

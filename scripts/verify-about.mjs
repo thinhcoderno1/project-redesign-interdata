@@ -42,7 +42,7 @@ try {
     );
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
       "content",
-      "noindex, nofollow",
+      "index, follow",
     );
     await expect(page.locator("header.site-header")).toHaveCount(1);
     await expect(page.locator("footer")).toHaveCount(1);

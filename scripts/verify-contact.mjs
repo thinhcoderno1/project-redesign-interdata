@@ -56,7 +56,7 @@ try {
     );
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
       "content",
-      "noindex, nofollow",
+      "index, follow",
     );
     await expect(page.locator('footer a[href="/lien-he/"]')).toHaveCount(1);
     await expect(page.locator('footer a[href="/#proxmox"]')).toHaveCount(1);

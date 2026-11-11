@@ -75,7 +75,7 @@ CSS điều chỉnh nằm riêng trong module VMware, không thay CSS dùng chun
 hoặc bằng chứng cấu hình cấp cho khách hàng.
 
 Canonical, Open Graph và Service JSON-LD dùng URL mới. FAQPage schema khớp
-mười FAQ; năm câu sau mở bằng “Xem tất cả”. Giữ robots noindex/nofollow
+mười FAQ; năm câu sau mở bằng “Xem tất cả”. Giữ robots index/follow
 của project. Không có API giá hoặc Offer/Product schema.
 
 ## Kiểm tra local

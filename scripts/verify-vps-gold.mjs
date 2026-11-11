@@ -114,7 +114,7 @@ try {
   );
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     "content",
-    /noindex/,
+    /^index, follow$/,
   );
   for (const slug of ["vps-gold-nvme-u2", "vps-gold-enterprise-1gbps"]) {
     const redirect = await page.request.get(

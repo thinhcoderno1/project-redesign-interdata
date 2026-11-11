@@ -26,7 +26,7 @@ export function loadProjectModule(file) {
     },
   }).outputText;
   const localRequire = (id) =>
-    id === "server-only"
+    id === "server-only" || id.endsWith(".css")
       ? {}
       : id.startsWith("@/")
         ? loadProjectModule(path.join("src", id.slice(2)))

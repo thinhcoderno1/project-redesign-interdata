@@ -39,16 +39,22 @@ export async function generateMetadata({
   searchParams: Promise<Query>;
 }): Promise<Metadata> {
   const query = await searchParams;
+  const normalized = normalizeQuery(query);
+  const canonical = `https://interdata.vn${blogListingHref({
+    ...normalized,
+    page: normalized.page > 1 ? normalized.page : undefined,
+  })}`;
   return {
     title: "InterData Blog — Kiến thức, hướng dẫn & tin tức công nghệ",
     description:
       "Khám phá kiến thức VPS, Cloud Server, bảo mật và lập trình. Hướng dẫn thực hành, tin tức, khuyến mãi và cơ hội nghề nghiệp từ InterData.",
     alternates: {
-      canonical: `https://interdata.vn${blogListingHref({ ...normalizeQuery(query), page: query.page ? normalizeQuery(query).page : undefined })}`,
+      canonical,
     },
+    ...(normalized.q ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       title: "InterData Blog",
-      url: "https://interdata.vn/blog/",
+      url: canonical,
       locale: "vi_VN",
       type: "website",
     },

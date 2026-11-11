@@ -84,7 +84,7 @@ khoảng 110 KiB, tạo bằng imagegen tích hợp. Prompt tại
 `docs/proxmox-ceph-image-prompt.md`. Không ghi chữ VPS hoặc số liệu trên ảnh.
 
 Canonical, Open Graph và Service JSON-LD dùng route mới. FAQPage khớp mười FAQ;
-năm mục sau mở bằng “Xem tất cả”. Giữ robots noindex/nofollow của project.
+năm mục sau mở bằng “Xem tất cả”. Giữ robots index/follow của project.
 Không tạo Offer/Product schema hoặc API giá.
 
 ## Kiểm tra local

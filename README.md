@@ -44,6 +44,6 @@ Section phản hồi có 8 feedback từ `D:\InterData\thue-vps\components\testi
 - `docs/asset-manifest.json`: nguồn từng tài sản và kích thước ảnh đã nén.
 - `docs/IMPLEMENTATION-HANDOFF.md`: kết quả kiểm tra và các mục cần xác nhận.
 
-Mặc định là bản review, `noindex,nofollow`. `NEXT_PUBLIC_CONTENT_MODE=public` ở thời điểm build ẩn claims/chiến dịch/hạ tầng chưa duyệt và trang báo cáo. Chỉ đổi trạng thái `approved` sau khi có xác nhận thật. Chế độ public chưa được kiểm tra trong lần này; cấu hình indexing cần được quyết định riêng trước khi xuất bản.
+Chế độ nội dung mặc định là review. Các trang công khai cho phép `index,follow`; báo cáo `/content-review/`, kết quả tìm kiếm nội bộ và trang không tìm thấy giữ `noindex`. `NEXT_PUBLIC_CONTENT_MODE=public` ở thời điểm build ẩn claims/chiến dịch/hạ tầng chưa duyệt và trang báo cáo. Chỉ đổi trạng thái `approved` sau khi có xác nhận thật. Cấu hình robots, canonical và sitemap được mô tả trong [docs/seo.md](docs/seo.md).
 
 Hai tài liệu gốc tìm thấy tại `C:\Users\interdigi 03\Downloads\KLVN\BlogPost` và được sao chép nguyên văn vào `docs/`. Các tài sản đã được đóng gói trong `public`, nên build không phụ thuộc hai dự án nguồn. `scripts/prepare-assets.mjs` chỉ dùng khi cần tái tạo asset từ đúng các đường dẫn nguồn, đồng thời cập nhật snapshot bài viết và font; không chạy trong build thường.

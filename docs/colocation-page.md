@@ -4,7 +4,7 @@
 giữ query string. Chỉ đổi `links.colocation`, không thêm dịch vụ song song.
 Menu, trang chủ và trang giới thiệu dùng lại entry Colocation hiện có.
 Canonical, Open Graph và Service JSON-LD dùng URL mới. Giữ chính sách robots
-noindex/nofollow của project.
+index/follow của project.
 
 ## Thiết kế và nội dung
 

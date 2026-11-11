@@ -1,6 +1,6 @@
 # Trang VPS Linux
 
-Triển khai local tại đúng `/vps-linux/` để thay thế trang Linux hiện tại khi deploy project. Không tạo URL dịch vụ khác, không chuyển hướng sang Platinum. Dùng layout website, navigation và footer chung; giữ noindex/nofollow hiện có của project.
+Triển khai local tại đúng `/vps-linux/` để thay thế trang Linux hiện tại khi deploy project. Không tạo URL dịch vụ khác, không chuyển hướng sang Platinum. Dùng layout website, navigation và footer chung; giữ index/follow hiện có của project.
 
 ## Thiết kế và nội dung
 
@@ -49,7 +49,7 @@ npm run build
 
 `TEST_BASE_URL` mặc định `http://localhost:3100`. `LINUX_QA_DEV_BASE_URL` chọn dev server cho fixture tạm kiểm tra bảng giá lỗi/thử lại; fixture được xóa sau kiểm tra. Chạy build sau khi fixture đã xóa.
 
-Bộ kiểm tra đối chiếu danh sách, mô tả, thứ tự, mọi giá và checkout với API thật; kiểm tra dữ liệu sai, giá âm và checkout ngoài domain; canonical/Service JSON-LD/noindex; mở rộng, chu kỳ và bàn phím, FAQ, CTA cuộn tới giá; không JavaScript; lỗi mạng và phục hồi. Responsive tại 320/390/768/1024/1440/1920px kiểm tra tràn ngang, hai nút Hero bằng kích thước, icon badge, ảnh tải thành công, không dùng ảnh AMD/Platinum và axe WCAG A/AA. Kết quả và ảnh chụp lưu tại `artifacts/vps-linux/`.
+Bộ kiểm tra đối chiếu danh sách, mô tả, thứ tự, mọi giá và checkout với API thật; kiểm tra dữ liệu sai, giá âm và checkout ngoài domain; canonical/Service JSON-LD/index; mở rộng, chu kỳ và bàn phím, FAQ, CTA cuộn tới giá; không JavaScript; lỗi mạng và phục hồi. Responsive tại 320/390/768/1024/1440/1920px kiểm tra tràn ngang, hai nút Hero bằng kích thước, icon badge, ảnh tải thành công, không dùng ảnh AMD/Platinum và axe WCAG A/AA. Kết quả và ảnh chụp lưu tại `artifacts/vps-linux/`.
 
 Đây là xác thực local. Không thực hiện đặt hàng/thanh toán hoặc deploy lên website công khai.
 

@@ -50,9 +50,8 @@ try {
     "https://interdata.vn" + route,
   );
   assert(
-    (
-      await page.locator('meta[name="robots"]').getAttribute("content")
-    ).includes("noindex"),
+    (await page.locator('meta[name="robots"]').getAttribute("content")) ===
+      "index, follow",
   );
   const schemas = await readSchemaNodes(page);
   assert(

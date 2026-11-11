@@ -90,7 +90,7 @@ Các bài kiểm tra dịch vụ cũ đọc graph qua `scripts/schema-helpers.mj
 
 ## Indexing và công cụ của Google
 
-Project vẫn giữ cấu hình **`noindex, nofollow` của bản review** trong root metadata. Thay đổi schema không tự mở indexing hoặc triển khai website. Khi xuất bản chính thức, cần quyết định cấu hình indexing riêng và kiểm tra URL live bằng [Rich Results Test](https://search.google.com/test/rich-results) / [Schema Markup Validator](https://validator.schema.org/).
+Root metadata cho phép **`index, follow` trên các trang công khai**. Báo cáo nội bộ, kết quả tìm kiếm và trang không tìm thấy giữ `noindex`; xem `docs/seo.md`. Thay đổi mã nguồn không tự triển khai website. Sau khi triển khai, kiểm tra URL live bằng [Rich Results Test](https://search.google.com/test/rich-results) / [Schema Markup Validator](https://validator.schema.org/).
 
 JSON-LD hợp lệ giúp máy tìm kiếm hiểu nội dung; không bảo đảm thứ hạng hay rich result. Google đã [ngừng hiển thị FAQ rich results từ ngày 07/05/2026](https://developers.google.com/search/updates#may-2026). `FAQPage` vẫn mô tả nội dung hỏi đáp theo Schema.org; việc có loại schema này không có nghĩa InterData sẽ có FAQ rich result trên Google.
 

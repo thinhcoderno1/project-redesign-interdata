@@ -16,7 +16,7 @@ Hai entry hiện có được cập nhật về `/amd-cloud-server/`, giữ nguy
 thông tin sản phẩm trong danh mục. Không thêm entry dịch vụ thứ hai.
 URL cũ được chuyển hướng 308 về route được yêu cầu bằng `next.config.ts`.
 Canonical, Open Graph và Service JSON-LD đều dùng URL mới.
-Giữ noindex/nofollow hiện có của project.
+Giữ index/follow hiện có của project.
 
 ## Nội dung và nguồn
 

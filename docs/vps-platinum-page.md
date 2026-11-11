@@ -28,7 +28,7 @@ Nguồn giá trực tiếp:
 - Link đặt hàng luôn giữ `product_url` từ API và thêm `billingcycle` được chọn. Giữ thông số mạng ở từng gói, không áp một tốc độ chung cho mọi nhóm.
 - Nội dung nền tảng dùng Intel Xeon Platinum, KVM, NVMe, IPv4, root; không chuyển thông số 64 nhân/128 luồng của AMD sang trang mới và không tự chọn model CPU Intel.
 - Nội dung giá nhắc kiểm tra tổng tiền, thuế, tùy chọn và giá gia hạn ở trang đăng ký. Backup, nâng cấp và điều kiện hỗ trợ có hướng dẫn xác nhận theo gói.
-- SEO title, description, Open Graph, canonical và Service JSON-LD dùng URL mới. Giữ noindex/nofollow hiện có của toàn project.
+- SEO title, description, Open Graph, canonical và Service JSON-LD dùng URL mới. Giữ index/follow hiện có của toàn project.
 
 ## Hình ảnh mới
 

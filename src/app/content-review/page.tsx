@@ -7,6 +7,12 @@ import {
   reviewMode,
 } from "@/data/content";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Duyệt nội dung nội bộ | InterData",
+  robots: { index: false, follow: false },
+};
 export default function ContentReview() {
   if (!reviewMode) notFound();
   return (
@@ -77,15 +83,16 @@ export default function ContentReview() {
         homepage, CTA đến <a href={links.contact}>trang Liên hệ</a>. Trang Liên
         hệ có công cụ soạn email; người dùng xem lại và gửi trong ứng dụng email
         của mình. Không mô phỏng gửi thành công. Bản này không có backend tiếp
-        nhận yêu cầu, analytics hay đăng nhập riêng.
+        nhận yêu cầu hay đăng nhập riêng.
       </p>
       <h2>Chế độ xuất bản</h2>
       <p>
-        Mặc định CONTENT_MODE là review, metadata noindex. Đặt
+        Mặc định CONTENT_MODE là review. Báo cáo nội bộ này giữ noindex, còn các
+        trang công khai cho phép lập chỉ mục. Đặt
         NEXT_PUBLIC_CONTENT_MODE=public để ẩn banner và claims chưa duyệt cùng
         báo cáo này. Chỉ chuyển trạng thái thành approved trong
-        src/data/content.ts sau khi có phê duyệt thật. Cần duyệt
-        metadata/indexing riêng khi triển khai. Chưa deploy.
+        src/data/content.ts sau khi có phê duyệt thật. Cần duyệt nội dung riêng
+        khi triển khai. Chưa deploy.
       </p>
     </main>
   );

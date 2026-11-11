@@ -85,17 +85,15 @@ try {
     );
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
       "content",
-      "noindex, nofollow",
+      "index, follow",
     );
     const nav = page.locator("aside nav");
-    const links = await nav
-      .locator("a")
-      .evaluateAll((nodes) =>
-        nodes.map((node) => ({
-          href: node.getAttribute("href"),
-          text: node.textContent,
-        })),
-      );
+    const links = await nav.locator("a").evaluateAll((nodes) =>
+      nodes.map((node) => ({
+        href: node.getAttribute("href"),
+        text: node.textContent,
+      })),
+    );
     expect(links.length).toBeGreaterThan(0);
     expect(links.map((link) => link.text)).toEqual(
       await page.locator("article h2").allTextContents(),

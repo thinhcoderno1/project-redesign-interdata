@@ -122,7 +122,7 @@ try {
   );
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     "content",
-    /noindex/,
+    /^index, follow$/,
   );
   const schema = (await readSchemaNodes(page)).find(
     (node) => node["@type"] === "Service",

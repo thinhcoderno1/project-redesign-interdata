@@ -24,7 +24,7 @@ API hiện không cung cấp kỳ tháng (`monthly = -1`). Kỳ mặc định l�
 
 Mặc định hiện bốn gói đầu, mở rộng được đủ 18 gói, đổi chu kỳ bằng chuột hoặc bàn phím. Checkout giữ URL sản phẩm và thêm `billingcycle` đúng kỳ đã chọn. Không JavaScript vẫn có bốn gói và link tới cổng đăng ký. Giá, thuế, tùy chọn, khả năng cung cấp và giá gia hạn cần được kiểm tra ở trang đặt hàng; không tuyên bố tồn kho hay tự thực hiện giao dịch.
 
-Danh mục dùng `/vps-gold/` tại `src/data/service-catalog.ts` và `src/data/vps-content.json`, áp dụng cho navigation, homepage và bộ chọn dịch vụ Thuê VPS. Metadata, Open Graph và Service JSON-LD dùng URL mới. Giữ nguyên noindex/nofollow của toàn project.
+Danh mục dùng `/vps-gold/` tại `src/data/service-catalog.ts` và `src/data/vps-content.json`, áp dụng cho navigation, homepage và bộ chọn dịch vụ Thuê VPS. Metadata, Open Graph và Service JSON-LD dùng URL mới. Giữ nguyên index/follow của toàn project.
 
 ## Hình ảnh
 
@@ -47,7 +47,7 @@ npm run build
 
 `TEST_BASE_URL` mặc định `http://localhost:3100`; `GOLD_QA_DEV_BASE_URL` chọn dev server cho fixture lỗi/thử lại. Fixture tạm tự xóa sau kiểm tra; chạy build sau khi kiểm thử đã hoàn tất.
 
-Bộ kiểm tra đối chiếu API thật: đủ gói HCM/HN, thứ tự, mô tả, mọi giá và checkout của các kỳ hiện có, loại giá âm và dữ liệu sai, API outage/retry; canonical/Service JSON-LD/noindex, hai redirect giữ query, mở rộng, phím điều hướng chu kỳ, FAQ, CTA cuộn tới giá và không JavaScript. Responsive tại 320/390/768/1024/1440/1920px gồm ảnh tải đúng, không dùng ảnh AMD/Platinum, icon badge, hai nút Hero cùng kích thước, không tràn ngang và axe WCAG A/AA. Bằng chứng lưu tại `artifacts/vps-gold/`.
+Bộ kiểm tra đối chiếu API thật: đủ gói HCM/HN, thứ tự, mô tả, mọi giá và checkout của các kỳ hiện có, loại giá âm và dữ liệu sai, API outage/retry; canonical/Service JSON-LD/index, hai redirect giữ query, mở rộng, phím điều hướng chu kỳ, FAQ, CTA cuộn tới giá và không JavaScript. Responsive tại 320/390/768/1024/1440/1920px gồm ảnh tải đúng, không dùng ảnh AMD/Platinum, icon badge, hai nút Hero cùng kích thước, không tràn ngang và axe WCAG A/AA. Bằng chứng lưu tại `artifacts/vps-gold/`.
 
 Đây là công việc local; chưa deploy lên website công khai và không thực hiện đặt hàng/thanh toán.
 

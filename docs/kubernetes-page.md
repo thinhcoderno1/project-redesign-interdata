@@ -68,7 +68,7 @@ tái sử dụng tài nguyên hiện có. Tất cả là minh họa, không đư
 
 Canonical, Open Graph và Service JSON-LD dùng URL mới đúng chữ hoa.
 FAQPage schema khớp mười FAQ; năm câu sau mở bằng “Xem tất cả”.
-Giữ robots noindex/nofollow của project. Không có API giá hoặc Offer/Product schema.
+Giữ robots index/follow của project. Không có API giá hoặc Offer/Product schema.
 
 ## Kiểm tra local
 

@@ -37,7 +37,7 @@
 - The coupon section retains its two service columns, blue highlighted 3-year cards, white 2-year/1-year cards, dashed code fields and “Áp mã ngay” links to the respective VPS/Cloud Server hubs. Each code field displays its published service/cycle code. Columns stack at 900px and below. Apply links retain their existing destinations.
 - Both Flash Sale and Coupons use `CouponCopyButton`: the displayed code and copy icon share one keyboard-accessible button. Clipboard writes copy only the supplied display value (published codes in Coupons and placeholders in Flash Sale); success changes the icon to a check and announces “Đã sao chép” in a temporary live status bubble. Denied/unavailable clipboard access reports an error without a false success. Feedback resets after 2.5 seconds and its timer is cleaned up on unmount. Coupon definitions remain server-side; the authorized display values are passed into the buttons.
 - Sales handoff: replace reference discounts/time windows with approved values, provide eligible products, dates/timezone, real redemption codes, renewal terms and availability before publishing the campaign. No demo/placeholder notes appear in the rendered page.
-- The route inherits the project's current noindex policy. This work does not publish or deploy the page.
+- The route inherits the project's public index/follow policy. This work does not publish or deploy the page.
 
 ## Verification
 
