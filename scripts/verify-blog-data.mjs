@@ -94,6 +94,47 @@ assert.equal(
   null,
 );
 assert.equal(firstBlogImage("<p>No images</p>"), null);
+const emojiIcons = ["🌐", "☎️", "🏢", "👩🏽‍💻", "🇻🇳", "1️⃣"];
+for (const className of ["emoji", "wp-smiley", "alignnone emoji extra"]) {
+  for (const icon of emojiIcons) {
+    const markup = `<img class="${className}" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f310.svg" alt="${icon}" width="16" height="16" onerror="alert(1)">`;
+    const content = prepareBlogContent(`<p>${markup} Website</p>`).html;
+    assert.equal(
+      content,
+      `<p><span class="interdata-emoji">${icon}</span> Website</p>`,
+    );
+    assert.equal(firstBlogImage(markup), null);
+  }
+}
+const pngEmoji =
+  '<img class="emoji" data-src="https://s.w.org/images/core/emoji/17.0.2/72x72/1f310.png" alt="🌐">';
+assert.deepEqual(
+  firstBlogImage(
+    `${pngEmoji}<img src="https://example.com/article.webp" alt="Article image">`,
+  ),
+  { url: "https://example.com/article.webp", alt: "Article image" },
+);
+assert.equal(
+  prepareBlogContent(pngEmoji).html,
+  '<span class="interdata-emoji">🌐</span>',
+);
+assert.equal(
+  prepareBlogContent(
+    '<h2><img class="emoji" alt="🌐" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f310.svg"> Website</h2>',
+  ).toc[0].title,
+  "🌐 Website",
+);
+const unsafeEmoji = prepareBlogContent(
+  '<img class="emoji" alt="&lt;img src=x onerror=alert(1)&gt;" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f310.svg">',
+).html;
+assert.ok(!unsafeEmoji.includes("<img"));
+assert.match(unsafeEmoji, /&lt;img/);
+assert.equal(
+  firstBlogImage(
+    '<img class="emoji-illustration" src="https://example.com/photo.webp" alt="Photo">',
+  ).url,
+  "https://example.com/photo.webp",
+);
 const categories = [
   { id: 1, slug: "vps", name: "VPS", count: 5, parent: 0 },
   { id: 2, slug: "linux", name: "Linux", count: 2, parent: 1 },

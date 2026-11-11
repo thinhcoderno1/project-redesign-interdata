@@ -692,6 +692,9 @@
   margin-block: 0 22px;
   text-align: justify;
 }
+.articleContent p:has(:global(.interdata-emoji)) {
+  text-align: left;
+}
 .articleContent h2 {
   color: #1e3a8a;
   font-size: 24px;

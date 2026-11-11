@@ -29,6 +29,7 @@ const tags = [
 const allowedClasses = {
   "*": [
     /^interdata-(?:plan-(?:carousel|viewport|track|card|title|price|badge|features|icon(?:-(?:cpu|ram|storage|network|gift))?|spacer|button)|carousel-(?:heading|arrow|prev|next|mark))$/,
+    "interdata-emoji",
   ],
 };
 const attributes = {
@@ -73,13 +74,19 @@ function safeImage(value: string | undefined) {
   }
 }
 
+function wordPressEmoji(attrs: Record<string, string>) {
+  return /(?:^|\s)(?:emoji|wp-smiley)(?:\s|$)/.test(attrs.class || "")
+    ? attrs.alt || null
+    : null;
+}
+
 export function firstBlogImage(
   raw: string,
 ): { url: string; alt: string } | null {
   let image: { url: string; alt: string } | null = null;
   const parser = new Parser({
     onopentag(name, attrs) {
-      if (image || name !== "img") return;
+      if (image || name !== "img" || wordPressEmoji(attrs)) return;
       const url =
         safeImage(attrs["data-src"]) ||
         safeImage(attrs["data-lazy-src"]) ||
@@ -130,18 +137,31 @@ export function prepareBlogContent(
           },
         };
       },
-      img: (tagName, attrs) => ({
-        tagName,
-        attribs: {
-          src: safeImage(attrs["data-src"]) || safeImage(attrs.src),
-          alt: normalizeCompanyPhoneText(attrs.alt || ""),
-          loading: "lazy",
-          decoding: "async",
-          ...(attrs.style ? { style: attrs.style } : {}),
-          ...(/^\d+$/.test(attrs.width || "") ? { width: attrs.width } : {}),
-          ...(/^\d+$/.test(attrs.height || "") ? { height: attrs.height } : {}),
-        },
-      }),
+      img: (tagName, attrs): sanitizeHtml.Tag => {
+        const emoji = wordPressEmoji(attrs);
+        // WordPress replaces emoji with remote SVG/PNG images. Restore their
+        // text so they stay inline without relaxing the image URL policy.
+        if (emoji)
+          return {
+            tagName: "span",
+            attribs: { class: "interdata-emoji" },
+            text: emoji,
+          };
+        return {
+          tagName,
+          attribs: {
+            src: safeImage(attrs["data-src"]) || safeImage(attrs.src),
+            alt: normalizeCompanyPhoneText(attrs.alt || ""),
+            loading: "lazy",
+            decoding: "async",
+            ...(attrs.style ? { style: attrs.style } : {}),
+            ...(/^\d+$/.test(attrs.width || "") ? { width: attrs.width } : {}),
+            ...(/^\d+$/.test(attrs.height || "")
+              ? { height: attrs.height }
+              : {}),
+          },
+        };
+      },
       iframe: (tagName, attrs) => ({
         tagName,
         attribs: {
