@@ -107,7 +107,7 @@ try {
       );
       await section.scrollIntoViewIfNeeded();
       await expect(section.locator(".testimonial-slide")).toHaveCount(
-        width >= 960 ? 3 : 8,
+        Math.ceil(testimonials.length / (width >= 960 ? 3 : 1)),
       );
       await section.locator(".testimonial-details summary").first().click();
       await expect(section.locator("details").first()).toHaveAttribute(
@@ -168,5 +168,5 @@ try {
   await browser.close();
 }
 console.log(
-  `Success stories: ${results.length} routes share all 8 ordered testimonials without JavaScript; four page layouts, mobile/desktop, images, disclosure and keyboard navigation passed.`,
+  `Success stories: ${results.length} routes share all ${testimonials.length} ordered testimonials without JavaScript; four page layouts, mobile/desktop, images, disclosure and keyboard navigation passed.`,
 );

@@ -37,6 +37,16 @@ export const testimonials = [
     logoHeight: 277,
   },
   {
+    name: "Gia Tuấn",
+    company: "WPTANGTOC OLS",
+    showFullQuote: true,
+    logo: "/images/testimonials/logo-wptangtoc.png",
+    quote:
+      "Mình đang sử dụng và rất thích gói AMD Cloud Server của InterData. Hiệu năng cực khủng, vô địch trong tầm giá.",
+    logoWidth: 600,
+    logoHeight: 600,
+  },
+  {
     name: "Trịnh Bảo",
     company: "BALICO",
     logo: "/images/testimonials/balico.png",

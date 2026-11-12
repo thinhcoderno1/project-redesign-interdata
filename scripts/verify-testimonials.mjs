@@ -16,7 +16,7 @@ const { outputText } = ts.transpileModule(`export default ${literal}`, {
 const { default: expected } = await import(
   `data:text/javascript;base64,${Buffer.from(outputText).toString("base64")}`
 );
-expect(expected).toHaveLength(8);
+expect(expected).toHaveLength(9);
 expect(expected.slice(0, 3).map((item) => item.company)).toEqual([
   "Đồng Hồ Hải Triều",
   "SEO Việt",
@@ -51,7 +51,10 @@ if (
         /name: "([^"]+)",[\s\S]*?company: "([^"]+)",[\s\S]*?logo: "([^"]+)",[\s\S]*?content: `([^`]+)`/g,
       ),
   ];
-  expect(records).toHaveLength(expected.length);
+  // WPTANGTOC OLS was supplied separately after the original eight testimonials.
+  expect(records).toHaveLength(
+    expected.filter((item) => item.company !== "WPTANGTOC OLS").length,
+  );
   for (const match of records) {
     const company = sourceCompanyCorrections[match[2]] || match[2];
     const item = expected.find((item) => item.company === company);
@@ -123,10 +126,15 @@ try {
     expect(rendered).toEqual(
       expected.map(({ name, company, quote }) => ({ name, company, quote })),
     );
-    const previews = await cards
-      .locator(".testimonial-preview")
-      .allTextContents();
-    for (const [index, preview] of previews.entries()) {
+    for (const [index, item] of expected.entries()) {
+      const card = cards.nth(index);
+      if (item.showFullQuote) {
+        await expect(card.locator(".testimonial-preview")).toHaveCount(0);
+        await expect(card.locator("summary")).toHaveCount(0);
+        await expect(card.locator(".testimonial-full")).toHaveText(item.quote);
+        continue;
+      }
+      const preview = await card.locator(".testimonial-preview").textContent();
       const excerpt = preview.replace(/…$/, "");
       const proportion =
         excerpt.split(/\s+/).length / expected[index].quote.split(/\s+/).length;
@@ -216,6 +224,11 @@ try {
         const details = card.locator("details");
         const summary = details.locator("summary");
         const full = details.locator(".testimonial-full");
+        if ((await details.count()) === 0) {
+          await expect(card.locator(".testimonial-full")).toBeVisible();
+          await expect(card.locator("summary")).toHaveCount(0);
+          continue;
+        }
         await expect(full).not.toBeVisible();
         await summary.click();
         await expect(details).toHaveAttribute("open", "");

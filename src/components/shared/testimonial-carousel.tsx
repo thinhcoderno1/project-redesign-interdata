@@ -20,6 +20,7 @@ type Testimonial = {
   logoWidth: number;
   logoHeight: number;
   quote: string;
+  showFullQuote?: boolean;
 };
 
 function previewQuote(quote: string) {
@@ -307,23 +308,35 @@ export function TestimonialCarousel({
                   <span className="testimonial-quote-mark" aria-hidden="true">
                     “
                   </span>
-                  <blockquote className="testimonial-preview">
-                    {previewQuote(item.quote)}
-                  </blockquote>
-                  <details className="testimonial-details">
-                    <summary>
-                      <span className="testimonial-expand">
-                        Xem đầy đủ <ArrowDown aria-hidden="true" size={17} />
-                      </span>
-                      <span className="testimonial-collapse">
-                        Thu gọn <ArrowUp aria-hidden="true" size={17} />
-                      </span>
-                      <span className="sr-only"> phản hồi của {item.name}</span>
-                    </summary>
+                  {item.showFullQuote ? (
                     <blockquote className="testimonial-full">
                       {item.quote}
                     </blockquote>
-                  </details>
+                  ) : (
+                    <>
+                      <blockquote className="testimonial-preview">
+                        {previewQuote(item.quote)}
+                      </blockquote>
+                      <details className="testimonial-details">
+                        <summary>
+                          <span className="testimonial-expand">
+                            Xem đầy đủ{" "}
+                            <ArrowDown aria-hidden="true" size={17} />
+                          </span>
+                          <span className="testimonial-collapse">
+                            Thu gọn <ArrowUp aria-hidden="true" size={17} />
+                          </span>
+                          <span className="sr-only">
+                            {" "}
+                            phản hồi của {item.name}
+                          </span>
+                        </summary>
+                        <blockquote className="testimonial-full">
+                          {item.quote}
+                        </blockquote>
+                      </details>
+                    </>
+                  )}
                 </div>
                 <div className="testimonial-author">
                   <strong>{item.name}</strong>
