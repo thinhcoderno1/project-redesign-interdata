@@ -1,5 +1,7 @@
 # Logo section Đối tác
 
+Ngày 12/11/2026, thay logo Prometheus bằng EzyPlatform theo yêu cầu người dùng, dùng nguyên file `C:/Users/Thinh/Downloads/Logo EzyPlatform.png`, lưu tại `public/images/technology-partners/ezyplatform.png`. Giữ nguyên vị trí và bố cục ô logo trên các trang dùng chung danh sách đối tác.
+
 Section `doi-tac-cong-nghe` được đặt ngay sau section giáo dục. Danh sách ban đầu gồm 16 thương hiệu do người dùng cung cấp; “Promox” được chuẩn hóa thành “Proxmox”. Ngày 10/10/2026 bổ sung 4 logo minh họa theo yêu cầu demo: Kubernetes, Prometheus, Helm và containerd. Giữ thứ tự tương đối của 16 logo ban đầu; Kubernetes bổ sung ở cuối bên trái, 3 logo còn lại ở cuối bên phải. Desktop bố trí hai vòng cung cân đối, mỗi bên 10 logo, năm hàng × hai ô ôm địa cầu. Màn hình dưới 1024px dùng lưới logo bên dưới địa cầu để bảo đảm kích thước dễ đọc. Không hiển thị nhãn nhóm.
 
 Bốn logo bổ sung giữ metadata `demo: true` trong dữ liệu để lưu nguồn gốc minh họa. Theo yêu cầu ngày 10/10/2026, giao diện không hiển thị nhãn Demo hoặc dòng chú thích bên dưới. Các mục này không bổ sung tuyên bố tính năng, tích hợp hay chứng nhận.

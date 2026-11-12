@@ -260,36 +260,73 @@ export function FeaturedPosts({ posts }: { posts: BlogPost[] }) {
   const first = posts[0];
   if (!first) return null;
   return (
-    <section className={styles.featured} aria-label="Bài viết nổi bật">
-      <article className={styles.featureLead}>
-        <BlogImage
-          src={first.image}
-          priority
-          sizes="(max-width: 900px) 90vw, 760px"
-        />
-        <div className={styles.featureOverlay} />
-        <div className={styles.featureLeadCopy}>
-          <span className={styles.featureBadge}>TIÊU ĐIỂM</span>
-          <span>{first.categories[0]?.name}</span>
-          <h2>
-            <Link prefetch={false} href={first.href}>
-              {first.title}
-            </Link>
-          </h2>
-          <div>
-            <CalendarDays size={16} aria-hidden="true" />
-            <time dateTime={first.publishedAt}>
-              {dateLabel(first.publishedAt)}
-            </time>
-            <ArrowRight size={22} aria-hidden="true" />
+    <section className={styles.featured} aria-labelledby="featured-title">
+      <h2 id="featured-title" className={styles.featureHeading}>
+        Bài viết nổi bật
+      </h2>
+      <article className={styles.featureLead} data-post-id={first.id}>
+        <Link
+          prefetch={false}
+          href={first.href}
+          className={styles.featureLeadLink}
+        >
+          <BlogImage
+            src={first.image}
+            priority
+            sizes="(max-width: 600px) 90vw, (max-width: 959px) 85vw, (max-width: 1344px) 55vw, 724px"
+          />
+          <div className={styles.featureOverlay} aria-hidden="true" />
+          <div className={styles.featureLeadCopy}>
+            <span className={styles.featureBadge}>
+              {first.categories[0]?.name || "InterData Blog"}
+            </span>
+            <h3>{first.title}</h3>
+            <div className={styles.featureLeadMeta}>
+              <span className={styles.featureDate}>
+                <CalendarDays size={15} aria-hidden="true" />
+                <time dateTime={first.publishedAt}>
+                  {dateLabel(first.publishedAt)}
+                </time>
+              </span>
+              <span className={styles.featureArrow} aria-hidden="true">
+                <ArrowRight size={20} />
+              </span>
+            </div>
           </div>
-        </div>
+        </Link>
       </article>
-      <div className={styles.featureSide}>
-        {posts.slice(1, 3).map((post) => (
-          <PostCard compact post={post} key={post.id} />
+      <ul className={styles.featureSide}>
+        {posts.slice(1, 4).map((post) => (
+          <li key={post.id}>
+            <article className={styles.featureItem} data-post-id={post.id}>
+              <Link
+                prefetch={false}
+                href={post.href}
+                className={styles.featureItemLink}
+              >
+                <div className={styles.featureItemImage}>
+                  <BlogImage
+                    src={post.image}
+                    sizes="(max-width: 600px) 112px, (max-width: 959px) 200px, 160px"
+                  />
+                </div>
+                <div className={styles.featureItemCopy}>
+                  <span className={styles.featureCategory}>
+                    {post.categories[0]?.name || "InterData Blog"}
+                  </span>
+                  <h3>{post.title}</h3>
+                  <span className={styles.featureDate}>
+                    <CalendarDays size={14} aria-hidden="true" />
+                    <time dateTime={post.publishedAt}>
+                      {dateLabel(post.publishedAt)}
+                    </time>
+                  </span>
+                </div>
+              </Link>
+            </article>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

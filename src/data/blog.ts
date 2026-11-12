@@ -25,11 +25,25 @@ export type BlogListing = {
   pages: number;
   status: "ready" | "unavailable";
 };
+
+// Editorial selection in display order; titles and images stay sourced from CMS.
+export const popularGuideSlugs = [
+  "cach-dang-nhap-vps-tren-may-tinh",
+  "cach-dang-nhap-vps-tren-dien-thoai",
+  "doi-mat-khau-vps",
+  "cai-lai-he-dieu-hanh-cho-vps",
+  "nguyen-nhan-va-khac-phuc-vps-full-tai-nguyen",
+  "them-file-iso-len-vps",
+  "bao-mat-vps-linux",
+  "dung-vnc-viewer-de-dieu-khien-vps-windows",
+] as const;
+
 export const blogSections = [
   {
     id: "popular",
-    title: "Hướng dẫn mới nhất",
-    description: "Cập nhật hướng dẫn triển khai và quản trị hạ tầng từ blog.",
+    title: "Hướng dẫn phổ biến",
+    description:
+      "Các hướng dẫn thường dùng để đăng nhập, quản trị và bảo mật VPS.",
     label: "HỌC & THỰC HÀNH",
     category: null,
   },

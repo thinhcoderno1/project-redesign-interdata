@@ -2,10 +2,12 @@
 
 `/blog/` uses the existing website layout, Header/Footer, Be Vietnam Pro fonts and blue design tokens. The page includes a hero/search form, all API categories, featured and newest posts, latest guides, News/Events, Promotions and Careers. Search, category filtering and pagination use shareable query parameters (`q`, `category`, `page`) and render on the server.
 
+The featured section pairs one large image-led article with a titled list of three smaller articles on a pale InterData blue surface. Category badges and publication dates use live post data; each article has one full-card link. Below 960px the lead and list stack vertically. The unfiltered index requests ten posts: four featured, followed by six newest posts without repeating featured articles. Search and paginated views retain twelve posts per page.
+
 ## Source and caching
 
 - Public WordPress REST API: `https://admin.interdata.vn/wp-json/wp/v2/`, configured in `src/lib/blog-source.ts` for both the blog and homepage resource feeds.
-- Posts and nonempty categories are discovered from the API; category IDs and article records are not hardcoded. Category filters include descendants. Latest guides use the standard `orderby=date`, search for “hướng dẫn”, and exclude News, Promotions and Careers. The new CMS does not support `orderby=post_views`.
+- Posts and nonempty categories are discovered from the API; category IDs and article records are not hardcoded. Category filters include descendants. “Hướng dẫn phổ biến” uses eight editorially selected article slugs from `popularGuideSlugs` in `src/data/blog.ts`, in the order requested by the user. Titles, images, dates and links still come from the CMS. A single published-post query fetches the selection, then restores the configured order; missing or unpublished articles are omitted without substituting unrelated posts. This is an editorial selection rather than a ranking by traffic. The new CMS does not support `orderby=post_views`.
 - Published posts only. Requests have a 15-second timeout and 300-second Next.js data cache/revalidation. Independent blog sections stream into their own Suspense boundaries.
 - An API failure shows a retry state; an empty search shows an empty-results state. Source outages are distinct from missing posts. Protected or unpublished content is never displayed.
 

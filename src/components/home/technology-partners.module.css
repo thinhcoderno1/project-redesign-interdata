@@ -89,6 +89,10 @@
   transform: scale(1.35);
 }
 
+.ezyplatform {
+  padding-inline: 6px;
+}
+
 .inverse {
   background: var(--brand-strong);
   border-color: var(--brand-strong);

@@ -5,7 +5,11 @@ import { Suspense } from "react";
 import { ArrowRight, BookOpenText } from "lucide-react";
 import { getBlogCategories, getBlogListing } from "@/lib/blog-api";
 import { blogListingHref } from "@/lib/blog-links";
-import { blogSections, type BlogCategory } from "@/data/blog";
+import {
+  blogSections,
+  popularGuideSlugs,
+  type BlogCategory,
+} from "@/data/blog";
 import {
   CategoryNav,
   FeaturedPosts,
@@ -93,8 +97,8 @@ async function FeedSection({
   const popular = section.id === "popular";
   const listing = await getBlogListing(categories, {
     category: section.category || undefined,
-    popular,
-    perPage: popular ? 4 : 3,
+    slugs: popular ? popularGuideSlugs : undefined,
+    perPage: popular ? popularGuideSlugs.length : 3,
   });
   return (
     <section
@@ -135,7 +139,7 @@ export default async function BlogPage({
     q,
     category,
     page,
-    perPage: filtered ? 12 : 9,
+    perPage: filtered ? 12 : 10,
   });
   const selected = categories.find((item) => item.slug === category);
   const schemaPath = blogListingHref({
@@ -245,10 +249,7 @@ export default async function BlogPage({
             <PostGrid
               listing={{
                 ...listing,
-                posts:
-                  listing.posts.length > 3
-                    ? listing.posts.slice(3)
-                    : listing.posts,
+                posts: listing.posts.slice(4),
               }}
             />
           </section>

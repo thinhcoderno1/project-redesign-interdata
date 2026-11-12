@@ -225,12 +225,37 @@ assert.equal(requests.at(-1).url.searchParams.get("orderby"), "relevance");
 assert.equal(requests.at(-1).url.origin, "https://admin.interdata.vn");
 assert.equal(requests.at(-1).url.pathname, "/wp-json/wp/v2/posts");
 assert.equal(requests.at(-1).options.next.revalidate, 300);
-await source.listing(categories, { popular: true });
-assert.equal(requests.at(-1).url.searchParams.get("orderby"), "date");
-assert.equal(
-  requests.at(-1).url.searchParams.get("categories_exclude"),
-  "3,4,5",
+const guidePost = {
+  ...post,
+  id: 11,
+  slug: "huong-dan-linux",
+  title: { rendered: "Linux: Tiêu đề gốc &amp; hướng dẫn" },
+};
+const guidesSource = createBlogSource(async (input) => {
+  const params = new URL(input).searchParams;
+  assert.equal(params.get("slug"), `${post.slug},${guidePost.slug},missing`);
+  assert.equal(params.get("per_page"), "3");
+  assert.equal(params.get("status"), "publish");
+  assert.equal(params.has("search"), false);
+  // The CMS can return date order, unrelated records or omit a selected article.
+  return Response.json([
+    guidePost,
+    post,
+    { ...post, id: 12, slug: "unrelated" },
+    { ...post, id: 13, slug: "missing", status: "draft" },
+  ]);
+});
+const guides = await guidesSource.listing(categories, {
+  slugs: [post.slug, guidePost.slug, "missing"],
+  perPage: 3,
+});
+assert.equal(guides.status, "ready");
+assert.deepEqual(
+  guides.posts.map(({ slug }) => slug),
+  [post.slug, guidePost.slug],
 );
+assert.equal(guides.posts[1].title, "Linux: Tiêu đề gốc & hướng dẫn");
+assert.equal(guides.posts[1].href, `/blog/${guidePost.slug}/`);
 assert.equal(
   (await source.post(post.slug, categories)).content,
   post.content.rendered,

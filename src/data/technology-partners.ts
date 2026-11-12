@@ -56,9 +56,9 @@ export const technologyPartnerGroups = [
     name: "Cloud Native & vận hành — minh họa demo",
     partners: [
       {
-        name: "Prometheus",
-        asset: "prometheus.svg",
-        shape: "wide",
+        name: "EzyPlatform",
+        asset: "ezyplatform.png",
+        shape: "ezyplatform",
         demo: true,
       },
       { name: "Helm", asset: "helm.svg", shape: "wide", demo: true },

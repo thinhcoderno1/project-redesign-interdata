@@ -193,7 +193,7 @@ export function createBlogSource(fetcher: typeof fetch = fetch) {
       category?: string;
       page?: number;
       perPage?: number;
-      popular?: boolean;
+      slugs?: readonly string[];
       exclude?: number[];
     } = {},
   ): Promise<BlogListing> {
@@ -202,11 +202,12 @@ export function createBlogSource(fetcher: typeof fetch = fetch) {
       page: String(Math.max(1, options.page || 1)),
       status: "publish",
       order: "desc",
-      orderby: options.popular ? "date" : options.q ? "relevance" : "date",
+      orderby: options.q ? "relevance" : "date",
       _embed: "wp:featuredmedia,author",
       _fields: LIST_FIELDS,
     };
-    if (options.q || options.popular) params.search = options.q || "hướng dẫn";
+    if (options.q) params.search = options.q;
+    if (options.slugs?.length) params.slug = options.slugs.join(",");
     if (options.category) {
       const ids = categoryFamily(categoryList, options.category);
       if (!ids.length)
@@ -214,10 +215,6 @@ export function createBlogSource(fetcher: typeof fetch = fetch) {
       params.categories = ids.join(",");
     }
     if (options.exclude?.length) params.exclude = options.exclude.join(",");
-    if (options.popular)
-      params.categories_exclude = ["su-kien", "khuyen-mai", "tuyen-dung"]
-        .flatMap((slug) => categoryFamily(categoryList, slug))
-        .join(",");
     try {
       const result = await request("posts", params);
       const seen = new Set<number>();
@@ -228,7 +225,12 @@ export function createBlogSource(fetcher: typeof fetch = fetch) {
         return [post];
       });
       return {
-        posts,
+        posts: options.slugs?.length
+          ? [...new Set(options.slugs)].flatMap((slug) => {
+              const post = posts.find((post) => post.slug === slug);
+              return post ? [post] : [];
+            })
+          : posts,
         total: result.total,
         pages: result.pages,
         status: "ready",
