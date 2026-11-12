@@ -57,6 +57,7 @@ export const testimonials = [
   },
   {
     name: "Trường Phong",
+    hidden: true,
     company: "Công ty TNHH Giải pháp Công nghệ Trường Phong",
     logo: "/images/testimonials/logo-themewpgiare-truongphong.png",
     quote:
@@ -83,3 +84,5 @@ export const testimonials = [
     logoHeight: 55,
   },
 ];
+
+export const visibleTestimonials = testimonials.filter((item) => !item.hidden);

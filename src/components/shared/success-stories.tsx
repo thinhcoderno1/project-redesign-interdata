@@ -1,5 +1,5 @@
 import { MessageSquareQuote } from "lucide-react";
-import { testimonials } from "@/data/testimonials";
+import { visibleTestimonials } from "@/data/testimonials";
 import homeStyles from "@/components/home/home.module.css";
 import { TestimonialCarousel } from "./testimonial-carousel";
 import styles from "./success-stories.module.css";
@@ -42,7 +42,7 @@ export function SuccessStories({
             </div>
           </div>
           <TestimonialCarousel
-            items={testimonials}
+            items={visibleTestimonials}
             controlsOnCards={controlsOnCards}
           />
         </div>

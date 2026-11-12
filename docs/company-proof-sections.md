@@ -8,8 +8,10 @@ bố cục tại đây; sửa nội dung, logo và thứ tự tại `src/data/te
 `CustomerProof` gọi section này và giữ riêng phần báo chí. Các bản feedback
 riêng của Canhme/Vibe Coding được thay bằng cùng component và carousel.
 
-Thứ tự: Đồng Hồ Hải Triều → SEO Việt → UMIX Việt Nam → RealDev → WPTANGTOC OLS →
-BALICO → Trường Phong → Digizone Việt Nam → Jobkey. Giữ nguyên lời nhận xét và logo.
+Thứ tự hiển thị: Đồng Hồ Hải Triều → SEO Việt → UMIX Việt Nam → RealDev → WPTANGTOC OLS →
+BALICO → Digizone Việt Nam → Jobkey. Giữ nguyên lời nhận xét và logo.
+Feedback Trường Phong có `hidden: true`; dữ liệu và logo vẫn được giữ lại.
+Section dùng `visibleTestimonials` đã lọc các feedback ẩn trước khi tạo carousel.
 `src/data/content.ts` tái xuất dữ liệu để các nơi đang sử dụng tiếp tục nhận
 cùng thứ tự. Dữ liệu trong `vps-content.json` là snapshot nguồn nhập ban đầu,
 không được dùng để hiển thị feedback.

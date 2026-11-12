@@ -13,10 +13,12 @@ const literal = source.match(
 const { outputText } = ts.transpileModule(`export default ${literal}`, {
   compilerOptions: { module: ts.ModuleKind.ESNext },
 });
-const { default: expected } = await import(
+const { default: allTestimonials } = await import(
   `data:text/javascript;base64,${Buffer.from(outputText).toString("base64")}`
 );
-expect(expected).toHaveLength(9);
+expect(allTestimonials).toHaveLength(9);
+const expected = allTestimonials.filter((item) => !item.hidden);
+expect(expected).toHaveLength(8);
 expect(expected.slice(0, 3).map((item) => item.company)).toEqual([
   "Đồng Hồ Hải Triều",
   "SEO Việt",
@@ -53,11 +55,11 @@ if (
   ];
   // WPTANGTOC OLS was supplied separately after the original eight testimonials.
   expect(records).toHaveLength(
-    expected.filter((item) => item.company !== "WPTANGTOC OLS").length,
+    allTestimonials.filter((item) => item.company !== "WPTANGTOC OLS").length,
   );
   for (const match of records) {
     const company = sourceCompanyCorrections[match[2]] || match[2];
-    const item = expected.find((item) => item.company === company);
+    const item = allTestimonials.find((item) => item.company === company);
     expect(item, company).toBeDefined();
     expect(item.name).toBe(match[1]);
     expect(item.quote).toBe(match[4]);

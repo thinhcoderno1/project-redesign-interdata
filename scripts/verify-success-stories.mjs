@@ -7,7 +7,9 @@ import { loadProjectModule } from "./load-project-typescript.mjs";
 
 const base = process.env.TEST_BASE_URL || "http://localhost:3100";
 const { publicPagePaths } = loadProjectModule("src/lib/seo-sitemap.ts");
-const { testimonials } = loadProjectModule("src/data/testimonials.ts");
+const { visibleTestimonials: testimonials } = loadProjectModule(
+  "src/data/testimonials.ts",
+);
 const storyPaths = [
   "/",
   "/thue-vps/",
