@@ -7,6 +7,11 @@ Assets are stored locally under `public/images/footer` and do not require third-
 
 The three-column footer section below “Chính sách & Điều khoản” contains website certificates, supported payments and the existing social profiles. It uses the shared InterData color tokens and stacks on small screens, reserving space for the floating contact controls.
 
+The social column also contains “Nhóm Khuyến Mãi:” below the existing social links,
+with Telegram (`https://t.me/interdatavn`) and Zalo (`https://zalo.me/g/ingoza480`).
+Both use the existing circular icon style. The Telegram SVG comes from Simple Icons
+and is stored locally at `public/images/footer/telegram.svg`; Zalo reuses `zalo.svg`.
+
 Additional local assets:
 
 - DMCA: owner-supplied green `dmca-badge-w250-2x1-01.png`, copied unchanged to `public/images/footer/dmca.png` (250 × 125), displayed at 88 × 44.

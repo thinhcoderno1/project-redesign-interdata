@@ -37,7 +37,8 @@
   padding-block: 32px 36px;
   border-top: 1px solid var(--border-on-dark);
 }
-.assurances h2 {
+.assurances h2,
+.promotionGroups h3 {
   margin-bottom: 20px;
   color: var(--text-on-brand);
   font-size: 16px;
@@ -139,6 +140,9 @@ a.certificateItem:hover {
   max-width: 280px;
   gap: 12px;
 }
+.promotionGroups {
+  margin-top: 24px;
+}
 .socialLink {
   display: flex;
   align-items: center;
@@ -187,7 +191,8 @@ a.certificateItem:hover {
     padding-block: 28px;
     padding-inline-end: 44px;
   }
-  .assurances h2 {
+  .assurances h2,
+  .promotionGroups h3 {
     margin-bottom: 16px;
   }
   .policies > div {

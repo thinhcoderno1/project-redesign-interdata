@@ -11,6 +11,11 @@ const paymentBrands = [
   { name: "PayPal", image: "paypal", width: 44 },
 ] as const;
 
+const promotionGroups = [
+  { name: "Telegram", icon: "telegram", href: "https://t.me/interdatavn" },
+  { name: "Zalo", icon: "zalo", href: "https://zalo.me/g/ingoza480" },
+] as const;
+
 export function FooterAssurances() {
   return (
     <div className={styles.assurances}>
@@ -115,6 +120,13 @@ export function FooterAssurances() {
       <section aria-labelledby="footer-social-heading">
         <h2 id="footer-social-heading">Kết nối với InterData</h2>
         <FooterSocialLinks />
+        <div className={styles.promotionGroups}>
+          <h3>Nhóm Khuyến Mãi:</h3>
+          <FooterSocialLinks
+            links={promotionGroups}
+            label="Nhóm Khuyến Mãi InterData"
+          />
+        </div>
       </section>
     </div>
   );

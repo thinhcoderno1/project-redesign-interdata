@@ -2,10 +2,16 @@ import { socialProfiles } from "@/data/site-identity";
 import Image from "next/image";
 import styles from "./footer.module.css";
 
-export function FooterSocialLinks() {
+export function FooterSocialLinks({
+  links = socialProfiles,
+  label = "Kết nối với InterData",
+}: {
+  links?: readonly { name: string; icon: string; href: string }[];
+  label?: string;
+}) {
   return (
-    <nav className={styles.socialLinks} aria-label="Kết nối với InterData">
-      {socialProfiles.map((social) => (
+    <nav className={styles.socialLinks} aria-label={label}>
+      {links.map((social) => (
         <a
           key={social.icon}
           href={social.href}
