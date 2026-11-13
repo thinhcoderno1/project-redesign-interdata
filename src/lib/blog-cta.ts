@@ -146,7 +146,26 @@ export function prepareBlogCtaMarkup(raw: string) {
       styled.add(node);
   }
   for (const node of nodes) {
-    if (!styled.has(node)) delete node.attribs.style;
+    if (!styled.has(node)) {
+      // Cell backgrounds can be article content, such as a color chart.
+      // Keep solid colors only; the article layout still uses local styles.
+      const cellBackground =
+        node.name === "td"
+          ? (node.attribs.style || "")
+              .split(";")
+              .flatMap((declaration) => {
+                const match = declaration.match(
+                  /^\s*(background(?:-color)?)\s*:\s*(.*?)\s*$/i,
+                );
+                return match && color.test(match[2])
+                  ? [`${match[1].toLowerCase()}:${match[2]}`]
+                  : [];
+              })
+              .join(";")
+          : "";
+      if (cellBackground) node.attribs.style = cellBackground;
+      else delete node.attribs.style;
+    }
     // wpautop leaves empty paragraphs around HTML comments in flex layouts.
     if (
       styled.has(node) &&

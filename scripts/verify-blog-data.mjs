@@ -306,6 +306,53 @@ assert.equal(prepared.toc.length, 3);
 assert.equal(new Set(prepared.toc.map((item) => item.id)).size, 3);
 for (const item of prepared.toc)
   assert.ok(prepared.html.includes(`id="${item.id}"`));
+
+// WordPress color-chart cells survive both sanitizer passes and framing.
+const swatchStyles = [
+  "background: #000000",
+  "background: #FFFFFF",
+  "background: #FF0000",
+  "background-color: rgb(59, 130, 246)",
+  "BACKGROUND: hsl(120 100% 50%)",
+  "background: rebeccapurple",
+  "background: rgba(0, 0, 0, 0.5)",
+];
+const colorChart = prepareBlogContent(
+  `<h2>Bảng mã màu</h2><table><tbody>${swatchStyles
+    .map(
+      (style) =>
+        `<tr><td style="padding:8px;border:1px solid #E5E7EB;${style};position:fixed;width:9999px" onclick="alert(1)"></td><td><code>${style}</code></td></tr>`,
+    )
+    .join("")}</tbody></table>`,
+);
+const colorChartFrame = frameBlogContent(colorChart.html);
+for (const style of swatchStyles) {
+  const [property, value] = style.split(":");
+  assert.ok(
+    colorChartFrame.body.includes(
+      `<td style="${property.toLowerCase()}:${value.trim()}"></td>`,
+    ),
+    `Missing color swatch: ${style}`,
+  );
+}
+assert.ok(
+  !/padding:|border:|position:|width:|onclick/.test(colorChartFrame.body),
+);
+const unsafeSwatches = prepareBlogContent(
+  `<table><tr>${[
+    "background:url(https://evil.example/track)",
+    "background:expression(alert(1))",
+    "background-color:var(--unsafe)",
+    "background:linear-gradient(red,blue)",
+    "background:#fff url(https://evil.example/track)",
+  ]
+    .map((style) => `<td style="${style}"></td>`)
+    .join("")}</tr></table><p style="background:red">Ordinary text</p>`,
+).html;
+assert.ok(
+  !/style=|evil\.example|expression|var\(--unsafe\)/.test(unsafeSwatches),
+);
+
 assert.equal(
   localBlogHref("https://external.example/blog/post/", categories),
   "https://external.example/blog/post/",
