@@ -15,6 +15,7 @@ export const links = {
   contact: "/lien-he/",
   careers: "/blog/?category=tuyen-dung",
   blog: "/blog/",
+  tools: "/cong-cu/",
   promotion: "/canhme/",
   ticket: "https://support.interdata.vn/submitticket.php",
   register: "https://support.interdata.vn/register.php",

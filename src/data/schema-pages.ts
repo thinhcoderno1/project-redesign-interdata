@@ -105,6 +105,7 @@ export function pageProfile(path: string): PageProfile {
   if (legal) return { name: legal.label };
   if (path === "/gioi-thieu/") return { type: "AboutPage", name: "Giới thiệu" };
   if (path === "/lien-he/") return { type: "ContactPage", name: "Liên hệ" };
+  if (path === "/cong-cu/") return { type: "CollectionPage", name: "Công cụ online" };
   if (path === "/chinh-sach-bao-mat/") return { name: "Chính sách bảo mật" };
   if (path === "/canhme/" || path === "/blackfriday/")
     return {

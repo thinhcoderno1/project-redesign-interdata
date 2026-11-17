@@ -4,7 +4,11 @@ import styles from "./floating-contact.module.css";
 
 export function FloatingContact() {
   return (
-    <nav className={styles.contacts} aria-label="Liên hệ nhanh và tiện ích">
+    <nav
+      className={styles.contacts}
+      aria-label="Liên hệ nhanh và tiện ích"
+      data-floating-contact
+    >
       <a
         className={`${styles.action} ${styles.zalo}`}
         href="https://zalo.me/2009180325727970604"

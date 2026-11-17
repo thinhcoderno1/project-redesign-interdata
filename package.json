@@ -27,6 +27,8 @@
     "test:capacity": "node scripts/verify-capacity.mjs",
     "test:about": "node scripts/verify-about.mjs",
     "test:contact": "node scripts/verify-contact.mjs",
+    "test:tools:data": "node scripts/verify-tools-data.mjs",
+    "test:tools": "node scripts/verify-tools.mjs",
     "test:legal": "node scripts/verify-legal-pages.mjs",
     "test:vps": "node scripts/verify-vps.mjs",
     "test:cloud-server": "node scripts/verify-cloud-server.mjs",

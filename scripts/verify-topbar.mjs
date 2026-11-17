@@ -1,6 +1,10 @@
 import { chromium, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import fs from "node:fs/promises";
+import { loadProjectModule } from "./load-project-typescript.mjs";
+const { toolsPageApproved } = loadProjectModule(
+  "src/data/page-availability.ts",
+);
 
 const base = process.env.TEST_BASE_URL || "http://localhost:3100";
 const browser = await chromium.launch();
@@ -12,6 +16,7 @@ const menus = [
     items: [
       ["Giới thiệu", "/gioi-thieu/"],
       ["Liên hệ", "/lien-he/"],
+      ...(toolsPageApproved ? [["Công cụ online", "/cong-cu/"]] : []),
     ],
   },
   {
@@ -144,7 +149,7 @@ try {
         await page.waitForTimeout(200);
       }
       await expect(popup).toBeVisible();
-      await expect(popup.getByRole("link")).toHaveCount(2);
+      await expect(popup.getByRole("link")).toHaveCount(menu.items.length);
       for (const [name, href] of menu.items) {
         await expect(
           popup.getByRole("link", { name, exact: true }),

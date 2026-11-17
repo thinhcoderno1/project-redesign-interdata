@@ -7,6 +7,7 @@ import { loadProjectModule } from "./load-project-typescript.mjs";
 
 const base = process.env.TEST_BASE_URL || "http://127.0.0.1:3100";
 const { pageProfile } = loadProjectModule("src/data/schema-pages.ts");
+const { publicPagePaths } = loadProjectModule("src/lib/seo-sitemap.ts");
 const { htmlToText } = loadProjectModule("src/lib/interdata-blog.ts");
 async function files(directory) {
   return (
@@ -168,7 +169,7 @@ for (const file of await files("src/app/(website)")) {
   const source = await fs.readFile(file, "utf8");
   const match = source.match(/withPageSchema\([\s\S]*?path:\s*"([^"]+)"/);
   assert.ok(match, `Route missing schema: ${file}`);
-  routes.push(match[1]);
+  if (publicPagePaths.includes(match[1])) routes.push(match[1]);
 }
 for (const route of routes) await check(route);
 const blog = await check("/blog/");

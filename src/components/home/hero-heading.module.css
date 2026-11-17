@@ -83,10 +83,23 @@
 
 @media (max-width: 639px) {
   .heading {
-    --hero-heading-max-size: 33;
+    --hero-heading-max-size: 40;
   }
 
   .heading h1 {
+    font-size: var(--hero-heading-size, min(40px, 10.5cqw));
     line-height: 1.32;
+  }
+
+  /* Use the same stacked layout when measuring the longest rotating phrase. */
+  .heading :global(.hero-heading-row) {
+    flex-direction: column;
+    gap: 0.08em;
+  }
+
+  /* Contain wider outgoing phrases while preserving Vietnamese diacritics. */
+  .heading :global(.hero-applications) {
+    overflow: clip;
+    overflow-clip-margin: var(--hero-word-bleed);
   }
 }

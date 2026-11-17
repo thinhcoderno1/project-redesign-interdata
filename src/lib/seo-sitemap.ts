@@ -4,6 +4,7 @@ import { services, solutions } from "../data/content";
 import { cloudCatalog, vpsCatalog } from "../data/service-catalog";
 import { legalDocuments } from "../data/legal-documents";
 import { siteIdentity } from "../data/site-identity";
+import { toolsPageApproved } from "../data/page-availability";
 import { BLOG_API_URL } from "./blog-source";
 
 export const publicPagePaths = [
@@ -12,6 +13,7 @@ export const publicPagePaths = [
     "/gioi-thieu/",
     "/lien-he/",
     "/blog/",
+    ...(toolsPageApproved ? ["/cong-cu/"] : []),
     "/canhme/",
     "/blackfriday/",
     "/chinh-sach-bao-mat/",

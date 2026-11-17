@@ -2,6 +2,9 @@ import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { loadProjectModule } from "./load-project-typescript.mjs";
+const { toolsPageApproved } = loadProjectModule(
+  "src/data/page-availability.ts",
+);
 
 const { publicPagePaths, getBlogSitemapEntries } = loadProjectModule(
   "src/lib/seo-sitemap.ts",
@@ -30,8 +33,11 @@ async function routes(directory, segments = []) {
 }
 assert.deepEqual(
   [...publicPagePaths].sort(),
-  (await routes("src/app/(website)")).sort(),
+  (await routes("src/app/(website)"))
+    .filter((route) => route !== "/cong-cu/" || toolsPageApproved)
+    .sort(),
 );
+assert.equal(publicPagePaths.includes("/cong-cu/"), toolsPageApproved);
 assert.equal(rootMetadata.robots.index, true);
 assert.equal(rootMetadata.robots.follow, true);
 assert.equal(rootMetadata.robots.googleBot["max-image-preview"], "large");

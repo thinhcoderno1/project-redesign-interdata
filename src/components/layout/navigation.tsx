@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { links, solutions } from "@/data/content";
+import { toolsPageApproved } from "@/data/page-availability";
 import {
   cloudCatalog,
   vpsCatalog,
@@ -232,6 +233,9 @@ export function Navigation() {
               items={[
                 { name: "Giới thiệu", href: links.about },
                 { name: "Liên hệ", href: links.contact },
+                ...(toolsPageApproved
+                  ? [{ name: "Công cụ online", href: links.tools }]
+                  : []),
               ]}
             />
             <a href={links.careers}>Tuyển Dụng</a>
@@ -397,6 +401,11 @@ export function Navigation() {
           </div>
           <nav aria-label="Điều hướng trên điện thoại">
             <Link href="/">Trang chủ</Link>
+            {toolsPageApproved && (
+              <Link href={links.tools} onClick={closeDrawer}>
+                Công cụ online
+              </Link>
+            )}
             {serviceMenus.map((service) => (
               <details key={service.id} className="mobile-service-menu">
                 <summary>

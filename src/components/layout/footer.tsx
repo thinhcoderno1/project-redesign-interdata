@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { toolsPageApproved } from "@/data/page-availability";
 import { Mail, MapPin, Phone, ReceiptText } from "lucide-react";
 import {
   links,
@@ -68,6 +69,9 @@ export function Footer() {
           </div>
           <div>
             <h2>Hướng dẫn</h2>
+            {toolsPageApproved && (
+              <Link href={links.tools}>Công cụ online</Link>
+            )}
             <Link href="/blog/huong-dan-gui-yeu-cau-ho-tro-tai-interdata/">
               Gửi Ticket hỗ trợ
             </Link>

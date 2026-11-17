@@ -19,7 +19,28 @@ const overlap = (a, b) =>
   Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1 &&
   Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 1;
 
-async function checkSingleLine(page) {
+function checkHeadingParts(parts, gap, width) {
+  expect(parts).toHaveLength(3);
+  for (const part of parts) {
+    expect(part.left).toBeGreaterThanOrEqual(0);
+    expect(part.right).toBeLessThanOrEqual(width);
+    expect(part.height).toBeCloseTo(parts[0].height, 1);
+    if (width <= 639) {
+      expect((part.left + part.right) / 2).toBeCloseTo(width / 2, 1);
+    } else {
+      expect(part.top).toBeCloseTo(parts[0].top, 1);
+    }
+  }
+  for (let index = 1; index < parts.length; index++) {
+    const spacing =
+      width <= 639
+        ? parts[index].top - parts[index - 1].bottom
+        : parts[index].left - parts[index - 1].right;
+    expect(spacing).toBeCloseTo(gap, 1);
+  }
+}
+
+async function checkHeadingLayout(page) {
   const layout = await page.evaluate(() => {
     const row = document.querySelector("h1 .hero-heading-row");
     const parts = [...row.children].map((part) =>
@@ -33,22 +54,12 @@ async function checkSingleLine(page) {
       scrollWidth: document.documentElement.scrollWidth,
     };
   });
-  expect(layout.parts).toHaveLength(3);
   expect(layout.scrollWidth).toBeLessThanOrEqual(layout.width);
-  expect(layout.parts[0].left).toBeGreaterThanOrEqual(0);
-  expect(layout.parts[2].right).toBeLessThanOrEqual(layout.width);
-  for (const part of layout.parts) {
-    expect(part.top).toBeCloseTo(layout.parts[0].top, 1);
-    expect(part.height).toBeCloseTo(layout.parts[0].height, 1);
+  checkHeadingParts(layout.parts, layout.gap, layout.width);
+  if (layout.width <= 639) {
+    expect(parseFloat(layout.fontSize)).toBeGreaterThanOrEqual(28);
+    expect(parseFloat(layout.fontSize)).toBeLessThanOrEqual(40);
   }
-  expect(layout.parts[1].left - layout.parts[0].right).toBeCloseTo(
-    layout.gap,
-    1,
-  );
-  expect(layout.parts[2].left - layout.parts[1].right).toBeCloseTo(
-    layout.gap,
-    1,
-  );
   return layout;
 }
 async function checkRoll(page) {
@@ -115,21 +126,7 @@ async function checkRoll(page) {
     expect(sample.opacity).toEqual([1, 1, 1, 1]);
     expect(sample.sameNodes).toBe(true);
     expect(sample.whiteAnimations).toEqual([0, 0]);
-    expect(sample.parts[0].left).toBeGreaterThanOrEqual(0);
-    expect(sample.parts[2].right).toBeLessThanOrEqual(sample.viewportWidth);
-    expect(
-      sample.parts.every(
-        (part) => Math.abs(part.top - sample.parts[0].top) < 0.1,
-      ),
-    ).toBe(true);
-    expect(sample.parts[1].left - sample.parts[0].right).toBeCloseTo(
-      sample.gap,
-      1,
-    );
-    expect(sample.parts[2].left - sample.parts[1].right).toBeCloseTo(
-      sample.gap,
-      1,
-    );
+    checkHeadingParts(sample.parts, sample.gap, sample.viewportWidth);
     if (index > 0) {
       const previous = roll.samples[index - 1].width;
       expect(
@@ -193,7 +190,9 @@ async function checkDiacritics(page, width) {
   };
 }
 try {
-  for (const width of [320, 360, 390, 640, 768, 959, 1024, 1199, 1440, 1920]) {
+  for (const width of [
+    320, 360, 375, 390, 414, 639, 640, 768, 959, 1024, 1199, 1440, 1920,
+  ]) {
     const context = await browser.newContext({
       viewport: { width, height: 1100 },
       reducedMotion: "reduce",
@@ -221,7 +220,7 @@ try {
       applications[0],
     );
     await expect(hero.locator(".hero-application")).toHaveText(applications);
-    await checkSingleLine(page);
+    await checkHeadingLayout(page);
     await expect(benefits.locator(":scope > li")).toHaveCount(4);
     await expect(benefits).toContainText("240Gbps+");
     await expect(benefits).toContainText("L3-L4-L7-WAF");
@@ -323,7 +322,7 @@ try {
     await expect(heading).toHaveAttribute("data-running", "true");
     const start = applications.indexOf(await active.textContent());
     const originalBox = await page.locator("h1").boundingBox();
-    const originalLine = await checkSingleLine(page);
+    const originalLine = await checkHeadingLayout(page);
     await page.evaluate(() => {
       window.headingWhiteNodes = [
         document.querySelector(".hero-heading-prefix"),
@@ -341,7 +340,7 @@ try {
         results.push({ diacritics: await checkDiacritics(page, width) });
       }
       expect(await page.locator("h1").boundingBox()).toEqual(originalBox);
-      const line = await checkSingleLine(page);
+      const line = await checkHeadingLayout(page);
       expect(line.fontSize).toBe(originalLine.fontSize);
       expect(line.gap).toBe(originalLine.gap);
       await expect(heading.locator("button")).toHaveCount(0);
@@ -388,10 +387,10 @@ try {
       height: 960,
     });
     await page.clock.runFor(500);
-    await checkSingleLine(page);
+    await checkHeadingLayout(page);
     await page.setViewportSize({ width, height: 960 });
     await page.clock.runFor(500);
-    await checkSingleLine(page);
+    await checkHeadingLayout(page);
     await context.close();
   }
 
@@ -405,7 +404,7 @@ try {
     await expect(page.locator(".hero-application[data-active]")).toHaveText(
       applications[0],
     );
-    await checkSingleLine(page);
+    await checkHeadingLayout(page);
     await expect(
       page.getByRole("list", { name: "Lợi ích hạ tầng InterData" }),
     ).toBeVisible();
