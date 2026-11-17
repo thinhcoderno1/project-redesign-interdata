@@ -49,6 +49,8 @@
     "test:vps-n8n": "node scripts/verify-vps-n8n.mjs",
     "test:vps-vibe-coding": "node scripts/verify-vps-vibe-coding.mjs",
     "test:canh-me": "node scripts/verify-canh-me.mjs",
+    "test:swed-day:data": "node scripts/verify-swed-day-data.mjs",
+    "test:swed-day": "node scripts/verify-swed-day.mjs",
     "test:blog:data": "node scripts/verify-blog-data.mjs",
     "test:blog": "node scripts/verify-blog.mjs",
     "test:schemas:data": "node scripts/verify-schema-data.mjs",

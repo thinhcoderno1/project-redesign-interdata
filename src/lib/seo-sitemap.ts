@@ -16,6 +16,7 @@ export const publicPagePaths = [
     ...(toolsPageApproved ? ["/cong-cu/"] : []),
     "/canhme/",
     "/blackfriday/",
+    "/swed-day/",
     "/chinh-sach-bao-mat/",
     ...services.map((service) => service.href),
     ...solutions.map((solution) => solution.href),
