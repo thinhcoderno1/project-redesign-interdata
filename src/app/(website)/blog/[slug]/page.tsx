@@ -13,6 +13,11 @@ import { getBlogCategories, getBlogListing, getBlogPost } from "@/lib/blog-api";
 import { firstBlogImage, prepareBlogContent } from "@/lib/blog-content";
 import { frameBlogContent } from "@/lib/blog-frame";
 import { PostArticle } from "@/components/blog/post-article";
+import { BlogPromotion } from "@/components/blog/blog-promotion";
+import {
+  getBlogPromotionPlacement,
+  splitBlogPromotionBody,
+} from "@/lib/blog-promotion";
 import { blogListingHref } from "@/lib/blog-links";
 import {
   PostGrid,
@@ -25,9 +30,6 @@ import { buildBlogPostSchema } from "@/lib/structured-data";
 
 export const revalidate = 300;
 export const dynamicParams = true;
-export function generateStaticParams() {
-  return [];
-}
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -72,6 +74,15 @@ export default async function SinglePost({ params }: Props) {
     categories,
   );
   const { opening, body } = frameBlogContent(html);
+  const promotionSplit = splitBlogPromotionBody(body);
+  const promotionPlacement = await getBlogPromotionPlacement(!!promotionSplit);
+  const promotion = (
+    <BlogPromotion
+      key={`${post.id}-${promotionPlacement}`}
+      placement={promotionPlacement}
+      pageType="article"
+    />
+  );
   const contents = toc.filter((item) => item.level === 2);
   const related = await getBlogListing(categories, {
     category: post.categories[0]?.slug,
@@ -169,7 +180,19 @@ export default async function SinglePost({ params }: Props) {
               dangerouslySetInnerHTML={{ __html: opening }}
             />
           )}
-          <div data-article-body dangerouslySetInnerHTML={{ __html: body }} />
+          {promotionPlacement === "early" && promotion}
+          {promotionPlacement === "middle" && promotionSplit ? (
+            <div data-article-body>
+              <div
+                dangerouslySetInnerHTML={{ __html: promotionSplit.before }}
+              />
+              {promotion}
+              <div dangerouslySetInnerHTML={{ __html: promotionSplit.after }} />
+            </div>
+          ) : (
+            <div data-article-body dangerouslySetInnerHTML={{ __html: body }} />
+          )}
+          {promotionPlacement === "end" && promotion}
         </PostArticle>
       </div>
       <div className={`${styles.container} ${styles.articleFooter}`}>

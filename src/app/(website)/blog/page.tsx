@@ -5,6 +5,8 @@ import { Suspense } from "react";
 import { ArrowRight, BookOpenText } from "lucide-react";
 import { getBlogCategories, getBlogListing } from "@/lib/blog-api";
 import { blogListingHref } from "@/lib/blog-links";
+import { BlogPromotion } from "@/components/blog/blog-promotion";
+import { getBlogPromotionPlacement } from "@/lib/blog-promotion";
 import {
   blogSections,
   popularGuideSlugs,
@@ -148,6 +150,22 @@ export default async function BlogPage({
     page: query.page ? page : undefined,
   });
   const schemaTitle = blogListingTitle({ q, page }, selected?.name);
+  const promotionPlacement = await getBlogPromotionPlacement();
+  const promotion = (
+    <BlogPromotion
+      key={`${schemaPath}-${promotionPlacement}`}
+      placement={promotionPlacement}
+      pageType="listing"
+    />
+  );
+  const splitIndex = Math.min(
+    listing.posts.length,
+    promotionPlacement === "early"
+      ? 3
+      : promotionPlacement === "middle"
+        ? 6
+        : listing.posts.length,
+  );
   return (
     <main id="main-content" className={styles.page}>
       <StructuredData
@@ -222,7 +240,30 @@ export default async function BlogPage({
               Về trang blog <ArrowRight size={18} />
             </Link>
           </div>
-          <PostGrid listing={listing} />
+          {splitIndex > 0 ? (
+            <>
+              <PostGrid
+                listing={{
+                  ...listing,
+                  posts: listing.posts.slice(0, splitIndex),
+                }}
+              />
+              {promotion}
+              {splitIndex < listing.posts.length && (
+                <PostGrid
+                  listing={{
+                    ...listing,
+                    posts: listing.posts.slice(splitIndex),
+                  }}
+                />
+              )}
+            </>
+          ) : (
+            <>
+              <PostGrid listing={listing} />
+              {promotion}
+            </>
+          )}
           <Pagination
             page={page}
             pages={listing.pages}
@@ -234,6 +275,7 @@ export default async function BlogPage({
         <>
           <div className={styles.container}>
             <FeaturedPosts posts={listing.posts} />
+            {promotionPlacement === "early" && promotion}
           </div>
           <section
             className={`${styles.container} ${styles.latest}`}
@@ -253,6 +295,9 @@ export default async function BlogPage({
               }}
             />
           </section>
+          {promotionPlacement === "middle" && (
+            <div className={styles.container}>{promotion}</div>
+          )}
           {blogSections.map((section) => (
             <Suspense
               key={section.id}
@@ -268,6 +313,9 @@ export default async function BlogPage({
               <FeedSection section={section} categories={categories} />
             </Suspense>
           ))}
+          {promotionPlacement === "end" && (
+            <div className={styles.container}>{promotion}</div>
+          )}
           <section className={`${styles.container} ${styles.blogCta}`}>
             <div>
               <span className={styles.eyebrow}>TỪ KIẾN THỨC ĐẾN THỰC TẾ</span>

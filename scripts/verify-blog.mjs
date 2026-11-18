@@ -147,10 +147,9 @@ try {
     0,
   );
   await expect(page.locator("main > header img")).toHaveCount(0);
-  await expect(page.locator("aside > :first-child")).toHaveAttribute(
-    "aria-label",
-    "Mục lục",
-  );
+  await expect(
+    page.locator("aside[data-has-toc] > :first-child"),
+  ).toHaveAttribute("aria-label", "Mục lục");
   await expect(page.locator('article [data-article-cta="vps"]')).toHaveCount(1);
   await expect(page.locator('article [data-article-cta="cloud"]')).toHaveCount(
     1,
@@ -260,7 +259,7 @@ try {
   for (const width of [320, 390, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     await page.evaluate(() => window.scrollTo(0, 0));
-    const sidebar = await page.locator("main aside").boundingBox();
+    const sidebar = await page.locator("aside[data-has-toc]").boundingBox();
     const article = await page
       .locator('article[aria-label="Nội dung bài viết"]')
       .boundingBox();

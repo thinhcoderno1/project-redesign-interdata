@@ -13,7 +13,13 @@ The featured section pairs one large image-led article with a titled list of thr
 
 ## Single posts
 
-`/blog/[slug]/` renders published articles on demand with five-minute revalidation. Includes title, categories, author, Vietnam-local dates, estimated reading time and related posts. The article frame follows the supplied `khung-html.md`: opening copy, blue left-bordered H2s, existing CTA panels, FAQ and conclusion treatments, and the source disclaimer when present. The source's manual TOC is replaced to avoid duplication. Text, links, images, tables and commands remain sourced from the original article; no placeholder copy, writing instructions, additional FAQs or marketing claims are generated. `docs/blog-post-template.html` archives the supplied frame with all HTML comments removed.
+The listing and articles render one Black Friday 2026 banner per page request, with weighted random placement: 60% early, 30% middle, 10% end. `src/data/promotions.ts` shares the homepage artwork and destination and holds these adjustable starting weights. These weights are a starting hypothesis, not measured CTR rankings. The listing places it after featured posts, after the latest section or before the bottom CTA; filtered/search/paginated listings insert it after 3 cards, 6 cards or the final card. Short result sets cap the insertion to their actual length. Article positions are after the opening, at a safe section boundary near the middle or after the body. Posts without a safe middle boundary redistribute that weight to early/end. HTML blocks, paragraphs, tables, code and source headings remain intact.
+
+`getBlogPromotionPlacement()` uses Next.js `connection()` so the choice occurs at request time, without hydration randomization or moving a banner after first paint. CMS fetches retain their five-minute cache, while article HTML is rendered per request. Native links and the server-rendered banner work without JavaScript. The banner is labelled as an InterData offer, preserves its full 5:1 image ratio and includes a readable campaign title/CTA on small screens. It does not appear in the shared navigation or outside blog routes.
+
+The client component queues `view_promotion` and `select_promotion` on the existing GTM `dataLayer`. An impression requires a loaded image, an active tab and at least 50% of the unit visible continuously for one second, once per banner mount; native clicks (including middle-clicks) queue selection events. Payloads include `ecommerce.promotion_id`, `promotion_name`, `creative_name`, `creative_slot` (e.g. `blog_article_early`) and `page_path` without query strings. To report CTR, configure the existing GTM container to forward these events to GA4 and compare selections/views by slot; this change does not modify or publish GTM configuration.
+
+`/blog/[slug]/` renders published articles per request using the five-minute CMS data cache. Includes title, categories, author, Vietnam-local dates, estimated reading time and related posts. The article frame follows the supplied `khung-html.md`: opening copy, blue left-bordered H2s, existing CTA panels, FAQ and conclusion treatments, and the source disclaimer when present. The source's manual TOC is replaced to avoid duplication. Text, links, images, tables and commands remain sourced from the original article; no placeholder copy, writing instructions, additional FAQs or marketing claims are generated. `docs/blog-post-template.html` archives the supplied frame with all HTML comments removed.
 
 The featured image is hidden on single posts; images within the article are retained. Article OG/Twitter previews use the first valid image in the article HTML, including lazy-loaded image URLs. If the article has no image, previews fall back to its featured image, then the shared InterData brand image. BlogPosting JSON-LD retains the source featured image. The H2 table of contents sits at the top of the left sticky sidebar, above its existing service CTA. The sidebar has its own scrolling area for long contents lists. Below 960px, the TOC appears above the article in a single column.
 
@@ -36,6 +42,7 @@ The browser check verifies actual API plans and links, responsive card counts, l
 ```powershell
 npm run test:blog:data
 npm run test:blog
+node scripts/verify-blog-promotions.mjs
 npm run test:resources:data
 npm run typecheck
 npm run build

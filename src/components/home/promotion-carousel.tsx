@@ -3,15 +3,16 @@
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState, useSyncExternalStore } from "react";
+import { blackFriday2026Banner } from "@/data/promotions";
 import styles from "./promotion-carousel.module.css";
 
-const banners = [
-  {
-    title: "Black Friday 2026",
-    image: "/images/promotion/black-friday-2026-gift-vouchers-5x1-v2.webp",
-    alt: "Black Friday 2026 — hộp quà mở ra 3 voucher: VPS / Cloud Server giảm đến 71%; VPS Platinum chỉ từ 83K và tặng thêm 1 năm; giảm 50% phí gia hạn.",
-    href: "/blackfriday/",
-  },
+const banners: {
+  title: string;
+  image: string;
+  alt: string;
+  href?: string;
+}[] = [
+  blackFriday2026Banner,
   {
     title: "Ưu đãi VPS / Cloud Server",
     image: "/images/promotion/vps-cloud-warm.webp",

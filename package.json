@@ -53,6 +53,7 @@
     "test:swed-day": "node scripts/verify-swed-day.mjs",
     "test:blog:data": "node scripts/verify-blog-data.mjs",
     "test:blog": "node scripts/verify-blog.mjs",
+    "test:blog:promotions": "node scripts/verify-blog-promotions.mjs",
     "test:schemas:data": "node scripts/verify-schema-data.mjs",
     "test:schemas": "node scripts/verify-schemas.mjs"
   },
