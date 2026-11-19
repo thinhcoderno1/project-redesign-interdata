@@ -56,10 +56,6 @@ const bannerTime = hasOpeningDate
   ? bannerTimeLabel.format(openingDate).replace(/\s+/g, "")
   : null;
 
-function keepSpecUnitsTogether(specs: string) {
-  return specs.replace(/ (?=vCPU|RAM|SSD|-)/g, "\u00a0");
-}
-
 function OfferAction({
   label,
   offer,
@@ -206,9 +202,7 @@ export function FlashSaleOffers({
             </span>
             <div>
               <h3 id="flash-free-title">Tặng miễn phí VPS Platinum</h3>
-              <p className={styles.specs}>
-                {keepSpecUnitsTogether(freeOffer.specs)}
-              </p>
+              <p className={styles.specs}>{freeOffer.specs}</p>
             </div>
           </div>
           <div className={styles.freePrice}>
@@ -251,10 +245,7 @@ export function FlashSaleOffers({
                         Giảm <strong>{discount}%</strong>
                       </div>
                       <h4>
-                        {plan}{" "}
-                        <span className={styles.specs}>
-                          {keepSpecUnitsTogether(specs)}
-                        </span>
+                        {plan} <span className={styles.specs}>{specs}</span>
                       </h4>
                       <p className={styles.cycle}>Chu kỳ 3 tháng – 1 năm</p>
                     </div>

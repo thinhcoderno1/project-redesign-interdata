@@ -89,7 +89,8 @@ try {
     "Giảm giá VPS",
     "Giảm giá Cloud Server",
   ]);
-  await expect(section.locator('[class*="specs"]')).toHaveText([
+  const specs = section.locator('[class*="specs"]');
+  await expect(specs).toHaveText([
     "2 vCPU - 2GB RAM - 30GB SSD",
     "2 vCPU - 2GB RAM - 30GB SSD",
     "2 vCPU - 4GB RAM - 50GB SSD",
@@ -128,13 +129,33 @@ try {
   }
   await expect(section.locator('[class*="quantity"]')).toHaveCount(0);
   assert(!(await section.innerHTML()).includes("BF26FLASH20"));
-  for (const width of [320, 360, 390, 540, 640, 768, 800, 1024, 1440, 1920]) {
+  for (const width of [
+    320, 360, 385, 386, 390, 540, 640, 651, 741, 768, 800, 1024, 1440, 1920,
+  ]) {
     await page.setViewportSize({ width, height: 1000 });
     assert(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth + 1,
       ),
       `Upcoming overflow at ${width}`,
+    );
+    const brokenSpecs = await specs.evaluateAll((lines) =>
+      lines
+        .filter((line) => {
+          const text = document.createRange();
+          text.selectNodeContents(line);
+          const box = line.getBoundingClientRect();
+          return (
+            text.getClientRects().length !== 1 ||
+            text.getBoundingClientRect().right > box.right + 1
+          );
+        })
+        .map((line) => line.textContent),
+    );
+    assert.deepEqual(
+      brokenSpecs,
+      [],
+      `Configuration line does not fit at ${width}px`,
     );
   }
   await page.setViewportSize({ width: 1440, height: 1000 });

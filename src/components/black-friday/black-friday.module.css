@@ -20,6 +20,8 @@
   --bf-orange: #ff6018;
   --bf-orange-highlight: #ff842b;
   --bf-orange-on-light: #c33d0b;
+  --bf-orange-on-dark: #ff792f;
+  --bf-orange-discount: #eb4c0a;
   --bf-dark: #0c1013;
   --bf-muted: #cbd0d8;
   --bf-heading-size: clamp(28px, 3.1vw, 40px);
@@ -1573,7 +1575,7 @@
   border-radius: 4px;
   font-size: 18px;
   font-weight: 800;
-  color: #ff792f;
+  color: var(--bf-orange-on-dark);
   white-space: nowrap;
 }
 .couponColumns {
@@ -1648,7 +1650,7 @@
 }
 .ticket h4 {
   margin: 9px 0 0;
-  color: #eb4c0a;
+  color: var(--bf-orange-discount);
   font-weight: 800;
   letter-spacing: -0.05em;
   line-height: 1;

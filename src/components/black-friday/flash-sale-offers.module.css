@@ -141,7 +141,7 @@
 }
 
 .intro .eyebrow {
-  color: var(--bf-orange-highlight);
+  color: var(--bf-orange-on-dark);
   font-family: "Be Vietnam Pro Plan ExtraBold", "Be Vietnam Pro", sans-serif;
   font-size: clamp(0.75rem, 1vw, 0.875rem);
   font-weight: 800;
@@ -184,7 +184,7 @@
 
 .event svg {
   flex: none;
-  color: var(--bf-orange-highlight);
+  color: var(--bf-orange-on-dark);
 }
 
 .clock {
@@ -296,6 +296,16 @@
   display: flex;
   align-items: center;
   gap: 15px;
+}
+
+.freeInfo > div,
+.ticketBody {
+  container-type: inline-size;
+  min-width: 0;
+}
+
+.freeInfo > div {
+  flex: 1;
 }
 
 .freeIcon,
@@ -449,6 +459,10 @@
   letter-spacing: -0.08em;
 }
 
+.ticket[data-service="vps"] .discount strong {
+  color: var(--bf-orange-discount);
+}
+
 .ticket h4 {
   margin: 7px 0 0;
   font-size: clamp(1rem, 1.5vw, 1.25rem);
@@ -457,10 +471,16 @@
   text-wrap: balance;
 }
 
+.specs {
+  --spec-font-size: 1rem;
+  font-size: min(var(--spec-font-size), 6.15cqi);
+  white-space: nowrap;
+}
+
 .ticket h4 .specs {
+  --spec-font-size: clamp(0.875rem, 1.12vw, 1rem);
   display: block;
   margin-top: 4px;
-  font-size: clamp(0.875rem, 1.12vw, 1rem);
   font-weight: 600;
   line-height: 1.45;
   letter-spacing: normal;
@@ -704,7 +724,23 @@
   }
 
   .freeInfo {
-    gap: 10px;
+    container-type: inline-size;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 4px 10px;
+  }
+
+  .freeInfo > div {
+    display: contents;
+  }
+
+  .freeInfo h3 {
+    grid-column: -2 / -1;
+  }
+
+  .freeInfo .specs {
+    grid-column: 1 / -1;
+    margin-top: 0;
   }
 
   .grid {
@@ -735,7 +771,7 @@
   }
 
   .ticket {
-    grid-template-columns: minmax(0, 1fr) minmax(150px, 0.95fr);
+    grid-template-columns: minmax(0, 1fr) minmax(152px, 0.72fr);
     grid-template-rows: 1fr;
     align-items: center;
   }
@@ -761,7 +797,20 @@
   }
 }
 
-@media (max-width: 375px) {
+@media (min-width: 386px) and (max-width: 440px) {
+  .ticketBody {
+    padding-inline: 8px;
+  }
+
+  .ticketEnd .locked,
+  .ticketEnd .register {
+    gap: 4px;
+    padding-inline: 4px;
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 385px) {
   .ticket {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
@@ -774,6 +823,10 @@
 }
 
 @media (max-width: 345px) {
+  .freeInfo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .intro .event {
     gap: 4px;
     font-size: 0.9375rem;
