@@ -8,7 +8,7 @@ export const revalidate = 60;
 
 const title = "Black Friday VPS & Cloud Server 2026 - Tiết Kiệm Đến 75%";
 const description =
-  "Săn ưu đãi Black Friday 2026 tại InterData: VPS giảm đến 71%, Cloud Server đến 61%. Best Plans đăng ký 3 năm, nhận 4 năm sử dụng. Chọn gói, lấy mã ngay!";
+  "VPS giảm đến 55%, Cloud Server giảm đến 40% - VPS Platinum Từ 62K/Tháng - Flash Sale 0đ - Tặng S3 Storage 200GB. Săn Deals Ngay!";
 
 export const metadata: Metadata = {
   title,
