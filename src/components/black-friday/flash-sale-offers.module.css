@@ -1,8 +1,91 @@
 .section {
+  --dot-grid-size: clamp(16px, 1.35vw, 22px);
+  --dot-grid-edges: linear-gradient(
+    90deg,
+    #000,
+    #0008 21%,
+    #0002 40% 60%,
+    #0008 79%,
+    #000
+  );
+  --dot-grid-ends: linear-gradient(
+    transparent,
+    #000 72px,
+    #000 56%,
+    transparent
+  );
+  position: relative;
+  isolation: isolate;
   color: #f4f7fd;
   padding-block: clamp(40px, 5vw, 64px) 44px;
   font-size: 1rem;
   line-height: normal;
+}
+
+.section::before,
+.section::after {
+  position: absolute;
+  inset: 0 0 auto;
+  height: clamp(350px, 33vw, 480px);
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    var(--dot-grid-ink) 1.15px,
+    transparent 1.8px
+  );
+  background-size: var(--dot-grid-size) var(--dot-grid-size);
+  mask-composite: intersect;
+}
+
+.section::before {
+  --dot-grid-ink: rgb(129 169 240 / 27%);
+  content: "";
+  mask-image: var(--dot-grid-edges), var(--dot-grid-ends);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .section::after {
+    --dot-grid-ink: rgb(147 205 255 / 66%);
+    content: "";
+    mask-image:
+      radial-gradient(
+        ellipse 23% 92% at 50% 45%,
+        transparent 38%,
+        #000 60%,
+        transparent 82%
+      ),
+      var(--dot-grid-edges), var(--dot-grid-ends);
+    mask-size:
+      200% 100%,
+      100% 100%,
+      100% 100%;
+    mask-repeat: no-repeat;
+    animation: flash-dot-wave 7.6s linear -1.8s infinite;
+  }
+}
+
+@keyframes flash-dot-wave {
+  from {
+    mask-position:
+      100% 50%,
+      center,
+      center;
+    opacity: 0;
+  }
+
+  14%,
+  86% {
+    opacity: 0.84;
+  }
+
+  to {
+    mask-position:
+      0% 50%,
+      center,
+      center;
+    opacity: 0;
+  }
 }
 
 .wrap {
