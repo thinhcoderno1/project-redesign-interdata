@@ -343,6 +343,35 @@ export function BlackFridayPage({
         className={styles.bestPlans}
         aria-labelledby="best-plans-title"
       >
+        <svg
+          className={styles.bestPlansCircuit}
+          viewBox="0 0 1200 480"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <g fill="none" stroke="currentColor" strokeWidth="1.3" opacity=".69">
+            <path d="M0 45h90l30 30h121M0 81h64l32 32h36m-132 42h32l36 36h118M0 330h71l40-40h101m-212 87h91l42 42h130M1200 82h-73l-32 32h-99l-36 36h-95m335-22h-45l-53 53h-59m157 104h-108l-38-38H936m264 133h-74l-52-52H939m261 98h-168l-37-37h-71m276 66h-213l-41-41h-58" />
+            <circle cx="241" cy="75" r="3" />
+            <circle cx="132" cy="113" r="3" />
+            <circle cx="186" cy="191" r="3" />
+            <circle cx="212" cy="290" r="3" />
+            <circle cx="263" cy="419" r="3" />
+            <circle cx="865" cy="150" r="3" />
+            <circle cx="1043" cy="181" r="3" />
+            <circle cx="936" cy="247" r="3" />
+            <circle cx="939" cy="328" r="3" />
+            <circle cx="924" cy="389" r="3" />
+            <circle cx="888" cy="414" r="3" />
+          </g>
+          <g fill="#ff8753">
+            <circle cx="90" cy="45" r="2.5" />
+            <circle cx="111" cy="290" r="2.5" />
+            <circle cx="1095" cy="114" r="2.5" />
+            <circle cx="1054" cy="247" r="2.5" />
+            <circle cx="1074" cy="328" r="2.5" />
+          </g>
+        </svg>
         <div className="container">
           <div
             className={`${styles.sectionHeading} ${styles.bestPlansHeading}`}
