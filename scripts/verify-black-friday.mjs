@@ -308,21 +308,21 @@ try {
   await expect(page.locator("#ma-giam-gia article")).toHaveCount(6);
   await expect(page.locator("#ma-giam-gia details")).toHaveCount(2);
   await expect(page.locator("#ma-giam-gia article h4 strong")).toHaveText([
-    "71%",
-    "61%",
-    "51%",
-    "61%",
-    "51%",
-    "41%",
+    "55%",
+    "50%",
+    "45%",
+    "40%",
+    "35%",
+    "30%",
   ]);
   await expect(page.locator("#ma-giam-gia article a")).toHaveCount(6);
   await expect(page.locator('#ma-giam-gia [class*="couponCode"]')).toHaveText([
-    "BF26-VPS71",
-    "BF26-VPS61",
-    "BF26-VPS51",
-    "BF26-CLOUD61",
-    "BF26-CLOUD51",
-    "BF26-CLOUD41",
+    "BF26-VPS55",
+    "BF26-VPS50",
+    "BF26-VPS45",
+    "BF26-CLOUD40",
+    "BF26-CLOUD35",
+    "BF26-CLOUD30",
   ]);
   for (const [index, action] of (
     await page.locator("#ma-giam-gia article a").all()
@@ -571,12 +571,12 @@ try {
   await expect(
     staticPage.locator('#ma-giam-gia [class*="couponCode"]'),
   ).toHaveText([
-    "BF26-VPS71",
-    "BF26-VPS61",
-    "BF26-VPS51",
-    "BF26-CLOUD61",
-    "BF26-CLOUD51",
-    "BF26-CLOUD41",
+    "BF26-VPS55",
+    "BF26-VPS50",
+    "BF26-VPS45",
+    "BF26-CLOUD40",
+    "BF26-CLOUD35",
+    "BF26-CLOUD30",
   ]);
   await expect(
     staticPage.locator("#best-plans article").first().locator("a"),

@@ -31,12 +31,12 @@ const data = load(await fs.readFile("src/data/black-friday.ts", "utf8"), {
 const source = await fs.readFile("src/lib/black-friday-coupons.ts", "utf8");
 const imports = { "server-only": {}, "@/data/black-friday": data };
 const expected = [
-  ["VPS", 36, 71, "BF26-VPS71"],
-  ["VPS", 24, 61, "BF26-VPS61"],
-  ["VPS", 12, 51, "BF26-VPS51"],
-  ["Cloud Server", 36, 61, "BF26-CLOUD61"],
-  ["Cloud Server", 24, 51, "BF26-CLOUD51"],
-  ["Cloud Server", 12, 41, "BF26-CLOUD41"],
+  ["VPS", 36, 55, "BF26-VPS55"],
+  ["VPS", 24, 50, "BF26-VPS50"],
+  ["VPS", 12, 45, "BF26-VPS45"],
+  ["Cloud Server", 36, 40, "BF26-CLOUD40"],
+  ["Cloud Server", 24, 35, "BF26-CLOUD35"],
+  ["Cloud Server", 12, 30, "BF26-CLOUD30"],
 ];
 const hidden = load(
   source.replace(

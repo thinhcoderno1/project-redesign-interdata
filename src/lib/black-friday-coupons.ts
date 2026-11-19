@@ -11,14 +11,14 @@ const publishCouponCodes = true;
 
 const privateCouponCodes = {
   VPS: {
-    12: "BF26-VPS51",
-    24: "BF26-VPS61",
-    36: "BF26-VPS71",
+    12: "BF26-VPS45",
+    24: "BF26-VPS50",
+    36: "BF26-VPS55",
   },
   "Cloud Server": {
-    12: "BF26-CLOUD41",
-    24: "BF26-CLOUD51",
-    36: "BF26-CLOUD61",
+    12: "BF26-CLOUD30",
+    24: "BF26-CLOUD35",
+    36: "BF26-CLOUD40",
   },
 } as const;
 

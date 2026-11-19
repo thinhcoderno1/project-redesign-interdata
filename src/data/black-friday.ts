@@ -172,18 +172,18 @@ export const blackFridayCoupons = [
   {
     service: "VPS",
     offers: [
-      { months: 36, discount: 71 },
-      { months: 24, discount: 61 },
-      { months: 12, discount: 51 },
+      { months: 36, discount: 55 },
+      { months: 24, discount: 50 },
+      { months: 12, discount: 45 },
     ],
     href: links.vps,
   },
   {
     service: "Cloud Server",
     offers: [
-      { months: 36, discount: 61 },
-      { months: 24, discount: 51 },
-      { months: 12, discount: 41 },
+      { months: 36, discount: 40 },
+      { months: 24, discount: 35 },
+      { months: 12, discount: 30 },
     ],
     href: links.cloud,
   },
