@@ -15,8 +15,19 @@ try {
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto(`${base}/blackfriday/`);
   const buttons = page.getByRole("button", { name: /^Sao chép mã/ });
-  await expect(buttons).toHaveCount(8);
-  const expected = ["BF-XXXX", "BF-XXXX", ...Array(6).fill("BF26-XXXXX")];
+  const release = await fetch(base + "/api/black-friday-flash-sale/").then(
+    (response) => response.json(),
+  );
+  const expected = [
+    ...Object.values(release.offers).map((offer) => offer.code),
+    "BF26-VPS55",
+    "BF26-VPS50",
+    "BF26-VPS45",
+    "BF26-CLOUD40",
+    "BF26-CLOUD35",
+    "BF26-CLOUD30",
+  ];
+  await expect(buttons).toHaveCount(expected.length);
   for (const [index, button] of (await buttons.all()).entries()) {
     await expect(button).toHaveText(expected[index]);
     // Exercise both the code text and the icon hit targets.
@@ -108,7 +119,7 @@ try {
   );
   assert.deepEqual(errors, []);
   console.log(
-    "Copy: eight displayed codes, text/icon clicks, Enter/Space, clipboard readback, feedback reset, denied/unsupported clipboard, responsive fit and unpublished-code privacy passed.",
+    "Copy: all currently published codes, text/icon clicks, Enter/Space, clipboard readback, feedback reset, denied/unsupported clipboard, responsive fit and no legacy codes passed.",
   );
 } finally {
   await browser.close();

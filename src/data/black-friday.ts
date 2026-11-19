@@ -157,14 +157,14 @@ export function getBlackFridayUpgrade(
   };
 }
 
-// Preview keeps the section visible and the clock at 00:00:00:00.
+// Preview keeps the section visible; Flash Sale releases are timed on the server.
 // Set all dates and switch to "scheduled" when the official schedule is ready.
 // Scheduled mode shows the section from visibleFrom until endsAt; "hidden" hides it.
 export const blackFridayFlashSale: FlashSaleSchedule = {
-  // Keep Flash Sale hidden until explicitly requested to reopen.
-  mode: "hidden",
+  // Show the offers now; codes and quantities open on November 20 at 11:00 VN.
+  mode: "preview",
   visibleFrom: null,
-  startsAt: null,
+  startsAt: "2026-11-20T11:00:00+07:00",
   endsAt: null,
 };
 
@@ -199,8 +199,6 @@ export type BlackFridayCouponGroup = {
   }[];
 };
 
-// Flash Sale retains its own placeholder independently of the coupon section.
-export const blackFridayCouponPlaceholder = "BF-XXXX";
 export const blackFridayDiscountCouponPlaceholder = "BF26-XXXXX";
 
 export const blackFridayCouponConditions = [

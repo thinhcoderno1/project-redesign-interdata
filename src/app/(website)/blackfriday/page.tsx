@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { BlackFridayPage } from "@/components/black-friday/black-friday-page";
 import { getBlackFridayProducts } from "@/lib/black-friday-pricing";
 import { getBlackFridayCoupons } from "@/lib/black-friday-coupons";
+import { getBlackFridayFlashSaleCheckoutLinks } from "@/lib/black-friday-flash-sale-checkout";
 
 export const revalidate = 60;
 
@@ -32,11 +33,15 @@ export const metadata: Metadata = {
 };
 
 async function Page() {
-  const [vps] = await Promise.allSettled([getBlackFridayProducts()]);
+  const [vps, flashSaleCheckoutLinks] = await Promise.all([
+    getBlackFridayProducts().catch(() => []),
+    getBlackFridayFlashSaleCheckoutLinks(),
+  ]);
   return (
     <BlackFridayPage
-      vps={vps.status === "fulfilled" ? vps.value : []}
+      vps={vps}
       coupons={getBlackFridayCoupons()}
+      flashSaleCheckoutLinks={flashSaleCheckoutLinks}
     />
   );
 }

@@ -101,7 +101,7 @@ try {
     await renewal.evaluate(
       (el) =>
         el.previousElementSibling.id === "best-plans" &&
-        el.nextElementSibling.id === "flash-sale",
+        el.nextElementSibling.firstElementChild.id === "flash-sale",
     ),
   );
   assert(
@@ -265,46 +265,25 @@ try {
     await expect(specs.locator("li:visible")).toHaveCount(3);
   }
   await tabs.last().click();
-  const countdown = page.locator('#flash-sale [role="timer"]');
-  await expect(countdown).toHaveCount(1);
-  await expect(countdown.locator("strong")).toHaveText([
-    "00",
-    "00",
-    "00",
-    "00",
-  ]);
-  await expect(countdown.locator("span")).toHaveText([
-    "Ngày",
-    "Giờ",
-    "Phút",
-    "Giây",
-  ]);
-  await expect(page.locator('#flash-sale [class*="slotSwitch"]')).toHaveCount(
-    0,
+  const release = await fetch(base + "/api/black-friday-flash-sale/").then(
+    (response) => response.json(),
   );
-  await page.waitForTimeout(1100);
-  await expect(countdown.locator("strong")).toHaveText([
-    "00",
-    "00",
-    "00",
-    "00",
-  ]);
-  await expect(page.locator('#flash-sale [class*="flashCode"]')).toHaveText([
-    "BF-XXXX",
-    "BF-XXXX",
-  ]);
-  await expect(page.locator("#flash-sale article a")).toHaveText([
-    "Áp mã ngay",
-    "Áp mã ngay",
-  ]);
-  await expect(page.locator("#flash-sale article a").nth(0)).toHaveAttribute(
-    "href",
-    "/thue-vps/",
+  const flash = page.locator("#flash-sale");
+  await expect(flash.locator("article")).toHaveCount(7);
+  await expect(flash.locator("time")).toHaveAttribute(
+    "dateTime",
+    "2026-11-20T11:00:00+07:00",
   );
-  await expect(page.locator("#flash-sale article a").nth(1)).toHaveAttribute(
-    "href",
-    "/cloud-server/",
-  );
+  if (release.status === "live") {
+    await expect(flash.getByRole("button")).toHaveText(
+      Object.values(release.offers).map((offer) => offer.code),
+    );
+    await expect(flash.getByRole("timer")).toHaveCount(0);
+  } else {
+    await expect(flash.getByRole("timer")).toHaveCount(1);
+    await expect(flash.getByRole("button")).toHaveCount(0);
+    await expect(flash.locator('[class*="quantity"]')).toHaveCount(0);
+  }
   await expect(page.locator("#ma-giam-gia article")).toHaveCount(6);
   await expect(page.locator("#ma-giam-gia details")).toHaveCount(2);
   await expect(page.locator("#ma-giam-gia article h4 strong")).toHaveText([
@@ -377,7 +356,9 @@ try {
   );
   assert(
     await consultation.evaluate(
-      (el) => el.parentElement.previousElementSibling.id === "ma-giam-gia",
+      (el) =>
+        el.parentElement.previousElementSibling.lastElementChild.id ===
+        "ma-giam-gia",
     ),
   );
   await expect(consultation.locator("h2")).toHaveText(
@@ -606,9 +587,8 @@ try {
     staticPage.locator("#ma-giam-gia details").first(),
   ).toHaveAttribute("open", "");
   await expect(staticPage.locator("#black-friday-faq details")).toHaveCount(8);
-  await expect(
-    staticPage.locator('#flash-sale [role="timer"] strong'),
-  ).toHaveText(["00", "00", "00", "00"]);
+  await expect(staticPage.locator("#flash-sale article")).toHaveCount(7);
+  await expect(staticPage.locator("#flash-sale button")).toHaveCount(0);
   const staticFlashTerms = staticPage.locator(
     '#flash-sale [class*="flashTerms"]',
   );
@@ -629,7 +609,7 @@ try {
     ),
   );
   console.log(
-    "Black Friday: pricing across cycles, keyboard support, checkout URLs, layout, static countdown preview, terms, anchors, consultation CTA, 8 FAQs, 7 viewport widths, axe with expanded answers and no-JavaScript checks passed.",
+    "Black Friday: pricing across cycles, keyboard support, checkout URLs, layout, timed Flash Sale release, terms, anchors, consultation CTA, 8 FAQs, 7 viewport widths, axe with expanded answers and no-JavaScript checks passed.",
   );
 } finally {
   await browser.close();

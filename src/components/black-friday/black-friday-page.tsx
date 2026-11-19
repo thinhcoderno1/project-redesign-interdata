@@ -11,10 +11,9 @@ import {
 import Image from "next/image";
 import { ConsultationCta } from "@/components/home/consultation-cta";
 import { CouponCopyButton } from "./coupon-copy-button";
-import {
-  FlashSaleCountdown,
-  useFlashSaleVisibility,
-} from "./flash-sale-countdown";
+import { useFlashSaleVisibility } from "./use-flash-sale-visibility";
+import { FlashSaleOffers } from "./flash-sale-offers";
+import type { FlashSaleCheckoutLinks } from "@/data/black-friday-flash-sale";
 import {
   ArrowDownUp,
   ArrowRight,
@@ -29,7 +28,6 @@ import {
   Gift,
   Globe2,
   HardDrive,
-  Info,
   MemoryStick,
   Network,
   RefreshCw,
@@ -38,7 +36,6 @@ import {
   Ticket,
   TicketPercent,
   TicketPlus,
-  Zap,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -48,11 +45,8 @@ import {
   type VpsProduct,
 } from "@/data/vps-pricing";
 import {
-  blackFridayCouponCondition,
   blackFridayCouponConditions,
-  blackFridayCouponPlaceholder,
   blackFridayFaqs,
-  blackFridayFlashSaleConditions,
   blackFridayRenewal,
   blackFridaySpecs,
   getBlackFridaySavings,
@@ -60,7 +54,6 @@ import {
   showBlackFridaySavingsBadge,
   type BlackFridayCouponGroup,
 } from "@/data/black-friday";
-import { links } from "@/data/content";
 import { contactDetails } from "@/data/contact";
 import styles from "./black-friday.module.css";
 
@@ -211,9 +204,11 @@ function PlanUpgrade({
 export function BlackFridayPage({
   vps,
   coupons,
+  flashSaleCheckoutLinks,
 }: {
   vps: VpsProduct[];
   coupons: BlackFridayCouponGroup[];
+  flashSaleCheckoutLinks: FlashSaleCheckoutLinks;
 }) {
   const [cycle, setCycle] = useState<BillingCycle>("triennially");
   const cycleTabs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -584,185 +579,88 @@ export function BlackFridayPage({
         </div>
       </section>
 
-      {flashSaleVisible && (
+      <div className={styles.offersArea}>
+        {flashSaleVisible && (
+          <FlashSaleOffers checkoutLinks={flashSaleCheckoutLinks} />
+        )}
+
         <section
-          id="flash-sale"
-          className={styles.flashSale}
-          aria-labelledby="flash-sale-title"
+          id="ma-giam-gia"
+          className={styles.coupons}
+          aria-labelledby="coupons-title"
         >
-          <div className={`container ${styles.flashPanel}`}>
-            <div className={styles.flashIntro}>
-              <div className={styles.flashHeading}>
-                <EyebrowBadge icon={Zap} className={styles.sectionEyebrow}>
-                  ƯU ĐÃI GIỚI HẠN THỜI GIAN
+          <div className="container">
+            <div className={styles.couponHeading}>
+              <div>
+                <EyebrowBadge
+                  icon={TicketPercent}
+                  className={styles.sectionEyebrow}
+                >
+                  MÃ ƯU ĐÃI
                 </EyebrowBadge>
-                <div className={styles.flashTitle}>
-                  <h2 id="flash-sale-title">
-                    <span>FLASH</span>
-                    <span>SALE</span>
-                  </h2>
-                  <svg
-                    viewBox="0 0 70 100"
-                    fill="none"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                    focusable="false"
-                  >
-                    <path d="M30 5H54L42 34H65L16 94L28 54H5Z" />
-                  </svg>
-                </div>
-                <p>Sẵn sàng săn ưu đãi khi Flash Sale mở bán.</p>
+                <h2 id="coupons-title">
+                  Mã giảm giá<span>.</span>
+                </h2>
+                <p>Chọn chu kỳ phù hợp cho VPS &amp; Cloud Server.</p>
               </div>
-              <div className={styles.flashArtwork}>
-                <Image
-                  src="/images/black-friday/flash-sale-3d.webp"
-                  alt=""
-                  width={1200}
-                  height={800}
-                  sizes="(max-width: 800px) 100vw, 440px"
-                />
-              </div>
-              <details className={styles.flashTerms}>
-                <summary>
-                  <Info size={24} aria-hidden="true" />
-                  Điều kiện áp dụng
-                </summary>
-                <ul className={styles.flashConditions}>
-                  {blackFridayFlashSaleConditions.map((condition) => (
-                    <li key={condition}>{condition}</li>
-                  ))}
-                </ul>
-              </details>
+              <span className={styles.couponAside}>BLACK FRIDAY</span>
             </div>
-            <div className={styles.flashDeals}>
-              <FlashSaleCountdown />
-              <div className={styles.flashGrid}>
-                {[
-                  {
-                    label: "VPS Flash Deal",
-                    service: "VPS",
-                    discount: 70,
-                    href: links.vps,
-                  },
-                  {
-                    label: "Cloud Flash Deal",
-                    service: "Cloud Server",
-                    discount: 60,
-                    href: links.cloud,
-                  },
-                ].map(({ label, service, discount, href }) => (
-                  <article key={label} className={styles.flashCard}>
-                    <div className={styles.flashCardOffer}>
-                      <div className={styles.flashCardTitle}>
-                        <span className={styles.flashBadge}>{service}</span>
-                        <h3>{label}</h3>
+            <div className={styles.couponColumns}>
+              {coupons.map((group) => (
+                <div key={group.service} className={styles.couponGroup}>
+                  <h3>
+                    {group.service === "VPS" ? (
+                      <Server aria-hidden="true" />
+                    ) : (
+                      <Cloud aria-hidden="true" />
+                    )}
+                    {group.service}
+                  </h3>
+                  {group.offers.map(({ discount, months, code }, index) => (
+                    <article
+                      className={`${styles.ticket} ${index === 0 ? styles.ticketFeatured : ""}`}
+                      key={months}
+                    >
+                      <div className={styles.ticketOffer}>
+                        <div className={styles.ticketTop}>
+                          <span>Chu kỳ {months / 12} năm</span>
+                          {index === 0 && <b>Ưu đãi cao nhất</b>}
+                        </div>
+                        <h4>
+                          <span>Giảm</span>
+                          <strong>{discount}%</strong>
+                        </h4>
                       </div>
-                      <div className={styles.flashDiscount}>
-                        <span>Giảm</span> <strong>{discount}%</strong>
+                      <div className={styles.couponAction}>
+                        <span className={styles.couponLabel}>MÃ ƯU ĐÃI</span>
+                        <CouponCopyButton
+                          className={styles.couponCode}
+                          code={code}
+                          label={`${group.service} chu kỳ ${months / 12} năm`}
+                        />
+                        <a
+                          href={group.href}
+                          aria-label={`Áp mã ngay ${group.service} chu kỳ ${months / 12} năm`}
+                        >
+                          <Ticket size={20} aria-hidden="true" /> Áp mã ngay
+                        </a>
                       </div>
-                    </div>
-                    <div className={styles.flashCardBottom}>
-                      <CouponCopyButton
-                        className={styles.flashCode}
-                        code={blackFridayCouponPlaceholder}
-                        label={label}
-                      />
-                      <a
-                        className={`button ${styles.orangeButton}`}
-                        href={href}
-                        aria-label={`Áp mã ngay ${label}`}
-                      >
-                        <Ticket size={24} aria-hidden="true" /> Áp mã ngay
-                      </a>
-                    </div>
-                  </article>
-                ))}
-              </div>
-              <p className={styles.flashNote}>
-                <Info size={19} aria-hidden="true" />
-                {blackFridayCouponCondition}
-              </p>
+                    </article>
+                  ))}
+                  <details className={styles.terms}>
+                    <summary>Điều kiện áp dụng</summary>
+                    <ul>
+                      {blackFridayCouponConditions.map((condition) => (
+                        <li key={condition}>{condition}</li>
+                      ))}
+                    </ul>
+                  </details>
+                </div>
+              ))}
             </div>
           </div>
         </section>
-      )}
-
-      <section
-        id="ma-giam-gia"
-        className={styles.coupons}
-        aria-labelledby="coupons-title"
-      >
-        <div className="container">
-          <div className={styles.couponHeading}>
-            <div>
-              <EyebrowBadge
-                icon={TicketPercent}
-                className={styles.sectionEyebrow}
-              >
-                MÃ ƯU ĐÃI
-              </EyebrowBadge>
-              <h2 id="coupons-title">
-                Mã giảm giá<span>.</span>
-              </h2>
-              <p>Chọn chu kỳ phù hợp cho VPS &amp; Cloud Server.</p>
-            </div>
-            <span className={styles.couponAside}>BLACK FRIDAY</span>
-          </div>
-          <div className={styles.couponColumns}>
-            {coupons.map((group) => (
-              <div key={group.service} className={styles.couponGroup}>
-                <h3>
-                  {group.service === "VPS" ? (
-                    <Server aria-hidden="true" />
-                  ) : (
-                    <Cloud aria-hidden="true" />
-                  )}
-                  {group.service}
-                </h3>
-                {group.offers.map(({ discount, months, code }, index) => (
-                  <article
-                    className={`${styles.ticket} ${index === 0 ? styles.ticketFeatured : ""}`}
-                    key={months}
-                  >
-                    <div className={styles.ticketOffer}>
-                      <div className={styles.ticketTop}>
-                        <span>Chu kỳ {months / 12} năm</span>
-                        {index === 0 && <b>Ưu đãi cao nhất</b>}
-                      </div>
-                      <h4>
-                        <span>Giảm</span>
-                        <strong>{discount}%</strong>
-                      </h4>
-                    </div>
-                    <div className={styles.couponAction}>
-                      <span className={styles.couponLabel}>MÃ ƯU ĐÃI</span>
-                      <CouponCopyButton
-                        className={styles.couponCode}
-                        code={code}
-                        label={`${group.service} chu kỳ ${months / 12} năm`}
-                      />
-                      <a
-                        href={group.href}
-                        aria-label={`Áp mã ngay ${group.service} chu kỳ ${months / 12} năm`}
-                      >
-                        <Ticket size={20} aria-hidden="true" /> Áp mã ngay
-                      </a>
-                    </div>
-                  </article>
-                ))}
-                <details className={styles.terms}>
-                  <summary>Điều kiện áp dụng</summary>
-                  <ul>
-                    {blackFridayCouponConditions.map((condition) => (
-                      <li key={condition}>{condition}</li>
-                    ))}
-                  </ul>
-                </details>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      </div>
       <div className={styles.consultationArea}>
         <ConsultationCta
           id="black-friday-consultation"
