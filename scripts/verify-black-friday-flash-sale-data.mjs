@@ -38,37 +38,32 @@ const {
   blackFridayFlashSaleGroups: groups,
 } = load(publicSource);
 const publicOffers = [freeOffer, ...groups.flatMap((group) => group.offers)];
-const expected = {
-  free: { code: "BF26FLASH20-FREE", quantity: 3 },
-  vps81: { code: "BF26FLASH20-VPS81", quantity: 3 },
-  vps71: { code: "BF26FLASH20-VPS71", quantity: 3 },
-  vps61: { code: "BF26FLASH20-VPS61", quantity: 10 },
-  cloud61: { code: "BF26FLASH20-CLOUD61", quantity: 3 },
-  cloud51: { code: "BF26FLASH20-CLOUD51", quantity: 3 },
-  cloud41: { code: "BF26FLASH20-CLOUD41", quantity: 10 },
-};
 assert.equal(data.blackFridayFlashSale.mode, "preview");
-assert.equal(data.blackFridayFlashSale.startsAt, "2026-11-20T11:00:00+07:00");
+assert.equal(data.blackFridayFlashSale.startsAt, "2026-11-23T11:00:00+07:00");
 const start = Date.parse(data.blackFridayFlashSale.startsAt);
-assert.equal(start, Date.parse("2026-11-20T04:00:00Z"));
+assert.equal(start, Date.parse("2026-11-23T04:00:00Z"));
 const imports = {
   "server-only": {},
   "@/data/black-friday": data,
   "./flash-sale": load(await fs.readFile("src/lib/flash-sale.ts", "utf8")),
 };
 const { getBlackFridayFlashSaleRelease: release } = load(source, imports);
-for (const now of [start - 86400000, start - 1000, start - 1]) {
+for (const now of [
+  Date.parse("2026-11-20T11:00:00+07:00"),
+  start - 1000,
+  start - 1,
+]) {
   assert.equal(release(now).status, "upcoming");
   assert.deepEqual(release(now).offers, {});
   assert(!/BF26FLASH20|quantity/.test(JSON.stringify(release(now))));
 }
 for (const now of [start, start + 1, start + 86400000]) {
   assert.equal(release(now).status, "live");
-  assert.deepEqual(release(now).offers, expected);
+  assert.deepEqual(release(now).offers, {});
 }
 assert.deepEqual(
   publicOffers.map(({ id }) => id),
-  Object.keys(expected),
+  ["free", "vps81", "vps71", "vps61", "cloud61", "cloud51", "cloud41"],
 );
 assert.deepEqual(
   groups.flatMap((group) => group.offers.map(({ discount }) => discount)),
@@ -107,15 +102,15 @@ const scheduled = load(source, {
   "@/data/black-friday": {
     blackFridayFlashSale: {
       mode: "scheduled",
-      visibleFrom: "2026-11-20T10:00:00+07:00",
+      visibleFrom: "2026-11-23T10:00:00+07:00",
       startsAt: data.blackFridayFlashSale.startsAt,
-      endsAt: "2026-11-20T12:00:00+07:00",
+      endsAt: "2026-11-23T12:00:00+07:00",
     },
   },
 }).getBlackFridayFlashSaleRelease;
-assert.deepEqual(scheduled(start - 1).offers, {});
-assert.deepEqual(scheduled(start).offers, expected);
-assert.deepEqual(scheduled(start + 3600000).offers, {});
+assert.equal(scheduled(start - 1).status, "upcoming");
+assert.equal(scheduled(start).status, "live");
+assert.equal(scheduled(start + 3600000).status, "upcoming");
 const checkoutSource = await fs.readFile(
   "src/lib/black-friday-flash-sale-checkout.ts",
   "utf8",
@@ -223,5 +218,5 @@ if (process.argv.includes("--built")) {
   );
 }
 console.log(
-  "Flash Sale data: 11:00 Vietnam timezone, millisecond release boundary, exact seven offers, hidden/invalid config, server-only codes and quantities, no-store response and ignored client timestamps passed.",
+  "Flash Sale data: November 23 at 11:00 Vietnam time, millisecond opening boundary, seven offers, no prior-round codes, hidden/invalid config, no-store response and ignored client timestamps passed.",
 );

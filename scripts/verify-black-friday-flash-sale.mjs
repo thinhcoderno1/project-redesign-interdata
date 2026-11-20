@@ -4,16 +4,16 @@ import { chromium, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 const base = process.env.TEST_BASE_URL || "http://localhost:3000";
-const startsAt = "2026-11-20T11:00:00+07:00";
+const startsAt = "2026-11-23T11:00:00+07:00";
 const start = Date.parse(startsAt);
 const offers = {
-  free: { code: "BF26FLASH20-FREE", quantity: 3 },
-  vps81: { code: "BF26FLASH20-VPS81", quantity: 3 },
-  vps71: { code: "BF26FLASH20-VPS71", quantity: 3 },
-  vps61: { code: "BF26FLASH20-VPS61", quantity: 10 },
-  cloud61: { code: "BF26FLASH20-CLOUD61", quantity: 3 },
-  cloud51: { code: "BF26FLASH20-CLOUD51", quantity: 3 },
-  cloud41: { code: "BF26FLASH20-CLOUD41", quantity: 10 },
+  free: { code: "TEST-FREE" },
+  vps81: { code: "TEST-VPS81" },
+  vps71: { code: "TEST-VPS71" },
+  vps61: { code: "TEST-VPS61" },
+  cloud61: { code: "TEST-CLOUD61" },
+  cloud51: { code: "TEST-CLOUD51" },
+  cloud41: { code: "TEST-CLOUD41" },
 };
 const checkouts = {
   free: "/store/vps-platinum-viettel-hcm/plan-2-2c-2g-30g-platinum-vt",
@@ -42,16 +42,17 @@ try {
   assert.equal(actualResponse.status(), 200);
   assert(actualResponse.headers()["cache-control"].includes("no-store"));
   const actualRelease = await actualResponse.json();
+  assert.equal(actualRelease.startsAt, startsAt);
   assert.equal(
     actualRelease.status,
     actualRelease.serverNow < start ? "upcoming" : "live",
   );
-  if (actualRelease.serverNow < start)
-    assert.deepEqual(actualRelease.offers, {});
+  assert.deepEqual(actualRelease.offers, {});
   page.on("pageerror", (error) => errors.push(error.message));
   let serverNow = start - 86400000;
   let requests = 0;
   let failure = false;
+  let codesReady = false;
   await page.route("**/api/black-friday-flash-sale/", async (route) => {
     requests++;
     if (failure) return route.fulfill({ status: 503, body: "Unavailable" });
@@ -61,7 +62,7 @@ try {
         serverNow,
         startsAt,
         status: live ? "live" : "upcoming",
-        offers: live ? offers : {},
+        offers: live && codesReady ? offers : {},
       },
     });
   });
@@ -72,7 +73,7 @@ try {
   const section = page.locator("#flash-sale");
   await expect(section).toBeVisible();
   await expect(section.locator("time")).toHaveText(
-    "11:00AM · Thứ Sáu, 20/11/2026",
+    "11:00AM · Thứ Hai, 23/11/2026",
   );
   await expect(
     section.getByText("Đếm ngược đến giờ mở sale", { exact: true }),
@@ -99,19 +100,16 @@ try {
     "2 vCPU - 4GB RAM - 50GB SSD",
     "4 vCPU - 8GB RAM - 80GB SSD",
   ]);
-  const freeCycle = section.locator(
-    '[data-offer="free"] [class*="specs"] + [class*="cycle"]',
-  );
-  await expect(freeCycle).toHaveText("Chu kỳ 3 tháng");
-  await expect(freeCycle).toBeVisible();
+  const freeOffer = section.locator('[data-offer="free"]');
+  await expect(freeOffer).not.toContainText("Chu kỳ");
   const discountCycles = section.locator('[data-service] [class*="cycle"]');
   await expect(discountCycles).toHaveText(
     Array(6).fill("Chu kỳ 3 tháng – 1 năm"),
   );
   await expect(discountCycles.first()).toHaveCSS("color", "rgb(75, 89, 112)");
-  await expect(
-    section.getByText("Mở mã lúc 11:00", { exact: true }),
-  ).toHaveCount(7);
+  const locked = section.getByText("Mã tiếp theo 23/11/2026", { exact: true });
+  const quantities = section.getByText(/^Số lượng:/);
+  await expect(locked).toHaveCount(7);
   await expect(section.getByRole("timer").locator("strong").first()).toHaveText(
     "01",
   );
@@ -127,7 +125,7 @@ try {
       `https://support.interdata.vn/index.php?rp=${path}&billingcycle=quarterly`,
     );
   }
-  await expect(section.locator('[class*="quantity"]')).toHaveCount(0);
+  await expect(quantities).toHaveCount(0);
   assert(!(await section.innerHTML()).includes("BF26FLASH20"));
   for (const width of [
     320, 360, 385, 386, 390, 540, 640, 651, 741, 768, 800, 1024, 1440, 1920,
@@ -192,9 +190,18 @@ try {
     .toBeGreaterThan(countBefore);
   await expect(section.getByRole("button")).toHaveCount(0);
   await expect(registerLinks).toHaveCount(7);
-  await expect(section.locator('[class*="quantity"]')).toHaveCount(0);
+  await expect(quantities).toHaveCount(0);
   failure = false;
   serverNow = start;
+  await expect(section.getByRole("timer")).toHaveCount(0, { timeout: 5000 });
+  await expect(locked).toHaveCount(7);
+  await expect(section.getByRole("button")).toHaveCount(0);
+  await expect(
+    section.getByText("Flash Sale đã mở", { exact: true }),
+  ).toHaveCount(0);
+
+  codesReady = true;
+  await page.evaluate(() => window.dispatchEvent(new Event("pageshow")));
   await expect(section.getByRole("button")).toHaveCount(7, { timeout: 5000 });
   await expect(registerLinks).toHaveCount(7);
   await expect(section.getByRole("timer")).toHaveCount(0);
@@ -204,8 +211,9 @@ try {
   await expect(
     section.getByText("Flash Sale đã mở", { exact: true }),
   ).toBeVisible();
-  await expect(freeCycle).toBeVisible();
-  for (const [id, { code, quantity }] of Object.entries(offers)) {
+  await expect(freeOffer).not.toContainText("Chu kỳ");
+  await expect(quantities).toHaveCount(0);
+  for (const [id, { code }] of Object.entries(offers)) {
     const card = section.locator(`[data-offer="${id}"]`);
     const copy = card.getByRole("button");
     await expect(copy).toHaveText(code);
@@ -220,9 +228,6 @@ try {
     ]);
     assert(
       registerBox && copyBox && registerBox.y >= copyBox.y + copyBox.height,
-    );
-    await expect(card.locator('[class*="quantity"]')).toHaveText(
-      `Số lượng: ${quantity}`,
     );
     await copy.click();
     assert.equal(
@@ -286,7 +291,7 @@ try {
   await expect(section.getByRole("button")).toHaveCount(7);
   assert.deepEqual(errors, []);
   console.log(
-    "Flash Sale UI: seven offers, free and discount cycle labels, countdown, device clock skew, automatic release, failed-request retry, exact codes/quantities, clipboard, responsive layouts and accessibility passed.",
+    "Flash Sale UI: seven locked offers, November 23 countdown, hidden quantities and free cycle, delayed code release, device clock skew, retries, clipboard, responsive layouts and accessibility passed.",
   );
 } finally {
   await browser.close();

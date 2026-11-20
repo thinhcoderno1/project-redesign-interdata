@@ -13,6 +13,7 @@ export function useFlashSaleRelease() {
       serverNow: number;
       measuredAt: number;
       startsAt: number;
+      openingConfirmed: boolean;
     } | null = null;
     let published = false;
     let stopped = false;
@@ -40,8 +41,10 @@ export function useFlashSaleRelease() {
           serverNow: data.serverNow,
           measuredAt: performance.now(),
           startsAt,
+          openingConfirmed: data.status === "live",
         };
-        published = data.status === "live";
+        published =
+          clock.openingConfirmed && Object.keys(data.offers).length > 0;
         setRelease(data);
         setRemainingSeconds(
           Math.max(0, Math.ceil((startsAt - data.serverNow) / 1000)),
@@ -65,9 +68,11 @@ export function useFlashSaleRelease() {
           clock.startsAt - (clock.serverNow + elapsed - clock.measuredAt);
         setRemainingSeconds(Math.max(0, Math.ceil(remaining / 1000)));
       }
-      const retryAfter = !clock || remaining <= 0 ? 1000 : 30000;
+      const awaitingOpening =
+        clock && !clock.openingConfirmed && remaining <= 0;
+      const retryAfter = !clock || awaitingOpening ? 1000 : 30000;
       const reachedOpening =
-        clock && remaining <= 0 && lastAttempt < clock.measuredAt;
+        clock && awaitingOpening && lastAttempt < clock.measuredAt;
       if (reachedOpening || elapsed - lastAttempt >= retryAfter) void sync();
     }
 

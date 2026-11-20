@@ -161,10 +161,10 @@ export function getBlackFridayUpgrade(
 // Set all dates and switch to "scheduled" when the official schedule is ready.
 // Scheduled mode shows the section from visibleFrom until endsAt; "hidden" hides it.
 export const blackFridayFlashSale: FlashSaleSchedule = {
-  // Show the offers now; codes and quantities open on November 20 at 11:00 VN.
+  // Show the offers now and count down to November 23 at 11:00 VN.
   mode: "preview",
   visibleFrom: null,
-  startsAt: "2026-11-20T11:00:00+07:00",
+  startsAt: "2026-11-23T11:00:00+07:00",
   endsAt: null,
 };
 

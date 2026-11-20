@@ -35,10 +35,10 @@ const openingDateLabel = new Intl.DateTimeFormat("vi-VN", {
   year: "numeric",
   timeZone: "Asia/Ho_Chi_Minh",
 });
-const openingTimeLabel = new Intl.DateTimeFormat("vi-VN", {
-  hour: "2-digit",
-  minute: "2-digit",
-  hourCycle: "h23",
+const openingShortDateLabel = new Intl.DateTimeFormat("vi-VN", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
   timeZone: "Asia/Ho_Chi_Minh",
 });
 const bannerTimeLabel = new Intl.DateTimeFormat("en-US", {
@@ -48,8 +48,8 @@ const bannerTimeLabel = new Intl.DateTimeFormat("en-US", {
   timeZone: "Asia/Ho_Chi_Minh",
 });
 const hasOpeningDate = Number.isFinite(openingDate.getTime());
-const openingTime = hasOpeningDate
-  ? openingTimeLabel.format(openingDate)
+const openingShortDate = hasOpeningDate
+  ? openingShortDateLabel.format(openingDate)
   : null;
 const openingDay = hasOpeningDate ? openingDateLabel.format(openingDate) : null;
 const bannerTime = hasOpeningDate
@@ -68,18 +68,15 @@ function OfferAction({
   return (
     <>
       {offer ? (
-        <>
-          <CouponCopyButton
-            className={styles.copy}
-            code={offer.code}
-            label={label}
-          />
-          <span className={styles.quantity}>Số lượng: {offer.quantity}</span>
-        </>
+        <CouponCopyButton
+          className={styles.copy}
+          code={offer.code}
+          label={label}
+        />
       ) : (
         <div className={styles.locked}>
           <LockKeyhole size={14} aria-hidden="true" />
-          {openingTime ? `Mở mã lúc ${openingTime}` : "Mã chưa mở"}
+          {openingShortDate ? `Mã tiếp theo ${openingShortDate}` : "Mã chưa mở"}
         </div>
       )}
       {checkoutHref && (
@@ -104,6 +101,7 @@ export function FlashSaleOffers({
   const { release, remainingSeconds, syncFailed } = useFlashSaleRelease();
   const live = release?.status === "live";
   const publishedOffers = live ? release.offers : {};
+  const hasPublishedOffers = Object.keys(publishedOffers).length > 0;
   const values =
     remainingSeconds === null
       ? ["--", "--", "--", "--"]
@@ -116,7 +114,7 @@ export function FlashSaleOffers({
       className={styles.section}
       aria-labelledby="flash-sale-title"
     >
-      <div className={styles.wrap}>
+      <div className="container">
         <header className={styles.hero}>
           <svg
             className={styles.heroBolt}
@@ -150,7 +148,7 @@ export function FlashSaleOffers({
           </div>
 
           <div className={styles.clock}>
-            {live && (
+            {hasPublishedOffers && (
               <p className={styles.clockHeading}>
                 <span className={styles.indicator} aria-hidden="true" />
                 Flash Sale đã mở
@@ -182,7 +180,7 @@ export function FlashSaleOffers({
               ))}
             </div>
             <p className={styles.clockNote} role="status">
-              {live
+              {hasPublishedOffers
                 ? "Chọn ưu đãi bên dưới để sao chép mã."
                 : syncFailed
                   ? "Đang kết nối lại để cập nhật giờ mở bán…"
@@ -203,7 +201,6 @@ export function FlashSaleOffers({
             <div>
               <h3 id="flash-free-title">Tặng miễn phí VPS Platinum</h3>
               <p className={styles.specs}>{freeOffer.specs}</p>
-              <p className={styles.cycle}>Chu kỳ 3 tháng</p>
             </div>
           </div>
           <div className={styles.freePrice}>

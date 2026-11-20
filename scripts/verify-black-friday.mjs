@@ -272,7 +272,7 @@ try {
   await expect(flash.locator("article")).toHaveCount(7);
   await expect(flash.locator("time")).toHaveAttribute(
     "dateTime",
-    "2026-11-20T11:00:00+07:00",
+    "2026-11-23T11:00:00+07:00",
   );
   if (release.status === "live") {
     await expect(flash.getByRole("button")).toHaveText(
@@ -282,8 +282,8 @@ try {
   } else {
     await expect(flash.getByRole("timer")).toHaveCount(1);
     await expect(flash.getByRole("button")).toHaveCount(0);
-    await expect(flash.locator('[class*="quantity"]')).toHaveCount(0);
   }
+  await expect(flash.getByText(/^Số lượng:/)).toHaveCount(0);
   await expect(page.locator("#ma-giam-gia article")).toHaveCount(6);
   await expect(page.locator("#ma-giam-gia details")).toHaveCount(2);
   await expect(page.locator("#ma-giam-gia article h4 strong")).toHaveText([

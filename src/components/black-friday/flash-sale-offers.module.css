@@ -88,11 +88,6 @@
   }
 }
 
-.wrap {
-  width: min(1184px, calc(100% - 64px));
-  margin-inline: auto;
-}
-
 .hero {
   container-type: inline-size;
   position: relative;
@@ -486,14 +481,11 @@
   letter-spacing: normal;
 }
 
-.cycle {
-  font-size: clamp(0.875rem, 1.12vw, 0.9375rem);
-  line-height: 1.45;
-}
-
 .ticket .cycle {
   margin-top: 4px;
   color: #4b5970;
+  font-size: clamp(0.875rem, 1.12vw, 0.9375rem);
+  line-height: 1.45;
 }
 
 .ticketEnd {
@@ -540,6 +532,10 @@
   line-height: 1.4;
 }
 
+.locked {
+  text-align: center;
+}
+
 .locked svg,
 .copy svg {
   flex: none;
@@ -565,14 +561,6 @@
 
 .copy:hover {
   background: #d5e5ff;
-}
-
-.quantity {
-  display: block;
-  margin-top: 5px;
-  color: #46556b;
-  font-size: 0.875rem;
-  line-height: 1.4;
 }
 
 .register {
@@ -613,10 +601,6 @@
   border-color: #7badff7d;
   background: #092c67;
   color: #eef5ff;
-}
-
-.free .quantity {
-  color: #dfecff;
 }
 
 .flashTerms {
@@ -674,10 +658,6 @@
 }
 
 @media (max-width: 740px) {
-  .wrap {
-    width: calc(100% - 32px);
-  }
-
   .hero {
     grid-template-columns: 1fr;
     gap: 21px;
@@ -741,8 +721,7 @@
     grid-column: -2 / -1;
   }
 
-  .freeInfo .specs,
-  .freeInfo .cycle {
+  .freeInfo .specs {
     grid-column: 1 / -1;
     margin-top: 0;
   }

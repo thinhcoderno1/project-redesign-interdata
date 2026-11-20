@@ -13,6 +13,7 @@ import { ConsultationCta } from "@/components/home/consultation-cta";
 import { CouponCopyButton } from "./coupon-copy-button";
 import { useFlashSaleVisibility } from "./use-flash-sale-visibility";
 import { FlashSaleOffers } from "./flash-sale-offers";
+import { PromotionGroupsCta } from "./promotion-groups-cta";
 import type { FlashSaleCheckoutLinks } from "@/data/black-friday-flash-sale";
 import {
   ArrowDownUp,
@@ -612,6 +613,8 @@ export function BlackFridayPage({
         {flashSaleVisible && (
           <FlashSaleOffers checkoutLinks={flashSaleCheckoutLinks} />
         )}
+
+        <PromotionGroupsCta />
 
         <section
           id="ma-giam-gia"

@@ -1,4 +1,4 @@
-// Public offer details only. Codes and quantities stay in the server-only module.
+// Public offer details only. Codes stay in the server-only module.
 const specs = {
   "2-2-30": "2 vCPU - 2GB RAM - 30GB SSD",
   "2-4-50": "2 vCPU - 4GB RAM - 50GB SSD",
@@ -68,7 +68,7 @@ export type FlashSaleOfferId =
 
 export type FlashSaleCheckoutLinks = Partial<Record<FlashSaleOfferId, string>>;
 
-export type PublishedFlashSaleOffer = { code: string; quantity: number };
+export type PublishedFlashSaleOffer = { code: string };
 
 export type FlashSaleRelease = {
   serverNow: number;
