@@ -486,11 +486,14 @@
   letter-spacing: normal;
 }
 
+.cycle {
+  font-size: clamp(0.875rem, 1.12vw, 0.9375rem);
+  line-height: 1.45;
+}
+
 .ticket .cycle {
   margin-top: 4px;
   color: #4b5970;
-  font-size: clamp(0.875rem, 1.12vw, 0.9375rem);
-  line-height: 1.45;
 }
 
 .ticketEnd {
@@ -738,7 +741,8 @@
     grid-column: -2 / -1;
   }
 
-  .freeInfo .specs {
+  .freeInfo .specs,
+  .freeInfo .cycle {
     grid-column: 1 / -1;
     margin-top: 0;
   }

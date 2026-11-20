@@ -203,6 +203,7 @@ export function FlashSaleOffers({
             <div>
               <h3 id="flash-free-title">Tặng miễn phí VPS Platinum</h3>
               <p className={styles.specs}>{freeOffer.specs}</p>
+              <p className={styles.cycle}>Chu kỳ 3 tháng</p>
             </div>
           </div>
           <div className={styles.freePrice}>

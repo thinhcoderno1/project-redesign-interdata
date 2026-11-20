@@ -99,16 +99,16 @@ try {
     "2 vCPU - 4GB RAM - 50GB SSD",
     "4 vCPU - 8GB RAM - 80GB SSD",
   ]);
-  await expect(section.locator('[data-offer="free"]')).not.toContainText(
-    "Chu kỳ",
+  const freeCycle = section.locator(
+    '[data-offer="free"] [class*="specs"] + [class*="cycle"]',
   );
-  await expect(section.locator('[class*="cycle"]')).toHaveText(
+  await expect(freeCycle).toHaveText("Chu kỳ 3 tháng");
+  await expect(freeCycle).toBeVisible();
+  const discountCycles = section.locator('[data-service] [class*="cycle"]');
+  await expect(discountCycles).toHaveText(
     Array(6).fill("Chu kỳ 3 tháng – 1 năm"),
   );
-  await expect(section.locator('[class*="cycle"]').first()).toHaveCSS(
-    "color",
-    "rgb(75, 89, 112)",
-  );
+  await expect(discountCycles.first()).toHaveCSS("color", "rgb(75, 89, 112)");
   await expect(
     section.getByText("Mở mã lúc 11:00", { exact: true }),
   ).toHaveCount(7);
@@ -204,9 +204,7 @@ try {
   await expect(
     section.getByText("Flash Sale đã mở", { exact: true }),
   ).toBeVisible();
-  await expect(section.locator('[data-offer="free"]')).not.toContainText(
-    "Chu kỳ",
-  );
+  await expect(freeCycle).toBeVisible();
   for (const [id, { code, quantity }] of Object.entries(offers)) {
     const card = section.locator(`[data-offer="${id}"]`);
     const copy = card.getByRole("button");
@@ -288,7 +286,7 @@ try {
   await expect(section.getByRole("button")).toHaveCount(7);
   assert.deepEqual(errors, []);
   console.log(
-    "Flash Sale UI: seven offers, free cycle hidden, six cycle labels, countdown, device clock skew, automatic release, failed-request retry, exact codes/quantities, clipboard, responsive layouts and accessibility passed.",
+    "Flash Sale UI: seven offers, free and discount cycle labels, countdown, device clock skew, automatic release, failed-request retry, exact codes/quantities, clipboard, responsive layouts and accessibility passed.",
   );
 } finally {
   await browser.close();
