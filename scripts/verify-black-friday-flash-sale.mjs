@@ -86,8 +86,8 @@ try {
   await expect(section.locator("article")).toHaveCount(7);
   await expect(section.locator("h3")).toHaveText([
     "Tặng miễn phí VPS Platinum",
-    "Giảm giá VPS",
-    "Giảm giá Cloud Server",
+    "Flash Sale VPS",
+    "Flash Sale Cloud Server",
   ]);
   const specs = section.locator('[class*="specs"]');
   await expect(specs).toHaveText([
