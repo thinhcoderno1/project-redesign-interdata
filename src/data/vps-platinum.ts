@@ -1,12 +1,16 @@
 import type { BillingCycle, VpsProduct } from "./vps-pricing";
 
-export const platinumGroups = [
+export const platinumPricingGroups = [
   { gid: 29, label: "VPS PLATINUM FPT" },
   { gid: 101, label: "VPS PLATINUM VIETTEL" },
+] as const;
+export const platinumGroups = [
+  ...platinumPricingGroups,
   { gid: 100, label: "Hot Deals · Inter Platinum" },
 ] as const;
 export type PlatinumGid = (typeof platinumGroups)[number]["gid"];
-export type PlatinumPrices = Record<PlatinumGid, VpsProduct[] | null>;
+export type PlatinumPricingGid = (typeof platinumPricingGroups)[number]["gid"];
+export type PlatinumPrices = Record<PlatinumPricingGid, VpsProduct[] | null>;
 export const platinumBillingCycles: { key: BillingCycle; label: string }[] = [
   { key: "monthly", label: "1 tháng" },
   { key: "quarterly", label: "3 tháng" },

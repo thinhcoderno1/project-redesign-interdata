@@ -22,9 +22,9 @@ import {
 } from "lucide-react";
 import {
   platinumBillingCycles,
-  platinumGroups,
-  type PlatinumGid,
+  platinumPricingGroups,
   type PlatinumPrices,
+  type PlatinumPricingGid,
 } from "@/data/vps-platinum";
 import {
   checkoutUrl,
@@ -73,7 +73,7 @@ export function PlatinumPricing({
   initialPrices: PlatinumPrices;
 }) {
   const [prices, setPrices] = useState(initialPrices);
-  const [gid, setGid] = useState<PlatinumGid>(101);
+  const [gid, setGid] = useState<PlatinumPricingGid>(101);
   const products =
     prices[gid]?.filter(
       (product) =>
@@ -158,19 +158,28 @@ export function PlatinumPricing({
             aria-label="Chọn dòng VPS"
             value={gid}
             onChange={(event) => {
+              const group = platinumPricingGroups.find(
+                ({ gid }) => String(gid) === event.target.value,
+              );
+              if (!group) return;
               controller.current?.abort();
               setPending(false);
               setFailed(false);
               setExpanded(false);
-              setGid(Number(event.target.value) as PlatinumGid);
+              setGid(group.gid);
             }}
           >
-            {platinumGroups.map((group) => (
+            {platinumPricingGroups.map((group) => (
               <option key={group.gid} value={group.gid}>
                 {group.label}
               </option>
             ))}
           </select>
+          <ChevronDown
+            className={styles.groupChevron}
+            size={16}
+            aria-hidden="true"
+          />
         </div>
         <noscript>
           <p className={styles.noScriptNote}>
@@ -178,14 +187,10 @@ export function PlatinumPricing({
             có thể xem toàn bộ cấu hình tại{" "}
             <a href="https://support.interdata.vn/index.php?rp=/store/vps-platinum">
               VPS PLATINUM FPT
-            </a>
-            ,{" "}
-            <a href="https://support.interdata.vn/index.php?rp=/store/vps-platinum-viettel-hcm">
-              VPS PLATINUM VIETTEL
             </a>{" "}
             hoặc{" "}
-            <a href="https://support.interdata.vn/index.php?rp=/store/inter-platinum-series-2026">
-              Hot Deals Inter Platinum
+            <a href="https://support.interdata.vn/index.php?rp=/store/vps-platinum-viettel-hcm">
+              VPS PLATINUM VIETTEL
             </a>
             .
           </p>
@@ -234,10 +239,7 @@ export function PlatinumPricing({
                 {displayed.map((product) => {
                   const price = product.pricing.VND[selected.key];
                   const purchasable = price !== undefined;
-                  const popular =
-                    gid === 100
-                      ? product.slug === "inter-platinum-2"
-                      : product.slug.startsWith("plan-3");
+                  const popular = product.slug.startsWith("plan-3");
                   return (
                     <article
                       key={product.pid}

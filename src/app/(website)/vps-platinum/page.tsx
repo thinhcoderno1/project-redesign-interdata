@@ -8,7 +8,7 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "VPS Platinum - Intel Xeon, NVMe, Hiệu Năng Mạnh Mẽ",
   description:
-    "Thuê VPS PLATINUM Intel Xeon, SSD NVMe U.2 Gen 4 và quyền root. So sánh cấu hình FPT, Viettel, Hot Deals và giá theo chu kỳ tại InterData.",
+    "Thuê VPS PLATINUM Intel Xeon, SSD NVMe U.2 Gen 4 và quyền root. So sánh cấu hình FPT, Viettel và giá theo chu kỳ tại InterData.",
   alternates: { canonical: "https://interdata.vn/vps-platinum/" },
   openGraph: {
     title: "VPS Platinum - Intel Xeon, NVMe, Hiệu Năng Mạnh Mẽ",

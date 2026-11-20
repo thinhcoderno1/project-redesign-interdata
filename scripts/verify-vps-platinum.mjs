@@ -92,8 +92,17 @@ try {
     `${base}/api/vps-platinum-pricing/?gid=67`,
   );
   expect(invalid.status()).toBe(400);
+  const hotDeals = await page.request.get(
+    `${base}/api/vps-platinum-pricing/?gid=100`,
+  );
+  expect(hotDeals.status()).toBe(200);
+  expect((await hotDeals.json()).products).toEqual(sources[100]);
   await expect(page.locator("#platinum-group")).toHaveValue("101");
-  for (const gid of [101, 29, 100]) {
+  await expect(page.locator("#platinum-group option")).toHaveText([
+    "VPS PLATINUM FPT",
+    "VPS PLATINUM VIETTEL",
+  ]);
+  for (const gid of [101, 29]) {
     const api = await page.request.get(
       `${base}/api/vps-platinum-pricing/?gid=${gid}`,
     );
@@ -271,7 +280,10 @@ try {
   const fallback = await noJs.newPage();
   await fallback.goto(`${base}/vps-platinum/`);
   await expect(fallback.locator("[data-pid]")).toHaveCount(4);
-  await expect(fallback.locator("noscript a")).toHaveCount(3);
+  await expect(fallback.locator("#bang-gia noscript a")).toHaveText([
+    "VPS PLATINUM FPT",
+    "VPS PLATINUM VIETTEL",
+  ]);
   await fallback.locator("#cau-hoi summary").first().click();
   await expect(fallback.locator("#cau-hoi details").first()).toHaveAttribute(
     "open",
@@ -287,7 +299,7 @@ try {
   try {
     await fs.writeFile(
       fixture,
-      'import { PlatinumPricing } from "@/components/vps-platinum/platinum-pricing"; export default function Page(){ return <main id="noi-dung"><PlatinumPricing initialPrices={{29:null,101:null,100:null}} /></main>; }',
+      'import { PlatinumPricing } from "@/components/vps-platinum/platinum-pricing"; export default function Page(){ return <main id="noi-dung"><PlatinumPricing initialPrices={{29:null,101:null}} /></main>; }',
     );
     const retry = await context.newPage();
     let recover = false;
@@ -302,9 +314,13 @@ try {
         ),
       });
     });
-    await retry.goto(`${devBase}/platinum-pricing-qa/`, {
-      waitUntil: "networkidle",
-    });
+    const retryUrl = `${devBase}/platinum-pricing-qa/`;
+    await expect
+      .poll(async () => (await retry.request.get(retryUrl)).status(), {
+        timeout: 15000,
+      })
+      .toBe(200);
+    await retry.goto(retryUrl, { waitUntil: "networkidle" });
     await retry.getByRole("button", { name: "Thử lại" }).click();
     await expect(
       retry.getByRole("button", { name: "Đang tải bảng giá…" }),
@@ -313,10 +329,15 @@ try {
     recover = true;
     await retry.getByRole("button", { name: "Thử lại" }).click();
     await expect(retry.locator("[data-pid]")).toHaveCount(4);
-    await retry.locator("#platinum-group").selectOption("100");
+    await retry.locator("#platinum-group").selectOption("29");
     await retry.getByRole("button", { name: "Thử lại" }).click();
-    await expect(retry.locator("[data-pid]")).toHaveCount(3);
-    await expect(retry.getByRole("tab")).toHaveCount(3);
+    const firstFptProduct = sources[29].find(
+      (p) => !/HN|custom/i.test(p.name) && !p.slug.startsWith("custom"),
+    );
+    await expect(retry.locator("[data-pid]").first()).toHaveAttribute(
+      "data-pid",
+      String(firstFptProduct.pid),
+    );
     await retry.close();
   } finally {
     await fs.unlink(fixture);
@@ -343,7 +364,7 @@ try {
   console.log(
     JSON.stringify({
       passed: true,
-      groups: 3,
+      groups: 2,
       viewports: 6,
       noJavaScript: true,
       retryRecovery: true,

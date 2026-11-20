@@ -1,6 +1,7 @@
 import {
   platinumBillingCycles,
   platinumGroups,
+  platinumPricingGroups,
   type PlatinumGid,
   type PlatinumPrices,
 } from "@/data/vps-platinum";
@@ -73,11 +74,11 @@ export async function getPlatinumProducts(
 
 export async function getPlatinumPrices(): Promise<PlatinumPrices> {
   const results = await Promise.allSettled(
-    platinumGroups.map(({ gid }) => getPlatinumProducts(gid)),
+    platinumPricingGroups.map(({ gid }) => getPlatinumProducts(gid)),
   );
   return Object.fromEntries(
     results.map((result, index) => [
-      platinumGroups[index].gid,
+      platinumPricingGroups[index].gid,
       result.status === "fulfilled" ? result.value : null,
     ]),
   ) as PlatinumPrices;
