@@ -320,14 +320,9 @@
   gap: 15px;
 }
 
-.freeInfo > div,
-.ticketBody {
-  container-type: inline-size;
-  min-width: 0;
-}
-
 .freeInfo > div {
   flex: 1;
+  min-width: 0;
 }
 
 .freeIcon,
@@ -463,6 +458,8 @@
 }
 
 .ticketBody {
+  container-type: inline-size;
+  min-width: 0;
   padding: 14px 17px 13px;
 }
 
@@ -734,7 +731,6 @@
   }
 
   .freeInfo {
-    container-type: inline-size;
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     gap: 4px 10px;
@@ -748,7 +744,7 @@
     grid-column: -2 / -1;
   }
 
-  .freeInfo .specs {
+  .freeInfo p {
     grid-column: 1 / -1;
     margin-top: 0;
   }

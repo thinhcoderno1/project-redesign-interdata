@@ -7,8 +7,7 @@ const specs = {
 
 export const blackFridayFlashSaleFreeOffer = {
   id: "free",
-  plan: "VPS Platinum",
-  specs: specs["2-2-30"],
+  plan: "tên miền .COM",
 } as const;
 
 export const blackFridayFlashSaleGroups = [

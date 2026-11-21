@@ -37,7 +37,8 @@ const {
   blackFridayFlashSaleFreeOffer: freeOffer,
   blackFridayFlashSaleGroups: groups,
 } = load(publicSource);
-const publicOffers = [freeOffer, ...groups.flatMap((group) => group.offers)];
+const discountOffers = groups.flatMap((group) => group.offers);
+const publicOffers = [freeOffer, ...discountOffers];
 assert.equal(data.blackFridayFlashSale.mode, "preview");
 assert.equal(data.blackFridayFlashSale.startsAt, "2026-11-23T11:00:00+07:00");
 const start = Date.parse(data.blackFridayFlashSale.startsAt);
@@ -66,15 +67,15 @@ assert.deepEqual(
   ["free", "vps81", "vps71", "vps61", "cloud61", "cloud51", "cloud41"],
 );
 assert.deepEqual(
-  groups.flatMap((group) => group.offers.map(({ discount }) => discount)),
+  discountOffers.map(({ discount }) => discount),
   [81, 71, 61, 61, 51, 41],
 );
 assert(!/BF26FLASH20/.test(publicSource));
 assert(!/quantity/.test(JSON.stringify(publicOffers)));
+assert.equal(freeOffer.plan, "tên miền .COM");
 assert.deepEqual(
-  publicOffers.map(({ plan, specs }) => `${plan} ${specs}`),
+  discountOffers.map(({ plan, specs }) => `${plan} ${specs}`),
   [
-    "VPS Platinum 2 vCPU - 2GB RAM - 30GB SSD",
     "VPS Platinum 2 vCPU - 2GB RAM - 30GB SSD",
     "VPS Platinum 2 vCPU - 4GB RAM - 50GB SSD",
     "VPS Platinum 4 vCPU - 8GB RAM - 80GB SSD",
@@ -146,8 +147,10 @@ const { getBlackFridayFlashSaleCheckoutLinks: getCheckoutLinks } = load(
   checkoutImports,
 );
 const vpsCheckout = `${vpsProduct.product_url}&billingcycle=quarterly`;
+const domainRegistrationUrl =
+  "https://support.interdata.vn/cart.php?a=add&domain=register";
 assert.deepEqual(await getCheckoutLinks(), {
-  free: vpsCheckout,
+  free: domainRegistrationUrl,
   vps81: vpsCheckout,
 });
 const invalidCheckout = load(checkoutSource, {
@@ -164,7 +167,7 @@ const invalidCheckout = load(checkoutSource, {
     ],
   },
 }).getBlackFridayFlashSaleCheckoutLinks;
-assert.deepEqual(await invalidCheckout(), {});
+assert.deepEqual(await invalidCheckout(), { free: domainRegistrationUrl });
 const { GET } = load(
   await fs.readFile("src/app/api/black-friday-flash-sale/route.ts", "utf8"),
   {

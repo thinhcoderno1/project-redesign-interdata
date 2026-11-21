@@ -15,8 +15,7 @@ const offers = {
   cloud51: { code: "TEST-CLOUD51" },
   cloud41: { code: "TEST-CLOUD41" },
 };
-const checkouts = {
-  free: "/store/vps-platinum-viettel-hcm/plan-2-2c-2g-30g-platinum-vt",
+const checkoutPaths = {
   vps81: "/store/vps-platinum-viettel-hcm/plan-2-2c-2g-30g-platinum-vt",
   vps71: "/store/vps-platinum-viettel-hcm/plan-3-2c-4g-50g-platinum-vt",
   vps61: "/store/vps-platinum-viettel-hcm/plan-5-4c-8g-80g-platinum-vt",
@@ -24,6 +23,13 @@ const checkouts = {
   cloud51: "/store/platinum-g2-cloud/plan-4-hcm",
   cloud41: "/store/platinum-g2-cloud/platinum-g2-cloud-plan-6",
 };
+const checkouts = new Map(
+  Object.entries(checkoutPaths).map(([id, path]) => [
+    id,
+    `https://support.interdata.vn/index.php?rp=${path}&billingcycle=quarterly`,
+  ]),
+);
+checkouts.set("free", "https://support.interdata.vn/cart.php?a=add&domain=register");
 const directory = "artifacts/black-friday";
 await fs.mkdir(directory, { recursive: true });
 const browser = await chromium.launch({
@@ -92,13 +98,12 @@ try {
   await expect(page.locator('nav a[href="#flash-sale"]')).toBeVisible();
   await expect(section.locator("article")).toHaveCount(7);
   await expect(section.locator("h3")).toHaveText([
-    "Tặng miễn phí VPS Platinum",
+    "TẶNG MIỄN PHÍ TÊN MIỀN .COM",
     "Flash Sale VPS",
     "Flash Sale Cloud Server",
   ]);
   const specs = section.locator('[class*="specs"]');
   await expect(specs).toHaveText([
-    "2 vCPU - 2GB RAM - 30GB SSD",
     "2 vCPU - 2GB RAM - 30GB SSD",
     "2 vCPU - 4GB RAM - 50GB SSD",
     "4 vCPU - 8GB RAM - 80GB SSD",
@@ -107,6 +112,11 @@ try {
     "4 vCPU - 8GB RAM - 80GB SSD",
   ]);
   const freeOffer = section.locator('[data-offer="free"]');
+  await expect(
+    freeOffer.getByText("Săn tên miền đẹp cho thương hiệu của bạn", {
+      exact: true,
+    }),
+  ).toBeVisible();
   await expect(freeOffer).not.toContainText("Chu kỳ");
   const discountCycles = section.locator('[data-service] [class*="cycle"]');
   await expect(discountCycles).toHaveText(
@@ -122,14 +132,17 @@ try {
   await expect(section.getByRole("button")).toHaveCount(0);
   const registerLinks = section.getByRole("link", { name: /^Đăng ký ngay/ });
   await expect(registerLinks).toHaveCount(7);
-  for (const [id, path] of Object.entries(checkouts)) {
+  await expect(
+    freeOffer.getByRole("link", {
+      name: "Đăng ký ngay tên miền .COM miễn phí",
+      exact: true,
+    }),
+  ).toBeVisible();
+  for (const [id, href] of checkouts) {
     const card = section.locator(`[data-offer="${id}"]`);
     const register = card.getByRole("link", { name: /^Đăng ký ngay/ });
     await expect(register).toBeVisible();
-    await expect(register).toHaveAttribute(
-      "href",
-      `https://support.interdata.vn/index.php?rp=${path}&billingcycle=quarterly`,
-    );
+    await expect(register).toHaveAttribute("href", href);
   }
   await expect(quantities).toHaveCount(0);
   assert(!(await section.innerHTML()).includes("BF26FLASH20"));
@@ -224,10 +237,7 @@ try {
     const copy = card.getByRole("button");
     await expect(copy).toHaveText(code);
     const register = card.getByRole("link", { name: /^Đăng ký ngay/ });
-    await expect(register).toHaveAttribute(
-      "href",
-      `https://support.interdata.vn/index.php?rp=${checkouts[id]}&billingcycle=quarterly`,
-    );
+    await expect(register).toHaveAttribute("href", checkouts.get(id));
     const [copyBox, registerBox] = await Promise.all([
       copy.boundingBox(),
       register.boundingBox(),

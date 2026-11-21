@@ -11,22 +11,20 @@ import { getPlatinumProducts } from "./vps-platinum-pricing";
 
 const viettelGid = 101;
 const checkoutCycle = "quarterly";
-const vps2230 = {
-  service: "vps",
-  pid: 533,
-  slug: "plan-2-2c-2g-30g-platinum-vt",
-} as const;
+const domainRegistrationUrl =
+  "https://support.interdata.vn/cart.php?a=add&domain=register";
+
+type CatalogOfferId = Exclude<FlashSaleOfferId, "free">;
 
 const checkoutProducts = {
-  free: vps2230,
-  vps81: vps2230,
+  vps81: { service: "vps", pid: 533, slug: "plan-2-2c-2g-30g-platinum-vt" },
   vps71: { service: "vps", pid: 534, slug: "plan-3-2c-4g-50g-platinum-vt" },
   vps61: { service: "vps", pid: 536, slug: "plan-5-4c-8g-80g-platinum-vt" },
   cloud61: { service: "cloud", pid: 250, slug: "plan-3-hcm" },
   cloud51: { service: "cloud", pid: 251, slug: "plan-4-hcm" },
   cloud41: { service: "cloud", pid: 253, slug: "platinum-g2-cloud-plan-6" },
 } satisfies Record<
-  FlashSaleOfferId,
+  CatalogOfferId,
   { service: "vps" | "cloud"; pid: number; slug: string }
 >;
 
@@ -47,7 +45,7 @@ export async function getBlackFridayFlashSaleCheckoutLinks(): Promise<FlashSaleC
     cloud: cloud.status === "fulfilled" ? cloud.value : [],
   };
 
-  const links: FlashSaleCheckoutLinks = {};
+  const links: FlashSaleCheckoutLinks = { free: domainRegistrationUrl };
   for (const [id, { service, pid, slug }] of Object.entries(checkoutProducts)) {
     const matches = catalogs[service].filter((product) => product.pid === pid);
     const [product] = matches;
@@ -68,7 +66,7 @@ export async function getBlackFridayFlashSaleCheckoutLinks(): Promise<FlashSaleC
     )
       continue;
 
-    links[id as FlashSaleOfferId] = checkoutUrl(product, checkoutCycle);
+    links[id as CatalogOfferId] = checkoutUrl(product, checkoutCycle);
   }
   return links;
 }

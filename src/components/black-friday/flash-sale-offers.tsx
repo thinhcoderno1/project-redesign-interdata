@@ -214,8 +214,8 @@ export function FlashSaleOffers({
               <Gift size={29} aria-hidden="true" />
             </span>
             <div>
-              <h3 id="flash-free-title">Tặng miễn phí VPS Platinum</h3>
-              <p className={styles.specs}>{freeOffer.specs}</p>
+              <h3 id="flash-free-title">TẶNG MIỄN PHÍ TÊN MIỀN .COM</h3>
+              <p>Săn tên miền đẹp cho thương hiệu của bạn</p>
             </div>
           </div>
           <div className={styles.freePrice}>
@@ -223,7 +223,7 @@ export function FlashSaleOffers({
           </div>
           <div className={styles.freeEnd}>
             <OfferAction
-              label={`${freeOffer.plan} ${freeOffer.specs} miễn phí`}
+              label={`${freeOffer.plan} miễn phí`}
               offer={publishedOffers[freeOffer.id]}
               checkoutHref={checkoutLinks[freeOffer.id]}
             />
