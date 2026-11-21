@@ -182,6 +182,33 @@
   color: var(--bf-orange-on-dark);
 }
 
+.intro .upcoming {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  margin-top: 10px;
+  color: #bbcadc;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.upcomingDates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.upcomingDates time {
+  padding: 3px 8px;
+  border: 1px solid #53647c;
+  border-radius: 6px;
+  background: #182437;
+  color: #e2e9f3;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
 .clock {
   justify-self: end;
   width: 100%;

@@ -13,6 +13,7 @@ import {
 import {
   blackFridayFlashSale,
   blackFridayFlashSaleConditions,
+  blackFridayFlashSaleUpcomingDates,
 } from "@/data/black-friday";
 import {
   blackFridayFlashSaleFreeOffer,
@@ -55,6 +56,10 @@ const openingDay = hasOpeningDate ? openingDateLabel.format(openingDate) : null;
 const bannerTime = hasOpeningDate
   ? bannerTimeLabel.format(openingDate).replace(/\s+/g, "")
   : null;
+const upcomingDates = blackFridayFlashSaleUpcomingDates.map((date) => ({
+  date,
+  label: openingShortDateLabel.format(new Date(date)),
+}));
 
 function OfferAction({
   label,
@@ -145,6 +150,16 @@ export function FlashSaleOffers({
                 </time>
               </p>
             )}
+            <p className={styles.upcoming}>
+              <span>Các đợt tiếp theo</span>
+              <span className={styles.upcomingDates}>
+                {upcomingDates.map(({ date, label }) => (
+                  <time key={date} dateTime={date}>
+                    {label}
+                  </time>
+                ))}
+              </span>
+            </p>
           </div>
 
           <div className={styles.clock}>

@@ -168,6 +168,8 @@ export const blackFridayFlashSale: FlashSaleSchedule = {
   endsAt: null,
 };
 
+export const blackFridayFlashSaleUpcomingDates = ["2026-11-25", "2026-11-27"];
+
 export const blackFridayCoupons = [
   {
     service: "VPS",

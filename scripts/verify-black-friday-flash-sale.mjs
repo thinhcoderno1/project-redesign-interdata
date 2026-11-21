@@ -72,8 +72,14 @@ try {
   assert(!(await page.content()).includes("BF26FLASH20"));
   const section = page.locator("#flash-sale");
   await expect(section).toBeVisible();
-  await expect(section.locator("time")).toHaveText(
+  await expect(section.locator(`time[datetime="${startsAt}"]`)).toHaveText(
     "11:00AM · Thứ Hai, 23/11/2026",
+  );
+  await expect(section.locator('time[datetime="2026-11-25"]')).toHaveText(
+    "25/11/2026",
+  );
+  await expect(section.locator('time[datetime="2026-11-27"]')).toHaveText(
+    "27/11/2026",
   );
   await expect(
     section.getByText("Đếm ngược đến giờ mở sale", { exact: true }),
