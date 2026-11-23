@@ -3,6 +3,7 @@
 import { MobilePricingSlider } from "@/components/shared/mobile-pricing-slider";
 import {
   useEffect,
+  useId,
   useRef,
   useState,
   type KeyboardEvent,
@@ -18,10 +19,9 @@ import type { FlashSaleCheckoutLinks } from "@/data/black-friday-flash-sale";
 import {
   ArrowDownUp,
   ArrowRight,
-  ArrowUp,
   ArrowUpRight,
+  BadgeCheck,
   Check,
-  ChevronDown,
   CircleHelp,
   Cloud,
   Cpu,
@@ -33,26 +33,22 @@ import {
   Network,
   RefreshCw,
   Server,
+  ShieldCheck,
   Sparkles,
   Ticket,
   TicketPercent,
   TicketPlus,
   type LucideIcon,
 } from "lucide-react";
-import {
-  checkoutUrl,
-  formatVnd,
-  type BillingCycle,
-  type VpsProduct,
-} from "@/data/vps-pricing";
+import { checkoutUrl, formatVnd } from "@/data/vps-pricing";
+import type {
+  BlackFridayCycle,
+  BlackFridayProduct,
+} from "@/lib/black-friday-pricing";
 import {
   blackFridayCouponConditions,
   blackFridayFaqs,
   blackFridayRenewal,
-  blackFridaySpecs,
-  getBlackFridaySavings,
-  getBlackFridayUpgrade,
-  showBlackFridaySavingsBadge,
   type BlackFridayCouponGroup,
 } from "@/data/black-friday";
 import { contactDetails } from "@/data/contact";
@@ -66,20 +62,24 @@ const marqueeMessages = [
   "Nâng Cấp Hạ Tầng",
 ];
 
-const cycles: { key: BillingCycle; label: string }[] = [
-  { key: "monthly", label: "1 tháng" },
-  { key: "quarterly", label: "3 tháng" },
-  { key: "semiannually", label: "6 tháng" },
-  { key: "annually", label: "12 tháng" },
-  { key: "biennially", label: "24 tháng" },
-  { key: "triennially", label: "36 tháng" },
-];
+const bestPlanCycles = [
+  { key: "annually", label: "1 năm", badgeDiscount: 60 },
+  { key: "biennially", label: "2 năm", badgeDiscount: 65 },
+  { key: "triennially", label: "3 năm", badgeDiscount: 70 },
+] as const satisfies readonly {
+  key: BlackFridayCycle;
+  label: string;
+  badgeDiscount: number;
+}[];
 
-const bestPlanCycles: { key: BillingCycle; label: string }[] = [
-  { key: "annually", label: "1 năm" },
-  { key: "biennially", label: "2 năm" },
-  { key: "triennially", label: "3 năm" },
-];
+const planResources = [
+  { key: "cpu", unit: "vCore", icon: Cpu },
+  { key: "ram", unit: "GB RAM", icon: MemoryStick },
+  { key: "nvme", unit: "GB SSD NVMe", icon: HardDrive },
+] as const;
+
+const vipFlamePath =
+  "M7.3 19.3C3.4 19.3 1 17 1 13.8c0-2.2 1.1-4.1 2.7-5.8-.2 1.5.4 2.7 1.6 3.2C4.9 7.3 8.1 5.1 7.6 1c3.4 1.4 5.5 4.2 5 7 1.3-.5 2.4-1.6 2.6-2.9 1.2 1 1.7 1.7 1.8 2.6h11.8c3.7 0 6.2 2.4 6.2 5.6s-2.5 6-6.2 6Z";
 
 function EyebrowBadge({
   icon: Icon,
@@ -98,105 +98,124 @@ function EyebrowBadge({
   );
 }
 
-function Price({
-  product,
-  cycle,
-}: {
-  product: VpsProduct;
-  cycle: BillingCycle;
-}) {
+function VipBadge() {
+  const gradientId = useId();
+
   return (
-    <div className={styles.price}>
-      <strong>{formatVnd(product.pricing.VND[cycle])}</strong>
-      <span>
-        /{" "}
-        {cycle === "triennially"
-          ? "48 tháng"
-          : cycles.find((item) => item.key === cycle)?.label}
-      </span>
-    </div>
+    <svg
+      className={styles.vipBadge}
+      viewBox="0 0 36 26"
+      role="img"
+      aria-label="VIP"
+      focusable="false"
+    >
+      <defs>
+        <linearGradient
+          id={gradientId}
+          x1="2"
+          y1="1"
+          x2="27"
+          y2="17"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="18%" stopColor="#e62a32" />
+          <stop offset="43%" stopColor="#ff7a18" />
+          <stop offset="68%" stopColor="#ffd45a" />
+        </linearGradient>
+      </defs>
+      <g transform="scale(1 1.27)">
+        <path
+          d={vipFlamePath}
+          fill={`url(#${gradientId})`}
+          stroke="#ae3d14"
+          strokeWidth="0.7"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M8 17.3c-2.5-.2-3.9-2-3.4-4.2.5.9 1.1 1.4 1.9 1.5-.3-2.1 1.3-4.2 2-5.9 1.5 2.5 2.2 5.9-.5 8.6Z"
+          fill="#ffe98a"
+          opacity="0.85"
+        />
+        <path
+          className={styles.vipRim}
+          d={vipFlamePath}
+          fill="none"
+          stroke="#fff3be"
+          strokeWidth="1"
+          strokeLinejoin="round"
+        />
+      </g>
+      <text
+        x="21"
+        y="20.9"
+        textAnchor="middle"
+        fontFamily="Arial, sans-serif"
+        fontSize="12"
+        fontWeight="800"
+        letterSpacing="0.35"
+        fill="#551800"
+      >
+        VIP
+      </text>
+    </svg>
   );
 }
 
-function Specs({ product }: { product: VpsProduct }) {
-  const specs = blackFridaySpecs(product);
-  const isExtra = (spec: string) =>
-    /IPv[46]|Network\s*Port|Unlimited\s*Bandwidth/i.test(spec);
-  const primary = specs.filter((spec) => !isExtra(spec));
-  const extra = specs.filter(isExtra);
-  function specLine(spec: string) {
-    const Icon = /vCPU|vCore/i.test(spec)
-      ? Cpu
-      : /RAM/i.test(spec)
-        ? MemoryStick
-        : /NVMe|SSD/i.test(spec)
-          ? HardDrive
-          : /IPv4|IPv6/i.test(spec)
-            ? Globe2
-            : /Network|Mbps|Gbps/i.test(spec)
-              ? Network
-              : /Bandwidth|băng thông/i.test(spec)
-                ? ArrowDownUp
-                : Check;
-    return (
-      <li key={spec}>
-        <Icon size={20} aria-hidden="true" />
-        <span>{spec}</span>
-      </li>
-    );
-  }
-  return (
-    <div className={styles.specs}>
-      <ul className={styles.specList}>{primary.map(specLine)}</ul>
-      {extra.length > 0 && (
-        <details className={styles.specDetails}>
-          <summary>
-            <span className={styles.showMore}>Xem thêm</span>
-            <span className={styles.showLess}>Thu gọn</span>
-            <ChevronDown size={16} aria-hidden="true" />
-          </summary>
-          <ul className={styles.specList}>{extra.map(specLine)}</ul>
-        </details>
-      )}
-    </div>
-  );
-}
+function Specs({ product }: { product: BlackFridayProduct }) {
+  const { resources } = product;
+  const networkSpecs = [
+    { label: product.ipv4, icon: Globe2 },
+    { label: product.port, icon: Network },
+    { label: product.bandwidth, icon: ArrowDownUp },
+  ];
 
-function PlanUpgrade({
-  product,
-  next,
-}: {
-  product: VpsProduct;
-  next: VpsProduct | undefined;
-}) {
-  // Promote the 3-year offer (48 months of service) on every billing tab.
-  const upgrade = next && getBlackFridayUpgrade(next, product, "triennially");
-  if (!next || !upgrade) return null;
   return (
-    <div className={styles.planUpgrade}>
-      <p className={styles.upgradeTitle}>
-        <ArrowUp size={16} aria-hidden="true" />
-        Chỉ thêm
-      </p>
-      <div className={styles.upgradeMonthly}>
-        <strong>{formatVnd(upgrade.monthlyEquivalent)}</strong>
-        <span> /tháng</span>
-      </div>
-      <p className={styles.upgradeLabel}>Nhận thêm:</p>
-      <ul className={styles.upgradeResources} role="list">
-        {upgrade.resources.map(({ key, value, unit }) => {
-          const Icon =
-            key === "cpu" ? Cpu : key === "ram" ? MemoryStick : HardDrive;
-          return (
-            <li key={key}>
-              <Icon size={14} aria-hidden="true" />
-              <span>
-                +{new Intl.NumberFormat("vi-VN").format(value)}{" "}
-                {key === "storage" ? "GB NVMe" : unit}
-              </span>
+    <ul className={styles.specs} aria-label="Cấu hình" role="list">
+      {resources &&
+        planResources.map(({ key, unit, icon: Icon }) => (
+          <li key={key}>
+            <Icon size={17} aria-hidden="true" />
+            <span>
+              {resources[key]} {unit}
+            </span>
+          </li>
+        ))}
+      {networkSpecs.map(
+        ({ label, icon: Icon }) =>
+          label && (
+            <li key={label}>
+              <Icon size={17} aria-hidden="true" />
+              <span>{label}</span>
             </li>
-          );
-        })}
+          ),
+      )}
+      {product.firewall && (
+        <li className={styles.firewallSpec}>
+          <ShieldCheck size={17} aria-hidden="true" />
+          <span className={styles.firewallLabel}>
+            <span>{product.firewall}</span>
+            <VipBadge />
+          </span>
+        </li>
+      )}
+    </ul>
+  );
+}
+
+function PlanGifts({ gifts }: { gifts: readonly string[] }) {
+  return (
+    <div className={styles.planGifts}>
+      <p className={styles.giftTitle}>
+        <Gift size={17} aria-hidden="true" />
+        Quà Tặng
+      </p>
+      <ul className={styles.giftList} role="list">
+        {gifts.map((gift) => (
+          <li key={gift}>
+            <BadgeCheck size={16} aria-hidden="true" />
+            <span>{gift}</span>
+          </li>
+        ))}
       </ul>
     </div>
   );
@@ -207,16 +226,20 @@ export function BlackFridayPage({
   coupons,
   flashSaleCheckoutLinks,
 }: {
-  vps: VpsProduct[];
+  vps: BlackFridayProduct[];
   coupons: BlackFridayCouponGroup[];
   flashSaleCheckoutLinks: FlashSaleCheckoutLinks;
 }) {
-  const [cycle, setCycle] = useState<BillingCycle>("triennially");
+  const [selectedCycle, setCycle] = useState<BlackFridayCycle>("triennially");
   const cycleTabs = useRef<(HTMLButtonElement | null)[]>([]);
+  const planGrid = useRef<HTMLDivElement>(null);
   const flashSaleVisible = useFlashSaleVisibility();
   const [activeSection, setActiveSection] = useState("best-plans");
   const products = vps;
-  const selectedCycle = cycle;
+  const period = bestPlanCycles.find(({ key }) => key === selectedCycle)?.label;
+  const hasReferencePrice = products.some(
+    (product) => product.referencePrices[selectedCycle] !== undefined,
+  );
 
   function cycleKeyboard(
     event: KeyboardEvent<HTMLButtonElement>,
@@ -250,6 +273,25 @@ export function BlackFridayPage({
     });
     return () => observer.disconnect();
   }, [flashSaleVisible]);
+
+  useEffect(() => {
+    const badges = planGrid.current?.querySelectorAll(`.${styles.vipBadge}`);
+    if (!badges?.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          entry.target.toggleAttribute(
+            "data-highlighted",
+            entry.intersectionRatio >= 0.8,
+          );
+        }
+      },
+      { threshold: 0.8 },
+    );
+    badges.forEach((badge) => observer.observe(badge));
+    return () => observer.disconnect();
+  }, [products]);
 
   return (
     <main id="main-content" className={`${styles.page} dark`}>
@@ -373,16 +415,16 @@ export function BlackFridayPage({
             <circle cx="1074" cy="328" r="2.5" />
           </g>
         </svg>
-        <div className="container">
+        <div className={`container ${styles.bestPlansInner}`}>
           <div
             className={`${styles.sectionHeading} ${styles.bestPlansHeading}`}
           >
             <div>
               <EyebrowBadge icon={Sparkles} className={styles.sectionEyebrow}>
-                ƯU ĐÃI NỔI BẬT
+                HOT DEALS
               </EyebrowBadge>
-              <h2 id="best-plans-title">BEST PLANS VPS BLACK FRIDAY</h2>
-              <p>Chọn cấu hình phù hợp với nhu cầu của bạn.</p>
+              <h2 id="best-plans-title">VPS PLATINUM BLACK FRIDAY</h2>
+              <p>Hiệu năng mạnh mẽ cho mọi dự án</p>
             </div>
           </div>
           {products.length ? (
@@ -396,29 +438,30 @@ export function BlackFridayPage({
                   role="tablist"
                   aria-labelledby="bf-cycle-label"
                 >
-                  {bestPlanCycles.map(({ key, label }, index) => (
-                    <button
-                      key={key}
-                      ref={(element) => {
-                        cycleTabs.current[index] = element;
-                      }}
-                      type="button"
-                      role="tab"
-                      id={`bf-cycle-${key}`}
-                      aria-controls="bf-plans"
-                      aria-selected={selectedCycle === key}
-                      tabIndex={selectedCycle === key ? 0 : -1}
-                      onClick={() => setCycle(key)}
-                      onKeyDown={(event) => cycleKeyboard(event, index)}
-                    >
-                      {label}
-                      {key === "triennially" && (
+                  {bestPlanCycles.map(
+                    ({ key, label, badgeDiscount }, index) => (
+                      <button
+                        key={key}
+                        ref={(element) => {
+                          cycleTabs.current[index] = element;
+                        }}
+                        type="button"
+                        role="tab"
+                        id={`bf-cycle-${key}`}
+                        aria-controls="bf-plans"
+                        aria-selected={selectedCycle === key}
+                        tabIndex={selectedCycle === key ? 0 : -1}
+                        onClick={() => setCycle(key)}
+                        onKeyDown={(event) => cycleKeyboard(event, index)}
+                      >
+                        {label}
                         <span className={styles.cycleSavingsTag}>
-                          Miễn phí 1 năm
+                          <span className="sr-only">Giảm {badgeDiscount}%</span>
+                          <span aria-hidden="true">-{badgeDiscount}%</span>
                         </span>
-                      )}
-                    </button>
-                  ))}
+                      </button>
+                    ),
+                  )}
                 </div>
               </div>
               <ul
@@ -427,10 +470,10 @@ export function BlackFridayPage({
                 role="list"
               >
                 {[
-                  "Intel Xeon Platinum",
+                  "Intel® Platinum Gen 2",
                   "SSD NVMe U.2 Gen 4",
-                  "Uptime 99.9%",
-                  "Support 24/7",
+                  "AntiDDoS 120Gbps",
+                  "Quà Tặng Ngập Tràn",
                 ].map((highlight) => (
                   <li key={highlight}>
                     <Check size={17} strokeWidth={2.5} aria-hidden="true" />
@@ -440,6 +483,7 @@ export function BlackFridayPage({
               </ul>
               <MobilePricingSlider
                 id="bf-plans"
+                ref={planGrid}
                 className={styles.planGrid}
                 role="tabpanel"
                 aria-labelledby={`bf-cycle-${selectedCycle}`}
@@ -447,7 +491,13 @@ export function BlackFridayPage({
                 aria-live="polite"
               >
                 {products.map((product, index) => {
-                  const savings = getBlackFridaySavings(product, selectedCycle);
+                  const total = product.pricing.VND[selectedCycle];
+                  const hasPrice = total !== undefined;
+                  const referencePrice = product.referencePrices[selectedCycle];
+                  const isEstimate = referencePrice?.source === "estimate";
+                  const referenceLabel = isEstimate
+                    ? "Giá tham chiếu ước tính theo bảng tài nguyên VPS Platinum Viettel"
+                    : "Giá tham chiếu VPS Platinum Viettel";
                   return (
                     <article
                       key={product.pid}
@@ -462,60 +512,45 @@ export function BlackFridayPage({
                       )}
                       <div className={styles.planHeader}>
                         <h3>{product.name}</h3>
-                        <span
-                          className={styles.planIconStage}
-                          aria-hidden="true"
-                        >
-                          <Image
-                            className={styles.planServerIcon}
-                            src="/images/black-friday/3d-server-icon.png"
-                            alt=""
-                            width={300}
-                            height={300}
-                            sizes="(max-width: 360px) 76px, (max-width: 700px) 92px, (max-width: 800px) 52px, (max-width: 900px) 60px, (max-width: 1100px) 80px, 108px"
-                          />
-                        </span>
+                        <Image
+                          className={styles.planChip}
+                          src="/images/black-friday/intel-xeon-platinum-8000-angled.webp"
+                          alt=""
+                          width={256}
+                          height={256}
+                          sizes="(max-width: 360px) 74px, (max-width: 767px) 82px, (min-width: 1024px) and (max-width: 1100px) 70px, 88px"
+                        />
                       </div>
-                      {selectedCycle === "triennially" && (
-                        <div className={styles.giftTag}>
-                          <Gift size={17} aria-hidden="true" />
-                          <span>TẶNG THÊM 1 NĂM</span>
-                        </div>
-                      )}
-                      {savings && (
+                      {hasReferencePrice && (
                         <div className={styles.originalPrice}>
-                          <del>
-                            {formatVnd(savings.originalPrice)} /{" "}
-                            {
-                              cycles.find(({ key }) => key === selectedCycle)
-                                ?.label
-                            }
-                          </del>
-                          {showBlackFridaySavingsBadge && (
-                            <span className={styles.savingsBadge}>
-                              -{savings.percent}%
-                            </span>
+                          {referencePrice !== undefined && (
+                            <del title={referenceLabel}>
+                              <span className="sr-only">{referenceLabel} </span>
+                              {formatVnd(referencePrice.amount)} / {period}
+                            </del>
                           )}
                         </div>
                       )}
-                      <Price product={product} cycle={selectedCycle} />
-                      <PlanUpgrade
-                        product={product}
-                        next={products[index + 1]}
-                      />
+                      <div className={styles.price}>
+                        <strong>{formatVnd(total)}</strong>
+                        {hasPrice && <span>/ {period}</span>}
+                      </div>
                       <Specs product={product} />
+                      {selectedCycle === "triennially" &&
+                        hasPrice &&
+                        product.gifts.length > 0 && (
+                          <PlanGifts gifts={product.gifts} />
+                        )}
                       <a
                         className={`button ${styles.blueButton}`}
                         href={
-                          product.pricing.VND[selectedCycle] !== undefined
+                          hasPrice
                             ? checkoutUrl(product, selectedCycle)
                             : "/lien-he/"
                         }
-                        aria-label={`${product.pricing.VND[selectedCycle] !== undefined ? "Đăng ký ngay gói" : "Liên hệ tư vấn gói"} ${product.name}`}
+                        aria-label={`${hasPrice ? "Đăng ký ngay gói" : "Liên hệ tư vấn gói"} ${product.name}`}
                       >
-                        {product.pricing.VND[selectedCycle] !== undefined
-                          ? "Đăng ký ngay"
-                          : "Liên hệ tư vấn"}
+                        {hasPrice ? "Đăng ký ngay" : "Liên hệ tư vấn"}
                         <ArrowRight size={17} aria-hidden="true" />
                       </a>
                     </article>

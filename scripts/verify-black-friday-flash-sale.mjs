@@ -7,14 +7,15 @@ const base = process.env.TEST_BASE_URL || "http://localhost:3000";
 const startsAt = "2026-11-23T11:00:00+07:00";
 const start = Date.parse(startsAt);
 const offers = {
-  free: { code: "TEST-FREE" },
-  vps81: { code: "TEST-VPS81" },
-  vps71: { code: "TEST-VPS71" },
-  vps61: { code: "TEST-VPS61" },
-  cloud61: { code: "TEST-CLOUD61" },
-  cloud51: { code: "TEST-CLOUD51" },
-  cloud41: { code: "TEST-CLOUD41" },
+  free: { code: "TESTFLASH23-DOMAIN", quantity: 5 },
+  vps81: { code: "TESTFLASH23-VPS81", quantity: 3 },
+  vps71: { code: "TESTFLASH23-VPS71", quantity: 3 },
+  vps61: { code: "TESTFLASH23-VPS61", quantity: 10 },
+  cloud61: { code: "TESTFLASH23-CLOUD61", quantity: 3 },
+  cloud51: { code: "TESTFLASH23-CLOUD51", quantity: 3 },
+  cloud41: { code: "TESTFLASH23-CLOUD41", quantity: 10 },
 };
+const codePattern = /BF26FLASH(?:20|23)-/;
 const checkoutPaths = {
   vps81: "/store/vps-platinum-viettel-hcm/plan-2-2c-2g-30g-platinum-vt",
   vps71: "/store/vps-platinum-viettel-hcm/plan-3-2c-4g-50g-platinum-vt",
@@ -29,7 +30,10 @@ const checkouts = new Map(
     `https://support.interdata.vn/index.php?rp=${path}&billingcycle=quarterly`,
   ]),
 );
-checkouts.set("free", "https://support.interdata.vn/cart.php?a=add&domain=register");
+checkouts.set(
+  "free",
+  "https://support.interdata.vn/cart.php?a=add&domain=register",
+);
 const directory = "artifacts/black-friday";
 await fs.mkdir(directory, { recursive: true });
 const browser = await chromium.launch({
@@ -53,7 +57,21 @@ try {
     actualRelease.status,
     actualRelease.serverNow < start ? "upcoming" : "live",
   );
-  assert.deepEqual(actualRelease.offers, {});
+  if (actualRelease.status === "live") {
+    assert.deepEqual(
+      Object.fromEntries(
+        Object.entries(actualRelease.offers).map(([id, { quantity }]) => [
+          id,
+          quantity,
+        ]),
+      ),
+      Object.fromEntries(
+        Object.entries(offers).map(([id, { quantity }]) => [id, quantity]),
+      ),
+    );
+  } else {
+    assert.deepEqual(actualRelease.offers, {});
+  }
   page.on("pageerror", (error) => errors.push(error.message));
   let serverNow = start - 86400000;
   let requests = 0;
@@ -75,7 +93,7 @@ try {
   // An advanced device clock must not reveal codes before the server opens.
   await page.clock.setFixedTime(new Date(start + 86400000));
   assert.equal((await page.goto(`${base}/blackfriday/`)).status(), 200);
-  assert(!(await page.content()).includes("BF26FLASH20"));
+  assert(!codePattern.test(await page.content()));
   const section = page.locator("#flash-sale");
   await expect(section).toBeVisible();
   await expect(section.locator(`time[datetime="${startsAt}"]`)).toHaveText(
@@ -117,14 +135,13 @@ try {
       exact: true,
     }),
   ).toBeVisible();
-  await expect(freeOffer).not.toContainText("Chu kỳ");
   const discountCycles = section.locator('[data-service] [class*="cycle"]');
   await expect(discountCycles).toHaveText(
     Array(6).fill("Chu kỳ 3 tháng – 1 năm"),
   );
   await expect(discountCycles.first()).toHaveCSS("color", "rgb(75, 89, 112)");
   const locked = section.getByText("Mã tiếp theo 23/11/2026", { exact: true });
-  const quantities = section.getByText(/^Số lượng:/);
+  const quantities = section.getByText(/^Chỉ \d{2} mã$/i);
   await expect(locked).toHaveCount(7);
   await expect(section.getByRole("timer").locator("strong").first()).toHaveText(
     "01",
@@ -145,7 +162,7 @@ try {
     await expect(register).toHaveAttribute("href", href);
   }
   await expect(quantities).toHaveCount(0);
-  assert(!(await section.innerHTML()).includes("BF26FLASH20"));
+  assert(!codePattern.test(await section.innerHTML()));
   for (const width of [
     320, 360, 385, 386, 390, 540, 640, 651, 741, 768, 800, 1024, 1440, 1920,
   ]) {
@@ -215,6 +232,7 @@ try {
   await expect(section.getByRole("timer")).toHaveCount(0, { timeout: 5000 });
   await expect(locked).toHaveCount(7);
   await expect(section.getByRole("button")).toHaveCount(0);
+  await expect(quantities).toHaveCount(0);
   await expect(
     section.getByText("Flash Sale đã mở", { exact: true }),
   ).toHaveCount(0);
@@ -230,12 +248,22 @@ try {
   await expect(
     section.getByText("Flash Sale đã mở", { exact: true }),
   ).toBeVisible();
-  await expect(freeOffer).not.toContainText("Chu kỳ");
-  await expect(quantities).toHaveCount(0);
-  for (const [id, { code }] of Object.entries(offers)) {
+  await expect(
+    freeOffer.getByText("Săn tên miền đẹp cho thương hiệu của bạn", {
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(quantities).toHaveCount(7);
+  await expect(quantities.nth(1)).toHaveCSS("color", "rgb(140, 50, 16)");
+  for (const [id, { code, quantity }] of Object.entries(offers)) {
     const card = section.locator(`[data-offer="${id}"]`);
     const copy = card.getByRole("button");
     await expect(copy).toHaveText(code);
+    await expect(
+      card.getByText(`Chỉ ${String(quantity).padStart(2, "0")} mã`, {
+        exact: true,
+      }),
+    ).toBeVisible();
     const register = card.getByRole("link", { name: /^Đăng ký ngay/ });
     await expect(register).toHaveAttribute("href", checkouts.get(id));
     const [copyBox, registerBox] = await Promise.all([
@@ -261,6 +289,7 @@ try {
   ]);
   await page.reload();
   await expect(section.getByRole("button")).toHaveCount(7);
+  await expect(quantities).toHaveCount(7);
   for (const width of [320, 390, 640, 768, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 1000 });
     assert(
@@ -305,9 +334,17 @@ try {
   await page.clock.setFixedTime(new Date(start - 86400000));
   await page.reload();
   await expect(section.getByRole("button")).toHaveCount(7);
+  // An already-open page also picks up the release at the boundary without a visibility event.
+  serverNow = start - 2000;
+  await page.reload();
+  await expect(locked).toHaveCount(7);
+  await expect(quantities).toHaveCount(0);
+  serverNow = start;
+  await expect(quantities).toHaveCount(7);
+  await expect(section.getByRole("button")).toHaveCount(7);
   assert.deepEqual(errors, []);
   console.log(
-    "Flash Sale UI: seven locked offers, November 23 countdown, hidden quantities and free cycle, delayed code release, device clock skew, retries, clipboard, responsive layouts and accessibility passed.",
+    "Flash Sale UI: seven locked offers, November 23 countdown, domain offer copy, code and quantity release, device clock skew, retries, clipboard, responsive layouts and accessibility passed.",
   );
 } finally {
   await browser.close();

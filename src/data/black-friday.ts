@@ -1,161 +1,11 @@
-import vpsContent from "./vps-content.json";
 import { links } from "./content";
 import type { FlashSaleSchedule } from "@/lib/flash-sale";
-import {
-  productSpecs,
-  type BillingCycle,
-  type VpsProduct,
-} from "./vps-pricing";
 
-export const blackFridayGid = 103;
-// Temporarily hide the percentage beside the original price; set true to restore it.
-export const showBlackFridaySavingsBadge = false;
 // Retain renewal copy and the additional offer for a future campaign update.
 export const blackFridayRenewal = {
   showDescriptions: false,
   showExtraDiscount: false,
 };
-export const blackFridayPlans = [
-  { pid: 567, slug: "bf26-start", platinumName: "INTER PLATINUM 1", plan: 1 },
-  { pid: 568, slug: "bf26-core", platinumName: "INTER PLATINUM 2", plan: 2 },
-  { pid: 569, slug: "bf26-plus", platinumName: "INTER PLATINUM 3", plan: 3 },
-] as const;
-
-export function getBlackFridayPlan(product: VpsProduct) {
-  return product.gid === blackFridayGid
-    ? blackFridayPlans.find(
-        ({ pid, slug }) => product.pid === pid && product.slug === slug,
-      )
-    : undefined;
-}
-
-export function blackFridaySpecs(product: VpsProduct) {
-  // The API includes campaign copy above the specs; the 3-year gift has its own tag.
-  return productSpecs(product, true).filter(
-    (line) => !/^Tặng\s+1\s+Năm\s+HSD\b/i.test(line),
-  );
-}
-
-// Use the retained Inter Platinum annual ORIGINAL, not its discounted API price.
-// Black Friday has no additional discount for longer billing cycles.
-const originalPrices: Partial<
-  Record<string, Partial<Record<BillingCycle, number>>>
-> = vpsContent.hotDeals.originalPrices;
-
-export function getBlackFridaySavings(
-  product: VpsProduct,
-  cycle: BillingCycle,
-) {
-  const plan = getBlackFridayPlan(product);
-  const years = { annually: 1, biennially: 2, triennially: 3 }[
-    cycle as "annually" | "biennially" | "triennially"
-  ];
-  const annualOriginal = plan && originalPrices[plan.platinumName]?.annually;
-  const originalPrice =
-    typeof annualOriginal === "number" ? annualOriginal * years : NaN;
-  const price = product.pricing.VND[cycle];
-  const currentPrice = Number(price);
-  if (
-    !plan ||
-    !years ||
-    !Number.isFinite(originalPrice) ||
-    originalPrice <= 0 ||
-    typeof price !== "string" ||
-    !price.trim() ||
-    !Number.isFinite(currentPrice) ||
-    currentPrice < 0 ||
-    currentPrice >= originalPrice
-  )
-    return null;
-
-  return {
-    originalPrice,
-    // Round down so the displayed whole percentage never overstates savings.
-    percent: Math.floor(((originalPrice - currentPrice) / originalPrice) * 100),
-  };
-}
-
-export function getBlackFridayUpgrade(
-  product: VpsProduct,
-  previous: VpsProduct | undefined,
-  cycle: BillingCycle,
-) {
-  // Include the extra year of service offered with the 3-year cycle.
-  const months = { annually: 12, biennially: 24, triennially: 48 }[
-    cycle as "annually" | "biennially" | "triennially"
-  ];
-  const plan = getBlackFridayPlan(product);
-  const previousPlan = previous && getBlackFridayPlan(previous);
-  if (
-    !previous ||
-    !months ||
-    !plan ||
-    !previousPlan ||
-    plan.plan !== previousPlan.plan + 1
-  )
-    return null;
-
-  const price = product.pricing.VND[cycle];
-  const previousPrice = previous.pricing.VND[cycle];
-  if (
-    typeof price !== "string" ||
-    !price.trim() ||
-    typeof previousPrice !== "string" ||
-    !previousPrice.trim() ||
-    !Number.isFinite(Number(price)) ||
-    !Number.isFinite(Number(previousPrice)) ||
-    Number(previousPrice) < 0 ||
-    Number(price) <= Number(previousPrice)
-  )
-    return null;
-
-  const specs = productSpecs(product, true);
-  const previousSpecs = productSpecs(previous, true);
-  const definitions = [
-    { key: "cpu", pattern: /^(\d+(?:\.\d+)?)\s+vCore$/i, unit: "vCore" },
-    { key: "ram", pattern: /^(\d+(?:\.\d+)?)\s+GB RAM$/i, unit: "GB RAM" },
-    {
-      key: "storage",
-      pattern: /^(\d+(?:\.\d+)?)\s+GB SSD NVMe$/i,
-      unit: "GB SSD NVMe",
-    },
-  ] as const;
-  const resources = definitions.map(({ key, pattern, unit }) => {
-    const read = (lines: string[]) => {
-      const matches = lines.flatMap((line) => {
-        const match = line.match(pattern);
-        return match ? [Number(match[1])] : [];
-      });
-      return matches.length === 1 ? matches[0] : NaN;
-    };
-    const current = read(specs);
-    const before = read(previousSpecs);
-    return { key, unit, value: current - before, current, before };
-  });
-  if (
-    resources.some(
-      ({ current, before, value }) =>
-        !Number.isFinite(current) ||
-        !Number.isFinite(before) ||
-        current <= 0 ||
-        before <= 0 ||
-        value < 0,
-    )
-  )
-    return null;
-  const increases = resources.filter(({ value }) => value > 0);
-  if (!increases.length) return null;
-  const difference = Number(price) - Number(previousPrice);
-  return {
-    previousPlan: previousPlan.plan,
-    months,
-    difference,
-    // The comparison is a monthly equivalent, never a monthly checkout price.
-    // Round up to avoid understating a fractional-dong monthly difference.
-    monthlyEquivalent: Math.ceil(difference / months),
-    resources: increases,
-  };
-}
 
 // Preview keeps the section visible; Flash Sale releases are timed on the server.
 // Set all dates and switch to "scheduled" when the official schedule is ready.
@@ -226,21 +76,21 @@ export const blackFridayFaqs: {
   action?: { label: string; href: string };
 }[] = [
   {
-    question: "Nên chọn Plan 1, Plan 2 hay Plan 3?",
+    question: "Nên chọn gói BF26 PLATINUM nào?",
     answer:
-      "Hãy đối chiếu mức dùng CPU, RAM và dung lượng lưu trữ thực tế, đồng thời chừa tài nguyên cho tăng trưởng. Plan 1 phù hợp với website hoặc ứng dụng nhỏ; cân nhắc Plan 2 hoặc Plan 3 khi chạy thêm dịch vụ, cần nhiều RAM hoặc xử lý đồng thời nhiều tác vụ. Khối nâng cấp ở Best Plans cho biết tài nguyên tăng thêm và khoản chênh lệch giữa hai gói liền nhau.",
+      "Hãy đối chiếu mức dùng CPU, RAM và dung lượng lưu trữ thực tế, đồng thời chừa tài nguyên cho tăng trưởng. P1 có cấu hình thấp nhất trong nhóm. Bạn có thể so sánh P2 đến P8 nếu cần nhiều tài nguyên hơn.",
     action: { label: "So sánh các Best Plans", href: "#best-plans" },
   },
   {
     question:
       "Giá trong Best Plans là giá mỗi tháng hay tổng tiền theo chu kỳ?",
     answer:
-      "Số tiền chính trên mỗi gói là tổng tiền cho chu kỳ 12, 24 hoặc 36 tháng đang chọn. Dòng “Chỉ thêm …đ/tháng” trong khối nâng cấp ở cả ba chu kỳ là khoản chênh lệch giữa hai gói khi đăng ký 3 năm, chia cho tổng 48 tháng sử dụng (đã gồm 1 năm được tặng), không phải số tiền thanh toán hằng tháng hay báo giá nâng cấp một dịch vụ đang dùng. Kiểm tra tổng tiền và chu kỳ trên trang đăng ký trước khi thanh toán.",
+      "Số tiền chính trên mỗi gói là tổng tiền cho chu kỳ 1, 2 hoặc 3 năm đang chọn.",
   },
   {
     question: "Nên đăng ký 1, 2 hay 3 năm để tối ưu chi phí?",
     answer:
-      "Chu kỳ 1 năm phù hợp khi bạn muốn linh hoạt ngân sách hoặc nhu cầu sử dụng còn có thể thay đổi. Chu kỳ 2 năm là lựa chọn cân bằng nếu đã có kế hoạch sử dụng tương đối ổn định và muốn cân đối khoản thanh toán ban đầu. Nếu dự kiến vận hành website, ứng dụng hoặc hệ thống lâu dài và ngân sách cho phép, bạn nên ưu tiên chu kỳ 3 năm để tận dụng ưu đãi dài hạn và chủ động kế hoạch chi phí. Riêng tại Best Plans, đăng ký chu kỳ 3 năm còn được tặng thêm 1 năm sử dụng: thanh toán cho 3 năm và nhận tổng cộng 4 năm sử dụng, giúp tối ưu chi phí bình quân theo tháng.",
+      "Chu kỳ 1 năm giúp bạn linh hoạt ngân sách khi nhu cầu còn thay đổi. Chu kỳ 2 năm giảm 5% trên tổng giá 2 năm, còn chu kỳ 3 năm giảm 10% trên tổng giá 3 năm. Các gói P2 đến P8 có thêm quà tặng khi chọn chu kỳ 3 năm.",
   },
   {
     question: "Tôi nhận và sử dụng mã ưu đãi như thế nào?",
@@ -260,9 +110,9 @@ export const blackFridayFaqs: {
     action: { label: "Xem ưu đãi gia hạn", href: "#gia-han" },
   },
   {
-    question: "Ưu đãi “Tặng thêm 1 năm” được áp dụng như thế nào?",
+    question: "Gói nào có quà tặng khi đăng ký 3 năm?",
     answer:
-      "Ưu đãi “Tặng thêm 1 năm” chỉ áp dụng cho các gói đăng ký chu kỳ 3 năm.",
+      "Các gói BF26 PLATINUM P2 đến P8 có quà tặng khi chọn chu kỳ 3 năm. Chọn tab 3 năm để xem quà của từng gói.",
   },
   {
     question: "Cần chuẩn bị gì khi muốn chuyển dữ liệu hoặc nâng cấp gói?",

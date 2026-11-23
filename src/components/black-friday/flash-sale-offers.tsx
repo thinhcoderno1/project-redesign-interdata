@@ -73,11 +73,16 @@ function OfferAction({
   return (
     <>
       {offer ? (
-        <CouponCopyButton
-          className={styles.copy}
-          code={offer.code}
-          label={label}
-        />
+        <>
+          <p className={styles.quantity}>
+            Chỉ {String(offer.quantity).padStart(2, "0")} mã
+          </p>
+          <CouponCopyButton
+            className={styles.copy}
+            code={offer.code}
+            label={label}
+          />
+        </>
       ) : (
         <div className={styles.locked}>
           <LockKeyhole size={14} aria-hidden="true" />

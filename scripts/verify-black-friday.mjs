@@ -11,19 +11,16 @@ const browser = await chromium.launch({
 });
 const errors = [];
 const results = [];
-const originalPrices = JSON.parse(
-  await fs.readFile("src/data/vps-content.json", "utf8"),
-).hotDeals.originalPrices;
 const api = await fetch(
-  "https://support.interdata.vn/packages.php?gid=103&module",
+  "https://support.interdata.vn/packages.php?gid=105&module",
 );
 assert(api.ok, `Black Friday API HTTP ${api.status}`);
 const catalog = await api.json();
 assert.equal(catalog.success, true);
-const plans = [567, 568, 569].map((pid) =>
-  catalog.products.find((p) => p.pid === pid),
+const plans = Array.from({ length: 8 }, (_, index) =>
+  catalog.products.find((product) => product.pid === 570 + index),
 );
-assert(plans.every((p) => p?.gid === 103));
+assert(plans.every((p) => p?.gid === 105));
 try {
   const context = await browser.newContext({
     viewport: { width: 1440, height: 1000 },
@@ -40,21 +37,20 @@ try {
     "href",
     "https://interdata.vn/blackfriday/",
   );
-  await expect(page.locator("#best-plans article")).toHaveCount(3);
-  await expect(page.locator('#best-plans [class*="planHeader"] p')).toHaveCount(
-    0,
+  const cards = page.locator("#best-plans article");
+  await expect(cards).toHaveCount(plans.length);
+  await expect(cards.locator("h3")).toHaveText(
+    plans.map((_, index) => `BF26 PLATINUM P${index + 1}`),
+  );
+  await expect(page.locator("#best-plans-title")).toHaveText(
+    "VPS PLATINUM BLACK FRIDAY",
   );
   await expect(
-    page.locator("#best-plans").getByText(/^Quy đổi từ/),
-  ).toHaveCount(0);
-  await expect(page.locator("#best-plans article h3")).toHaveText([
-    "BF26 - Start",
-    "BF26 - Core",
-    "BF26 - Plus",
-  ]);
-  await expect(page.locator("#best-plans-title")).toHaveText(
-    "BEST PLANS VPS BLACK FRIDAY",
-  );
+    page.locator("#best-plans").getByText("HOT DEALS"),
+  ).toBeVisible();
+  await expect(
+    cards.locator('img[src*="intel-xeon-platinum-8000-angled"]'),
+  ).toHaveCount(plans.length);
   const recommendation = page.locator(
     '#best-plans [class*="recommendationTag"]',
   );
@@ -110,16 +106,26 @@ try {
     ),
   );
   const tabs = page.locator('#best-plans [role="tab"]');
-  await expect(tabs).toHaveText(["1 năm", "2 năm", /3 năm\s*Miễn phí 1 năm/]);
+  for (const [index, discount] of [60, 65, 70].entries()) {
+    await expect(tabs.nth(index)).toHaveAccessibleName(
+      `${index + 1} năm Giảm ${discount}%`,
+    );
+  }
   await expect(tabs.last()).toHaveAttribute("aria-selected", "true");
-  const gifts = page
-    .locator("#best-plans article")
-    .getByText("TẶNG THÊM 1 NĂM", { exact: true });
-  await expect(gifts).toHaveCount(3);
-  await expect(page.locator("#best-plans article a").first()).toHaveAttribute(
+  const gifts = cards.getByText("Quà Tặng", { exact: true });
+  await expect(gifts).toHaveCount(7);
+  await expect(cards.first().locator("a")).toHaveAttribute(
     "href",
     /billingcycle=triennially$/,
   );
+  await expect(cards.nth(1).locator('[class*="giftList"] li')).toHaveText([
+    "Ly sứ InterData",
+  ]);
+  await expect(cards.last().locator('[class*="giftList"] li')).toHaveText([
+    "Nón bảo hiểm InterData",
+    "Ly sứ InterData",
+    "200GB S3 Storage",
+  ]);
   await expect(
     page.locator('#best-plans select, #best-plans [aria-label="Chọn dịch vụ"]'),
   ).toHaveCount(0);
@@ -135,19 +141,7 @@ try {
     "triennially",
   ].entries()) {
     await tabs.nth(index).click();
-    await expect(gifts).toHaveCount(cycle === "triennially" ? 3 : 0);
-    if (cycle === "triennially") {
-      for (const gift of await gifts.all()) {
-        await expect(gift.locator("..").locator("svg")).toHaveCount(1);
-        assert(
-          await gift
-            .locator("..")
-            .evaluate((el) =>
-              Boolean(el.previousElementSibling.querySelector("h3")),
-            ),
-        );
-      }
-    }
+    await expect(gifts).toHaveCount(cycle === "triennially" ? 7 : 0);
     await expect(tabs.nth(index)).toHaveAttribute("aria-selected", "true");
     await expect(page.locator("#bf-plans")).toHaveAttribute(
       "aria-labelledby",
@@ -158,14 +152,9 @@ try {
       .allTextContents();
     if (previousPrices) assert.notDeepEqual(prices, previousPrices);
     previousPrices = prices;
-    for (const [planIndex, card] of (
-      await page.locator("#best-plans article").all()
-    ).entries()) {
+    for (const [planIndex, card] of (await cards.all()).entries()) {
       const product = plans[planIndex];
       await expect(card).toHaveAttribute("data-pid", String(product.pid));
-      const original =
-        originalPrices[`INTER PLATINUM ${planIndex + 1}`].annually *
-        (index + 1);
       const current = Number(
         (await card.locator('[class*="price"] > strong').innerText()).replace(
           /\D/g,
@@ -173,55 +162,26 @@ try {
         ),
       );
       assert.equal(current, Number(product.pricing.VND[cycle]));
-      assert.equal(current, Number(product.pricing.VND.annually) * (index + 1));
       await expect(card.locator('[class*="price"] > span')).toHaveText(
-        `/ ${["12 tháng", "24 tháng", "48 tháng"][index]}`,
+        `/ ${index + 1} năm`,
       );
-      await expect(card.locator('[class*="specs"]')).not.toContainText(
-        "Tặng 1 Năm HSD",
-      );
-      await expect(card.locator("del")).toHaveText(
-        `${new Intl.NumberFormat("vi-VN").format(original)}đ / ${["12 tháng", "24 tháng", "36 tháng"][index]}`,
+      const reference = card.locator("del");
+      await expect(reference).toHaveAttribute(
+        "title",
+        planIndex === 0
+          ? "Giá tham chiếu VPS Platinum Viettel"
+          : /Giá tham chiếu ước tính/,
       );
       assert(
         (
-          await card
-            .locator("del")
-            .evaluate((el) => getComputedStyle(el).textDecorationLine)
+          await reference.evaluate(
+            (el) => getComputedStyle(el).textDecorationLine,
+          )
         ).includes("line-through"),
       );
-      await expect(card.locator('[class*="savingsBadge"]')).toHaveCount(0);
       await expect(card.locator("a")).toHaveAttribute(
         "href",
         `${product.product_url}&billingcycle=${cycle}`,
-      );
-    }
-    const cards = page.locator("#best-plans article");
-    await expect(cards.last().locator('[class*="planUpgrade"]')).toHaveCount(0);
-    for (const cardIndex of [0, 1]) {
-      const upgrade = cards.nth(cardIndex).locator('[class*="planUpgrade"]');
-      // Every tab promotes the 3-year offer, including its extra year.
-      const difference =
-        Number(plans[cardIndex + 1].pricing.VND.triennially) -
-        Number(plans[cardIndex].pricing.VND.triennially);
-      const months = 48;
-      await expect(upgrade.locator('[class*="upgradeTitle"]')).toHaveText(
-        "Chỉ thêm",
-      );
-      await expect(upgrade.locator('[class*="upgradeLabel"]')).toHaveText(
-        "Nhận thêm:",
-      );
-      await expect(upgrade.locator("strong")).toHaveText(
-        `${new Intl.NumberFormat("vi-VN").format(Math.ceil(difference / months))}đ`,
-      );
-      await expect(upgrade.locator('[class*="upgradeMonthly"]')).toHaveText(
-        `${new Intl.NumberFormat("vi-VN").format(Math.ceil(difference / months))}đ /tháng`,
-      );
-      await expect(upgrade.locator('[class*="upgradeTotal"]')).toHaveCount(0);
-      await expect(upgrade.locator("li")).toHaveText(
-        cardIndex === 0
-          ? ["+3 vCore", "+5 GB RAM", "+40 GB NVMe"]
-          : ["+4 vCore", "+8 GB RAM", "+70 GB NVMe"],
       );
     }
   }
@@ -235,34 +195,23 @@ try {
   await tabs.last().press("ArrowLeft");
   await expect(tabs.nth(1)).toBeFocused();
   await tabs.nth(1).press("Home");
-  for (const card of await page.locator("#best-plans article").all()) {
+  for (const [index, card] of (await cards.all()).entries()) {
     const url = new URL(await card.locator("a").getAttribute("href"));
-    assert.equal(url.protocol, "https:");
-    assert.equal(url.hostname, "support.interdata.vn");
-    const specs = card.locator('[class*="specs"]');
-    await expect(specs.locator("li")).toHaveCount(6);
-    await expect(specs.locator("li:visible")).toHaveCount(3);
-    const configuration = card.locator("details");
-    await expect(configuration).not.toHaveAttribute("open", "");
-    await expect(configuration.locator("summary")).toHaveText("Xem thêm", {
-      useInnerText: true,
-    });
-    await configuration.locator("summary").click();
-    await expect(configuration).toHaveAttribute("open", "");
-    await expect(configuration.locator("summary")).toHaveText("Thu gọn", {
-      useInnerText: true,
-    });
-    await expect(specs.locator("li:visible")).toHaveCount(6);
-    await expect(page.locator("#best-plans details[open]")).toHaveCount(1);
-    await expect(specs.locator("li").nth(3)).toHaveText("1 IPv4 Public Global");
-    await expect(specs.locator("li").nth(4)).toHaveText("300Mbps Network Port");
-    await expect(specs.locator("li").nth(5)).toHaveText("Unlimited Bandwidth");
-    const collapseBox = await configuration.locator("summary").boundingBox();
-    const bandwidthBox = await specs.locator("li").nth(5).boundingBox();
-    assert(collapseBox.y >= bandwidthBox.y + bandwidthBox.height);
+    assert.equal(url.origin, "https://support.interdata.vn");
+    const specs = card.getByRole("list", { name: "Cấu hình" });
+    const resources = plans[index].description
+      .split("\n")
+      .filter((line) => /vCore$|GB RAM$|GB SSD NVMe$/.test(line));
+    await expect(specs.locator("li")).toHaveText([
+      ...resources,
+      "01 IPv4 Public",
+      "1Gbps Network Port",
+      "Unlimited Bandwidth",
+      /Firewall Anti DDoS 120Gbps/,
+    ]);
+    await expect(specs.getByRole("img", { name: "VIP" })).toHaveCount(1);
+    await expect(card.locator("details")).toHaveCount(0);
     await expect(card.locator("a")).toHaveText("Đăng ký ngay");
-    await configuration.locator("summary").press("Enter");
-    await expect(specs.locator("li:visible")).toHaveCount(3);
   }
   await tabs.last().click();
   const release = await fetch(base + "/api/black-friday-flash-sale/").then(
@@ -270,20 +219,32 @@ try {
   );
   const flash = page.locator("#flash-sale");
   await expect(flash.locator("article")).toHaveCount(7);
-  await expect(flash.locator("time")).toHaveAttribute(
+  await expect(flash.locator("time").first()).toHaveAttribute(
     "dateTime",
     "2026-11-23T11:00:00+07:00",
+  );
+  await expect(flash.locator('[data-offer="free"]')).toContainText(
+    "Săn tên miền đẹp cho thương hiệu của bạn",
   );
   if (release.status === "live") {
     await expect(flash.getByRole("button")).toHaveText(
       Object.values(release.offers).map((offer) => offer.code),
     );
     await expect(flash.getByRole("timer")).toHaveCount(0);
+    for (const [id, { quantity }] of Object.entries(release.offers)) {
+      await expect(
+        flash
+          .locator(`[data-offer="${id}"]`)
+          .getByText(`Chỉ ${String(quantity).padStart(2, "0")} mã`, {
+            exact: true,
+          }),
+      ).toBeVisible();
+    }
   } else {
     await expect(flash.getByRole("timer")).toHaveCount(1);
     await expect(flash.getByRole("button")).toHaveCount(0);
+    await expect(flash.getByText(/^Chỉ \d{2} mã$/i)).toHaveCount(0);
   }
-  await expect(flash.getByText(/^Số lượng:/)).toHaveCount(0);
   await expect(page.locator("#ma-giam-gia article")).toHaveCount(6);
   await expect(page.locator("#ma-giam-gia details")).toHaveCount(2);
   await expect(page.locator("#ma-giam-gia article h4 strong")).toHaveText([
@@ -448,7 +409,7 @@ try {
     ),
   ).toHaveAttribute("aria-current", "location");
   await page.emulateMedia({ reducedMotion: "reduce" });
-  for (const width of [320, 375, 390, 768, 1024, 1440, 1920]) {
+  for (const width of [320, 375, 390, 640, 767, 768, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 1000 });
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
     await page.evaluate(() => document.fonts.ready);
@@ -460,6 +421,28 @@ try {
     );
     await expect(page.locator("h1")).toBeVisible();
     await expect(page.locator("#best-plans article").first()).toBeVisible();
+    const planLayout = await page.locator("#bf-plans").evaluate((track) => {
+      const style = getComputedStyle(track);
+      const cards = Array.from(track.children);
+      const firstTop = cards[0].getBoundingClientRect().top;
+      return {
+        display: style.display,
+        firstRowCount: cards.filter(
+          (card) => card.getBoundingClientRect().top === firstTop,
+        ).length,
+        canScroll: track.scrollWidth > track.clientWidth,
+        cardsFit: cards.every(
+          (card) => card.scrollWidth <= card.clientWidth + 1,
+        ),
+      };
+    });
+    assert.equal(planLayout.display, width < 768 ? "flex" : "grid");
+    assert.equal(
+      planLayout.firstRowCount,
+      width < 768 ? 8 : width < 1024 ? 2 : 4,
+    );
+    assert.equal(planLayout.canScroll, width < 768);
+    assert(planLayout.cardsFit, `Best Plans card overflow at ${width}px`);
     const renewalBoxes = await renewal
       .locator('[class*="renewalGrid"] > *')
       .evaluateAll((cards) =>
@@ -548,7 +531,7 @@ try {
   await expect(
     staticPage.locator('#gia-han [class*="renewalIntro"] a'),
   ).toHaveAttribute("href", "https://www.facebook.com/interdata.com.vn");
-  await expect(staticPage.locator("#best-plans article")).toHaveCount(3);
+  await expect(staticPage.locator("#best-plans article")).toHaveCount(8);
   await expect(
     staticPage.locator('#ma-giam-gia [class*="couponCode"]'),
   ).toHaveText([
@@ -566,22 +549,17 @@ try {
     "aria-selected",
     "true",
   );
-  await expect(staticPage.locator("#best-plans article del")).toHaveCount(3);
+  await expect(staticPage.locator("#best-plans article del")).toHaveCount(8);
+  await expect(
+    staticPage.locator("#best-plans").getByText("Quà Tặng", { exact: true }),
+  ).toHaveCount(7);
   await expect(
     staticPage
       .locator("#best-plans article")
-      .getByText("TẶNG THÊM 1 NĂM", { exact: true }),
-  ).toHaveCount(3);
-  const staticCard = staticPage.locator("#best-plans article").first();
-  await expect(staticCard.locator('[class*="specs"] li:visible')).toHaveCount(
-    3,
-  );
-  await staticCard.locator("details summary").click();
-  await expect(staticCard.locator('[class*="specs"] li:visible')).toHaveCount(
-    6,
-  );
-  await staticCard.locator("details summary").press("Enter");
-  await expect(staticCard.locator("details")).not.toHaveAttribute("open", "");
+      .first()
+      .getByRole("list", { name: "Cấu hình" })
+      .locator("li:visible"),
+  ).toHaveCount(7);
   await staticPage.locator("#ma-giam-gia details summary").first().click();
   await expect(
     staticPage.locator("#ma-giam-gia details").first(),
@@ -589,6 +567,9 @@ try {
   await expect(staticPage.locator("#black-friday-faq details")).toHaveCount(8);
   await expect(staticPage.locator("#flash-sale article")).toHaveCount(7);
   await expect(staticPage.locator("#flash-sale button")).toHaveCount(0);
+  await expect(
+    staticPage.locator("#flash-sale").getByText(/^Chỉ \d{2} mã$/i),
+  ).toHaveCount(0);
   const staticFlashTerms = staticPage.locator(
     '#flash-sale [class*="flashTerms"]',
   );
@@ -609,7 +590,7 @@ try {
     ),
   );
   console.log(
-    "Black Friday: pricing across cycles, keyboard support, checkout URLs, layout, timed Flash Sale release, terms, anchors, consultation CTA, 8 FAQs, 7 viewport widths, axe with expanded answers and no-JavaScript checks passed.",
+    "Black Friday: pricing across cycles, keyboard support, checkout URLs, layout, timed Flash Sale release, terms, anchors, consultation CTA, 8 FAQs, 9 viewport widths, axe with expanded answers and no-JavaScript checks passed.",
   );
 } finally {
   await browser.close();

@@ -538,6 +538,26 @@
   right: -7px;
 }
 
+.section .quantity {
+  width: fit-content;
+  margin: 0 0 6px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: #fff0e6;
+  color: #8c3210;
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1.5;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+
+.free .quantity,
+.ticket[data-service="cloud"] .quantity {
+  background: #e7efff;
+  color: #0042a6;
+}
+
 .locked,
 .copy {
   display: flex;

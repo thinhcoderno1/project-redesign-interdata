@@ -48,7 +48,10 @@ export function productSpecs(product: VpsProduct, hotDeal = false) {
     .filter(Boolean)
     .filter((line) => !hotDeal || !line.toUpperCase().includes("GIA HẠN"));
 }
-export function checkoutUrl(product: VpsProduct, cycle?: BillingCycle) {
+export function checkoutUrl(
+  product: Pick<VpsProduct, "product_url">,
+  cycle?: BillingCycle,
+) {
   if (!cycle) return product.product_url;
   const separator = product.product_url.includes("?") ? "&" : "?";
   return `${product.product_url}${separator}billingcycle=${cycle}`;

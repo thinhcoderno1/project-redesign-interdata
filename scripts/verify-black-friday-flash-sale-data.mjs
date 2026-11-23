@@ -39,6 +39,16 @@ const {
 } = load(publicSource);
 const discountOffers = groups.flatMap((group) => group.offers);
 const publicOffers = [freeOffer, ...discountOffers];
+const expectedOffers = {
+  free: { code: "BF26FLASH23-DOMAIN", quantity: 5 },
+  vps81: { code: "BF26FLASH23-VPS81", quantity: 3 },
+  vps71: { code: "BF26FLASH23-VPS71", quantity: 3 },
+  vps61: { code: "BF26FLASH23-VPS61", quantity: 10 },
+  cloud61: { code: "BF26FLASH23-CLOUD61", quantity: 3 },
+  cloud51: { code: "BF26FLASH23-CLOUD51", quantity: 3 },
+  cloud41: { code: "BF26FLASH23-CLOUD41", quantity: 10 },
+};
+const codePattern = /BF26FLASH(?:20|23)-/;
 assert.equal(data.blackFridayFlashSale.mode, "preview");
 assert.equal(data.blackFridayFlashSale.startsAt, "2026-11-23T11:00:00+07:00");
 const start = Date.parse(data.blackFridayFlashSale.startsAt);
@@ -56,11 +66,11 @@ for (const now of [
 ]) {
   assert.equal(release(now).status, "upcoming");
   assert.deepEqual(release(now).offers, {});
-  assert(!/BF26FLASH20|quantity/.test(JSON.stringify(release(now))));
+  assert(!codePattern.test(JSON.stringify(release(now))));
 }
 for (const now of [start, start + 1, start + 86400000]) {
   assert.equal(release(now).status, "live");
-  assert.deepEqual(release(now).offers, {});
+  assert.deepEqual(release(now).offers, expectedOffers);
 }
 assert.deepEqual(
   publicOffers.map(({ id }) => id),
@@ -70,7 +80,7 @@ assert.deepEqual(
   discountOffers.map(({ discount }) => discount),
   [81, 71, 61, 61, 51, 41],
 );
-assert(!/BF26FLASH20/.test(publicSource));
+assert(!codePattern.test(publicSource));
 assert(!/quantity/.test(JSON.stringify(publicOffers)));
 assert.equal(freeOffer.plan, "tên miền .COM");
 assert.deepEqual(
@@ -111,7 +121,9 @@ const scheduled = load(source, {
 }).getBlackFridayFlashSaleRelease;
 assert.equal(scheduled(start - 1).status, "upcoming");
 assert.equal(scheduled(start).status, "live");
+assert.deepEqual(scheduled(start).offers, expectedOffers);
 assert.equal(scheduled(start + 3600000).status, "upcoming");
+assert.deepEqual(scheduled(start + 3600000).offers, {});
 const checkoutSource = await fs.readFile(
   "src/lib/black-friday-flash-sale-checkout.ts",
   "utf8",
@@ -183,6 +195,7 @@ const response = GET(
 );
 assert(response.headers.get("cache-control").includes("no-store"));
 assert.equal(response.headers.get("cdn-cache-control"), "no-store");
+assert.equal(response.headers.get("vercel-cdn-cache-control"), "no-store");
 assert.deepEqual((await response.json()).offers, {});
 if (process.argv.includes("--built")) {
   async function* files(directory) {
@@ -196,7 +209,7 @@ if (process.argv.includes("--built")) {
   for await (const file of files(".next/static")) {
     if (!/\.(?:js|map|json)$/.test(file)) continue;
     assert(
-      !(await fs.readFile(file, "utf8")).includes("BF26FLASH20"),
+      !codePattern.test(await fs.readFile(file, "utf8")),
       `Flash Sale code shipped in ${file}`,
     );
     checked++;
@@ -208,11 +221,11 @@ if (process.argv.includes("--built")) {
   ]) {
     const content = await fs.readFile(file, "utf8");
     assert(
-      !content.includes("BF26FLASH20"),
+      !codePattern.test(content),
       `Flash Sale code prerendered in ${file}`,
     );
     assert(
-      !content.includes("Số lượng:"),
+      !/Chỉ (?:03|05|10) mã/i.test(content),
       `Flash Sale quantity prerendered in ${file}`,
     );
   }
@@ -221,5 +234,5 @@ if (process.argv.includes("--built")) {
   );
 }
 console.log(
-  "Flash Sale data: November 23 at 11:00 Vietnam time, millisecond opening boundary, seven offers, no prior-round codes, hidden/invalid config, no-store response and ignored client timestamps passed.",
+  "Flash Sale data: all seven codes and quantities, millisecond opening boundary, hidden/invalid config, no-store response and ignored client timestamps passed.",
 );

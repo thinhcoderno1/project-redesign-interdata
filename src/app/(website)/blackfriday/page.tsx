@@ -9,7 +9,7 @@ export const revalidate = 60;
 
 const title = "Black Friday VPS & Cloud Server 2026 - Tiết Kiệm Đến 75%";
 const description =
-  "VPS giảm đến 55%, Cloud Server giảm đến 40% - VPS Platinum Từ 62K/Tháng - Flash Sale 0đ - Tặng S3 Storage 200GB. Săn Deals Ngay!";
+  "VPS giảm đến 55%, Cloud Server giảm đến 40% - 8 gói VPS Platinum Black Friday - Flash Sale 0đ - Tặng S3 Storage 200GB. Săn Deals Ngay!";
 
 export const metadata: Metadata = {
   title,
