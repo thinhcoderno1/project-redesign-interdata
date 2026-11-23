@@ -6,7 +6,7 @@ const base = process.env.TEST_BASE_URL || "http://localhost:3100";
 const bannerLinks = (root) =>
   root.getByRole("link").and(root.locator("[data-promotion-link]"));
 const expectedImages = [
-  "/images/promotion/black-friday-2026-studio-flash-sale-full.webp",
+  "/images/promotion/black-friday-2026-studio-flash-sale-no-tagline.webp",
   "/images/promotion/vps-cloud-warm.webp",
   "/images/promotion/vps-platinum-viettel-idc.jpg",
   "/images/promotion/vps-n8n.jpg",
@@ -38,7 +38,10 @@ try {
       /99%.*Flash Sale 0đ.*VPS, Cloud Server, Hosting và Domain.*nón bảo hiểm, ly sứ trắng và S3 Storage/,
     );
     await expect(campaignImage).toHaveAttribute("alt", /Black Friday 2026/);
-    await expect(campaignImage).toHaveAttribute("alt", /ƯU ĐÃI LỚN NHẤT NĂM/);
+    await expect(campaignImage).not.toHaveAttribute(
+      "alt",
+      /ƯU ĐÃI LỚN NHẤT NĂM/,
+    );
     await root.scrollIntoViewIfNeeded();
     const benefitsBox = await page
       .getByRole("list", { name: "Lợi ích hạ tầng InterData" })

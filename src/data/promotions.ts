@@ -1,9 +1,9 @@
 export const blackFriday2026Banner = {
   title: "Black Friday 2026",
-  image: "/images/promotion/black-friday-2026-studio-flash-sale-full.webp",
-  alt: "Black Friday 2026 — ƯU ĐÃI LỚN NHẤT NĂM. Tiết kiệm 99%. Flash Sale 0đ. Voucher VPS, Cloud Server, Hosting và Domain. Quà tặng gồm nón bảo hiểm, ly sứ trắng và S3 Storage.",
+  image: "/images/promotion/black-friday-2026-studio-flash-sale-no-tagline.webp",
+  alt: "Black Friday 2026 — Tiết kiệm 99%. Flash Sale 0đ. Voucher VPS, Cloud Server, Hosting và Domain. Quà tặng gồm nón bảo hiểm, ly sứ trắng và S3 Storage.",
   href: "/blackfriday/",
-  creativeName: "studio-flash-sale-5x1",
+  creativeName: "studio-flash-sale-no-tagline",
 } as const;
 
 export const homepageBlackFriday2026Banner = blackFriday2026Banner;

@@ -95,10 +95,10 @@ try {
     const artwork = banner.locator("img");
     assert.equal(
       new URL(await artwork.getAttribute("src"), base).pathname,
-      "/images/promotion/black-friday-2026-studio-flash-sale-full.webp",
+      "/images/promotion/black-friday-2026-studio-flash-sale-no-tagline.webp",
     );
     await expect(artwork).toHaveAttribute("alt", /Tiết kiệm 99%.*ly sứ/);
-    await expect(artwork).toHaveAttribute("alt", /ƯU ĐÃI LỚN NHẤT NĂM/);
+    await expect(artwork).not.toHaveAttribute("alt", /ƯU ĐÃI LỚN NHẤT NĂM/);
     await expect(
       banner.getByText("ƯU ĐÃI LỚN NHẤT NĂM", { exact: true }),
     ).toHaveCount(0);
@@ -176,7 +176,10 @@ try {
   await page.waitForTimeout(1200);
   assert.equal((await views()).length, 1);
   const viewEvent = (await views())[0];
-  assert.equal(viewEvent.ecommerce.creative_name, "studio-flash-sale-5x1");
+  assert.equal(
+    viewEvent.ecommerce.creative_name,
+    "studio-flash-sale-no-tagline",
+  );
   assert.equal(
     viewEvent.ecommerce.creative_slot,
     `blog_${(await banner.getAttribute("data-blog-promotion")).replace("-", "_")}`,
