@@ -6,7 +6,7 @@ const base = process.env.TEST_BASE_URL || "http://localhost:3100";
 const bannerLinks = (root) =>
   root.getByRole("link").and(root.locator("[data-promotion-link]"));
 const expectedImages = [
-  "/images/promotion/black-friday-2026-gift-vouchers-5x1-v2.webp",
+  "/images/promotion/black-friday-2026-platinum-gift-box-5x1-v4.webp",
   "/images/promotion/vps-cloud-warm.webp",
   "/images/promotion/vps-platinum-viettel-idc.jpg",
   "/images/promotion/vps-n8n.jpg",
@@ -32,7 +32,7 @@ try {
     const campaignImage = bannerLinks(root).locator("img");
     await expect(campaignImage).toHaveAttribute(
       "alt",
-      /3 voucher.*71%.*83K.*tặng thêm 1 năm;.*50% phí gia hạn/,
+      /ưu đãi lớn nhất năm.*99%.*VPS, Cloud Server, Hosting và Domain.*nón bảo hiểm, ly sứ và S3 Storage/,
     );
     await expect(campaignImage).toHaveAttribute("alt", /Black Friday 2026/);
     await root.scrollIntoViewIfNeeded();

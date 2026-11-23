@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState, useSyncExternalStore } from "react";
-import { blackFriday2026Banner } from "@/data/promotions";
+import { homepageBlackFriday2026Banner } from "@/data/promotions";
 import styles from "./promotion-carousel.module.css";
 
 const banners: {
@@ -12,7 +12,7 @@ const banners: {
   alt: string;
   href?: string;
 }[] = [
-  blackFriday2026Banner,
+  homepageBlackFriday2026Banner,
   {
     title: "Ưu đãi VPS / Cloud Server",
     image: "/images/promotion/vps-cloud-warm.webp",
