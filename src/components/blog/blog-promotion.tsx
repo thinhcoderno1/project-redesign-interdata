@@ -30,7 +30,7 @@ export function BlogPromotion({
         ecommerce: {
           promotion_id: "black-friday-2026",
           promotion_name: blackFriday2026Banner.title,
-          creative_name: "gift-vouchers-5x1-v2",
+          creative_name: blackFriday2026Banner.creativeName,
           creative_slot: `blog_${pageType}_${placement}`,
         },
         page_path: window.location.pathname,

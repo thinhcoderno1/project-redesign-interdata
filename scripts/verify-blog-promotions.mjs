@@ -92,6 +92,12 @@ try {
     const banner = page.locator("[data-blog-promotion]");
     await expect(banner).toHaveCount(1);
     await expect(banner.locator("a")).toHaveAttribute("href", "/blackfriday/");
+    const artwork = banner.locator("img");
+    assert.equal(
+      new URL(await artwork.getAttribute("src"), base).searchParams.get("url"),
+      "/images/promotion/black-friday-2026-platinum-gift-box-5x1-v4.webp",
+    );
+    await expect(artwork).toHaveAttribute("alt", /Tiết kiệm 99%.*ly sứ/);
     const placement = await banner.getAttribute("data-blog-promotion");
     assert.match(placement, /^(article|listing)-(early|middle|end)$/);
     assert(await banner.evaluate((el) => !!el.closest("main")));
@@ -166,6 +172,7 @@ try {
   await page.waitForTimeout(1200);
   assert.equal((await views()).length, 1);
   const viewEvent = (await views())[0];
+  assert.equal(viewEvent.ecommerce.creative_name, "platinum-gift-box-5x1-v4");
   assert.equal(
     viewEvent.ecommerce.creative_slot,
     `blog_${(await banner.getAttribute("data-blog-promotion")).replace("-", "_")}`,
@@ -182,6 +189,10 @@ try {
     window.dataLayer.filter((item) => item.event === "select_promotion"),
   );
   assert.equal(clicks.length, 1);
+  assert.equal(
+    clicks[0].ecommerce.creative_name,
+    viewEvent.ecommerce.creative_name,
+  );
   assert.equal(
     clicks[0].ecommerce.creative_slot,
     viewEvent.ecommerce.creative_slot,
