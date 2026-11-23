@@ -21,7 +21,7 @@ export function useFlashSaleRelease() {
     let lastAttempt = -Infinity;
 
     async function sync() {
-      if (request || published || stopped) return;
+      if (request || stopped) return;
       const controller = new AbortController();
       request = controller;
       lastAttempt = performance.now();
@@ -59,8 +59,11 @@ export function useFlashSaleRelease() {
     }
 
     function tick() {
-      if (published) return;
       const elapsed = performance.now();
+      if (published) {
+        if (elapsed - lastAttempt >= 30000) void sync();
+        return;
+      }
       let remaining = Infinity;
       if (clock) {
         // Use server time plus a monotonic clock; changing device time cannot unlock codes.

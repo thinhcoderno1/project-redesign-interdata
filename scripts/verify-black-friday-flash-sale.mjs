@@ -4,16 +4,16 @@ import { chromium, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 const base = process.env.TEST_BASE_URL || "http://localhost:3000";
-const startsAt = "2026-11-23T11:00:00+07:00";
+const startsAt = "2026-11-25T11:00:00+07:00";
 const start = Date.parse(startsAt);
 const offers = {
-  free: { code: "TESTFLASH23-DOMAIN", quantity: 5 },
-  vps81: { code: "TESTFLASH23-VPS81", quantity: 3 },
-  vps71: { code: "TESTFLASH23-VPS71", quantity: 3 },
-  vps61: { code: "TESTFLASH23-VPS61", quantity: 10 },
-  cloud61: { code: "TESTFLASH23-CLOUD61", quantity: 3 },
-  cloud51: { code: "TESTFLASH23-CLOUD51", quantity: 3 },
-  cloud41: { code: "TESTFLASH23-CLOUD41", quantity: 10 },
+  free: { code: "TESTFLASH25-DOMAIN", quantity: 5 },
+  vps81: { code: "TESTFLASH25-VPS81", quantity: 3 },
+  vps71: { code: "TESTFLASH25-VPS71", quantity: 3 },
+  vps61: { code: "TESTFLASH25-VPS61", quantity: 10 },
+  cloud61: { code: "TESTFLASH25-CLOUD61", quantity: 3 },
+  cloud51: { code: "TESTFLASH25-CLOUD51", quantity: 3 },
+  cloud41: { code: "TESTFLASH25-CLOUD41", quantity: 10 },
 };
 const codePattern = /BF26FLASH(?:20|23)-/;
 const checkoutPaths = {
@@ -57,34 +57,21 @@ try {
     actualRelease.status,
     actualRelease.serverNow < start ? "upcoming" : "live",
   );
-  if (actualRelease.status === "live") {
-    assert.deepEqual(
-      Object.fromEntries(
-        Object.entries(actualRelease.offers).map(([id, { quantity }]) => [
-          id,
-          quantity,
-        ]),
-      ),
-      Object.fromEntries(
-        Object.entries(offers).map(([id, { quantity }]) => [id, quantity]),
-      ),
-    );
-  } else {
-    assert.deepEqual(actualRelease.offers, {});
-  }
+  assert.deepEqual(actualRelease.offers, {});
   page.on("pageerror", (error) => errors.push(error.message));
   let serverNow = start - 86400000;
   let requests = 0;
   let failure = false;
   let codesReady = false;
+  let roundStartsAt = startsAt;
   await page.route("**/api/black-friday-flash-sale/", async (route) => {
     requests++;
     if (failure) return route.fulfill({ status: 503, body: "Unavailable" });
-    const live = serverNow >= start;
+    const live = serverNow >= Date.parse(roundStartsAt);
     await route.fulfill({
       json: {
         serverNow,
-        startsAt,
+        startsAt: roundStartsAt,
         status: live ? "live" : "upcoming",
         offers: live && codesReady ? offers : {},
       },
@@ -97,11 +84,9 @@ try {
   const section = page.locator("#flash-sale");
   await expect(section).toBeVisible();
   await expect(section.locator(`time[datetime="${startsAt}"]`)).toHaveText(
-    "11:00AM · Thứ Hai, 23/11/2026",
+    "11:00AM · Thứ Tư, 25/11/2026",
   );
-  await expect(section.locator('time[datetime="2026-11-25"]')).toHaveText(
-    "25/11/2026",
-  );
+  await expect(section.locator('time[datetime="2026-11-25"]')).toHaveCount(0);
   await expect(section.locator('time[datetime="2026-11-27"]')).toHaveText(
     "27/11/2026",
   );
@@ -140,7 +125,7 @@ try {
     Array(6).fill("Chu kỳ 3 tháng – 1 năm"),
   );
   await expect(discountCycles.first()).toHaveCSS("color", "rgb(75, 89, 112)");
-  const locked = section.getByText("Mã tiếp theo 23/11/2026", { exact: true });
+  const locked = section.getByText("Mã tiếp theo 25/11/2026", { exact: true });
   const quantities = section.getByText(/^Chỉ \d{2} mã$/i);
   await expect(locked).toHaveCount(7);
   await expect(section.getByRole("timer").locator("strong").first()).toHaveText(
@@ -342,9 +327,21 @@ try {
   serverNow = start;
   await expect(quantities).toHaveCount(7);
   await expect(section.getByRole("button")).toHaveCount(7);
+  // A live page must retire its published offers when the server advances the round.
+  roundStartsAt = "2026-11-27T11:00:00+07:00";
+  await page.evaluate(() => window.dispatchEvent(new Event("pageshow")));
+  await expect(section.getByRole("button")).toHaveCount(0);
+  await expect(quantities).toHaveCount(0);
+  await expect(section.getByRole("timer")).toHaveCount(1);
+  await expect(
+    section.getByText("Mã tiếp theo 27/11/2026", { exact: true }),
+  ).toHaveCount(7);
+  await expect(
+    section.locator('time[datetime="2026-11-27T11:00:00+07:00"]'),
+  ).toHaveText("11:00AM · Thứ Sáu, 27/11/2026");
   assert.deepEqual(errors, []);
   console.log(
-    "Flash Sale UI: seven locked offers, November 23 countdown, domain offer copy, code and quantity release, device clock skew, retries, clipboard, responsive layouts and accessibility passed.",
+    "Flash Sale UI: seven locked offers, November 25 countdown, domain offer copy, code and quantity release, device clock skew, retries, clipboard, responsive layouts and accessibility passed.",
   );
 } finally {
   await browser.close();

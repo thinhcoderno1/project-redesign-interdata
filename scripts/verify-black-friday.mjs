@@ -256,7 +256,7 @@ try {
   await expect(flash.locator("article")).toHaveCount(7);
   await expect(flash.locator("time").first()).toHaveAttribute(
     "dateTime",
-    "2026-11-23T11:00:00+07:00",
+    "2026-11-25T11:00:00+07:00",
   );
   await expect(flash.locator('[data-offer="free"]')).toContainText(
     "Săn tên miền đẹp cho thương hiệu của bạn",

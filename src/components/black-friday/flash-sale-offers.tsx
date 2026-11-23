@@ -28,7 +28,6 @@ import styles from "./flash-sale-offers.module.css";
 
 const countdownLabels = ["Ngày", "Giờ", "Phút", "Giây"];
 const groupIcons = { vps: Server, cloud: Cloud };
-const openingDate = new Date(blackFridayFlashSale.startsAt ?? NaN);
 const openingDateLabel = new Intl.DateTimeFormat("vi-VN", {
   weekday: "long",
   day: "2-digit",
@@ -48,14 +47,6 @@ const bannerTimeLabel = new Intl.DateTimeFormat("en-US", {
   hour12: true,
   timeZone: "Asia/Ho_Chi_Minh",
 });
-const hasOpeningDate = Number.isFinite(openingDate.getTime());
-const openingShortDate = hasOpeningDate
-  ? openingShortDateLabel.format(openingDate)
-  : null;
-const openingDay = hasOpeningDate ? openingDateLabel.format(openingDate) : null;
-const bannerTime = hasOpeningDate
-  ? bannerTimeLabel.format(openingDate).replace(/\s+/g, "")
-  : null;
 const upcomingDates = blackFridayFlashSaleUpcomingDates.map((date) => ({
   date,
   label: openingShortDateLabel.format(new Date(date)),
@@ -65,10 +56,12 @@ function OfferAction({
   label,
   offer,
   checkoutHref,
+  openingShortDate,
 }: {
   label: string;
   offer: PublishedFlashSaleOffer | undefined;
   checkoutHref?: string;
+  openingShortDate: string | null;
 }) {
   return (
     <>
@@ -109,6 +102,18 @@ export function FlashSaleOffers({
   checkoutLinks: FlashSaleCheckoutLinks;
 }) {
   const { release, remainingSeconds, syncFailed } = useFlashSaleRelease();
+  const startsAt = release?.startsAt ?? blackFridayFlashSale.startsAt;
+  const openingDate = new Date(startsAt ?? NaN);
+  const hasOpeningDate = Number.isFinite(openingDate.getTime());
+  const openingShortDate = hasOpeningDate
+    ? openingShortDateLabel.format(openingDate)
+    : null;
+  const openingDay = hasOpeningDate
+    ? openingDateLabel.format(openingDate)
+    : null;
+  const bannerTime = hasOpeningDate
+    ? bannerTimeLabel.format(openingDate).replace(/\s+/g, "")
+    : null;
   const live = release?.status === "live";
   const publishedOffers = live ? release.offers : {};
   const hasPublishedOffers = Object.keys(publishedOffers).length > 0;
@@ -150,7 +155,7 @@ export function FlashSaleOffers({
             {bannerTime && openingDay && (
               <p className={styles.event}>
                 <CalendarDays size={17} aria-hidden="true" />
-                <time dateTime={blackFridayFlashSale.startsAt ?? undefined}>
+                <time dateTime={startsAt ?? undefined}>
                   {bannerTime} · {openingDay}
                 </time>
               </p>
@@ -228,6 +233,7 @@ export function FlashSaleOffers({
           </div>
           <div className={styles.freeEnd}>
             <OfferAction
+              openingShortDate={openingShortDate}
               label={`${freeOffer.plan} miễn phí`}
               offer={publishedOffers[freeOffer.id]}
               checkoutHref={checkoutLinks[freeOffer.id]}
@@ -269,6 +275,7 @@ export function FlashSaleOffers({
                     </div>
                     <div className={styles.ticketEnd}>
                       <OfferAction
+                        openingShortDate={openingShortDate}
                         label={`${plan} ${specs} giảm ${discount}%`}
                         offer={publishedOffers[offerId]}
                         checkoutHref={checkoutLinks[offerId]}
