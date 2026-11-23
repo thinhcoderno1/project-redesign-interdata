@@ -111,21 +111,8 @@ try {
       `${index + 1} năm Giảm ${discount}%`,
     );
   }
-  await expect(tabs.last()).toHaveAttribute("aria-selected", "true");
+  await expect(tabs.first()).toHaveAttribute("aria-selected", "true");
   const gifts = cards.getByText("Quà Tặng", { exact: true });
-  await expect(gifts).toHaveCount(7);
-  await expect(cards.first().locator("a")).toHaveAttribute(
-    "href",
-    /billingcycle=triennially$/,
-  );
-  await expect(cards.nth(1).locator('[class*="giftList"] li')).toHaveText([
-    "Ly sứ InterData",
-  ]);
-  await expect(cards.last().locator('[class*="giftList"] li')).toHaveText([
-    "Nón bảo hiểm InterData",
-    "Ly sứ InterData",
-    "200GB S3 Storage",
-  ]);
   await expect(
     page.locator('#best-plans select, #best-plans [aria-label="Chọn dịch vụ"]'),
   ).toHaveCount(0);
@@ -140,7 +127,7 @@ try {
     "biennially",
     "triennially",
   ].entries()) {
-    await tabs.nth(index).click();
+    if (index > 0) await tabs.nth(index).click();
     await expect(gifts).toHaveCount(cycle === "triennially" ? 7 : 0);
     await expect(tabs.nth(index)).toHaveAttribute("aria-selected", "true");
     await expect(page.locator("#bf-plans")).toHaveAttribute(
@@ -185,6 +172,14 @@ try {
       );
     }
   }
+  await expect(cards.nth(1).locator('[class*="giftList"] li')).toHaveText([
+    "Ly sứ InterData",
+  ]);
+  await expect(cards.last().locator('[class*="giftList"] li')).toHaveText([
+    "Nón bảo hiểm InterData",
+    "Ly sứ InterData",
+    "200GB S3 Storage",
+  ]);
   await tabs.last().press("Home");
   await expect(tabs.first()).toBeFocused();
   await expect(tabs.first()).toHaveAttribute("aria-selected", "true");
@@ -544,15 +539,15 @@ try {
   ]);
   await expect(
     staticPage.locator("#best-plans article").first().locator("a"),
-  ).toHaveAttribute("href", /billingcycle=triennially$/);
-  await expect(staticPage.locator("#bf-cycle-triennially")).toHaveAttribute(
+  ).toHaveAttribute("href", /billingcycle=annually$/);
+  await expect(staticPage.locator("#bf-cycle-annually")).toHaveAttribute(
     "aria-selected",
     "true",
   );
   await expect(staticPage.locator("#best-plans article del")).toHaveCount(8);
   await expect(
     staticPage.locator("#best-plans").getByText("Quà Tặng", { exact: true }),
-  ).toHaveCount(7);
+  ).toHaveCount(0);
   await expect(
     staticPage
       .locator("#best-plans article")

@@ -230,7 +230,7 @@ export function BlackFridayPage({
   coupons: BlackFridayCouponGroup[];
   flashSaleCheckoutLinks: FlashSaleCheckoutLinks;
 }) {
-  const [selectedCycle, setCycle] = useState<BlackFridayCycle>("triennially");
+  const [selectedCycle, setCycle] = useState<BlackFridayCycle>("annually");
   const cycleTabs = useRef<(HTMLButtonElement | null)[]>([]);
   const planGrid = useRef<HTMLDivElement>(null);
   const flashSaleVisible = useFlashSaleVisibility();
