@@ -8,7 +8,7 @@ import { getBlackFridayFlashSaleCheckoutLinks } from "@/lib/black-friday-flash-s
 
 const title = "Black Friday VPS & Cloud Server 2026 - Tiết Kiệm Đến 75%";
 const description =
-  "VPS giảm đến 55%, Cloud Server giảm đến 40% - Ưu đãi VPS Platinum Black Friday - Flash Sale 0đ. Săn Deals Ngay!";
+  "Best Offers VPS Platinum Tiết Kiệm Đến 80% - AntiDDoS 120Gbps - Mã Giảm VPS / Cloud Đến 81% - Flash Sale 0Đ - Tặng S3 Storage, Nón Sơn & Ly Sứ.";
 
 export const metadata: Metadata = {
   title,
