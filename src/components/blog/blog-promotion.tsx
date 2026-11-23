@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { BlackFridayBannerArtwork } from "@/components/shared/black-friday-banner-artwork";
 import {
   blackFriday2026Banner,
   type BlogPromotionPlacement,
@@ -101,12 +101,7 @@ export function BlogPromotion({
           if (event.button === 1) track("select_promotion");
         }}
       >
-        <Image
-          className={styles.artwork}
-          src={blackFriday2026Banner.image}
-          alt={blackFriday2026Banner.alt}
-          width={2000}
-          height={400}
+        <BlackFridayBannerArtwork
           sizes={
             pageType === "article"
               ? "(max-width: 959px) calc(100vw - 40px), (max-width: 1343px) calc(100vw - 416px), 928px"

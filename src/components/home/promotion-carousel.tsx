@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState, useSyncExternalStore } from "react";
-import { blackFriday2026Banner } from "@/data/promotions";
+import { homepageBlackFriday2026Banner } from "@/data/promotions";
+import { BlackFridayBannerArtwork } from "@/components/shared/black-friday-banner-artwork";
 import styles from "./promotion-carousel.module.css";
 
 const banners: {
@@ -12,7 +13,7 @@ const banners: {
   alt: string;
   href?: string;
 }[] = [
-  blackFriday2026Banner,
+  homepageBlackFriday2026Banner,
   {
     title: "Ưu đãi VPS / Cloud Server",
     image: "/images/promotion/vps-cloud-warm.webp",
@@ -37,6 +38,7 @@ const banners: {
 const subscribeHydration = () => () => {};
 const hydratedSnapshot = () => true;
 const serverSnapshot = () => false;
+const imageSizes = "(max-width: 1343px) calc(100vw - 40px), 1248px";
 
 export function PromotionCarousel({ href }: { href: string }) {
   const root = useRef<HTMLDivElement>(null);
@@ -128,16 +130,26 @@ export function PromotionCarousel({ href }: { href: string }) {
                   href={banner.href ?? href}
                   data-promotion-link
                 >
-                  <Image
-                    className={index === 0 ? styles.campaignImage : undefined}
-                    src={banner.image}
-                    alt={banner.alt}
-                    width={index === 0 ? 2000 : 2048}
-                    height={index === 0 ? 400 : 432}
-                    sizes="(max-width: 1343px) calc(100vw - 40px), 1248px"
-                    loading={index < 2 ? "eager" : "lazy"}
-                    draggable={false}
-                  />
+                  {index === 0 ? (
+                    <BlackFridayBannerArtwork
+                      banner={homepageBlackFriday2026Banner}
+                      width={2172}
+                      height={464}
+                      unoptimized
+                      sizes={imageSizes}
+                      loading="eager"
+                    />
+                  ) : (
+                    <Image
+                      src={banner.image}
+                      alt={banner.alt}
+                      width={2048}
+                      height={432}
+                      sizes={imageSizes}
+                      loading={index === 1 ? "eager" : "lazy"}
+                      draggable={false}
+                    />
+                  )}
                 </a>
               </div>
             ))}

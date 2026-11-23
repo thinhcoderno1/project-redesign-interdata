@@ -94,10 +94,14 @@ try {
     await expect(banner.locator("a")).toHaveAttribute("href", "/blackfriday/");
     const artwork = banner.locator("img");
     assert.equal(
-      new URL(await artwork.getAttribute("src"), base).searchParams.get("url"),
-      "/images/promotion/black-friday-2026-platinum-gift-box-5x1-v4.webp",
+      new URL(await artwork.getAttribute("src"), base).pathname,
+      "/images/promotion/black-friday-2026-studio-flash-sale-full.webp",
     );
     await expect(artwork).toHaveAttribute("alt", /Tiết kiệm 99%.*ly sứ/);
+    await expect(artwork).toHaveAttribute("alt", /ƯU ĐÃI LỚN NHẤT NĂM/);
+    await expect(
+      banner.getByText("ƯU ĐÃI LỚN NHẤT NĂM", { exact: true }),
+    ).toHaveCount(0);
     const placement = await banner.getAttribute("data-blog-promotion");
     assert.match(placement, /^(article|listing)-(early|middle|end)$/);
     assert(await banner.evaluate((el) => !!el.closest("main")));
@@ -140,7 +144,7 @@ try {
       )
       .toBe(true);
     const image = await banner.locator("img").boundingBox();
-    assert(Math.abs(image.width / image.height - 5) < 0.05);
+    assert(Math.abs(image.width / image.height - 2172 / 464) < 0.05);
     assert(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
@@ -172,7 +176,7 @@ try {
   await page.waitForTimeout(1200);
   assert.equal((await views()).length, 1);
   const viewEvent = (await views())[0];
-  assert.equal(viewEvent.ecommerce.creative_name, "platinum-gift-box-5x1-v4");
+  assert.equal(viewEvent.ecommerce.creative_name, "studio-flash-sale-5x1");
   assert.equal(
     viewEvent.ecommerce.creative_slot,
     `blog_${(await banner.getAttribute("data-blog-promotion")).replace("-", "_")}`,
@@ -208,6 +212,11 @@ try {
   const plain = await noJs.newPage();
   await plain.goto(`${base}${articlePath}`);
   await expect(plain.locator("[data-blog-promotion]")).toHaveCount(1);
+  await expect(
+    plain
+      .locator("[data-blog-promotion]")
+      .getByText("ƯU ĐÃI LỚN NHẤT NĂM", { exact: true }),
+  ).toHaveCount(0);
   await expect(plain.locator("[data-blog-promotion] a")).toHaveAttribute(
     "href",
     "/blackfriday/",

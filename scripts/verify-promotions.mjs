@@ -6,7 +6,7 @@ const base = process.env.TEST_BASE_URL || "http://localhost:3100";
 const bannerLinks = (root) =>
   root.getByRole("link").and(root.locator("[data-promotion-link]"));
 const expectedImages = [
-  "/images/promotion/black-friday-2026-platinum-gift-box-5x1-v4.webp",
+  "/images/promotion/black-friday-2026-studio-flash-sale-full.webp",
   "/images/promotion/vps-cloud-warm.webp",
   "/images/promotion/vps-platinum-viettel-idc.jpg",
   "/images/promotion/vps-n8n.jpg",
@@ -29,12 +29,16 @@ try {
     await expect(root).toHaveAttribute("data-enhanced", "true");
     await expect(root).toHaveAttribute("data-active-slide", "1");
     await expect(bannerLinks(root)).toHaveAttribute("href", "/blackfriday/");
+    await expect(
+      bannerLinks(root).getByText("ƯU ĐÃI LỚN NHẤT NĂM", { exact: true }),
+    ).toHaveCount(0);
     const campaignImage = bannerLinks(root).locator("img");
     await expect(campaignImage).toHaveAttribute(
       "alt",
-      /ưu đãi lớn nhất năm.*99%.*VPS, Cloud Server, Hosting và Domain.*nón bảo hiểm, ly sứ và S3 Storage/,
+      /99%.*Flash Sale 0đ.*VPS, Cloud Server, Hosting và Domain.*nón bảo hiểm, ly sứ trắng và S3 Storage/,
     );
     await expect(campaignImage).toHaveAttribute("alt", /Black Friday 2026/);
+    await expect(campaignImage).toHaveAttribute("alt", /ƯU ĐÃI LỚN NHẤT NĂM/);
     await root.scrollIntoViewIfNeeded();
     const benefitsBox = await page
       .getByRole("list", { name: "Lợi ích hạ tầng InterData" })
@@ -92,9 +96,10 @@ try {
         index === 0 ? "/blackfriday/" : "/canhme/",
       );
       const image = link.locator("img");
-      expect(
-        new URL(await image.getAttribute("src"), base).searchParams.get("url"),
-      ).toBe(expectedImages[index]);
+      const imageUrl = new URL(await image.getAttribute("src"), base);
+      expect(imageUrl.searchParams.get("url") ?? imageUrl.pathname).toBe(
+        expectedImages[index],
+      );
       await expect
         .poll(() =>
           image.evaluate((img) => img.complete && img.naturalWidth > 0),
@@ -102,7 +107,7 @@ try {
         .toBe(true);
       const imageBox = await image.boundingBox();
       expect(imageBox.width / imageBox.height).toBeCloseTo(
-        index === 0 ? 5 : 2048 / 432,
+        index === 0 ? 2172 / 464 : 2048 / 432,
         2,
       );
       expect(
@@ -300,6 +305,9 @@ try {
     '#uu-dai [aria-roledescription="slideshow"]',
   );
   await expect(bannerLinks(fallbackRoot)).toHaveCount(expectedImages.length);
+  await expect(
+    fallbackRoot.getByText("ƯU ĐÃI LỚN NHẤT NĂM", { exact: true }),
+  ).toHaveCount(0);
   await expect(fallbackRoot.getByRole("button")).toHaveCount(0);
   for (const link of await bannerLinks(fallbackRoot).all()) {
     await link.focus();
