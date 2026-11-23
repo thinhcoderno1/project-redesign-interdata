@@ -1,9 +1,10 @@
 # Black Friday
 
 - Route: `/blackfriday/` inside the existing `(website)` layout. `/black-friday/` permanently redirects to it (308), preserving query parameters. Canonical, Open Graph URL and structured data use `/blackfriday/`. Shared Navigation, Footer, font, container widths and floating contact remain in use.
-- Best Plans uses the VPS Platinum Black Friday design from the demo. It displays four cards per row on desktop, two on tablet and a swipeable list on phones. P2 carries the “Phù hợp nhất” badge.
-- The campaign catalog comes from `https://support.interdata.vn/packages.php?gid=105&module` and revalidates every 60 seconds. The loader validates the group, the eight P1–P8 products (PIDs 570–577) and their checkout URLs. The live API sets the full price for each offered billing cycle. A missing cycle or unavailable catalog provides a contact link.
-- The configuration is displayed as a seven-row list with icons. The loader reads CPU, RAM, NVMe, network details, firewall and eligible gifts from Portal and formats them for the cards. The 1-year tab is selected by default. Gifts appear for P2–P8 on the 3-year tab. All three tabs support arrow, Home and End keys.
+- Before 11:30 on November 23, 2026 in Vietnam, Best Plans shows BF26 Start, Core and Plus from Portal group 103 (PIDs 567–569). The 3-year tab is selected and shows the extra year of service.
+- At 11:30, Best Plans switches to Portal group 105 and shows the eight VPS Platinum P1–P8 plans (PIDs 570–577). The Platinum design displays four cards per row on desktop, two on tablet and a swipeable list on phones. P2 carries the “Phù hợp nhất” badge.
+- The page selects the catalog at request time using the server clock. An already-open page checks `/api/black-friday-best-plans/` and refreshes its server-rendered data at the switch. Each Portal catalog revalidates every 60 seconds. The loader validates product IDs, billing totals and checkout URLs. A missing cycle or unavailable catalog provides a contact link.
+- Platinum configurations show seven rows with icons. The loader reads CPU, RAM, NVMe, network details, firewall and eligible gifts from Portal. Platinum opens on the 1-year tab and offers gifts for P2–P8 on the 3-year tab. All billing tabs support arrow, Home and End keys.
 - Crossed-out amounts show the VPS Platinum Viettel reference price for matching resources. Where the demo uses an estimate, the amount uses the demo’s resource rates and is marked as estimated in its accessible label and tooltip.
 - Flash Sale is visible immediately with `blackFridayFlashSale.mode: "preview"`. The countdown targets `2026-11-23T11:00:00+07:00` (11:00 on November 23, 2026, Vietnam time) and uses server time plus elapsed monotonic browser time. `/api/black-friday-flash-sale/` returns `private, no-store` responses and uses only server time to authorize code release. An open page checks for codes at the opening time and continues checking while awaiting codes. `mode: "hidden"` hides the section and blocks code release.
 - The page uses `src/components/black-friday/black-friday.module.css`, with a separate CSS module for Flash Sale. Both sections use the dark, blue and orange palette from their references.
@@ -28,17 +29,23 @@
 
 ## Verification
 
-The FAQ section follows the consultation CTA and includes eight native details/summary accordions. Its light, rounded panel uses a centered blue uppercase heading, an orange icon badge and a subtle CSS geometric backdrop. Questions are split into two independent columns of four, with thin separators and circular plus/minus controls; below 801px they stack into one column in the original reading order. All answers start collapsed. The former sidebar and its contact button are removed; the eight questions and existing answer links remain in place. The cycle-selection answer objectively compares 1/2/3 years, recommends 3 years for stable long-term needs and lists the gifts available with a 3-year order. Keyboard focus is visible and the accordions work without JavaScript. The heading retains the page-wide H2 font size.
+The FAQ section follows the consultation CTA and includes eight native details/summary accordions. Its light, rounded panel uses a centered blue uppercase heading, an orange icon badge and a subtle CSS geometric backdrop. Questions appear in two columns of four and stack into one column below 801px. All answers start collapsed. The billing answers refer readers to the prices and offers shown in the active catalog. Keyboard focus is visible and the accordions work without JavaScript.
 
 ```powershell
 npm run build
 node scripts/verify-black-friday-pricing-data.mjs
-node scripts/verify-black-friday-coupons.mjs --built
 node scripts/verify-black-friday-flash-sale-data.mjs
+```
+
+With the built application running on port 3100, verify the runtime responses and UI.
+
+```powershell
+node scripts/verify-black-friday-coupons.mjs --built
+node scripts/verify-black-friday-flash-sale-data.mjs --built
 node scripts/verify-black-friday-flash-sale.mjs
 node scripts/verify-black-friday-copy.mjs
 node scripts/verify-black-friday-countdown.mjs
 node scripts/verify-black-friday.mjs
 ```
 
-Use `TEST_BASE_URL` to check another local server. The script verifies VPS-only yearly tabs, keyboard support, cycle-specific checkout URLs, centered Best Plans alignment, time-window selection, coupon terms, section anchors, consultation CTA placement/actions/artwork, no-JavaScript rendering, seven viewport widths (320–1920), browser errors and WCAG A/AA with Axe. Screenshots and machine-readable results are in `artifacts/black-friday/` (Git ignored).
+Use `TEST_BASE_URL` to check another local server. The pricing test checks both sides of the 11:30 boundary. The page test checks the catalog active on the test server, cycle-specific checkout URLs, keyboard support, section anchors, rendering without JavaScript, nine viewport widths and WCAG A/AA with Axe. Screenshots and machine-readable results are in `artifacts/black-friday/`.

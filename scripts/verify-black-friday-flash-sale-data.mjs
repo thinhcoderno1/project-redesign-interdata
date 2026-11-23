@@ -215,22 +215,22 @@ if (process.argv.includes("--built")) {
     checked++;
   }
   assert(checked > 0);
-  for (const file of [
-    ".next/server/app/blackfriday.html",
-    ".next/server/app/blackfriday.rsc",
+  const base = process.env.TEST_BASE_URL || "http://localhost:3100";
+  for (const [format, headers] of [
+    ["HTML", {}],
+    ["RSC", { rsc: "1" }],
   ]) {
-    const content = await fs.readFile(file, "utf8");
-    assert(
-      !codePattern.test(content),
-      `Flash Sale code prerendered in ${file}`,
-    );
+    const response = await fetch(`${base}/blackfriday/`, { headers });
+    assert(response.ok, `Black Friday ${format} HTTP ${response.status}`);
+    const content = await response.text();
+    assert(!codePattern.test(content), `Flash Sale code exposed in ${format}`);
     assert(
       !/Chỉ (?:03|05|10) mã/i.test(content),
-      `Flash Sale quantity prerendered in ${file}`,
+      `Flash Sale quantity exposed in ${format}`,
     );
   }
   console.log(
-    `Flash Sale production privacy: ${checked} client assets and prerendered HTML/RSC contain no release codes or quantities.`,
+    `Flash Sale production privacy: ${checked} client assets and HTML/RSC contain no release codes or quantities.`,
   );
 }
 console.log(

@@ -76,9 +76,9 @@ export const blackFridayFaqs: {
   action?: { label: string; href: string };
 }[] = [
   {
-    question: "Nên chọn gói BF26 PLATINUM nào?",
+    question: "Nên chọn gói VPS Black Friday nào?",
     answer:
-      "Hãy đối chiếu mức dùng CPU, RAM và dung lượng lưu trữ thực tế, đồng thời chừa tài nguyên cho tăng trưởng. P1 có cấu hình thấp nhất trong nhóm. Bạn có thể so sánh P2 đến P8 nếu cần nhiều tài nguyên hơn.",
+      "Hãy đối chiếu mức dùng CPU, RAM và dung lượng lưu trữ thực tế, đồng thời chừa tài nguyên cho tăng trưởng. So sánh cấu hình của các gói đang mở bán để chọn theo nhu cầu sử dụng.",
     action: { label: "So sánh các Best Plans", href: "#best-plans" },
   },
   {
@@ -90,7 +90,7 @@ export const blackFridayFaqs: {
   {
     question: "Nên đăng ký 1, 2 hay 3 năm để tối ưu chi phí?",
     answer:
-      "Chu kỳ 1 năm giúp bạn linh hoạt ngân sách khi nhu cầu còn thay đổi. Chu kỳ 2 năm giảm 5% trên tổng giá 2 năm, còn chu kỳ 3 năm giảm 10% trên tổng giá 3 năm. Các gói P2 đến P8 có thêm quà tặng khi chọn chu kỳ 3 năm.",
+      "Chu kỳ 1 năm giúp bạn linh hoạt ngân sách khi nhu cầu còn thay đổi. Chọn từng chu kỳ để so sánh tổng tiền và quyền lợi trước khi đăng ký.",
   },
   {
     question: "Tôi nhận và sử dụng mã ưu đãi như thế nào?",
@@ -110,9 +110,9 @@ export const blackFridayFaqs: {
     action: { label: "Xem ưu đãi gia hạn", href: "#gia-han" },
   },
   {
-    question: "Gói nào có quà tặng khi đăng ký 3 năm?",
+    question: "Xem ưu đãi khi đăng ký 3 năm ở đâu?",
     answer:
-      "Các gói BF26 PLATINUM P2 đến P8 có quà tặng khi chọn chu kỳ 3 năm. Chọn tab 3 năm để xem quà của từng gói.",
+      "Chọn tab 3 năm tại Best Plans để xem quyền lợi áp dụng cho từng gói.",
   },
   {
     question: "Cần chuẩn bị gì khi muốn chuyển dữ liệu hoặc nâng cấp gói?",

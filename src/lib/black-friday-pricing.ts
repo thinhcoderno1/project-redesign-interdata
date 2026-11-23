@@ -1,4 +1,8 @@
 import { productSpecs, type VpsProduct } from "@/data/vps-pricing";
+import {
+  blackFridayGid,
+  blackFridayPlans,
+} from "@/data/black-friday-legacy-plans";
 import { getPlatinumProducts } from "./vps-platinum-pricing";
 
 const groupId = 105;
@@ -108,27 +112,25 @@ function getReferencePrices(
   return prices;
 }
 
-/** Best Plans checkout uses the campaign catalog. Viettel is a separate price reference. */
-export async function getBlackFridayProducts(): Promise<BlackFridayProduct[]> {
-  const [response, viettel] = await Promise.all([
-    fetch(`https://support.interdata.vn/packages.php?gid=${groupId}&module`, {
+async function loadCampaignProducts(
+  gid: number,
+  storefront: string,
+  plans: readonly { pid: number; slug: string }[],
+): Promise<VpsProduct[]> {
+  const response = await fetch(
+    `https://support.interdata.vn/packages.php?gid=${gid}&module`,
+    {
       next: { revalidate: 60 },
       signal: AbortSignal.timeout(15000),
-    }),
-    getPlatinumProducts(101).catch(() => []),
-  ]);
+    },
+  );
   if (!response.ok)
     throw new Error(`Black Friday pricing HTTP ${response.status}`);
   const data = await response.json();
   if (data.success !== true || !Array.isArray(data.products))
     throw new Error("Black Friday pricing unavailable");
 
-  const viettelPlans = viettel.map((product) => ({
-    product,
-    resources: readResources(productSpecs(product).join("\n")),
-  }));
-  return planIds.map((pid, index) => {
-    const slug = `bf26-platinum-p${index + 1}`;
+  return plans.map(({ pid, slug }) => {
     const matches = data.products.filter(
       (item: VpsProduct) => item?.pid === pid,
     );
@@ -136,7 +138,7 @@ export async function getBlackFridayProducts(): Promise<BlackFridayProduct[]> {
     if (
       matches.length !== 1 ||
       !item ||
-      item.gid !== groupId ||
+      item.gid !== gid ||
       item.slug !== slug ||
       ![item.name, item.description, item.product_url].every(
         (value) => typeof value === "string" && value.trim(),
@@ -170,13 +172,49 @@ export async function getBlackFridayProducts(): Promise<BlackFridayProduct[]> {
     );
     if (!Object.keys(pricing).length)
       throw new Error("Missing Black Friday prices");
-    const product: BlackFridayProduct = {
+    return {
       pid,
-      gid: groupId,
+      gid,
       slug,
-      name: item.name.replace(/^BF26-\s*/i, "BF26 ").toUpperCase(),
+      name: item.name,
+      description: item.description,
       product_url: item.product_url,
       pricing: { VND: pricing },
+    };
+  });
+}
+
+export function getPreviousBlackFridayProducts(): Promise<VpsProduct[]> {
+  return loadCampaignProducts(
+    blackFridayGid,
+    "/store/black-friday-2026",
+    blackFridayPlans,
+  );
+}
+
+/** Best Plans checkout uses the campaign catalog. Viettel is a separate price reference. */
+export async function getBlackFridayProducts(): Promise<BlackFridayProduct[]> {
+  const plans = planIds.map((pid, index) => ({
+    pid,
+    slug: `bf26-platinum-p${index + 1}`,
+  }));
+  const [products, viettel] = await Promise.all([
+    loadCampaignProducts(groupId, storefront, plans),
+    getPlatinumProducts(101).catch(() => []),
+  ]);
+  const viettelPlans = viettel.map((product) => ({
+    product,
+    resources: readResources(productSpecs(product).join("\n")),
+  }));
+  return products.map((item) => {
+    const { pid, gid, slug, name, product_url, pricing } = item;
+    const product: BlackFridayProduct = {
+      pid,
+      gid,
+      slug,
+      name: name.replace(/^BF26-\s*/i, "BF26 ").toUpperCase(),
+      product_url,
+      pricing,
       ...readPresentation(item),
       referencePrices: {},
     };

@@ -26,11 +26,16 @@ async function loadData(file, imports, fetcher = fetch) {
   return exported;
 }
 
+const vpsContent = JSON.parse(
+  await fs.readFile("src/data/vps-content.json", "utf8"),
+);
 const pricing = await loadData("src/data/vps-pricing.ts", {
-  "./vps-content.json": JSON.parse(
-    await fs.readFile("src/data/vps-content.json", "utf8"),
-  ),
+  "./vps-content.json": vpsContent,
   entities: { decodeHTML },
+});
+const legacy = await loadData("src/data/black-friday-legacy-plans.ts", {
+  "./vps-content.json": vpsContent,
+  "./vps-pricing": pricing,
 });
 const cycles = ["annually", "biennially", "triennially"];
 const testPlans = Array.from({ length: 8 }, (_, index) => {
@@ -65,6 +70,7 @@ const loadPricing = (fetcher, getViettelPlans = async () => [referencePlan]) =>
     "src/lib/black-friday-pricing.ts",
     {
       "@/data/vps-pricing": pricing,
+      "@/data/black-friday-legacy-plans": legacy,
       "./vps-platinum-pricing": {
         getPlatinumProducts: (gid) => {
           assert.equal(gid, 101);
@@ -156,6 +162,54 @@ for (const response of [
   const invalid = await loadPricing(async () => response);
   await assert.rejects(() => invalid.getBlackFridayProducts());
 }
+const legacyPlans = legacy.blackFridayPlans.map(({ pid, slug }, index) => ({
+  ...testPlans[index],
+  pid,
+  slug,
+  gid: 103,
+  name: ["BF26 - Start", "BF26 - Core", "BF26 - Plus"][index],
+  product_url: `https://support.interdata.vn/index.php?rp=/store/black-friday-2026/${slug}`,
+}));
+const groups = [];
+const allPricing = await loadPricing(async (url, options) => {
+  const gid = new URL(url).searchParams.get("gid");
+  groups.push(gid);
+  assert.equal(options.next.revalidate, 60);
+  const products = gid === "103" ? legacyPlans : testPlans;
+  return { ok: true, json: async () => ({ success: true, products }) };
+});
+const release = await loadData("src/lib/black-friday-best-plans.ts", {
+  "server-only": {},
+  "./black-friday-pricing": allPricing,
+});
+const launch = Date.parse("2026-11-23T04:30:00Z");
+const flashSaleStart = Date.parse("2026-11-23T04:00:00Z");
+assert.equal(release.getBestPlansRelease(flashSaleStart).delayMs, 30 * 60_000);
+assert.equal(release.getBestPlansRelease(launch - 1).delayMs, 1);
+assert.deepEqual(await release.getBestPlansCatalog(launch - 1), {
+  edition: "legacy",
+  products: legacyPlans,
+});
+assert.equal(release.getBestPlansRelease(launch).delayMs, 0);
+const launched = await release.getBestPlansCatalog(launch);
+assert.equal(launched.edition, "platinum");
+assert.deepEqual(
+  launched.products.map(({ pid }) => pid),
+  testPlans.map(({ pid }) => pid),
+);
+assert.deepEqual(groups, ["103", "105"]);
+const { GET } = await loadData("src/app/api/black-friday-best-plans/route.ts", {
+  "@/lib/black-friday-best-plans": {
+    getBestPlansRelease: () => release.getBestPlansRelease(launch - 1),
+  },
+});
+const timingResponse = GET(
+  new Request(
+    "http://localhost/api/black-friday-best-plans/?now=9999999999999",
+  ),
+);
+assert.match(timingResponse.headers.get("cache-control"), /no-store/);
+assert.deepEqual(await timingResponse.json(), { delayMs: 1 });
 console.log(
-  "Black Friday Platinum catalog, configuration, gifts, reference prices and failure handling passed.",
+  "Black Friday catalogs, configuration, gifts, reference prices and the independent 11:30 launch passed.",
 );

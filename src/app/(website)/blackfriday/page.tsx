@@ -1,15 +1,14 @@
 import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import { BlackFridayPage } from "@/components/black-friday/black-friday-page";
-import { getBlackFridayProducts } from "@/lib/black-friday-pricing";
+import { getBestPlansCatalog } from "@/lib/black-friday-best-plans";
 import { getBlackFridayCoupons } from "@/lib/black-friday-coupons";
 import { getBlackFridayFlashSaleCheckoutLinks } from "@/lib/black-friday-flash-sale-checkout";
 
-export const revalidate = 60;
-
 const title = "Black Friday VPS & Cloud Server 2026 - Tiết Kiệm Đến 75%";
 const description =
-  "VPS giảm đến 55%, Cloud Server giảm đến 40% - 8 gói VPS Platinum Black Friday - Flash Sale 0đ - Tặng S3 Storage 200GB. Săn Deals Ngay!";
+  "VPS giảm đến 55%, Cloud Server giảm đến 40% - Ưu đãi VPS Platinum Black Friday - Flash Sale 0đ. Săn Deals Ngay!";
 
 export const metadata: Metadata = {
   title,
@@ -33,13 +32,14 @@ export const metadata: Metadata = {
 };
 
 async function Page() {
-  const [vps, flashSaleCheckoutLinks] = await Promise.all([
-    getBlackFridayProducts().catch(() => []),
+  await connection();
+  const [bestPlans, flashSaleCheckoutLinks] = await Promise.all([
+    getBestPlansCatalog(),
     getBlackFridayFlashSaleCheckoutLinks(),
   ]);
   return (
     <BlackFridayPage
-      vps={vps}
+      bestPlans={bestPlans}
       coupons={getBlackFridayCoupons()}
       flashSaleCheckoutLinks={flashSaleCheckoutLinks}
     />

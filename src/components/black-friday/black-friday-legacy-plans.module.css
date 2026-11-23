@@ -1,0 +1,312 @@
+.grid.grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-inline-end: 0;
+  gap: clamp(13px, 1.65vw, 24px);
+}
+
+article.card {
+  padding: 22px clamp(12px, 1.75vw, 25px) 18px;
+  white-space: normal;
+}
+
+article.card h3 {
+  color: inherit;
+  font-size: clamp(19px, 1.8vw, 26px);
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .grid.grid {
+    margin-inline-end: max(0px, calc(60px - (100vw - 100%) / 2));
+  }
+}
+
+@media (min-width: 768px) and (max-width: 850px) {
+  article.card .planIconStage {
+    --plan-icon-size: 44px;
+  }
+}
+
+@media (max-width: 900px) {
+  .card .specs li {
+    gap: 8px;
+    font-size: 14px;
+  }
+}
+.planIconStage {
+  --plan-icon-size: clamp(88px, 7.5vw, 108px);
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  width: var(--plan-icon-size);
+  height: calc(var(--plan-icon-size) * 0.72);
+  flex-shrink: 0;
+}
+.planIconStage::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  bottom: -10%;
+  width: 68%;
+  height: 18%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    rgb(16 42 82 / 30%),
+    rgb(16 42 82 / 12%) 45%,
+    transparent 75%
+  );
+  filter: blur(2px);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.planServerIcon {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: var(--plan-icon-size);
+  height: var(--plan-icon-size);
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+}
+@media (max-width: 1100px) {
+  .planIconStage {
+    --plan-icon-size: 80px;
+  }
+}
+@media (min-width: 801px) and (max-width: 900px) {
+  .planIconStage {
+    --plan-icon-size: 60px;
+  }
+}
+@media (min-width: 701px) and (max-width: 800px) {
+  .planIconStage {
+    --plan-icon-size: 52px;
+  }
+}
+@media (max-width: 700px) {
+  .planIconStage {
+    --plan-icon-size: 92px;
+  }
+}
+@media (max-width: 360px) {
+  .planIconStage {
+    --plan-icon-size: 76px;
+  }
+}
+.giftTag {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 7px;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 4px;
+  padding: 4px 11px;
+  border-radius: 6px;
+  background: var(--bf-promo-red-background);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.giftTag svg {
+  flex-shrink: 0;
+}
+.price {
+  --bf-price-size: clamp(30px, 2.9vw, 40px);
+  --bf-period-size: clamp(12px, 4.8cqw, 18px);
+  container-type: inline-size;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  gap: 6px;
+  margin: 10px 0 12px;
+  line-height: 1.2;
+}
+.originalPrice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 10px;
+  color: #526075;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.originalPrice del {
+  font-weight: 600;
+  text-decoration-thickness: 1.5px;
+}
+.originalPrice + .price {
+  margin-top: 4px;
+}
+.price strong {
+  /* Reserve room for the period and fit the longest BF26 amount on one line. */
+  font-size: min(
+    var(--bf-price-size),
+    calc((100cqw - 5.5 * var(--bf-period-size) - 6px) / 6.1)
+  );
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  white-space: nowrap;
+}
+.price > span {
+  flex-shrink: 0;
+  font-size: var(--bf-period-size);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.planUpgrade {
+  container-type: inline-size;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--bf-blue);
+  border-radius: 0 7px 7px 0;
+  background: #edf3ff;
+}
+.card .upgradeTitle {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  color: #344565;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.upgradeTitle svg {
+  flex-shrink: 0;
+  color: var(--bf-blue);
+}
+.card .upgradeLabel {
+  flex-basis: 100%;
+  color: #526075;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.upgradeMonthly {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  gap: 2px 4px;
+  margin-top: 0;
+  color: var(--bf-blue);
+  line-height: 1.4;
+}
+.upgradeMonthly strong {
+  font-size: clamp(16px, 6.8cqw, 21px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+.upgradeMonthly > span {
+  font-size: 12px;
+  font-weight: 600;
+}
+.upgradeResources {
+  display: flex;
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin-top: 0;
+  padding: 0;
+  list-style: none;
+}
+.upgradeResources li {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 5px;
+  color: #243a64;
+  font-size: clamp(11px, 4cqw, 13px);
+  font-weight: 600;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+.upgradeResources svg {
+  width: clamp(14px, 5cqw, 16px);
+  height: clamp(14px, 5cqw, 16px);
+  flex-shrink: 0;
+  color: var(--bf-blue);
+}
+.specs {
+  border-top: 1px solid #d9dfe8;
+  padding-top: 12px;
+  margin-bottom: 14px;
+  display: grid;
+  gap: 8px;
+}
+.specs li {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #283347;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.card .specs li {
+  font-weight: 600;
+}
+.specList {
+  display: grid;
+  gap: 8px;
+}
+.specDetails summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  min-height: 32px;
+  color: var(--brand-primary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+.specDetails summary::-webkit-details-marker {
+  display: none;
+}
+.specDetails summary:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.specDetails summary svg {
+  color: currentColor;
+}
+.specDetails > ul {
+  margin-top: 10px;
+}
+.specDetails[open] {
+  display: flex;
+  flex-direction: column;
+}
+.specDetails[open] > ul {
+  margin-top: 0;
+}
+.specDetails[open] summary {
+  order: 1;
+  margin-top: 8px;
+}
+.specDetails .showLess,
+.specDetails[open] .showMore {
+  display: none;
+}
+.specDetails[open] .showLess {
+  display: inline;
+}
+.specDetails[open] summary svg {
+  transform: rotate(180deg);
+}
+.specs svg {
+  color: #121923;
+  flex-shrink: 0;
+}

@@ -96,17 +96,20 @@ if (process.argv.includes("--built")) {
     checked++;
   }
   assert(checked > 0);
-  for (const file of [
-    ".next/server/app/blackfriday.html",
-    ".next/server/app/blackfriday.rsc",
+  const base = process.env.TEST_BASE_URL || "http://localhost:3100";
+  for (const [format, headers] of [
+    ["HTML", {}],
+    ["RSC", { rsc: "1" }],
   ]) {
-    const content = await fs.readFile(file, "utf8");
+    const response = await fetch(`${base}/blackfriday/`, { headers });
+    assert(response.ok, `Black Friday ${format} HTTP ${response.status}`);
+    const content = await response.text();
     assert(!content.includes("BF26-XXXXX"));
     for (const [, , , code] of expected)
-      assert(content.includes(code), `Published coupon missing in ${file}`);
+      assert(content.includes(code), `Published coupon missing in ${format}`);
   }
   console.log(
-    `Coupons: ${checked} production client assets keep code definitions server-side; prerendered HTML and RSC contain all published codes.`,
+    `Coupons: ${checked} production client assets keep code definitions server-side, and HTML/RSC contain all published codes.`,
   );
 }
 console.log(

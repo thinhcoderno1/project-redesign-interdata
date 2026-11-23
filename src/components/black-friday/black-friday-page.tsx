@@ -15,7 +15,10 @@ import { CouponCopyButton } from "./coupon-copy-button";
 import { useFlashSaleVisibility } from "./use-flash-sale-visibility";
 import { FlashSaleOffers } from "./flash-sale-offers";
 import { PromotionGroupsCta } from "./promotion-groups-cta";
+import { LegacyBestPlanCard } from "./legacy-best-plan-card";
+import { useBestPlansRelease } from "./use-best-plans-release";
 import type { FlashSaleCheckoutLinks } from "@/data/black-friday-flash-sale";
+import type { BestPlansCatalog } from "@/lib/black-friday-best-plans";
 import {
   ArrowDownUp,
   ArrowRight,
@@ -53,6 +56,7 @@ import {
 } from "@/data/black-friday";
 import { contactDetails } from "@/data/contact";
 import styles from "./black-friday.module.css";
+import legacyStyles from "./black-friday-legacy-plans.module.css";
 
 const marqueeMessages = [
   "Black Friday 2026",
@@ -222,24 +226,41 @@ function PlanGifts({ gifts }: { gifts: readonly string[] }) {
 }
 
 export function BlackFridayPage({
-  vps,
+  bestPlans,
   coupons,
   flashSaleCheckoutLinks,
 }: {
-  vps: BlackFridayProduct[];
+  bestPlans: BestPlansCatalog;
   coupons: BlackFridayCouponGroup[];
   flashSaleCheckoutLinks: FlashSaleCheckoutLinks;
 }) {
-  const [selectedCycle, setCycle] = useState<BlackFridayCycle>("annually");
+  const [selection, setSelection] = useState<{
+    edition: BestPlansCatalog["edition"];
+    cycle: BlackFridayCycle;
+  }>();
   const cycleTabs = useRef<(HTMLButtonElement | null)[]>([]);
   const planGrid = useRef<HTMLDivElement>(null);
   const flashSaleVisible = useFlashSaleVisibility();
   const [activeSection, setActiveSection] = useState("best-plans");
-  const products = vps;
+  const { edition, products } = bestPlans;
+  const legacy = edition === "legacy";
+  const selectedCycle =
+    selection?.edition === edition
+      ? selection.cycle
+      : legacy
+        ? "triennially"
+        : "annually";
   const period = bestPlanCycles.find(({ key }) => key === selectedCycle)?.label;
-  const hasReferencePrice = products.some(
-    (product) => product.referencePrices[selectedCycle] !== undefined,
-  );
+  const hasReferencePrice =
+    bestPlans.edition === "platinum" &&
+    bestPlans.products.some(
+      (product) => product.referencePrices[selectedCycle] !== undefined,
+    );
+  useBestPlansRelease(legacy);
+
+  function setCycle(cycle: BlackFridayCycle) {
+    setSelection({ edition, cycle });
+  }
 
   function cycleKeyboard(
     event: KeyboardEvent<HTMLButtonElement>,
@@ -415,16 +436,28 @@ export function BlackFridayPage({
             <circle cx="1074" cy="328" r="2.5" />
           </g>
         </svg>
-        <div className={`container ${styles.bestPlansInner}`}>
+        <div
+          className={
+            legacy ? "container" : `container ${styles.bestPlansInner}`
+          }
+        >
           <div
             className={`${styles.sectionHeading} ${styles.bestPlansHeading}`}
           >
             <div>
               <EyebrowBadge icon={Sparkles} className={styles.sectionEyebrow}>
-                HOT DEALS
+                {legacy ? "ƯU ĐÃI NỔI BẬT" : "HOT DEALS"}
               </EyebrowBadge>
-              <h2 id="best-plans-title">VPS PLATINUM BLACK FRIDAY</h2>
-              <p>Hiệu năng mạnh mẽ cho mọi dự án</p>
+              <h2 id="best-plans-title">
+                {legacy
+                  ? "BEST PLANS VPS BLACK FRIDAY"
+                  : "VPS PLATINUM BLACK FRIDAY"}
+              </h2>
+              <p>
+                {legacy
+                  ? "Chọn cấu hình phù hợp với nhu cầu của bạn."
+                  : "Hiệu năng mạnh mẽ cho mọi dự án"}
+              </p>
             </div>
           </div>
           {products.length ? (
@@ -455,10 +488,20 @@ export function BlackFridayPage({
                         onKeyDown={(event) => cycleKeyboard(event, index)}
                       >
                         {label}
-                        <span className={styles.cycleSavingsTag}>
-                          <span className="sr-only">Giảm {badgeDiscount}%</span>
-                          <span aria-hidden="true">-{badgeDiscount}%</span>
-                        </span>
+                        {legacy ? (
+                          key === "triennially" && (
+                            <span className={styles.cycleSavingsTag}>
+                              Miễn phí 1 năm
+                            </span>
+                          )
+                        ) : (
+                          <span className={styles.cycleSavingsTag}>
+                            <span className="sr-only">
+                              Giảm {badgeDiscount}%
+                            </span>
+                            <span aria-hidden="true">-{badgeDiscount}%</span>
+                          </span>
+                        )}
                       </button>
                     ),
                   )}
@@ -469,12 +512,20 @@ export function BlackFridayPage({
                 aria-label="Điểm nổi bật của Best Plans"
                 role="list"
               >
-                {[
-                  "Intel® Platinum Gen 2",
-                  "SSD NVMe U.2 Gen 4",
-                  "AntiDDoS 120Gbps",
-                  "Quà Tặng Ngập Tràn",
-                ].map((highlight) => (
+                {(legacy
+                  ? [
+                      "Intel Xeon Platinum",
+                      "SSD NVMe U.2 Gen 4",
+                      "Uptime 99.9%",
+                      "Support 24/7",
+                    ]
+                  : [
+                      "Intel® Platinum Gen 2",
+                      "SSD NVMe U.2 Gen 4",
+                      "AntiDDoS 120Gbps",
+                      "Quà Tặng Ngập Tràn",
+                    ]
+                ).map((highlight) => (
                   <li key={highlight}>
                     <Check size={17} strokeWidth={2.5} aria-hidden="true" />
                     <span>{highlight}</span>
@@ -484,78 +535,95 @@ export function BlackFridayPage({
               <MobilePricingSlider
                 id="bf-plans"
                 ref={planGrid}
-                className={styles.planGrid}
+                className={
+                  legacy
+                    ? `${styles.planGrid} ${legacyStyles.grid}`
+                    : styles.planGrid
+                }
                 role="tabpanel"
                 aria-labelledby={`bf-cycle-${selectedCycle}`}
                 tabIndex={0}
                 aria-live="polite"
               >
-                {products.map((product, index) => {
-                  const total = product.pricing.VND[selectedCycle];
-                  const hasPrice = total !== undefined;
-                  const referencePrice = product.referencePrices[selectedCycle];
-                  const isEstimate = referencePrice?.source === "estimate";
-                  const referenceLabel = isEstimate
-                    ? "Giá tham chiếu ước tính theo bảng tài nguyên VPS Platinum Viettel"
-                    : "Giá tham chiếu VPS Platinum Viettel";
-                  return (
-                    <article
-                      key={product.pid}
-                      data-pid={product.pid}
-                      className={`${styles.planCard} ${index === 1 ? styles.featured : ""}`}
-                    >
-                      {index === 1 && (
-                        <span className={styles.recommendationTag}>
-                          <Crown size={16} aria-hidden="true" />
-                          Phù hợp nhất
-                        </span>
-                      )}
-                      <div className={styles.planHeader}>
-                        <h3>{product.name}</h3>
-                        <Image
-                          className={styles.planChip}
-                          src="/images/black-friday/intel-xeon-platinum-8000-angled.webp"
-                          alt=""
-                          width={256}
-                          height={256}
-                          sizes="(max-width: 360px) 74px, (max-width: 767px) 82px, (min-width: 1024px) and (max-width: 1100px) 70px, 88px"
-                        />
-                      </div>
-                      {hasReferencePrice && (
-                        <div className={styles.originalPrice}>
-                          {referencePrice !== undefined && (
-                            <del title={referenceLabel}>
-                              <span className="sr-only">{referenceLabel} </span>
-                              {formatVnd(referencePrice.amount)} / {period}
-                            </del>
+                {bestPlans.edition === "legacy"
+                  ? bestPlans.products.map((product, index) => (
+                      <LegacyBestPlanCard
+                        key={product.pid}
+                        product={product}
+                        next={bestPlans.products[index + 1]}
+                        index={index}
+                        selectedCycle={selectedCycle}
+                      />
+                    ))
+                  : bestPlans.products.map((product, index) => {
+                      const total = product.pricing.VND[selectedCycle];
+                      const hasPrice = total !== undefined;
+                      const referencePrice =
+                        product.referencePrices[selectedCycle];
+                      const isEstimate = referencePrice?.source === "estimate";
+                      const referenceLabel = isEstimate
+                        ? "Giá tham chiếu ước tính theo bảng tài nguyên VPS Platinum Viettel"
+                        : "Giá tham chiếu VPS Platinum Viettel";
+                      return (
+                        <article
+                          key={product.pid}
+                          data-pid={product.pid}
+                          className={`${styles.planCard} ${index === 1 ? styles.featured : ""}`}
+                        >
+                          {index === 1 && (
+                            <span className={styles.recommendationTag}>
+                              <Crown size={16} aria-hidden="true" />
+                              Phù hợp nhất
+                            </span>
                           )}
-                        </div>
-                      )}
-                      <div className={styles.price}>
-                        <strong>{formatVnd(total)}</strong>
-                        {hasPrice && <span>/ {period}</span>}
-                      </div>
-                      <Specs product={product} />
-                      {selectedCycle === "triennially" &&
-                        hasPrice &&
-                        product.gifts.length > 0 && (
-                          <PlanGifts gifts={product.gifts} />
-                        )}
-                      <a
-                        className={`button ${styles.blueButton}`}
-                        href={
-                          hasPrice
-                            ? checkoutUrl(product, selectedCycle)
-                            : "/lien-he/"
-                        }
-                        aria-label={`${hasPrice ? "Đăng ký ngay gói" : "Liên hệ tư vấn gói"} ${product.name}`}
-                      >
-                        {hasPrice ? "Đăng ký ngay" : "Liên hệ tư vấn"}
-                        <ArrowRight size={17} aria-hidden="true" />
-                      </a>
-                    </article>
-                  );
-                })}
+                          <div className={styles.planHeader}>
+                            <h3>{product.name}</h3>
+                            <Image
+                              className={styles.planChip}
+                              src="/images/black-friday/intel-xeon-platinum-8000-angled.webp"
+                              alt=""
+                              width={256}
+                              height={256}
+                              sizes="(max-width: 360px) 74px, (max-width: 767px) 82px, (min-width: 1024px) and (max-width: 1100px) 70px, 88px"
+                            />
+                          </div>
+                          {hasReferencePrice && (
+                            <div className={styles.originalPrice}>
+                              {referencePrice !== undefined && (
+                                <del title={referenceLabel}>
+                                  <span className="sr-only">
+                                    {referenceLabel}{" "}
+                                  </span>
+                                  {formatVnd(referencePrice.amount)} / {period}
+                                </del>
+                              )}
+                            </div>
+                          )}
+                          <div className={styles.price}>
+                            <strong>{formatVnd(total)}</strong>
+                            {hasPrice && <span>/ {period}</span>}
+                          </div>
+                          <Specs product={product} />
+                          {selectedCycle === "triennially" &&
+                            hasPrice &&
+                            product.gifts.length > 0 && (
+                              <PlanGifts gifts={product.gifts} />
+                            )}
+                          <a
+                            className={`button ${styles.blueButton}`}
+                            href={
+                              hasPrice
+                                ? checkoutUrl(product, selectedCycle)
+                                : "/lien-he/"
+                            }
+                            aria-label={`${hasPrice ? "Đăng ký ngay gói" : "Liên hệ tư vấn gói"} ${product.name}`}
+                          >
+                            {hasPrice ? "Đăng ký ngay" : "Liên hệ tư vấn"}
+                            <ArrowRight size={17} aria-hidden="true" />
+                          </a>
+                        </article>
+                      );
+                    })}
               </MobilePricingSlider>
             </>
           ) : (
