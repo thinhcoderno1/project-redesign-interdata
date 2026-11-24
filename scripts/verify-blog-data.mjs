@@ -491,54 +491,40 @@ const externalCta = prepareBlogContent(
 assert.ok(!/data-article-cta|style=/.test(externalCta.html));
 
 const uxBlock = fs.readFileSync("scripts/fixtures/blog-ux-bf26.html", "utf8");
-const uxPrepared = prepareBlogContent(
-  `<style>body{display:none}</style>${uxBlock}`,
+const shortcode = '[block id="slide-dich-vu"]';
+const keptContent = `<p>Opening copy.</p><h2 id="guide">Guide</h2><div class="interdata-plan-carousel-example"><p>Ordinary article content.</p></div><img src="/wp-content/uploads/article.jpg"><pre><code>${shortcode}</code></pre><p>[block id="unrelated-block"]</p>`;
+const sourceWithPlans = createBlogSource(async () =>
+  Response.json([
+    {
+      ...post,
+      content: {
+        rendered: `<div data-interdata-bf26-carousel><img src="/wp-content/uploads/plan.jpg"></div>
+${shortcode}
+<p>${shortcode}</p>${uxBlock}${keptContent}
+<section><p>Text beside the offers.</p><div class="legacy interdata-plan-carousel"><h2>Legacy plan</h2></div>${uxBlock}</section>`,
+      },
+    },
+  ]),
 );
-const uxFrame = frameBlogContent(uxPrepared.html);
-assert.equal(htmlToText(uxPrepared.html), htmlToText(uxBlock));
-assert.match(uxFrame.body, /data-article-plan-theme="bf26"/);
-assert.ok(!uxFrame.opening.includes("interdata-plan-carousel"));
+const filteredPost = await sourceWithPlans.post(post.slug, categories);
+assert.ok(filteredPost);
+assert.doesNotMatch(
+  filteredPost.content,
+  /data-interdata-bf26-carousel|interdata-bf26-plan-carousel|Legacy plan|<p>\[block id="slide-dich-vu"\]<\/p>/,
+);
+assert.equal(htmlToText(filteredPost.content).split(shortcode).length, 2);
 assert.equal(
-  (uxPrepared.html.match(/class="interdata-plan-card"/g) || []).length,
-  3,
+  firstBlogImage(filteredPost.content)?.url,
+  "https://admin.interdata.vn/wp-content/uploads/article.jpg",
 );
+const filteredContent = prepareBlogContent(filteredPost.content, categories);
+assert.deepEqual(filteredContent.toc, [
+  { id: "guide", title: "Guide", level: 2 },
+]);
 assert.equal(
-  (uxPrepared.html.match(/class="interdata-plan-button"/g) || []).length,
-  3,
+  htmlToText(filteredContent.html),
+  htmlToText(`${keptContent}<p>Text beside the offers.</p>`),
 );
-assert.equal(
-  (uxPrepared.html.match(/interdata-plan-icon-cpu/g) || []).length,
-  3,
-);
-assert.equal(
-  (uxPrepared.html.match(/interdata-plan-icon-network/g) || []).length,
-  9,
-);
-assert.match(uxPrepared.html, /class="interdata-plan-spacer"/);
-assert.match(uxPrepared.html, /tabindex="0"/);
-assert.match(uxPrepared.html, /role="region"/);
-assert.match(uxPrepared.html, /aria-hidden="true"/);
-assert.match(uxPrepared.html, /bf26-start&amp;billingcycle=annually/);
-assert.match(uxPrepared.html, /rel="noopener noreferrer"/);
-assert.ok(
-  !/<style|<script|<svg|<use|onclick|data-inline-page|id-bf26-icon-|class="interdata-bf26/.test(
-    uxPrepared.html,
-  ),
-);
-const repeatedUx = prepareBlogContent(uxBlock + uxBlock);
-assert.equal(
-  (repeatedUx.html.match(/data-article-plan-theme="bf26"/g) || []).length,
-  2,
-);
-assert.equal(
-  new Set(repeatedUx.toc.map((entry) => entry.id)).size,
-  repeatedUx.toc.length,
-);
-const legacyPlans = prepareBlogContent(
-  '<div class="interdata-plan-carousel"><div class="interdata-plan-viewport"><div class="interdata-plan-track"><article class="interdata-plan-card"><h3 class="interdata-plan-title">Legacy plan</h3><a class="interdata-plan-button" href="https://support.interdata.vn/">Register</a></article></div></div></div>',
-);
-assert.match(legacyPlans.html, /class="interdata-plan-card"/);
-assert.ok(!legacyPlans.html.includes('data-article-plan-theme="bf26"'));
 console.log(
-  "Blog data: queries, protected posts, sanitization, TOC, links, CTA styles and service UX Blocks passed.",
+  "Blog data: queries, protected posts, sanitization, TOC, links, CTA styles and service UX Block removal passed.",
 );

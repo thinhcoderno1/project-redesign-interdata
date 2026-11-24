@@ -126,14 +126,10 @@ try {
   });
   await expect(page).toHaveURL(/\/blog\/\?category=tuyen-dung/);
   await page.setViewportSize({ width: 1440, height: 1000 });
-  assert.equal(
-    (
-      await page.goto(`${baseUrl}${postHref}`, {
-        waitUntil: "domcontentloaded",
-      })
-    ).status(),
-    200,
-  );
+  const postResponse = await page.goto(`${baseUrl}${postHref}`, {
+    waitUntil: "domcontentloaded",
+  });
+  assert.equal(postResponse.status(), 200);
   await expect(page.locator("main h1")).toHaveCount(1);
   assert.ok((await page.locator("article h2").count()) > 2);
   const toc = page.locator('aside nav[aria-label="Mục lục"] a');
@@ -175,35 +171,81 @@ try {
   );
   const { parseDocument, DomUtils } = await import("htmlparser2");
   const original = parseDocument(sourceArticle[0].content.rendered);
-  const sourcePlans = DomUtils.findAll(
-    (node) => node.attribs.class === "interdata-bf26-plan-card",
+  const sourcePlanBlocks = DomUtils.findAll(
+    (node) => Object.hasOwn(node.attribs, "data-interdata-bf26-carousel"),
     original.children,
-  ).map((node) => ({
-    title: DomUtils.textContent(
-      DomUtils.findOne((child) => child.name === "h3", node.children),
-    ).trim(),
-    href: DomUtils.findOne((child) => child.name === "a", node.children).attribs
-      .href,
-  }));
-  const planBlock = page.locator('[data-article-plan-theme="bf26"]');
-  await expect(planBlock).toHaveCount(1);
-  assert.deepEqual(
-    await planBlock.locator(".interdata-plan-card").evaluateAll((cards) =>
-      cards.map((card) => ({
-        title: card.querySelector("h3").textContent.trim(),
-        href: card.querySelector("a").getAttribute("href"),
-      })),
-    ),
-    sourcePlans,
   );
-  await expect(planBlock.locator(".interdata-plan-icon-cpu").first()).toHaveCSS(
-    "mask-image",
-    /plan-cpu\.svg/,
+  assert.ok(sourcePlanBlocks.length > 0, "The CMS post still has a UX Block");
+  for (const block of sourcePlanBlocks) DomUtils.removeElement(block);
+  await expect(
+    page.locator(".interdata-plan-carousel, .interdata-bf26-plan-carousel"),
+  ).toHaveCount(0);
+  assert.doesNotMatch(
+    await postResponse.text(),
+    /interdata-(?:bf26-)?plan-carousel|data-interdata-bf26-carousel/,
   );
-  await expect(planBlock.locator(".interdata-plan-button").first()).toHaveCSS(
-    "background-color",
-    "rgb(0, 91, 234)",
+  await expect(page.locator("article [data-blog-promotion]")).toHaveCount(1);
+  const plansTitle = "BEST OFFERS VPS PLATINUM TIẾT KIỆM ĐẾN 80%";
+  const plans = page.getByRole("region", { name: plansTitle });
+  await expect(plans.getByRole("heading", { name: plansTitle })).toHaveCSS(
+    "background-image",
+    /linear-gradient/,
   );
+  assert.ok(
+    await plans.evaluate((section) => {
+      const header = section.parentElement.previousElementSibling;
+      return (
+        header.matches("header") &&
+        header.querySelector("h1") &&
+        header.querySelector("p")
+      );
+    }),
+    "Best Plans follows the post heading and description",
+  );
+  const planTrack = plans.locator("#blog-best-plans-track");
+  const planCards = planTrack.locator(":scope > li");
+  await expect(planCards.locator("h3")).toHaveText(
+    Array.from({ length: 8 }, (_, index) => `BF26 PLATINUM P${index + 1}`),
+  );
+  await expect(planCards.locator("[data-plan-spec]")).toHaveCount(8 * 7);
+  const registrationLinks = planCards.getByRole("link", {
+    name: /^Đăng ký gói/,
+  });
+  await expect(registrationLinks).toHaveText(Array(8).fill("Đăng ký"));
+  await expect(planCards.first().getByRole("link")).toHaveAttribute(
+    "href",
+    /bf26-platinum-p1&billingcycle=annually$/,
+  );
+  const gifts = plans.locator("details");
+  const giftSummary = gifts.locator("summary");
+  await expect(giftSummary).toContainText("Quà Tặng Chu Kỳ 3 Năm");
+  await expect(gifts).toHaveJSProperty("open", false);
+  await giftSummary.click();
+  await expect(gifts.getByText("P2, P3", { exact: true })).toBeVisible();
+  await expect(gifts.getByText(/200GB S3 Storage/)).toBeVisible();
+  await giftSummary.click();
+  const previousSlide = plans.getByRole("button", { name: "Nhóm gói trước" });
+  const nextSlide = plans.getByRole("button", { name: "Nhóm gói tiếp theo" });
+  await expect(plans.getByRole("status")).toHaveCount(0);
+  await expect(planTrack).toHaveCSS("scrollbar-width", "none");
+  const firstVisiblePlan = () =>
+    planTrack.evaluate((track) => {
+      const left = track.getBoundingClientRect().left;
+      return [...track.children].find(
+        (card) => card.getBoundingClientRect().left >= left - 2,
+      )?.dataset.planId;
+    });
+  await expect(previousSlide).toBeDisabled();
+  await nextSlide.click();
+  await expect(nextSlide).toBeDisabled();
+  await expect.poll(firstVisiblePlan).toBe("574");
+  await previousSlide.click();
+  await expect.poll(firstVisiblePlan).toBe("570");
+  await planTrack.press("ArrowRight");
+  await expect.poll(firstVisiblePlan).toBe("574");
+  await planTrack.press("ArrowLeft");
+  await expect.poll(firstVisiblePlan).toBe("570");
+  await planTrack.blur();
   for (const element of DomUtils.findAll(
     (node) =>
       node.attribs.id === "ez-toc-container" ||
@@ -259,6 +301,28 @@ try {
   for (const width of [320, 390, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     await page.evaluate(() => window.scrollTo(0, 0));
+    const perSlide = width >= 1024 ? 4 : width >= 640 ? 2 : 1;
+    await expect(previousSlide).toBeDisabled();
+    const [trackBox, previousBox, nextBox] = await Promise.all([
+      planTrack.boundingBox(),
+      previousSlide.boundingBox(),
+      nextSlide.boundingBox(),
+    ]);
+    assert.ok(
+      previousBox.x + previousBox.width / 2 <= trackBox.x &&
+        nextBox.x + nextBox.width / 2 >= trackBox.x + trackBox.width,
+      `Carousel arrows flank the track at ${width}px`,
+    );
+    assert.equal(
+      await planTrack.evaluate((track) => {
+        const bounds = track.getBoundingClientRect();
+        return [...track.children].filter((card) => {
+          const rect = card.getBoundingClientRect();
+          return rect.left >= bounds.left - 2 && rect.right <= bounds.right + 2;
+        }).length;
+      }),
+      perSlide,
+    );
     const sidebar = await page.locator("aside[data-has-toc]").boundingBox();
     const article = await page
       .locator('article[aria-label="Nội dung bài viết"]')
@@ -274,22 +338,6 @@ try {
         `Sidebar above article at ${width}px`,
       );
     assert.equal(await overflow(), false, `Post overflow ${width}`);
-    const planLayout = await planBlock.evaluate((block) => {
-      const viewport = block.querySelector(".interdata-plan-viewport");
-      const cards = [...block.querySelectorAll(".interdata-plan-card")];
-      return {
-        visible: Math.round(
-          viewport.clientWidth / cards[0].getBoundingClientRect().width,
-        ),
-        clipped: cards.some((card) => card.scrollWidth > card.clientWidth + 1),
-      };
-    });
-    assert.equal(planLayout.visible, width <= 480 ? 1 : width <= 800 ? 2 : 3);
-    assert.equal(
-      planLayout.clipped,
-      false,
-      `UX Block card overflow at ${width}px`,
-    );
     assert.equal(
       await page
         .locator("article [data-article-cta-source]")
@@ -308,37 +356,6 @@ try {
     if ([390, 1440].includes(width))
       await page.screenshot({ path: `artifacts/blog/post-${width}.png` });
   }
-  await page.setViewportSize({ width: 390, height: 1000 });
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  const planViewport = planBlock.locator(".interdata-plan-viewport");
-  const nextPlan = planBlock.locator(".interdata-carousel-next");
-  const previousPlan = planBlock.locator(".interdata-carousel-prev");
-  await nextPlan.click();
-  await expect
-    .poll(() => planViewport.evaluate((node) => node.scrollLeft))
-    .toBeGreaterThan(200);
-  await previousPlan.click();
-  await expect
-    .poll(() => planViewport.evaluate((node) => node.scrollLeft))
-    .toBeLessThan(2);
-  await previousPlan.click();
-  await expect
-    .poll(() => planViewport.evaluate((node) => node.scrollLeft))
-    .toBeGreaterThan(400);
-  await nextPlan.click();
-  await expect
-    .poll(() => planViewport.evaluate((node) => node.scrollLeft))
-    .toBeLessThan(2);
-  await page.setViewportSize({ width: 1440, height: 1000 });
-  await expect(nextPlan).toBeDisabled();
-  await expect(previousPlan).toBeDisabled();
-  const staticPlanFixture = await planBlock.evaluate((block) => ({
-    html: block.outerHTML,
-    articleClass: block.closest("article").className,
-    stylesheets: [...document.querySelectorAll('link[rel="stylesheet"]')].map(
-      (link) => link.href,
-    ),
-  }));
   const missing = await page.goto(`${baseUrl}/blog/no-such-post-9927/`, {
     waitUntil: "domcontentloaded",
   });
@@ -356,27 +373,6 @@ try {
   await expect(staticPage.locator("main article")).toHaveCount(
     careerPosts.length,
   );
-  await staticPage.setViewportSize({ width: 390, height: 1000 });
-  // Isolate the server-rendered block: the route's existing Suspense stream
-  // requires JavaScript to reveal its completed page, independently of UX Blocks.
-  await staticPage.setContent(
-    `<!doctype html><html><head>${staticPlanFixture.stylesheets.map((href) => `<link rel="stylesheet" href="${href}">`).join("")}</head><body><article class="${staticPlanFixture.articleClass}">${staticPlanFixture.html}</article></body></html>`,
-    { waitUntil: "load" },
-  );
-  const staticPlans = staticPage.locator('[data-article-plan-theme="bf26"]');
-  await expect(staticPlans.locator(".interdata-plan-card")).toHaveCount(
-    sourcePlans.length,
-  );
-  await expect(staticPlans.locator(".interdata-plan-track")).toHaveCSS(
-    "display",
-    "grid",
-  );
-  const staticViewport = staticPlans.locator(".interdata-plan-viewport");
-  await staticViewport.focus();
-  await staticPage.keyboard.press("ArrowRight");
-  await expect
-    .poll(() => staticViewport.evaluate((node) => node.scrollLeft))
-    .toBeGreaterThan(0);
   await noJs.close();
   assert.deepEqual(errors, []);
   await fs.writeFile(
@@ -384,7 +380,7 @@ try {
     JSON.stringify({ results, accessibility: "passed", errors }, null, 2),
   );
   console.log(
-    "Blog UI: live posts, search, TOC, CTA, UX Block pricing, carousel controls, no-JS scrolling, responsive layout and accessibility passed.",
+    "Blog UI: live posts, search, TOC, CTA, service UX Block removal, Platinum plan carousel, responsive layout and accessibility passed.",
   );
 } finally {
   await context.close();

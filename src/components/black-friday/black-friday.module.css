@@ -721,98 +721,6 @@
   font-weight: 600;
   white-space: nowrap;
 }
-.specs {
-  display: grid;
-  gap: 5px;
-  margin-bottom: 14px;
-  padding: 8px 0 0;
-  border-top: 1px solid #d9dfe8;
-  list-style: none;
-}
-.specs li {
-  display: flex;
-  align-items: flex-start;
-  gap: 7px;
-  color: #283347;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.45;
-}
-.specs li > svg {
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  margin-top: 2px;
-  color: var(--brand-primary);
-}
-.specs .firewallSpec {
-  letter-spacing: -0.012em;
-}
-.firewallLabel {
-  --vip-width: 40px;
-  --vip-gap: 4px;
-  --vip-lift: 3.5px;
-  position: relative;
-  /* Reserve horizontal space for the badge while keeping the text row compact. */
-  padding-inline-end: calc(var(--vip-width) + var(--vip-gap));
-}
-.vipBadge {
-  position: absolute;
-  top: 50%;
-  inset-inline-end: 0;
-  display: block;
-  width: var(--vip-width);
-  height: auto;
-  overflow: visible;
-  /* Align the lettering in the lower part of the flame with the Firewall text. */
-  translate: 0 calc(-50% - var(--vip-lift));
-}
-.vipRim {
-  opacity: 0.35;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .vipBadge[data-highlighted] .vipRim {
-    animation: vip-neon 2.6s ease-in-out infinite;
-  }
-}
-@keyframes vip-neon {
-  0%,
-  26%,
-  84%,
-  100% {
-    opacity: 0.16;
-    filter: none;
-  }
-  33%,
-  75% {
-    opacity: 1;
-    filter: drop-shadow(0 0 2px #ffb41c) drop-shadow(0 0 4px #ff8800);
-  }
-}
-@container (max-width: 263px) {
-  .firewallLabel {
-    --vip-width: 34px;
-    --vip-lift: 2.75px;
-  }
-}
-@container (max-width: 255px) {
-  .specs .firewallSpec {
-    font-size: 13px;
-    letter-spacing: -0.036em;
-  }
-}
-@container (max-width: 237px) {
-  .firewallLabel {
-    --vip-width: 32px;
-    --vip-gap: 3px;
-    --vip-lift: 2.25px;
-  }
-}
-@container (max-width: 228px) {
-  .firewallSpec > svg {
-    display: none;
-  }
-}
 .planCard > .blueButton {
   width: 100%;
   margin-top: auto;
@@ -857,9 +765,6 @@
   .planChip {
     width: 82px;
   }
-  .specs li {
-    font-size: 15px;
-  }
   .giftList {
     font-size: 14px;
   }
@@ -870,16 +775,6 @@
   }
   .planChip {
     width: 74px;
-  }
-  .specs {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 4px 8px;
-  }
-  .specs li {
-    font-size: 14px;
-  }
-  .specs li:nth-child(n + 3) {
-    grid-column: 1 / -1;
   }
 }
 .renewal {

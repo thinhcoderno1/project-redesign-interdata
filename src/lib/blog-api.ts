@@ -1,6 +1,7 @@
 import "server-only";
 import { cache } from "react";
 import { htmlToText } from "./interdata-blog";
+import { removeBlogPlanBlocks } from "./blog-plans";
 import { BLOG_API_URL, BLOG_CMS_ORIGIN, blogImageUrl } from "./blog-source";
 import type { BlogCategory, BlogPost, BlogListing } from "@/data/blog";
 
@@ -258,7 +259,7 @@ export function createBlogSource(fetcher: typeof fetch = fetch) {
       value.content.protected
     )
       return null;
-    return { ...post, content: value.content.rendered };
+    return { ...post, content: removeBlogPlanBlocks(value.content.rendered) };
   }
   return { categories, listing, post };
 }

@@ -1,4 +1,5 @@
 import { defaultSocialImage } from "@/lib/social-image";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
@@ -12,8 +13,12 @@ import {
 import { getBlogCategories, getBlogListing, getBlogPost } from "@/lib/blog-api";
 import { firstBlogImage, prepareBlogContent } from "@/lib/blog-content";
 import { frameBlogContent } from "@/lib/blog-frame";
-import { PostArticle } from "@/components/blog/post-article";
 import { BlogPromotion } from "@/components/blog/blog-promotion";
+import {
+  BlogBestPlans,
+  BlogBestPlansLoading,
+} from "@/components/blog/blog-best-plans";
+import { getBestPlansCatalog } from "@/lib/black-friday-best-plans";
 import {
   getBlogPromotionPlacement,
   splitBlogPromotionBody,
@@ -69,6 +74,7 @@ export default async function SinglePost({ params }: Props) {
     redirect(blogListingHref({ category: slug }));
   const post = await getBlogPost(slug);
   if (!post) notFound();
+  const bestPlans = getBestPlansCatalog();
   const { html, toc, readingMinutes } = prepareBlogContent(
     post.content,
     categories,
@@ -144,6 +150,11 @@ export default async function SinglePost({ params }: Props) {
           {post.excerpt && <p className={styles.postIntro}>{post.excerpt}</p>}
         </div>
       </header>
+      <div className={styles.container}>
+        <Suspense fallback={<BlogBestPlansLoading />}>
+          <BlogBestPlans catalog={bestPlans} />
+        </Suspense>
+      </div>
       <div className={`${styles.container} ${styles.articleGrid}`}>
         <aside
           className={styles.articleAside}
@@ -173,7 +184,10 @@ export default async function SinglePost({ params }: Props) {
             </Link>
           </div>
         </aside>
-        <PostArticle>
+        <article
+          className={styles.articleContent}
+          aria-label="Nội dung bài viết"
+        >
           {opening.trim() && (
             <div
               data-article-opening
@@ -193,7 +207,7 @@ export default async function SinglePost({ params }: Props) {
             <div data-article-body dangerouslySetInnerHTML={{ __html: body }} />
           )}
           {promotionPlacement === "end" && promotion}
-        </PostArticle>
+        </article>
       </div>
       <div className={`${styles.container} ${styles.articleFooter}`}>
         <Link href="/blog/" className={styles.sectionLink}>

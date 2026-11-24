@@ -1,61 +1,42 @@
-import { parseDocument, DomUtils } from "htmlparser2";
+import { DomUtils, parseDocument } from "htmlparser2";
 
-const planClass =
-  /^interdata-bf26-(plan-(?:carousel|viewport|track|card|title|price|badge|features|icon|spacer|button)|carousel-(?:heading|arrow|prev|next|mark))$/;
-const icons = new Set(["cpu", "ram", "storage", "network", "gift"]);
+const serviceCarouselClass =
+  /(?:^|\s)interdata-(?:bf26-)?plan-carousel(?:\s|$)/;
+const serviceShortcode =
+  /^\[block\s+id\s*=\s*(?:"slide-dich-vu"|'slide-dich-vu'|slide-dich-vu)\s*\/?\]$/i;
 
-// Adapt the service UX Block's known markup to locally maintained styles and
-// controls. Source CSS, inline scripts and arbitrary SVG are still discarded.
-export function prepareBlogPlans(raw: string) {
+export function removeBlogPlanBlocks(raw: string) {
   const document = parseDocument(raw);
-  const blocks = DomUtils.findAll(
-    (node) =>
-      node.attribs.class
-        ?.split(/\s+/)
-        .includes("interdata-bf26-plan-carousel") || false,
-    document.children,
-  );
-  for (const block of blocks) {
-    const nodes = [block, ...DomUtils.findAll(() => true, block.children)];
-    for (const node of nodes) {
-      if (node.attribs.class)
-        node.attribs.class = node.attribs.class
-          .split(/\s+/)
-          .map((name) => name.replace(planClass, "interdata-$1"))
-          .join(" ");
-      if (node.attribs.class?.split(/\s+/).includes("interdata-plan-icon")) {
-        const reference = DomUtils.findOne(
-          (child) => child.name === "use",
-          node.children,
-        );
-        const icon = reference?.attribs.href?.match(
-          /^#id-bf26-icon-(\w+)$/,
-        )?.[1];
-        if (icon && icons.has(icon))
-          node.attribs.class += ` interdata-plan-icon-${icon}`;
-        node.attribs["aria-hidden"] = "true";
-      }
-      if (
-        node.attribs.class?.split(/\s+/).includes("interdata-plan-viewport")
-      ) {
-        node.attribs.tabindex = "0";
-        node.attribs["aria-label"] = "Danh sách gói dịch vụ ưu đãi";
-        node.attribs.role = "group";
-      }
-    }
-    block.attribs["data-article-plan-theme"] = "bf26";
-    block.attribs.role = "region";
-    const heading = nodes.find(
-      (node) => node.attribs.class === "interdata-carousel-heading",
+  const blocks = DomUtils.findAll((node) => {
+    if (
+      serviceCarouselClass.test(node.attribs.class || "") ||
+      Object.hasOwn(node.attribs, "data-interdata-bf26-carousel")
+    )
+      return true;
+
+    const [text] = node.children;
+    return (
+      node.name === "p" &&
+      node.children.length === 1 &&
+      text?.type === "text" &&
+      serviceShortcode.test(text.data.trim())
     );
-    block.attribs["aria-label"] = heading
-      ? DomUtils.textContent(heading).trim()
-      : "Gói dịch vụ ưu đãi";
-    for (const svg of DomUtils.findAll(
-      (node) => node.name === "svg",
-      block.children,
-    ))
-      DomUtils.removeElement(svg);
+  }, document.children);
+  for (const block of blocks) DomUtils.removeElement(block);
+
+  let changed = blocks.length > 0;
+  // The shortcode can also appear on its own line without a WordPress paragraph.
+  for (const node of document.children) {
+    if (node.type !== "text") continue;
+    const text = node.data
+      .split("\n")
+      .filter((line) => !serviceShortcode.test(line.trim()))
+      .join("\n");
+    if (text !== node.data) {
+      node.data = text;
+      changed = true;
+    }
   }
-  return DomUtils.getOuterHTML(document);
+
+  return changed ? DomUtils.getOuterHTML(document) : raw;
 }

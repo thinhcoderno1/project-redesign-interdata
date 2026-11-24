@@ -63,9 +63,7 @@ export function splitBlogPromotionBody(
         }
       }
       previousTag = node.name;
-      previousPromotion =
-        !!node.attribs["data-article-cta"] ||
-        /\binterdata-plan-carousel\b/.test(node.attribs.class || "");
+      previousPromotion = !!node.attribs["data-article-cta"];
     }
     before += lengths[index];
   }

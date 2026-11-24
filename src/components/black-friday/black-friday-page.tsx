@@ -3,7 +3,6 @@
 import { MobilePricingSlider } from "@/components/shared/mobile-pricing-slider";
 import {
   useEffect,
-  useId,
   useRef,
   useState,
   type KeyboardEvent,
@@ -16,12 +15,12 @@ import { useFlashSaleVisibility } from "./use-flash-sale-visibility";
 import { FlashSaleOffers } from "./flash-sale-offers";
 import { PromotionGroupsCta } from "./promotion-groups-cta";
 import { LegacyBestPlanCard } from "./legacy-best-plan-card";
+import { PlatinumPlanSpecs } from "./platinum-plan-specs";
 import { useBestPlansRelease } from "./use-best-plans-release";
 import type { FlashSaleCheckoutLinks } from "@/data/black-friday-flash-sale";
 import type { BestPlansCatalog } from "@/lib/black-friday-best-plans";
 import {
   Activity,
-  ArrowDownUp,
   ArrowRight,
   ArrowUpRight,
   BadgeCheck,
@@ -30,15 +29,11 @@ import {
   Cpu,
   Crown,
   Gift,
-  Globe2,
   HardDrive,
   Headset,
-  MemoryStick,
-  Network,
   RefreshCw,
   Server,
   Shield,
-  ShieldCheck,
   Sparkles,
   Ticket,
   TicketPercent,
@@ -46,10 +41,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { checkoutUrl, formatVnd } from "@/data/vps-pricing";
-import type {
-  BlackFridayCycle,
-  BlackFridayProduct,
-} from "@/lib/black-friday-pricing";
+import type { BlackFridayCycle } from "@/lib/black-friday-pricing";
 import {
   blackFridayCouponConditions,
   blackFridayFaqs,
@@ -80,15 +72,6 @@ const bestPlanCycles = [
   badgeDiscount: number;
 }[];
 
-const planResources = [
-  { key: "cpu", unit: "vCore", icon: Cpu },
-  { key: "ram", unit: "GB RAM", icon: MemoryStick },
-  { key: "nvme", unit: "GB SSD NVMe", icon: HardDrive },
-] as const;
-
-const vipFlamePath =
-  "M7.3 19.3C3.4 19.3 1 17 1 13.8c0-2.2 1.1-4.1 2.7-5.8-.2 1.5.4 2.7 1.6 3.2C4.9 7.3 8.1 5.1 7.6 1c3.4 1.4 5.5 4.2 5 7 1.3-.5 2.4-1.6 2.6-2.9 1.2 1 1.7 1.7 1.8 2.6h11.8c3.7 0 6.2 2.4 6.2 5.6s-2.5 6-6.2 6Z";
-
 function EyebrowBadge({
   icon: Icon,
   children,
@@ -103,110 +86,6 @@ function EyebrowBadge({
       <Icon aria-hidden="true" focusable="false" />
       <span>{children}</span>
     </span>
-  );
-}
-
-function VipBadge() {
-  const gradientId = useId();
-
-  return (
-    <svg
-      className={styles.vipBadge}
-      viewBox="0 0 36 26"
-      role="img"
-      aria-label="VIP"
-      focusable="false"
-    >
-      <defs>
-        <linearGradient
-          id={gradientId}
-          x1="2"
-          y1="1"
-          x2="27"
-          y2="17"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="18%" stopColor="#e62a32" />
-          <stop offset="43%" stopColor="#ff7a18" />
-          <stop offset="68%" stopColor="#ffd45a" />
-        </linearGradient>
-      </defs>
-      <g transform="scale(1 1.27)">
-        <path
-          d={vipFlamePath}
-          fill={`url(#${gradientId})`}
-          stroke="#ae3d14"
-          strokeWidth="0.7"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M8 17.3c-2.5-.2-3.9-2-3.4-4.2.5.9 1.1 1.4 1.9 1.5-.3-2.1 1.3-4.2 2-5.9 1.5 2.5 2.2 5.9-.5 8.6Z"
-          fill="#ffe98a"
-          opacity="0.85"
-        />
-        <path
-          className={styles.vipRim}
-          d={vipFlamePath}
-          fill="none"
-          stroke="#fff3be"
-          strokeWidth="1"
-          strokeLinejoin="round"
-        />
-      </g>
-      <text
-        x="21"
-        y="20.9"
-        textAnchor="middle"
-        fontFamily="Arial, sans-serif"
-        fontSize="12"
-        fontWeight="800"
-        letterSpacing="0.35"
-        fill="#551800"
-      >
-        VIP
-      </text>
-    </svg>
-  );
-}
-
-function Specs({ product }: { product: BlackFridayProduct }) {
-  const { resources } = product;
-  const networkSpecs = [
-    { label: product.ipv4, icon: Globe2 },
-    { label: product.port, icon: Network },
-    { label: product.bandwidth, icon: ArrowDownUp },
-  ];
-
-  return (
-    <ul className={styles.specs} aria-label="Cấu hình" role="list">
-      {resources &&
-        planResources.map(({ key, unit, icon: Icon }) => (
-          <li key={key}>
-            <Icon size={17} aria-hidden="true" />
-            <span>
-              {resources[key]} {unit}
-            </span>
-          </li>
-        ))}
-      {networkSpecs.map(
-        ({ label, icon: Icon }) =>
-          label && (
-            <li key={label}>
-              <Icon size={17} aria-hidden="true" />
-              <span>{label}</span>
-            </li>
-          ),
-      )}
-      {product.firewall && (
-        <li className={styles.firewallSpec}>
-          <ShieldCheck size={17} aria-hidden="true" />
-          <span className={styles.firewallLabel}>
-            <span>{product.firewall}</span>
-            <VipBadge />
-          </span>
-        </li>
-      )}
-    </ul>
   );
 }
 
@@ -302,7 +181,7 @@ export function BlackFridayPage({
   }, [flashSaleVisible]);
 
   useEffect(() => {
-    const badges = planGrid.current?.querySelectorAll(`.${styles.vipBadge}`);
+    const badges = planGrid.current?.querySelectorAll("[data-plan-vip]");
     if (!badges?.length) return;
 
     const observer = new IntersectionObserver(
@@ -611,7 +490,7 @@ export function BlackFridayPage({
                             <strong>{formatVnd(total)}</strong>
                             {hasPrice && <span>/ {period}</span>}
                           </div>
-                          <Specs product={product} />
+                          <PlatinumPlanSpecs product={product} />
                           {product.pricing.VND.triennially !== undefined &&
                             product.gifts.length > 0 && (
                               <PlanGifts gifts={product.gifts} />

@@ -153,10 +153,7 @@ export function frameBlogContent(html: string) {
       delete node.attribs["data-article-button"];
   }
   const split = document.children.findIndex(
-    (node) =>
-      node.type === "tag" &&
-      (containsHeading(node) ||
-        node.attribs.class?.split(/\s+/).includes("interdata-plan-carousel")),
+    (node) => node.type === "tag" && containsHeading(node),
   );
   const serialize = (nodes: typeof document.children) =>
     nodes.map((node) => DomUtils.getOuterHTML(node)).join("");

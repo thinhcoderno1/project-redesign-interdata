@@ -13,7 +13,6 @@ import {
   articleCtaAllowedStyles,
   prepareBlogCtaMarkup,
 } from "./blog-cta";
-import { prepareBlogPlans } from "./blog-plans";
 
 export type TocEntry = { id: string; title: string; level: number };
 const tags = [
@@ -27,10 +26,7 @@ const tags = [
   "button",
 ];
 const allowedClasses = {
-  "*": [
-    /^interdata-(?:plan-(?:carousel|viewport|track|card|title|price|badge|features|icon(?:-(?:cpu|ram|storage|network|gift))?|spacer|button)|carousel-(?:heading|arrow|prev|next|mark))$/,
-    "interdata-emoji",
-  ],
+  "*": ["interdata-emoji"],
 };
 const attributes = {
   "*": ["id", "class", "style", "data-article-cta", "data-article-cta-source"],
@@ -38,7 +34,6 @@ const attributes = {
   div: [
     "data-article-panel",
     "data-article-section",
-    "data-article-plan-theme",
     "role",
     "aria-label",
     "tabindex",
@@ -102,7 +97,7 @@ export function prepareBlogContent(
   raw: string,
   categories: BlogCategory[] = [],
 ) {
-  const safe = sanitizeHtml(prepareBlogPlans(prepareBlogCtaMarkup(raw)), {
+  const safe = sanitizeHtml(prepareBlogCtaMarkup(raw), {
     allowedTags: tags,
     allowedAttributes: attributes,
     allowedClasses,
