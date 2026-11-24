@@ -12,7 +12,7 @@ const planIds = platinum
   ? [570, 571, 572, 573, 574, 575, 576, 577]
   : [567, 568, 569];
 const defaultCycle = platinum ? "annually" : "triennially";
-const giftLabel = platinum ? "Quà Tặng" : "TẶNG THÊM 1 NĂM";
+const giftLabel = platinum ? "Quà Tặng Chu Kỳ 3 Năm" : "TẶNG THÊM 1 NĂM";
 const giftCount = platinum ? 7 : 3;
 const directory = "artifacts/black-friday";
 await fs.mkdir(directory, { recursive: true });
@@ -135,7 +135,7 @@ try {
     "true",
   );
   const gifts = cards.getByText(giftLabel, { exact: true });
-  await expect(gifts).toHaveCount(platinum ? 0 : giftCount);
+  await expect(gifts).toHaveCount(giftCount);
   await expect(
     page.locator('#best-plans select, #best-plans [aria-label="Chọn dịch vụ"]'),
   ).toHaveCount(0);
@@ -151,7 +151,20 @@ try {
     "triennially",
   ].entries()) {
     if (!platinum || index > 0) await tabs.nth(index).click();
-    await expect(gifts).toHaveCount(cycle === "triennially" ? giftCount : 0);
+    await expect(gifts).toHaveCount(
+      platinum || cycle === "triennially" ? giftCount : 0,
+    );
+    if (platinum) {
+      await expect(cards.first().locator('[class*="giftList"]')).toHaveCount(0);
+      await expect(cards.nth(1).locator('[class*="giftList"] li')).toHaveText([
+        "Ly sứ InterData",
+      ]);
+      await expect(cards.last().locator('[class*="giftList"] li')).toHaveText([
+        "Nón bảo hiểm InterData",
+        "Ly sứ InterData",
+        "200GB S3 Storage",
+      ]);
+    }
     await expect(tabs.nth(index)).toHaveAttribute("aria-selected", "true");
     await expect(page.locator("#bf-plans")).toHaveAttribute(
       "aria-labelledby",
@@ -196,16 +209,7 @@ try {
       );
     }
   }
-  if (platinum) {
-    await expect(cards.nth(1).locator('[class*="giftList"] li')).toHaveText([
-      "Ly sứ InterData",
-    ]);
-    await expect(cards.last().locator('[class*="giftList"] li')).toHaveText([
-      "Nón bảo hiểm InterData",
-      "Ly sứ InterData",
-      "200GB S3 Storage",
-    ]);
-  } else {
+  if (!platinum) {
     await expect(cards.locator('[class*="planUpgrade"]')).toHaveCount(2);
   }
   await tabs.last().press("Home");
@@ -594,7 +598,7 @@ try {
   );
   await expect(
     staticPage.locator("#best-plans").getByText(giftLabel, { exact: true }),
-  ).toHaveCount(platinum ? 0 : giftCount);
+  ).toHaveCount(giftCount);
   await expect(
     staticPage
       .locator("#best-plans article")

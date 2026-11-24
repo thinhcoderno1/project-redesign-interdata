@@ -211,7 +211,7 @@ function PlanGifts({ gifts }: { gifts: readonly string[] }) {
     <div className={styles.planGifts}>
       <p className={styles.giftTitle}>
         <Gift size={17} aria-hidden="true" />
-        Quà Tặng
+        Quà Tặng Chu Kỳ 3 Năm
       </p>
       <ul className={styles.giftList} role="list">
         {gifts.map((gift) => (
@@ -604,8 +604,7 @@ export function BlackFridayPage({
                             {hasPrice && <span>/ {period}</span>}
                           </div>
                           <Specs product={product} />
-                          {selectedCycle === "triennially" &&
-                            hasPrice &&
+                          {product.pricing.VND.triennially !== undefined &&
                             product.gifts.length > 0 && (
                               <PlanGifts gifts={product.gifts} />
                             )}
