@@ -2,7 +2,7 @@
 
 - Route: `/blackfriday/` inside the existing `(website)` layout. `/black-friday/` permanently redirects to it (308), preserving query parameters. Canonical, Open Graph URL and structured data use `/blackfriday/`. Shared Navigation, Footer, font, container widths and floating contact remain in use.
 - Before 11:30 on November 23, 2026 in Vietnam, Best Plans shows BF26 Start, Core and Plus from Portal group 103 (PIDs 567–569). The 3-year tab is selected and shows the extra year of service.
-- At 11:30, Best Plans switches to Portal group 105 and shows the eight VPS Platinum P1–P8 plans (PIDs 570–577). The Platinum design displays four cards per row on desktop, two on tablet and a swipeable list on phones. P2 carries the “Phù hợp nhất” badge.
+- At 11:30, Best Plans switches to Portal group 105 and shows the eight VPS Platinum P1–P8 plans (PIDs 570–577). The Platinum design displays four cards per row on desktop, two on tablet and a swipeable list on phones. P3 carries the “Bán chạy nhất” badge.
 - The page selects the catalog at request time using the server clock. An already-open page checks `/api/black-friday-best-plans/` and refreshes its server-rendered data at the switch. Each Portal catalog revalidates every 60 seconds. The loader validates product IDs, billing totals and checkout URLs. A missing cycle or unavailable catalog provides a contact link.
 - Platinum configurations show seven rows with icons. The loader reads CPU, RAM, NVMe, network details, firewall and eligible gifts from Portal. Platinum opens on the 1-year tab. All three tabs show the P2–P8 gift lists under “Quà Tặng Chu Kỳ 3 Năm” when the 3-year cycle is available. The gifts apply to 3-year registrations. All billing tabs support arrow, Home and End keys.
 - Crossed-out amounts show the VPS Platinum Viettel reference price for matching resources. Where the demo uses an estimate, the amount uses the demo’s resource rates and is marked as estimated in its accessible label and tooltip.
@@ -26,6 +26,7 @@
 - Both Flash Sale and Coupons use `CouponCopyButton`: the displayed code and copy icon share one keyboard-accessible button. Regular coupons are always available; Flash Sale copy buttons mount only after server-authorized release. Success changes the icon to a check and announces “Đã sao chép” in a temporary live status bubble. Denied/unavailable clipboard access reports an error without a false success. Feedback resets after 2.5 seconds and its timer is cleaned up on unmount.
 - Sales handoff: configure eligible products, billing cycles and actual redemption limits in the sales system. The frontend controls display and publication timing, not checkout coupon validation or inventory.
 - The route inherits the project's public index/follow policy. This work does not publish or deploy the page.
+- The InfoSection directly below the FAQ renders the Vietnamese VPS and Cloud Server buying guide in the initial HTML. The intro is visible, a CSS gradient fades the preview, and a native disclosure reveals the full guide without JavaScript. The close control appears at the end of the guide and returns focus to the open control when JavaScript is available.
 
 ## Verification
 

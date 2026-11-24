@@ -72,21 +72,18 @@ try {
   const recommendation = page.locator(
     '#best-plans [class*="recommendationTag"]',
   );
+  const featuredCard = page.locator(
+    `#best-plans article[data-pid="${platinum ? 572 : 568}"]`,
+  );
   await expect(recommendation).toHaveCount(1);
   await expect(
-    page
-      .locator("#best-plans article")
-      .nth(1)
-      .locator('[class*="recommendationTag"]'),
-  ).toHaveText("Phù hợp nhất");
+    featuredCard.locator('[class*="recommendationTag"]'),
+  ).toHaveText(platinum ? "Bán chạy nhất" : "Phù hợp nhất");
   await expect(recommendation.locator("svg")).toHaveCount(1);
-  const highlighted = await page
-    .locator("#best-plans article")
-    .nth(1)
-    .evaluate((el) => {
-      const style = getComputedStyle(el);
-      return { outline: style.outlineWidth, color: style.outlineColor };
-    });
+  const highlighted = await featuredCard.evaluate((el) => {
+    const style = getComputedStyle(el);
+    return { outline: style.outlineWidth, color: style.outlineColor };
+  });
   assert.equal(highlighted.outline, "2px");
   assert.equal(highlighted.color, "rgb(0, 96, 255)");
   const renewal = page.locator("#gia-han");
@@ -438,6 +435,40 @@ try {
     if (href.startsWith("#")) await expect(page.locator(href)).toHaveCount(1);
     else assert.equal(href, "/lien-he/");
   }
+  const info = page.locator("#black-friday-info");
+  const infoDetails = info.locator("details");
+  const infoToggle = infoDetails.locator("summary");
+  const infoClose = infoDetails.getByRole("button", { name: "Thu gọn" });
+  const infoPreview = info.locator('[class*="preview"]');
+  const infoLastHeading = info.getByText(
+    "Cần chuẩn bị gì trước khi chuyển sang máy chủ mới?",
+    { exact: true },
+  );
+  await expect(
+    page.locator("#black-friday-faq + #black-friday-info"),
+  ).toHaveCount(1);
+  await expect(info.locator("h2")).toContainText("Black Friday 2026");
+  await expect(info.locator('[class*="intro"]')).toBeVisible();
+  await expect(infoDetails).not.toHaveAttribute("open", "");
+  await expect(infoToggle).toHaveAccessibleName("Xem thêm");
+  await expect(infoPreview).toHaveCSS("mask-image", /linear-gradient/);
+  await infoToggle.press("Enter");
+  await expect(infoDetails).toHaveAttribute("open", "");
+  await expect(infoToggle).toBeHidden();
+  await expect(infoDetails.locator("h3").first()).toBeFocused();
+  await expect(infoPreview).toHaveCSS("mask-image", "none");
+  await expect(infoLastHeading).toBeVisible();
+  const infoLastParagraph = infoDetails.locator("p").last();
+  const lastParagraphBox = await infoLastParagraph.boundingBox();
+  const closeBox = await infoClose.boundingBox();
+  assert(closeBox.y >= lastParagraphBox.y + lastParagraphBox.height);
+  await infoLastParagraph.locator("a").focus();
+  await page.keyboard.press("Tab");
+  await expect(infoClose).toBeFocused();
+  await page.keyboard.press("Space");
+  await expect(infoDetails).not.toHaveAttribute("open", "");
+  await expect(infoToggle).toBeFocused();
+  await expect(infoToggle).toBeInViewport();
   await page
     .locator('nav[aria-label="Nội dung Black Friday"] a[href="#ma-giam-gia"]')
     .click();
@@ -538,6 +569,7 @@ try {
       item.open = true;
     }),
   );
+  await infoToggle.press("Enter");
   const axe = await new AxeBuilder({ page })
     .include("main")
     .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
@@ -625,6 +657,26 @@ try {
   await staticFaq.locator("summary").click();
   await expect(staticFaq).toHaveAttribute("open", "");
   await expect(staticFaq.locator("p")).toBeVisible();
+  const staticInfo = staticPage.locator("#black-friday-info details");
+  const staticInfoToggle = staticInfo.locator("summary");
+  const staticInfoLastHeading = staticInfo.locator("h3").last();
+  await expect(staticInfo).not.toHaveAttribute("open", "");
+  await expect(staticInfoLastHeading).toHaveText(
+    await infoLastHeading.textContent(),
+  );
+  await staticInfoToggle.click();
+  await expect(staticInfoLastHeading).toBeVisible();
+  await expect(staticInfoToggle).toHaveAccessibleName("Thu gọn");
+  const staticLastParagraphBox = await staticInfo
+    .locator("p")
+    .last()
+    .boundingBox();
+  const staticToggleBox = await staticInfoToggle.boundingBox();
+  assert(
+    staticToggleBox.y >= staticLastParagraphBox.y + staticLastParagraphBox.height,
+  );
+  await staticInfoToggle.click();
+  await expect(staticInfo).not.toHaveAttribute("open", "");
   assert.deepEqual(errors, []);
   await fs.writeFile(
     `${directory}/results.json`,
@@ -635,7 +687,7 @@ try {
     ),
   );
   console.log(
-    "Black Friday: pricing across cycles, keyboard support, checkout URLs, layout, timed Flash Sale release, terms, anchors, consultation CTA, 8 FAQs, 9 viewport widths, axe with expanded answers and no-JavaScript checks passed.",
+    "Black Friday: pricing across cycles, keyboard support, checkout URLs, layout, timed Flash Sale release, terms, anchors, consultation CTA, 8 FAQs, info disclosure, 9 viewport widths, axe and no-JavaScript checks passed.",
   );
 } finally {
   await browser.close();

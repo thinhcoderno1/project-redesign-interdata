@@ -20,11 +20,11 @@ import { useBestPlansRelease } from "./use-best-plans-release";
 import type { FlashSaleCheckoutLinks } from "@/data/black-friday-flash-sale";
 import type { BestPlansCatalog } from "@/lib/black-friday-best-plans";
 import {
+  Activity,
   ArrowDownUp,
   ArrowRight,
   ArrowUpRight,
   BadgeCheck,
-  Check,
   CircleHelp,
   Cloud,
   Cpu,
@@ -32,10 +32,12 @@ import {
   Gift,
   Globe2,
   HardDrive,
+  Headset,
   MemoryStick,
   Network,
   RefreshCw,
   Server,
+  Shield,
   ShieldCheck,
   Sparkles,
   Ticket,
@@ -65,6 +67,8 @@ const marqueeMessages = [
   "Ưu Đãi Ngập Tràn",
   "Nâng Cấp Hạ Tầng",
 ];
+
+const featuredPlatinumPlanId = 572;
 
 const bestPlanCycles = [
   { key: "annually", label: "1 năm", badgeDiscount: 60 },
@@ -226,10 +230,12 @@ function PlanGifts({ gifts }: { gifts: readonly string[] }) {
 }
 
 export function BlackFridayPage({
+  children,
   bestPlans,
   coupons,
   flashSaleCheckoutLinks,
 }: {
+  children: ReactNode;
   bestPlans: BestPlansCatalog;
   coupons: BlackFridayCouponGroup[];
   flashSaleCheckoutLinks: FlashSaleCheckoutLinks;
@@ -514,21 +520,21 @@ export function BlackFridayPage({
               >
                 {(legacy
                   ? [
-                      "Intel Xeon Platinum",
-                      "SSD NVMe U.2 Gen 4",
-                      "Uptime 99.9%",
-                      "Support 24/7",
+                      { label: "Intel Xeon Platinum", icon: Cpu },
+                      { label: "SSD NVMe U.2 Gen 4", icon: HardDrive },
+                      { label: "Uptime 99.9%", icon: Activity },
+                      { label: "Support 24/7", icon: Headset },
                     ]
                   : [
-                      "Intel® Platinum Gen 2",
-                      "SSD NVMe U.2 Gen 4",
-                      "AntiDDoS 120Gbps",
-                      "Quà Tặng Ngập Tràn",
+                      { label: "Intel® Platinum Gen 2", icon: Cpu },
+                      { label: "SSD NVMe U.2 Gen 4", icon: HardDrive },
+                      { label: "AntiDDoS 120Gbps", icon: Shield },
+                      { label: "Quà Tặng Hấp Dẫn", icon: Gift },
                     ]
-                ).map((highlight) => (
-                  <li key={highlight}>
-                    <Check size={17} strokeWidth={2.5} aria-hidden="true" />
-                    <span>{highlight}</span>
+                ).map(({ label, icon: Icon }) => (
+                  <li key={label}>
+                    <Icon size={17} strokeWidth={2.5} aria-hidden="true" />
+                    <span>{label}</span>
                   </li>
                 ))}
               </ul>
@@ -555,7 +561,8 @@ export function BlackFridayPage({
                         selectedCycle={selectedCycle}
                       />
                     ))
-                  : bestPlans.products.map((product, index) => {
+                  : bestPlans.products.map((product) => {
+                      const isFeatured = product.pid === featuredPlatinumPlanId;
                       const total = product.pricing.VND[selectedCycle];
                       const hasPrice = total !== undefined;
                       const referencePrice =
@@ -568,24 +575,25 @@ export function BlackFridayPage({
                         <article
                           key={product.pid}
                           data-pid={product.pid}
-                          className={`${styles.planCard} ${index === 1 ? styles.featured : ""}`}
+                          className={`${styles.planCard} ${isFeatured ? styles.featured : ""}`}
                         >
-                          {index === 1 && (
+                          {isFeatured && (
                             <span className={styles.recommendationTag}>
                               <Crown size={16} aria-hidden="true" />
-                              Phù hợp nhất
+                              Bán chạy nhất
                             </span>
                           )}
                           <div className={styles.planHeader}>
                             <h3>{product.name}</h3>
-                            <Image
-                              className={styles.planChip}
-                              src="/images/black-friday/intel-xeon-platinum-8000-angled.webp"
-                              alt=""
-                              width={256}
-                              height={256}
-                              sizes="(max-width: 360px) 74px, (max-width: 767px) 82px, (min-width: 1024px) and (max-width: 1100px) 70px, 88px"
-                            />
+                            <span className={styles.planChip}>
+                              <Image
+                                src="/images/black-friday/intel-xeon-platinum-8000-angled.webp"
+                                alt=""
+                                width={256}
+                                height={256}
+                                sizes="(max-width: 360px) 74px, (max-width: 767px) 82px, (min-width: 1024px) and (max-width: 1100px) 70px, 88px"
+                              />
+                            </span>
                           </div>
                           {hasReferencePrice && (
                             <div className={styles.originalPrice}>
@@ -858,6 +866,7 @@ export function BlackFridayPage({
           </div>
         </div>
       </section>
+      {children}
     </main>
   );
 }

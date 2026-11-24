@@ -56,12 +56,12 @@ function OfferAction({
   label,
   offer,
   checkoutHref,
-  openingShortDate,
+  hasOpeningDate,
 }: {
   label: string;
   offer: PublishedFlashSaleOffer | undefined;
   checkoutHref?: string;
-  openingShortDate: string | null;
+  hasOpeningDate: boolean;
 }) {
   return (
     <>
@@ -79,7 +79,7 @@ function OfferAction({
       ) : (
         <div className={styles.locked}>
           <LockKeyhole size={14} aria-hidden="true" />
-          {openingShortDate ? `Mã tiếp theo ${openingShortDate}` : "Mã chưa mở"}
+          {hasOpeningDate ? "Mã đang cập nhật" : "Mã chưa mở"}
         </div>
       )}
       {checkoutHref && (
@@ -105,9 +105,6 @@ export function FlashSaleOffers({
   const startsAt = release?.startsAt ?? blackFridayFlashSale.startsAt;
   const openingDate = new Date(startsAt ?? NaN);
   const hasOpeningDate = Number.isFinite(openingDate.getTime());
-  const openingShortDate = hasOpeningDate
-    ? openingShortDateLabel.format(openingDate)
-    : null;
   const openingDay = hasOpeningDate
     ? openingDateLabel.format(openingDate)
     : null;
@@ -233,7 +230,7 @@ export function FlashSaleOffers({
           </div>
           <div className={styles.freeEnd}>
             <OfferAction
-              openingShortDate={openingShortDate}
+              hasOpeningDate={hasOpeningDate}
               label={`${freeOffer.plan} miễn phí`}
               offer={publishedOffers[freeOffer.id]}
               checkoutHref={checkoutLinks[freeOffer.id]}
@@ -275,7 +272,7 @@ export function FlashSaleOffers({
                     </div>
                     <div className={styles.ticketEnd}>
                       <OfferAction
-                        openingShortDate={openingShortDate}
+                        hasOpeningDate={hasOpeningDate}
                         label={`${plan} ${specs} giảm ${discount}%`}
                         offer={publishedOffers[offerId]}
                         checkoutHref={checkoutLinks[offerId]}

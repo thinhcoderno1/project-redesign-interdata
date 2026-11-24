@@ -2,6 +2,7 @@ import { withPageSchema } from "@/components/seo/page-schema";
 import type { Metadata } from "next";
 import { connection } from "next/server";
 import { BlackFridayPage } from "@/components/black-friday/black-friday-page";
+import { InfoSection } from "@/components/black-friday/info-section";
 import { getBestPlansCatalog } from "@/lib/black-friday-best-plans";
 import { getBlackFridayCoupons } from "@/lib/black-friday-coupons";
 import { getBlackFridayFlashSaleCheckoutLinks } from "@/lib/black-friday-flash-sale-checkout";
@@ -42,7 +43,9 @@ async function Page() {
       bestPlans={bestPlans}
       coupons={getBlackFridayCoupons()}
       flashSaleCheckoutLinks={flashSaleCheckoutLinks}
-    />
+    >
+      <InfoSection />
+    </BlackFridayPage>
   );
 }
 

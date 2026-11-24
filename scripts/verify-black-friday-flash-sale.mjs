@@ -125,7 +125,7 @@ try {
     Array(6).fill("Chu kỳ 3 tháng – 1 năm"),
   );
   await expect(discountCycles.first()).toHaveCSS("color", "rgb(75, 89, 112)");
-  const locked = section.getByText("Mã tiếp theo 25/11/2026", { exact: true });
+  const locked = section.getByText("Mã đang cập nhật", { exact: true });
   const quantities = section.getByText(/^Chỉ \d{2} mã$/i);
   await expect(locked).toHaveCount(7);
   await expect(section.getByRole("timer").locator("strong").first()).toHaveText(
@@ -333,9 +333,7 @@ try {
   await expect(section.getByRole("button")).toHaveCount(0);
   await expect(quantities).toHaveCount(0);
   await expect(section.getByRole("timer")).toHaveCount(1);
-  await expect(
-    section.getByText("Mã tiếp theo 27/11/2026", { exact: true }),
-  ).toHaveCount(7);
+  await expect(locked).toHaveCount(7);
   await expect(
     section.locator('time[datetime="2026-11-27T11:00:00+07:00"]'),
   ).toHaveText("11:00AM · Thứ Sáu, 27/11/2026");

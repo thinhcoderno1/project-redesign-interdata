@@ -1,0 +1,143 @@
+.section {
+  padding-block: 0 clamp(40px, 5vw, 72px);
+  background: #080e12;
+}
+
+.panel {
+  padding: clamp(24px, 5vw, 64px) clamp(20px, 5vw, 64px);
+  border: 1px solid #e2eafa;
+  border-radius: clamp(18px, 3vw, 24px);
+  background: #fff;
+  color: #10213e;
+}
+
+.content {
+  max-width: 76ch;
+  margin-inline: auto;
+  font-size: 16px;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+
+.content h2 {
+  margin-bottom: 16px;
+  color: var(--brand-primary);
+  font-size: clamp(25px, 3.1vw, 40px);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.section .content p,
+.body li {
+  color: #394b66;
+}
+
+.section .content .intro {
+  color: #10213e;
+  font-weight: 500;
+}
+
+.preview {
+  margin-top: 12px;
+}
+
+.content:has(> .disclosure:not([open])) .preview {
+  max-height: 3lh;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, #000 18%, transparent);
+}
+
+.toggle {
+  display: flex;
+  width: fit-content;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  margin-inline: auto;
+  padding: 7px 16px;
+  border: 1px solid #ccd9f5;
+  border-radius: 8px;
+  background: #eff5ff;
+  color: var(--brand-primary);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  list-style: none;
+}
+
+.disclosure summary::-webkit-details-marker {
+  display: none;
+}
+
+.toggle:hover {
+  background: #e3edff;
+}
+
+/* Move the native control to the end when JavaScript is unavailable. */
+.disclosure[open]:not([data-enhanced]) {
+  display: flex;
+  flex-direction: column;
+}
+
+.disclosure[open]:not([data-enhanced]) summary {
+  order: 1;
+  margin-top: 24px;
+}
+
+.content .disclosure :is(summary, button, a):focus-visible {
+  outline-color: var(--brand-primary);
+}
+
+.showLess,
+.disclosure[open] .showMore,
+.disclosure[data-enhanced][open] summary,
+.closeButton {
+  display: none;
+}
+
+.disclosure[open] .showLess {
+  display: inline;
+}
+
+.disclosure[open] summary svg {
+  transform: rotate(180deg);
+}
+
+.disclosure[data-enhanced][open] .closeButton {
+  display: flex;
+  margin-top: 24px;
+}
+
+.body > div {
+  margin-top: 26px;
+  padding-top: 24px;
+  border-top: 1px solid #e1e8f3;
+}
+
+.body h3 {
+  margin-bottom: 10px;
+  font-size: clamp(19px, 2.2vw, 24px);
+  text-wrap: pretty;
+}
+
+.body p + p,
+.body ul {
+  margin-top: 12px;
+}
+
+.body ul {
+  padding-inline-start: 1.25em;
+  list-style: disc;
+}
+
+.body li + li {
+  margin-top: 6px;
+}
+
+.body a {
+  color: var(--brand-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
