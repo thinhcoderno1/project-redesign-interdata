@@ -104,8 +104,8 @@ try {
   await expect(section.locator("article")).toHaveCount(7);
   await expect(section.locator("h3")).toHaveText([
     "TẶNG MIỄN PHÍ TÊN MIỀN .COM",
-    "BỘ 03 HOT DEALS - VPS PLATINUM GIẢM ĐẾN 81%",
-    "BỘ 03 HOT DEALS - CLOUD PLATINUM GIẢM ĐẾN 61%",
+    "Flash Sale VPS",
+    "Flash Sale Cloud Server",
   ]);
   const specs = section.locator('[class*="specs"]');
   await expect(specs).toHaveText([
