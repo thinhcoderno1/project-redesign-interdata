@@ -5,6 +5,9 @@ import { loadProjectModule } from "./load-project-typescript.mjs";
 
 const base = process.env.QA_BASE_URL || "http://localhost:3100";
 const { publicPagePaths } = loadProjectModule("src/lib/seo-sitemap.ts");
+const { homepageCampaignPath } = loadProjectModule(
+  "src/data/page-availability.ts",
+);
 function inspect(html) {
   const robots = [];
   const ogImages = [];
@@ -97,7 +100,11 @@ assert.ok(
   ),
 );
 for (const path of publicPagePaths)
-  assert.ok(locations.includes(`https://interdata.vn${path}`), path);
+  assert.equal(
+    locations.includes(`https://interdata.vn${path}`),
+    path !== "/" || !homepageCampaignPath,
+    path,
+  );
 
 const results = [];
 for (const path of [
@@ -111,6 +118,8 @@ for (const path of [
   ).pathname,
 ]) {
   const metadata = await page(path);
+  const canonicalPath =
+    path === "/" && homepageCampaignPath ? homepageCampaignPath : path;
   assert.equal(metadata.status, 200, path);
   assert.equal(metadata.hasRetiredPhone, false, `No retired phone on ${path}`);
   assert.ok(metadata.telephoneLinks.includes("tel:1900636822"), path);
@@ -128,7 +137,11 @@ for (const path of [
     metadata.robots.every((value) => !/noindex|nofollow/.test(value)),
     `Indexable page ${path}`,
   );
-  assert.equal(metadata.canonical, `https://interdata.vn${path}`, path);
+  assert.equal(
+    metadata.canonical,
+    `https://interdata.vn${canonicalPath}`,
+    path,
+  );
   if (path.startsWith("/blog/") && path !== "/blog/") {
     assert.equal(metadata.ogImages.length, 1);
     if (metadata.firstArticleImage)
@@ -137,7 +150,7 @@ for (const path of [
     assert.deepEqual(
       metadata.ogImages,
       [
-        `https://interdata.vn${path === "/blackfriday/" ? "/images/black-friday/og-image.png" : "/images/og/interdata.png"}`,
+        `https://interdata.vn${canonicalPath === "/blackfriday/" ? "/images/black-friday/og-image.png" : "/images/og/interdata.png"}`,
       ],
       path,
     );

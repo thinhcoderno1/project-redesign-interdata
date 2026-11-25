@@ -74,6 +74,7 @@ async function check(route, expectedArticle = false) {
   assert.equal(response.status, 200, route);
   const parsed = parsePage(await response.text());
   const { nodes, scripts, canonical, body } = parsed;
+  const pagePath = new URL(canonical).pathname;
   assert.equal(
     scripts.length,
     2,
@@ -113,14 +114,14 @@ async function check(route, expectedArticle = false) {
     ),
   );
   const breadcrumb = nodes.find((node) => node["@type"] === "BreadcrumbList");
-  if (route !== "/") {
+  if (pagePath !== "/") {
     assert.ok(breadcrumb?.itemListElement.length >= 2);
     breadcrumb.itemListElement.forEach((item, index) =>
       assert.equal(item.position, index + 1),
     );
     assert.equal(breadcrumb.itemListElement.at(-1).item, canonical);
   }
-  const profile = pageProfile(new URL(route, base).pathname);
+  const profile = pageProfile(pagePath);
   const service = nodes.filter((node) => node["@type"] === "Service");
   assert.equal(service.length, profile.service ? 1 : 0);
   if (service[0]) {
