@@ -1,10 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState, useSyncExternalStore } from "react";
-import { homepageBlackFriday2026Banner } from "@/data/promotions";
 import { BlackFridayBannerArtwork } from "@/components/shared/black-friday-banner-artwork";
+import { useFlashSaleRelease } from "@/components/black-friday/use-flash-sale-release";
+import { useFlashSaleVisibility } from "@/components/black-friday/use-flash-sale-visibility";
+import { blackFridayFlashSale } from "@/data/black-friday";
+import { homepageBlackFriday2026Banner } from "@/data/promotions";
+import { splitCountdown } from "@/lib/flash-sale";
 import styles from "./promotion-carousel.module.css";
 
 const banners: {
@@ -39,12 +43,60 @@ const subscribeHydration = () => () => {};
 const hydratedSnapshot = () => true;
 const serverSnapshot = () => false;
 const imageSizes = "(max-width: 1343px) calc(100vw - 40px), 1248px";
+const flashSaleDateLabel = new Intl.DateTimeFormat("vi-VN", {
+  hour: "2-digit",
+  minute: "2-digit",
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+  timeZone: "Asia/Ho_Chi_Minh",
+});
+
+function BlackFridayCountdown() {
+  const { release, remainingSeconds } = useFlashSaleRelease();
+  const startsAt = release?.startsAt ?? blackFridayFlashSale.startsAt;
+  const openingDate = new Date(startsAt ?? NaN);
+  const live = release?.status === "live";
+  const countdown =
+    !live && remainingSeconds !== null
+      ? splitCountdown(remainingSeconds)
+      : null;
+
+  if (!Number.isFinite(openingDate.getTime())) return null;
+
+  return (
+    <div className={styles.flashSale}>
+      <a href={`${homepageBlackFriday2026Banner.href}#flash-sale`}>
+        <strong>
+          {live ? "Flash Sale Black Friday" : "Flash Sale tiếp theo"}
+        </strong>
+        <time dateTime={startsAt ?? undefined}>
+          {flashSaleDateLabel.format(openingDate)}
+        </time>
+        <ArrowRight size={16} aria-hidden="true" />
+      </a>
+      {countdown && (
+        <span
+          className={styles.flashSaleTimer}
+          role="timer"
+          aria-live="off"
+          aria-label={`${countdown[0]} ngày, ${countdown[1]} giờ, ${countdown[2]} phút, ${countdown[3]} giây`}
+        >
+          <span aria-hidden="true">
+            {countdown[0]} ngày {countdown.slice(1).join(":")}
+          </span>
+        </span>
+      )}
+    </div>
+  );
+}
 
 export function PromotionCarousel({ href }: { href: string }) {
   const root = useRef<HTMLDivElement>(null);
   const gesture = useRef<{ x: number; y: number } | null>(null);
   const suppressClick = useRef(false);
   const [active, setActive] = useState(0);
+  const flashSaleVisible = useFlashSaleVisibility();
   const enhanced = useSyncExternalStore(
     subscribeHydration,
     hydratedSnapshot,
@@ -194,6 +246,7 @@ export function PromotionCarousel({ href }: { href: string }) {
           ))}
         </div>
       </div>
+      {flashSaleVisible && <BlackFridayCountdown />}
     </div>
   );
 }

@@ -4,15 +4,16 @@ import { chromium, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 const base = process.env.TEST_BASE_URL || "http://localhost:3000";
-const startsAt = "2026-11-25T11:00:00+07:00";
+const startsAt = "2026-11-27T11:00:00+07:00";
+const previousStartsAt = "2026-11-25T11:00:00+07:00";
 const start = Date.parse(startsAt);
 const offers = {
-  vps81: { code: "FLASHBF26-VPS81", quantity: 3 },
-  vps71: { code: "FLASHBF26-VPS71", quantity: 3 },
-  vps61: { code: "FLASHBF26-VPS61", quantity: 10 },
-  cloud61: { code: "FLASHBF26-CLOUD61", quantity: 3 },
-  cloud51: { code: "FLASHBF26-CLOUD51", quantity: 3 },
-  cloud41: { code: "FLASHBF26-CLOUD41", quantity: 10 },
+  vps81: { code: "TEST-VPS81", quantity: 3 },
+  vps71: { code: "TEST-VPS71", quantity: 3 },
+  vps61: { code: "TEST-VPS61", quantity: 10 },
+  cloud61: { code: "TEST-CLOUD61", quantity: 3 },
+  cloud51: { code: "TEST-CLOUD51", quantity: 3 },
+  cloud41: { code: "TEST-CLOUD41", quantity: 10 },
 };
 const codePattern = /(?:BF26FLASH(?:20|23)|FLASHBF26)-/;
 const checkoutPaths = {
@@ -56,10 +57,7 @@ try {
     actualRelease.status,
     actualRelease.serverNow < start ? "upcoming" : "live",
   );
-  assert.deepEqual(
-    actualRelease.offers,
-    actualRelease.serverNow < start ? {} : offers,
-  );
+  assert.deepEqual(actualRelease.offers, {});
   page.on("pageerror", (error) => errors.push(error.message));
   let serverNow = start - 86400000;
   let requests = 0;
@@ -86,12 +84,12 @@ try {
   const section = page.locator("#flash-sale");
   await expect(section).toBeVisible();
   await expect(section.locator(`time[datetime="${startsAt}"]`)).toHaveText(
-    "11:00AM · Thứ Tư, 25/11/2026",
+    "11:00AM · Thứ Sáu, 27/11/2026",
   );
-  await expect(section.locator('time[datetime="2026-11-25"]')).toHaveCount(0);
-  await expect(section.locator('time[datetime="2026-11-27"]')).toHaveText(
-    "27/11/2026",
-  );
+  await expect(section.locator("time")).toHaveCount(1);
+  await expect(
+    section.getByText("Flash Sale tiếp theo", { exact: true }),
+  ).toBeVisible();
   await expect(
     section.getByText("Đếm ngược đến giờ mở sale", { exact: true }),
   ).toHaveCount(0);
@@ -217,6 +215,9 @@ try {
   await expect(
     section.getByText("Flash Sale đã mở", { exact: true }),
   ).toHaveCount(0);
+  await expect(
+    section.getByText("Mã ưu đãi đang cập nhật.", { exact: true }),
+  ).toBeVisible();
 
   codesReady = true;
   await page.evaluate(() => window.dispatchEvent(new Event("pageshow")));
@@ -326,18 +327,32 @@ try {
   await expect(quantities).toHaveCount(6);
   await expect(section.getByRole("button")).toHaveCount(6);
   // A live page must retire its published offers when the server advances the round.
-  roundStartsAt = "2026-11-27T11:00:00+07:00";
+  roundStartsAt = previousStartsAt;
+  serverNow = Date.parse(previousStartsAt) + 3600000;
+  await page.evaluate(() => window.dispatchEvent(new Event("pageshow")));
+  await expect(
+    section.locator(`time[datetime="${previousStartsAt}"]`),
+  ).toBeVisible();
+  await expect(section.getByRole("button")).toHaveCount(6);
+  roundStartsAt = startsAt;
   await page.evaluate(() => window.dispatchEvent(new Event("pageshow")));
   await expect(section.getByRole("button")).toHaveCount(0);
   await expect(quantities).toHaveCount(0);
   await expect(section.getByRole("timer")).toHaveCount(1);
   await expect(locked).toHaveCount(7);
-  await expect(
-    section.locator('time[datetime="2026-11-27T11:00:00+07:00"]'),
-  ).toHaveText("11:00AM · Thứ Sáu, 27/11/2026");
+  await expect(section.locator(`time[datetime="${startsAt}"]`)).toHaveText(
+    "11:00AM · Thứ Sáu, 27/11/2026",
+  );
+  await page.goto(`${base}/`);
+  await expect(page.locator("#flash-sale time")).toHaveAttribute(
+    "datetime",
+    startsAt,
+  );
+  await expect(page.locator("#flash-sale").getByRole("timer")).toHaveCount(1);
+  await expect(page.locator("#flash-sale").getByRole("button")).toHaveCount(0);
   assert.deepEqual(errors, []);
   console.log(
-    "Flash Sale UI: November 25 countdown, visible domain offer without a code, six released codes and quantities, device clock skew, retries, clipboard, responsive layouts and accessibility passed.",
+    "Flash Sale UI: November 27 countdown at / and /blackfriday/, retired offers, simulated code release, clock skew, retries, clipboard, responsive layouts and accessibility passed.",
   );
 } finally {
   await browser.close();

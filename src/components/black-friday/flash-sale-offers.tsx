@@ -157,23 +157,27 @@ export function FlashSaleOffers({
                 </time>
               </p>
             )}
-            <p className={styles.upcoming}>
-              <span>Các đợt tiếp theo</span>
-              <span className={styles.upcomingDates}>
-                {upcomingDates.map(({ date, label }) => (
-                  <time key={date} dateTime={date}>
-                    {label}
-                  </time>
-                ))}
-              </span>
-            </p>
+            {upcomingDates.length > 0 && (
+              <p className={styles.upcoming}>
+                <span>Các đợt tiếp theo</span>
+                <span className={styles.upcomingDates}>
+                  {upcomingDates.map(({ date, label }) => (
+                    <time key={date} dateTime={date}>
+                      {label}
+                    </time>
+                  ))}
+                </span>
+              </p>
+            )}
           </div>
 
           <div className={styles.clock}>
-            {hasPublishedOffers && (
+            {(!live || hasPublishedOffers) && (
               <p className={styles.clockHeading}>
-                <span className={styles.indicator} aria-hidden="true" />
-                Flash Sale đã mở
+                {live && (
+                  <span className={styles.indicator} aria-hidden="true" />
+                )}
+                {live ? "Flash Sale đã mở" : "Flash Sale tiếp theo"}
               </p>
             )}
             <div
@@ -206,7 +210,9 @@ export function FlashSaleOffers({
                 ? "Chọn ưu đãi bên dưới để sao chép mã."
                 : syncFailed
                   ? "Đang kết nối lại để cập nhật giờ mở bán…"
-                  : null}
+                  : live
+                    ? "Mã ưu đãi đang cập nhật."
+                    : null}
             </p>
           </div>
         </header>

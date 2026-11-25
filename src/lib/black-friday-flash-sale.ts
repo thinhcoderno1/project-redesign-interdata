@@ -1,21 +1,11 @@
 import "server-only";
 
 import { blackFridayFlashSale } from "@/data/black-friday";
-import type {
-  FlashSaleOfferId,
-  FlashSaleRelease,
-  PublishedFlashSaleOffer,
-} from "@/data/black-friday-flash-sale";
+import type { FlashSaleRelease } from "@/data/black-friday-flash-sale";
 import { getFlashSaleState } from "./flash-sale";
 
-const offers: Partial<Record<FlashSaleOfferId, PublishedFlashSaleOffer>> = {
-  vps81: { code: "FLASHBF26-VPS81", quantity: 3 },
-  vps71: { code: "FLASHBF26-VPS71", quantity: 3 },
-  vps61: { code: "FLASHBF26-VPS61", quantity: 10 },
-  cloud61: { code: "FLASHBF26-CLOUD61", quantity: 3 },
-  cloud51: { code: "FLASHBF26-CLOUD51", quantity: 3 },
-  cloud41: { code: "FLASHBF26-CLOUD41", quantity: 10 },
-};
+// Fill in approved codes and quantities for the November 27 round.
+const offers: FlashSaleRelease["offers"] = {};
 
 export function getBlackFridayFlashSaleRelease(
   now = Date.now(),

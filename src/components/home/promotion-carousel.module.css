@@ -50,6 +50,37 @@
   display: flex;
   justify-content: center;
 }
+.flashSale {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 16px;
+  min-height: 44px;
+  margin-top: 4px;
+  padding: 8px;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  background: var(--brand-subtle);
+  color: var(--brand-strong);
+  font-size: 0.875rem;
+}
+.flashSale a {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 8px;
+  color: inherit;
+}
+.flashSale a:hover {
+  text-decoration: underline;
+}
+.flashSaleTimer {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  white-space: nowrap;
+}
 .pagination {
   display: flex;
   gap: 2px;

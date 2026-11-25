@@ -3,6 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 import fs from "node:fs/promises";
 
 const base = process.env.TEST_BASE_URL || "http://localhost:3100";
+const flashSaleStartsAt = "2026-11-27T11:00:00+07:00";
 const bannerLinks = (root) =>
   root.getByRole("link").and(root.locator("[data-promotion-link]"));
 const expectedImages = [
@@ -24,10 +25,34 @@ try {
     const page = await context.newPage();
     const errors = [];
     page.on("pageerror", (error) => errors.push(error.message));
+    await page.route("**/api/black-friday-flash-sale/", (route) =>
+      route.fulfill({
+        json: {
+          serverNow: Date.parse(flashSaleStartsAt) - 86400000,
+          startsAt: flashSaleStartsAt,
+          status: "upcoming",
+          offers: {},
+        },
+      }),
+    );
     await page.goto(base, { waitUntil: "domcontentloaded" });
     const root = page.locator('#uu-dai [aria-roledescription="slideshow"]');
     await expect(root).toHaveAttribute("data-enhanced", "true");
     await expect(root).toHaveAttribute("data-active-slide", "1");
+    const flashSaleLink = root.getByRole("link", {
+      name: /Flash Sale tiếp theo/,
+    });
+    await expect(flashSaleLink).toHaveAttribute(
+      "href",
+      "/blackfriday/#flash-sale",
+    );
+    await expect(flashSaleLink.locator("time")).toHaveAttribute(
+      "datetime",
+      flashSaleStartsAt,
+    );
+    await expect(root.getByRole("timer")).toContainText(
+      /^01 ngày|^00 ngày 23:/,
+    );
     await expect(bannerLinks(root)).toHaveAttribute("href", "/blackfriday/");
     await expect(
       bannerLinks(root).getByText("ƯU ĐÃI LỚN NHẤT NĂM", { exact: true }),
@@ -312,6 +337,10 @@ try {
     fallbackRoot.getByText("ƯU ĐÃI LỚN NHẤT NĂM", { exact: true }),
   ).toHaveCount(0);
   await expect(fallbackRoot.getByRole("button")).toHaveCount(0);
+  await expect(fallbackRoot.locator("time")).toHaveAttribute(
+    "datetime",
+    flashSaleStartsAt,
+  );
   for (const link of await bannerLinks(fallbackRoot).all()) {
     await link.focus();
     await expect(link).toBeInViewport();
