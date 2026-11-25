@@ -38,9 +38,16 @@ const {
   blackFridayFlashSaleGroups: groups,
 } = load(publicSource);
 const discountOffers = groups.flatMap((group) => group.offers);
-const publicOffers = [freeOffer, ...discountOffers];
-const expectedOffers = {};
-const codePattern = /BF26FLASH(?:20|23)-/;
+const expectedOffers = {
+  vps81: { code: "FLASHBF26-VPS81", quantity: 3 },
+  vps71: { code: "FLASHBF26-VPS71", quantity: 3 },
+  vps61: { code: "FLASHBF26-VPS61", quantity: 10 },
+  cloud61: { code: "FLASHBF26-CLOUD61", quantity: 3 },
+  cloud51: { code: "FLASHBF26-CLOUD51", quantity: 3 },
+  cloud41: { code: "FLASHBF26-CLOUD41", quantity: 10 },
+};
+const retiredCodePattern = /BF26FLASH(?:20|23)-/;
+const codePattern = /(?:BF26FLASH(?:20|23)|FLASHBF26)-/;
 assert.equal(data.blackFridayFlashSale.mode, "preview");
 assert.equal(data.blackFridayFlashSale.startsAt, "2026-11-25T11:00:00+07:00");
 const start = Date.parse(data.blackFridayFlashSale.startsAt);
@@ -65,18 +72,18 @@ for (const now of [
 for (const now of [start, start + 1, start + 86400000]) {
   assert.equal(release(now).status, "live");
   assert.deepEqual(release(now).offers, expectedOffers);
-  assert(!codePattern.test(JSON.stringify(release(now))));
+  assert(!retiredCodePattern.test(JSON.stringify(release(now))));
 }
 assert.deepEqual(
-  publicOffers.map(({ id }) => id),
-  ["free", "vps81", "vps71", "vps61", "cloud61", "cloud51", "cloud41"],
+  discountOffers.map(({ id }) => id),
+  Object.keys(expectedOffers),
 );
 assert.deepEqual(
   discountOffers.map(({ discount }) => discount),
   [81, 71, 61, 61, 51, 41],
 );
 assert(!codePattern.test(publicSource));
-assert(!/quantity/.test(JSON.stringify(publicOffers)));
+assert(!/quantity/.test(JSON.stringify(discountOffers)));
 assert.equal(freeOffer.plan, "tên miền .COM");
 assert.deepEqual(
   discountOffers.map(({ plan, specs }) => `${plan} ${specs}`),
@@ -229,5 +236,5 @@ if (process.argv.includes("--built")) {
   );
 }
 console.log(
-  "Flash Sale data: retired codes, November 25 countdown, millisecond opening boundary, hidden/invalid config, no-store response and ignored client timestamps passed.",
+  "Flash Sale data: six November 25 codes, millisecond opening boundary, domain checkout, hidden/invalid schedule, no-store response and ignored client timestamps passed.",
 );

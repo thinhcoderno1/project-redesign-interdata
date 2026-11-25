@@ -7,15 +7,14 @@ const base = process.env.TEST_BASE_URL || "http://localhost:3000";
 const startsAt = "2026-11-25T11:00:00+07:00";
 const start = Date.parse(startsAt);
 const offers = {
-  free: { code: "TESTFLASH25-DOMAIN", quantity: 5 },
-  vps81: { code: "TESTFLASH25-VPS81", quantity: 3 },
-  vps71: { code: "TESTFLASH25-VPS71", quantity: 3 },
-  vps61: { code: "TESTFLASH25-VPS61", quantity: 10 },
-  cloud61: { code: "TESTFLASH25-CLOUD61", quantity: 3 },
-  cloud51: { code: "TESTFLASH25-CLOUD51", quantity: 3 },
-  cloud41: { code: "TESTFLASH25-CLOUD41", quantity: 10 },
+  vps81: { code: "FLASHBF26-VPS81", quantity: 3 },
+  vps71: { code: "FLASHBF26-VPS71", quantity: 3 },
+  vps61: { code: "FLASHBF26-VPS61", quantity: 10 },
+  cloud61: { code: "FLASHBF26-CLOUD61", quantity: 3 },
+  cloud51: { code: "FLASHBF26-CLOUD51", quantity: 3 },
+  cloud41: { code: "FLASHBF26-CLOUD41", quantity: 10 },
 };
-const codePattern = /BF26FLASH(?:20|23)-/;
+const codePattern = /(?:BF26FLASH(?:20|23)|FLASHBF26)-/;
 const checkoutPaths = {
   vps81: "/store/vps-platinum-viettel-hcm/plan-2-2c-2g-30g-platinum-vt",
   vps71: "/store/vps-platinum-viettel-hcm/plan-3-2c-4g-50g-platinum-vt",
@@ -57,7 +56,10 @@ try {
     actualRelease.status,
     actualRelease.serverNow < start ? "upcoming" : "live",
   );
-  assert.deepEqual(actualRelease.offers, {});
+  assert.deepEqual(
+    actualRelease.offers,
+    actualRelease.serverNow < start ? {} : offers,
+  );
   page.on("pageerror", (error) => errors.push(error.message));
   let serverNow = start - 86400000;
   let requests = 0;
@@ -102,8 +104,8 @@ try {
   await expect(section.locator("article")).toHaveCount(7);
   await expect(section.locator("h3")).toHaveText([
     "TẶNG MIỄN PHÍ TÊN MIỀN .COM",
-    "Flash Sale VPS",
-    "Flash Sale Cloud Server",
+    "BỘ 03 HOT DEALS - VPS PLATINUM GIẢM ĐẾN 81%",
+    "BỘ 03 HOT DEALS - CLOUD PLATINUM GIẢM ĐẾN 61%",
   ]);
   const specs = section.locator('[class*="specs"]');
   await expect(specs).toHaveText([
@@ -134,12 +136,6 @@ try {
   await expect(section.getByRole("button")).toHaveCount(0);
   const registerLinks = section.getByRole("link", { name: /^Đăng ký ngay/ });
   await expect(registerLinks).toHaveCount(7);
-  await expect(
-    freeOffer.getByRole("link", {
-      name: "Đăng ký ngay tên miền .COM miễn phí",
-      exact: true,
-    }),
-  ).toBeVisible();
   for (const [id, href] of checkouts) {
     const card = section.locator(`[data-offer="${id}"]`);
     const register = card.getByRole("link", { name: /^Đăng ký ngay/ });
@@ -224,7 +220,7 @@ try {
 
   codesReady = true;
   await page.evaluate(() => window.dispatchEvent(new Event("pageshow")));
-  await expect(section.getByRole("button")).toHaveCount(7, { timeout: 5000 });
+  await expect(section.getByRole("button")).toHaveCount(6, { timeout: 5000 });
   await expect(registerLinks).toHaveCount(7);
   await expect(section.getByRole("timer")).toHaveCount(0);
   await expect(section.locator('[class*="countdown"] strong')).toHaveText(
@@ -234,12 +230,14 @@ try {
     section.getByText("Flash Sale đã mở", { exact: true }),
   ).toBeVisible();
   await expect(
-    freeOffer.getByText("Săn tên miền đẹp cho thương hiệu của bạn", {
-      exact: true,
-    }),
+    freeOffer.getByText("Mã đang cập nhật", { exact: true }),
   ).toBeVisible();
-  await expect(quantities).toHaveCount(7);
-  await expect(quantities.nth(1)).toHaveCSS("color", "rgb(140, 50, 16)");
+  await expect(freeOffer.getByRole("button")).toHaveCount(0);
+  await expect(
+    freeOffer.getByRole("link", { name: /^Đăng ký ngay/ }),
+  ).toHaveAttribute("href", checkouts.get("free"));
+  await expect(quantities).toHaveCount(6);
+  await expect(quantities.first()).toHaveCSS("color", "rgb(140, 50, 16)");
   for (const [id, { code, quantity }] of Object.entries(offers)) {
     const card = section.locator(`[data-offer="${id}"]`);
     const copy = card.getByRole("button");
@@ -273,8 +271,8 @@ try {
     "BF26-CLOUD30",
   ]);
   await page.reload();
-  await expect(section.getByRole("button")).toHaveCount(7);
-  await expect(quantities).toHaveCount(7);
+  await expect(section.getByRole("button")).toHaveCount(6);
+  await expect(quantities).toHaveCount(6);
   for (const width of [320, 390, 640, 768, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 1000 });
     assert(
@@ -318,15 +316,15 @@ try {
   // A slow device clock must not delay codes once the server has opened.
   await page.clock.setFixedTime(new Date(start - 86400000));
   await page.reload();
-  await expect(section.getByRole("button")).toHaveCount(7);
+  await expect(section.getByRole("button")).toHaveCount(6);
   // An already-open page also picks up the release at the boundary without a visibility event.
   serverNow = start - 2000;
   await page.reload();
   await expect(locked).toHaveCount(7);
   await expect(quantities).toHaveCount(0);
   serverNow = start;
-  await expect(quantities).toHaveCount(7);
-  await expect(section.getByRole("button")).toHaveCount(7);
+  await expect(quantities).toHaveCount(6);
+  await expect(section.getByRole("button")).toHaveCount(6);
   // A live page must retire its published offers when the server advances the round.
   roundStartsAt = "2026-11-27T11:00:00+07:00";
   await page.evaluate(() => window.dispatchEvent(new Event("pageshow")));
@@ -339,7 +337,7 @@ try {
   ).toHaveText("11:00AM · Thứ Sáu, 27/11/2026");
   assert.deepEqual(errors, []);
   console.log(
-    "Flash Sale UI: seven locked offers, November 25 countdown, domain offer copy, code and quantity release, device clock skew, retries, clipboard, responsive layouts and accessibility passed.",
+    "Flash Sale UI: November 25 countdown, visible domain offer without a code, six released codes and quantities, device clock skew, retries, clipboard, responsive layouts and accessibility passed.",
   );
 } finally {
   await browser.close();

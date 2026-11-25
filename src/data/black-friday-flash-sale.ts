@@ -13,7 +13,7 @@ export const blackFridayFlashSaleFreeOffer = {
 export const blackFridayFlashSaleGroups = [
   {
     id: "vps",
-    title: "Flash Sale VPS",
+    title: "BỘ 03 HOT DEALS - VPS PLATINUM GIẢM ĐẾN 81%",
     offers: [
       {
         id: "vps81",
@@ -37,7 +37,7 @@ export const blackFridayFlashSaleGroups = [
   },
   {
     id: "cloud",
-    title: "Flash Sale Cloud Server",
+    title: "BỘ 03 HOT DEALS - CLOUD PLATINUM GIẢM ĐẾN 61%",
     offers: [
       {
         id: "cloud61",
