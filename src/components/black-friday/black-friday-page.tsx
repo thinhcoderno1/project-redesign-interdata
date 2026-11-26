@@ -45,6 +45,7 @@ import type { BlackFridayCycle } from "@/lib/black-friday-pricing";
 import {
   blackFridayCouponConditions,
   blackFridayFaqs,
+  blackFridayPlatinumBestPlans,
   blackFridayRenewal,
   type BlackFridayCouponGroup,
 } from "@/data/black-friday";
@@ -60,17 +61,7 @@ const marqueeMessages = [
   "Nâng Cấp Hạ Tầng",
 ];
 
-const featuredPlatinumPlanId = 572;
-
-const bestPlanCycles = [
-  { key: "annually", label: "1 năm", badgeDiscount: 60 },
-  { key: "biennially", label: "2 năm", badgeDiscount: 65 },
-  { key: "triennially", label: "3 năm", badgeDiscount: 70 },
-] as const satisfies readonly {
-  key: BlackFridayCycle;
-  label: string;
-  badgeDiscount: number;
-}[];
+const bestPlanCycles = blackFridayPlatinumBestPlans.cycles;
 
 function EyebrowBadge({
   icon: Icon,
@@ -336,12 +327,12 @@ export function BlackFridayPage({
               <h2 id="best-plans-title">
                 {legacy
                   ? "BEST PLANS VPS BLACK FRIDAY"
-                  : "VPS PLATINUM BLACK FRIDAY"}
+                  : blackFridayPlatinumBestPlans.title.toUpperCase()}
               </h2>
               <p>
                 {legacy
                   ? "Chọn cấu hình phù hợp với nhu cầu của bạn."
-                  : "Hiệu năng mạnh mẽ cho mọi dự án"}
+                  : blackFridayPlatinumBestPlans.subtitle}
               </p>
             </div>
           </div>
@@ -441,7 +432,9 @@ export function BlackFridayPage({
                       />
                     ))
                   : bestPlans.products.map((product) => {
-                      const isFeatured = product.pid === featuredPlatinumPlanId;
+                      const isFeatured =
+                        product.pid ===
+                        blackFridayPlatinumBestPlans.featuredPid;
                       const total = product.pricing.VND[selectedCycle];
                       const hasPrice = total !== undefined;
                       const referencePrice =

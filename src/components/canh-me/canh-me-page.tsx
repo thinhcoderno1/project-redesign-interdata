@@ -3,15 +3,18 @@ import HotDeals from "./HotDeals";
 import InfoSection from "./InfoSection";
 import ZaloHotDealsSection from "./ZaloHotDealsSection";
 import { CanhMeProof } from "./canh-me-proof";
-import { deals, faqs, GID_ORDER } from "./data";
+import { blackFridayDeal, deals, faqs, GID_ORDER } from "./data";
 import type { ApiProduct } from "@/lib/canh-me-pricing";
+import type { BlackFridayProduct } from "@/lib/black-friday-pricing";
 import styles from "./canh-me.module.css";
 import theme from "./canh-me-theme.module.css";
 
 export function CanhMePage({
   pricingByGid,
+  platinumProducts,
 }: {
   pricingByGid: Record<number, ApiProduct[]>;
+  platinumProducts: BlackFridayProduct[];
 }) {
   const orderedDeals = GID_ORDER.flatMap((gid) =>
     deals.filter((deal) => deal.gid === gid && !deal.hidden),
@@ -19,7 +22,13 @@ export function CanhMePage({
   return (
     <main id="main-content" className={`${styles.page} ${theme.theme} cm-page`}>
       <Hero />
-      <HotDeals deals={orderedDeals} pricingByGid={pricingByGid} />
+      <HotDeals
+        deals={[blackFridayDeal, ...orderedDeals]}
+        pricingByGid={{
+          ...pricingByGid,
+          [blackFridayDeal.gid]: platinumProducts,
+        }}
+      />
       <ZaloHotDealsSection />
       <CanhMeProof />
       <section className="cm-section cm-faq" aria-labelledby="canhme-faq-title">

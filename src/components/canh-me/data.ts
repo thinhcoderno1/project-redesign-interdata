@@ -1,4 +1,5 @@
 import type { PricingPeriod } from "@/lib/canh-me-pricing";
+import { blackFridayPlatinumBestPlans } from "@/data/black-friday";
 
 export type DealProgram = {
   gid: number;
@@ -17,11 +18,27 @@ export type DealProgram = {
     | "triennially";
   pricingPeriods?: PricingPeriod[];
   defaultPricingPeriod?: PricingPeriod;
+  showCountdown?: boolean;
   showMonthlyEquivalentPrice?: boolean;
   hiddenProductPids?: number[];
   featuredPid?: number;
+  featuredLabel?: string;
   featuredIndex?: number;
   gridColumns?: 2 | 3 | 4;
+};
+
+export const blackFridayDeal: DealProgram = {
+  gid: 105,
+  eyebrow: `${blackFridayPlatinumBestPlans.title} 2026`,
+  title: blackFridayPlatinumBestPlans.subtitle,
+  description:
+    "VPS Platinum sử dụng CPU Intel Platinum Gen 2 và SSD NVMe U.2 Gen 4, đi kèm Firewall 120Gbps và Network lên đến 1Gbps. Phù hợp để chạy website, web app, database, Docker, automation, tools, phần mềm, CRM và nhiều ứng dụng khác. Cùng nhiều quà tặng hấp dẫn như S3 storage, nón bảo hiểm & ly sứ.",
+  note: "Có thể kết thúc sớm hơn dự kiến, do số lượng ưu đãi có hạn",
+  iconVariant: "vps",
+  pricingPeriods: blackFridayPlatinumBestPlans.cycles.map(({ key }) => key),
+  showCountdown: false,
+  featuredPid: blackFridayPlatinumBestPlans.featuredPid,
+  featuredLabel: "Bán chạy nhất",
 };
 
 export const ORIGINAL_PRICE_BY_PID: Record<

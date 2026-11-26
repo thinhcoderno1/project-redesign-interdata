@@ -1,5 +1,21 @@
 import { links } from "./content";
+import type { BlackFridayCycle } from "@/lib/black-friday-pricing";
 import type { FlashSaleSchedule } from "@/lib/flash-sale";
+
+export const blackFridayPlatinumBestPlans = {
+  title: "VPS Platinum Black Friday",
+  subtitle: "Hiệu năng mạnh mẽ cho mọi dự án",
+  featuredPid: 572,
+  cycles: [
+    { key: "annually", label: "1 năm", badgeDiscount: 60 },
+    { key: "biennially", label: "2 năm", badgeDiscount: 65 },
+    { key: "triennially", label: "3 năm", badgeDiscount: 70 },
+  ] as const satisfies readonly {
+    key: BlackFridayCycle;
+    label: string;
+    badgeDiscount: number;
+  }[],
+} as const;
 
 // Retain renewal copy and the additional offer for a future campaign update.
 export const blackFridayRenewal = {

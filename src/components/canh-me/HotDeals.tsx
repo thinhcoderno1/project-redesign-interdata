@@ -1,8 +1,16 @@
 "use client";
 
 import { MobilePricingSlider } from "@/components/shared/mobile-pricing-slider";
+import { blackFridayPlatinumBestPlans } from "@/data/black-friday";
+import { checkoutUrl, formatVnd } from "@/data/vps-pricing";
+import { Gift } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { ORIGINAL_PRICE_BY_PID, type DealProgram } from "./data";
+import {
+  blackFridayDeal,
+  ORIGINAL_PRICE_BY_PID,
+  type DealProgram,
+} from "./data";
+import type { BlackFridayProduct } from "@/lib/black-friday-pricing";
 import type { ApiProduct, PricingPeriod } from "@/lib/canh-me-pricing";
 import {
   formatVNDPrice,
@@ -19,6 +27,23 @@ function getCollapsedSpecCount(specs: string[]) {
       spec.toLowerCase().includes("đường truyền"),
   );
   return networkPortIndex >= 0 ? networkPortIndex + 1 : specs.length;
+}
+
+function getBlackFridaySpecs(product: BlackFridayProduct) {
+  const { resources, ipv4, port, bandwidth, firewall } = product;
+  return [
+    ...(resources
+      ? [
+          `${resources.cpu} vCore Intel Platinum Gen 2`,
+          `${resources.ram} GB RAM`,
+          `${resources.nvme} GB SSD NVMe`,
+        ]
+      : []),
+    ipv4,
+    port,
+    bandwidth,
+    firewall,
+  ].filter((spec) => spec !== undefined);
 }
 
 function getEndOfMonthTime(reference = new Date()) {
@@ -156,6 +181,56 @@ function formatOriginalMonthlyEquivalentVNDPrice(
   );
 }
 
+function getDealCardDetails(
+  product: ApiProduct | BlackFridayProduct,
+  program: DealProgram,
+  period: PricingPeriod,
+) {
+  const rawPrice = product.pricing.VND[period];
+  if ("referencePrices" in product) {
+    const cycle = blackFridayPlatinumBestPlans.cycles.find(
+      ({ key }) => key === period,
+    )?.key;
+    const referencePrice = cycle && product.referencePrices[cycle];
+    const price = rawPrice === undefined ? "" : formatVnd(rawPrice);
+    return {
+      specs: getBlackFridaySpecs(product),
+      gifts:
+        product.pricing.VND.triennially !== undefined
+          ? product.gifts
+          : undefined,
+      price,
+      originalPrice: referencePrice && formatVnd(referencePrice.amount),
+      originalPriceLabel:
+        referencePrice &&
+        (referencePrice.source === "estimate"
+          ? "Giá tham chiếu ước tính theo bảng tài nguyên VPS Platinum Viettel"
+          : "Giá tham chiếu VPS Platinum Viettel"),
+      href: price ? checkoutUrl(product, period) : "/lien-he/",
+    };
+  }
+
+  const monthlyEquivalent = program.showMonthlyEquivalentPrice;
+  const price = rawPrice
+    ? monthlyEquivalent
+      ? formatMonthlyEquivalentVNDPrice(rawPrice, period)
+      : formatVNDPrice(rawPrice)
+    : "";
+  const originalPrice = ORIGINAL_PRICE_BY_PID[product.pid]?.[period];
+  return {
+    specs: parseDescriptionSpecs(product.description),
+    price,
+    originalPrice: monthlyEquivalent
+      ? formatOriginalMonthlyEquivalentVNDPrice(originalPrice, period)
+      : originalPrice,
+    billingSummary:
+      price && monthlyEquivalent && rawPrice
+        ? `Thanh toán ${formatVNDPrice(rawPrice)} / ${PERIOD_LABEL[period]}`
+        : undefined,
+    href: price ? getProductOrderUrl(product, period) : "/lien-he/",
+  };
+}
+
 function ProgramIcon({
   variant = "cloud",
 }: {
@@ -173,10 +248,13 @@ function ProgramIcon({
 function DealCard({
   name,
   specs,
+  gifts,
   href,
   featured,
+  featuredLabel = "Gói được lựa chọn nhiều",
   price,
   originalPrice,
+  originalPriceLabel,
   period,
   billingSummary,
   isExpanded,
@@ -185,24 +263,32 @@ function DealCard({
 }: {
   name: string;
   specs: string[];
+  gifts?: readonly string[];
   href: string;
   featured: boolean;
+  featuredLabel?: string;
   price: string;
   originalPrice?: string;
+  originalPriceLabel?: string;
   period: string;
   billingSummary?: string;
   isExpanded: boolean;
-  onToggle: (key: string) => void;
+  onToggle?: (key: string) => void;
   toggleKey: string;
 }) {
   const collapsedSpecCount = getCollapsedSpecCount(specs);
-  const visibleSpecs = isExpanded ? specs : specs.slice(0, collapsedSpecCount);
-  const hasHiddenSpecs = specs.length > collapsedSpecCount;
+  const showsAllSpecs = !onToggle || isExpanded;
+  const visibleSpecs = showsAllSpecs
+    ? specs
+    : specs.slice(0, collapsedSpecCount);
+  const hasDetails =
+    specs.length > collapsedSpecCount || Boolean(gifts?.length);
+  const giftListTitle = "Quà tặng chu kỳ 3 năm";
 
   return (
     <article className={`cm-deal-card ${featured ? "is-featured" : ""}`}>
       {featured ? (
-        <div className="cm-featured-label">Gói được lựa chọn nhiều</div>
+        <div className="cm-featured-label">{featuredLabel}</div>
       ) : null}
       <div className="cm-deal-body">
         <div className="cm-deal-top">
@@ -216,7 +302,20 @@ function DealCard({
             </li>
           ))}
         </ul>
-        {hasHiddenSpecs ? (
+        {showsAllSpecs && gifts?.length ? (
+          <div className="cm-deal-gifts">
+            <p>{giftListTitle}</p>
+            <ul role="list" aria-label={giftListTitle}>
+              {gifts.map((gift) => (
+                <li key={gift}>
+                  <Gift size={18} aria-hidden="true" />
+                  {gift}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+        {onToggle && hasDetails ? (
           <button
             className="cm-deal-toggle"
             onClick={() => onToggle(toggleKey)}
@@ -229,7 +328,10 @@ function DealCard({
         ) : null}
         <div className="cm-price-wrap">
           {originalPrice && price ? (
-            <del className="cm-original-price">
+            <del className="cm-original-price" title={originalPriceLabel}>
+              {originalPriceLabel && (
+                <span className="sr-only">{originalPriceLabel} </span>
+              )}
               {originalPrice}
               <span>{period}</span>
             </del>
@@ -257,36 +359,19 @@ export default function HotDeals({
   pricingByGid,
 }: {
   deals: DealProgram[];
-  pricingByGid?: Record<number, ApiProduct[]>;
+  pricingByGid: Record<number, (ApiProduct | BlackFridayProduct)[]>;
 }) {
   const countdown = useEndOfMonthCountdown();
-  const visibleDeals = useMemo(
-    () => deals.filter((program) => !program.hidden),
-    [deals],
-  );
 
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>(
-    () =>
-      Object.fromEntries(
-        visibleDeals.flatMap((program) => {
-          const products = pricingByGid?.[program.gid] ?? [];
-          return products.map((_, i) => [`${program.gid}:${i}`, false]);
-        }),
-      ),
+    {},
   );
   const [collapsedPrograms, setCollapsedPrograms] = useState<
     Record<string, boolean>
   >({});
   const [activePeriods, setActivePeriods] = useState<
-    Record<string, PricingPeriod>
-  >(() =>
-    Object.fromEntries(
-      visibleDeals.map((program) => [
-        program.eyebrow,
-        getDefaultProgramPeriod(program),
-      ]),
-    ),
-  );
+    Partial<Record<string, PricingPeriod>>
+  >({});
 
   const toggleCard = (key: string) =>
     setExpandedCards((current) => ({ ...current, [key]: !current[key] }));
@@ -305,27 +390,35 @@ export default function HotDeals({
           cho từng nhu cầu triển khai.
         </p>
       </div>
-      {visibleDeals.map((program) => {
-        const programKey = program.eyebrow;
-        const isProgramCollapsed = collapsedPrograms[programKey] ?? false;
-        const pricingGridId = `canhme-pricing-${program.gid}`;
-        const apiProducts = pricingByGid?.[program.gid] ?? [];
+      {deals.map((program) => {
+        const programKey = `canhme-pricing-${program.gid}`;
+        const isPlatinum = program.gid === blackFridayDeal.gid;
+        const isProgramCollapsed =
+          !isPlatinum && (collapsedPrograms[programKey] ?? false);
+        const apiProducts = pricingByGid[program.gid] ?? [];
         const visibleApiProducts = program.hiddenProductPids?.length
           ? apiProducts.filter(
               (product) => !program.hiddenProductPids?.includes(product.pid),
             )
           : apiProducts;
         const availablePeriods = getProgramPeriods(program);
-        const period = availablePeriods.includes(activePeriods[programKey])
-          ? activePeriods[programKey]
-          : availablePeriods[0];
+        const selectedPeriod = activePeriods[programKey];
+        const period =
+          selectedPeriod && availablePeriods.includes(selectedPeriod)
+            ? selectedPeriod
+            : getDefaultProgramPeriod(program);
         const periodSuffix = program.showMonthlyEquivalentPrice
           ? PERIOD_SUFFIX.monthly
           : PERIOD_SUFFIX[period];
         const gridCols =
           program.gridColumns ?? (visibleApiProducts.length === 4 ? 4 : 3);
-        const gridClass =
-          gridCols === 2 ? "is-two" : gridCols === 4 ? "is-four" : "";
+        const gridClass = isPlatinum
+          ? "cm-deal-grid-platinum"
+          : gridCols === 2
+            ? "is-two"
+            : gridCols === 4
+              ? "is-four"
+              : "";
 
         return (
           <div className="cm-deal-program" key={programKey}>
@@ -334,27 +427,39 @@ export default function HotDeals({
               <div className="cm-program-copy">
                 <h3 className="cm-program-eyebrow">{program.eyebrow}</h3>
                 <p className="cm-program-subheadline">{program.title}</p>
-                <div className="cm-program-note">{PROGRAM_URGENCY_NOTE}</div>
-                <p>{program.description}</p>
-                <div className="cm-program-footer">
-                  <ProgramCountdown countdown={countdown} />
-                  <button
-                    aria-controls={pricingGridId}
-                    aria-expanded={!isProgramCollapsed}
-                    className="cm-program-pricing-toggle"
-                    onClick={() => toggleProgram(programKey)}
-                    type="button"
-                  >
-                    {isProgramCollapsed ? "Chi tiết ↓" : "Thu gọn ↑"}
-                  </button>
+                <div className="cm-program-note">
+                  {program.showCountdown === false
+                    ? program.note
+                    : PROGRAM_URGENCY_NOTE}
                 </div>
+                <p>{program.description}</p>
+                {!isPlatinum && (
+                  <div className="cm-program-footer">
+                    {program.showCountdown !== false && (
+                      <ProgramCountdown countdown={countdown} />
+                    )}
+                    <button
+                      aria-controls={programKey}
+                      aria-expanded={!isProgramCollapsed}
+                      className="cm-program-pricing-toggle"
+                      onClick={() => toggleProgram(programKey)}
+                      type="button"
+                    >
+                      {isProgramCollapsed ? "Chi tiết ↓" : "Thu gọn ↑"}
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
             {isProgramCollapsed ? null : (
               <>
                 {availablePeriods.length > 1 ? (
                   <div
-                    className="cm-period-tabs"
+                    className={
+                      isPlatinum
+                        ? "cm-period-tabs cm-period-tabs-platinum"
+                        : "cm-period-tabs"
+                    }
                     role="group"
                     aria-label={`Chu kỳ thanh toán ${program.eyebrow}`}
                   >
@@ -373,7 +478,7 @@ export default function HotDeals({
                 ) : null}
                 <MobilePricingSlider
                   className={`cm-deal-grid ${gridClass}`}
-                  id={pricingGridId}
+                  id={programKey}
                 >
                   {visibleApiProducts.length === 0 && (
                     <p className="cm-pricing-unavailable" role="status">
@@ -382,48 +487,22 @@ export default function HotDeals({
                     </p>
                   )}
                   {visibleApiProducts.map((product, i) => {
-                    const specs = parseDescriptionSpecs(product.description);
-                    const rawPrice = product.pricing?.VND?.[period];
-                    const price = rawPrice
-                      ? program.showMonthlyEquivalentPrice
-                        ? formatMonthlyEquivalentVNDPrice(rawPrice, period)
-                        : formatVNDPrice(rawPrice)
-                      : "";
-                    const originalPrice = program.showMonthlyEquivalentPrice
-                      ? formatOriginalMonthlyEquivalentVNDPrice(
-                          ORIGINAL_PRICE_BY_PID[product.pid]?.[period],
-                          period,
-                        )
-                      : ORIGINAL_PRICE_BY_PID[product.pid]?.[period];
-                    const toggleKey = `${program.gid}:${i}`;
+                    const toggleKey = `${programKey}:${product.pid}`;
 
                     return (
                       <DealCard
+                        {...getDealCardDetails(product, program, period)}
                         key={product.pid}
                         name={product.name}
-                        specs={specs}
-                        href={
-                          price
-                            ? getProductOrderUrl(product, period)
-                            : "/lien-he/"
-                        }
                         featured={
                           program.featuredPid
                             ? program.featuredPid === product.pid
                             : program.featuredIndex === i
                         }
-                        price={price}
-                        originalPrice={originalPrice}
+                        featuredLabel={program.featuredLabel}
                         period={periodSuffix}
-                        billingSummary={
-                          price &&
-                          program.showMonthlyEquivalentPrice &&
-                          rawPrice
-                            ? `Thanh toán ${formatVNDPrice(rawPrice)} / ${PERIOD_LABEL[period]}`
-                            : undefined
-                        }
                         isExpanded={expandedCards[toggleKey] ?? false}
-                        onToggle={toggleCard}
+                        onToggle={isPlatinum ? undefined : toggleCard}
                         toggleKey={toggleKey}
                       />
                     );
