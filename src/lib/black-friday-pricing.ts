@@ -8,6 +8,9 @@ import { getPlatinumProducts } from "./vps-platinum-pricing";
 const groupId = 105;
 const storefront = "/store/black-friday-26-vps-intel-platinum-gen2";
 const planIds = [570, 571, 572, 573, 574, 575, 576, 577];
+const amdGroupId = 107;
+const amdStorefront = "/store/black-friday-26-vps-amd-epyc-gen2";
+const amdPlanIds = [586, 587, 588, 589, 590, 591, 592, 593];
 const cycles = ["annually", "biennially", "triennially"] as const;
 const referenceTerms = {
   annually: { months: 12, discount: 10 },
@@ -192,6 +195,31 @@ export function getPreviousBlackFridayProducts(): Promise<VpsProduct[]> {
   );
 }
 
+function presentCampaignProduct(item: VpsProduct): BlackFridayProduct {
+  const { pid, gid, slug, name, product_url, pricing } = item;
+  return {
+    pid,
+    gid,
+    slug,
+    name: name.replace(/^BF26-\s*/i, "BF26 ").toUpperCase(),
+    product_url,
+    pricing,
+    ...readPresentation(item),
+    referencePrices: {},
+  };
+}
+
+export async function getBlackFridayAmdProducts(): Promise<
+  BlackFridayProduct[]
+> {
+  const plans = amdPlanIds.map((pid, index) => ({
+    pid,
+    slug: `bf26-amd-e${index + 1}`,
+  }));
+  const products = await loadCampaignProducts(amdGroupId, amdStorefront, plans);
+  return products.map(presentCampaignProduct);
+}
+
 /** Best Plans checkout uses the campaign catalog. Viettel is a separate price reference. */
 export async function getBlackFridayProducts(): Promise<BlackFridayProduct[]> {
   const plans = planIds.map((pid, index) => ({
@@ -207,17 +235,7 @@ export async function getBlackFridayProducts(): Promise<BlackFridayProduct[]> {
     resources: readResources(productSpecs(product).join("\n")),
   }));
   return products.map((item) => {
-    const { pid, gid, slug, name, product_url, pricing } = item;
-    const product: BlackFridayProduct = {
-      pid,
-      gid,
-      slug,
-      name: name.replace(/^BF26-\s*/i, "BF26 ").toUpperCase(),
-      product_url,
-      pricing,
-      ...readPresentation(item),
-      referencePrices: {},
-    };
+    const product = presentCampaignProduct(item);
     product.referencePrices = getReferencePrices(product, viettelPlans);
     return product;
   });

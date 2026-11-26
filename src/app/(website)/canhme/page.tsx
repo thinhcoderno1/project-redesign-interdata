@@ -4,7 +4,10 @@ import type { Metadata } from "next";
 import { CanhMePage } from "@/components/canh-me/canh-me-page";
 import { deals, GID_ORDER } from "@/components/canh-me/data";
 import { fetchAllGroupPricing } from "@/lib/canh-me-pricing";
-import { getBlackFridayProducts } from "@/lib/black-friday-pricing";
+import {
+  getBlackFridayAmdProducts,
+  getBlackFridayProducts,
+} from "@/lib/black-friday-pricing";
 
 export const revalidate = 60;
 export const metadata: Metadata = {
@@ -25,13 +28,15 @@ async function Page() {
   const gids = GID_ORDER.filter((gid) =>
     deals.some((deal) => deal.gid === gid && !deal.hidden),
   );
-  const [pricingByGid, platinumProducts] = await Promise.all([
+  const [pricingByGid, amdProducts, platinumProducts] = await Promise.all([
     fetchAllGroupPricing(gids),
+    getBlackFridayAmdProducts().catch(() => []),
     getBlackFridayProducts().catch(() => []),
   ]);
   return (
     <CanhMePage
       pricingByGid={pricingByGid}
+      amdProducts={amdProducts}
       platinumProducts={platinumProducts}
     />
   );

@@ -1,12 +1,17 @@
 import type { PricingPeriod } from "@/lib/canh-me-pricing";
-import { blackFridayPlatinumBestPlans } from "@/data/black-friday";
+import {
+  blackFridayAmdBestPlans,
+  blackFridayPlatinumBestPlans,
+} from "@/data/black-friday";
 
 export type DealProgram = {
+  id?: string;
   gid: number;
   eyebrow: string;
   title: string;
   description: string;
   note: string;
+  blackFriday?: { cpu: string };
   iconVariant?: "cloud" | "vps";
   hidden?: boolean;
   pricingPeriod?:
@@ -34,11 +39,29 @@ export const blackFridayDeal: DealProgram = {
   description:
     "VPS Platinum sử dụng CPU Intel Platinum Gen 2 và SSD NVMe U.2 Gen 4, đi kèm Firewall 120Gbps và Network lên đến 1Gbps. Phù hợp để chạy website, web app, database, Docker, automation, tools, phần mềm, CRM và nhiều ứng dụng khác. Cùng nhiều quà tặng hấp dẫn như S3 storage, nón bảo hiểm & ly sứ.",
   note: "Có thể kết thúc sớm hơn dự kiến, do số lượng ưu đãi có hạn",
+  blackFriday: { cpu: "Intel Platinum Gen 2" },
   iconVariant: "vps",
   pricingPeriods: blackFridayPlatinumBestPlans.cycles.map(({ key }) => key),
   showCountdown: false,
   featuredPid: blackFridayPlatinumBestPlans.featuredPid,
   featuredLabel: "Bán chạy nhất",
+};
+
+export const blackFridayAmdDeal: DealProgram = {
+  ...blackFridayDeal,
+  id: "canhme-amd",
+  gid: 107,
+  eyebrow: `${blackFridayAmdBestPlans.title} 2026`,
+  title: "SỨC MẠNH VƯỢT TRỘI - CÂN MỌI TÁC VỤ",
+  description: `VPS AMD dùng CPU ${blackFridayAmdBestPlans.cpu} và ${blackFridayAmdBestPlans.storage}, phù hợp khi cần chạy nhiều container, tự động hóa công việc hoặc xử lý dữ liệu song song. Dịch vụ có đường truyền lên đến 1 Gbps và Firewall 120 Gbps. Quà tặng hấp dẫn gồm S3 Storage, nón bảo hiểm và ly sứ.`,
+  blackFriday: { cpu: blackFridayAmdBestPlans.cpu },
+  featuredPid: blackFridayAmdBestPlans.featuredPid,
+  featuredLabel: blackFridayAmdBestPlans.featuredLabel,
+};
+
+export const blackFridayDealClone: DealProgram = {
+  ...blackFridayDeal,
+  id: "canhme-platinum-clone",
 };
 
 export const ORIGINAL_PRICE_BY_PID: Record<

@@ -5,11 +5,7 @@ import { blackFridayPlatinumBestPlans } from "@/data/black-friday";
 import { checkoutUrl, formatVnd } from "@/data/vps-pricing";
 import { Gift } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import {
-  blackFridayDeal,
-  ORIGINAL_PRICE_BY_PID,
-  type DealProgram,
-} from "./data";
+import { ORIGINAL_PRICE_BY_PID, type DealProgram } from "./data";
 import type { BlackFridayProduct } from "@/lib/black-friday-pricing";
 import type { ApiProduct, PricingPeriod } from "@/lib/canh-me-pricing";
 import {
@@ -29,12 +25,12 @@ function getCollapsedSpecCount(specs: string[]) {
   return networkPortIndex >= 0 ? networkPortIndex + 1 : specs.length;
 }
 
-function getBlackFridaySpecs(product: BlackFridayProduct) {
+function getBlackFridaySpecs(product: BlackFridayProduct, cpu?: string) {
   const { resources, ipv4, port, bandwidth, firewall } = product;
   return [
     ...(resources
       ? [
-          `${resources.cpu} vCore Intel Platinum Gen 2`,
+          `${resources.cpu} vCore${cpu ? ` ${cpu}` : ""}`,
           `${resources.ram} GB RAM`,
           `${resources.nvme} GB SSD NVMe`,
         ]
@@ -194,7 +190,7 @@ function getDealCardDetails(
     const referencePrice = cycle && product.referencePrices[cycle];
     const price = rawPrice === undefined ? "" : formatVnd(rawPrice);
     return {
-      specs: getBlackFridaySpecs(product),
+      specs: getBlackFridaySpecs(product, program.blackFriday?.cpu),
       gifts:
         product.pricing.VND.triennially !== undefined
           ? product.gifts
@@ -391,10 +387,12 @@ export default function HotDeals({
         </p>
       </div>
       {deals.map((program) => {
-        const programKey = `canhme-pricing-${program.gid}`;
-        const isPlatinum = program.gid === blackFridayDeal.gid;
+        const programKey = program.id
+          ? `${program.id}-pricing`
+          : `canhme-pricing-${program.gid}`;
+        const isBlackFriday = Boolean(program.blackFriday);
         const isProgramCollapsed =
-          !isPlatinum && (collapsedPrograms[programKey] ?? false);
+          !isBlackFriday && (collapsedPrograms[programKey] ?? false);
         const apiProducts = pricingByGid[program.gid] ?? [];
         const visibleApiProducts = program.hiddenProductPids?.length
           ? apiProducts.filter(
@@ -412,7 +410,7 @@ export default function HotDeals({
           : PERIOD_SUFFIX[period];
         const gridCols =
           program.gridColumns ?? (visibleApiProducts.length === 4 ? 4 : 3);
-        const gridClass = isPlatinum
+        const gridClass = isBlackFriday
           ? "cm-deal-grid-platinum"
           : gridCols === 2
             ? "is-two"
@@ -421,7 +419,7 @@ export default function HotDeals({
               : "";
 
         return (
-          <div className="cm-deal-program" key={programKey}>
+          <div className="cm-deal-program" id={program.id} key={programKey}>
             <div className="cm-program-intro">
               <ProgramIcon variant={program.iconVariant} />
               <div className="cm-program-copy">
@@ -433,7 +431,7 @@ export default function HotDeals({
                     : PROGRAM_URGENCY_NOTE}
                 </div>
                 <p>{program.description}</p>
-                {!isPlatinum && (
+                {!isBlackFriday && (
                   <div className="cm-program-footer">
                     {program.showCountdown !== false && (
                       <ProgramCountdown countdown={countdown} />
@@ -456,7 +454,7 @@ export default function HotDeals({
                 {availablePeriods.length > 1 ? (
                   <div
                     className={
-                      isPlatinum
+                      isBlackFriday
                         ? "cm-period-tabs cm-period-tabs-platinum"
                         : "cm-period-tabs"
                     }
@@ -502,7 +500,7 @@ export default function HotDeals({
                         featuredLabel={program.featuredLabel}
                         period={periodSuffix}
                         isExpanded={expandedCards[toggleKey] ?? false}
-                        onToggle={isPlatinum ? undefined : toggleCard}
+                        onToggle={isBlackFriday ? undefined : toggleCard}
                         toggleKey={toggleKey}
                       />
                     );

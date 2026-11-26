@@ -15,7 +15,9 @@
   size-adjust: 75%;
 }
 
-.page {
+.page,
+.bestPlansGroup,
+.bestPlans {
   --bf-blue: #0060ff;
   --bf-orange: #ff6018;
   --bf-orange-highlight: #ff842b;
@@ -27,14 +29,18 @@
   --bf-dark: #0c1013;
   --bf-muted: #cbd0d8;
   --bf-heading-size: clamp(28px, 3.1vw, 40px);
-  background: var(--bf-dark);
   color: #fff;
+}
+.page {
+  background: var(--bf-dark);
   overflow: clip;
 }
-.page p {
+.page p,
+.bestPlans p {
   color: var(--bf-muted);
 }
-.page :is(a, button, select, summary):focus-visible {
+.page :is(a, button, select, summary):focus-visible,
+.bestPlans :is(a, button, select, summary):focus-visible {
   outline: 3px solid #ff9b58;
   outline-offset: 4px;
 }
@@ -365,9 +371,15 @@
   font-variant-numeric: tabular-nums;
 }
 .bestPlans {
+  padding: 52px 0 64px;
+}
+.bestPlansGroup > .bestPlans:not(:last-child) {
+  padding-block-end: 0;
+}
+.bestPlansGroup,
+.bestPlansBackground {
   position: relative;
   isolation: isolate;
-  padding: 52px 0 64px;
   background:
     radial-gradient(
       ellipse 62% 48% at 10% 12%,
@@ -385,6 +397,29 @@
       transparent 72%
     ),
     var(--bf-dark);
+}
+.platinumBestPlans {
+  position: relative;
+  isolation: isolate;
+}
+.platinumBestPlans::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 52% 36% at 8% 19%, #1468ff76, transparent 78%),
+    radial-gradient(ellipse 44% 42% at 94% 34%, #7660ed66, transparent 80%),
+    radial-gradient(ellipse 50% 34% at 28% 82%, #127cce58, transparent 78%),
+    radial-gradient(ellipse 34% 36% at 99% 88%, #ff6d333d, transparent 78%);
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 clamp(76px, 10vw, 136px),
+    #000 calc(100% - 48px),
+    transparent
+  );
 }
 .bestPlansCircuit {
   position: absolute;
@@ -1885,7 +1920,8 @@
   .tickerTrack {
     animation: none;
   }
-  .page * {
+  .page *,
+  .bestPlans * {
     transition: none !important;
   }
   .planCard:hover {

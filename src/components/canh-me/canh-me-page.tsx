@@ -3,7 +3,13 @@ import HotDeals from "./HotDeals";
 import InfoSection from "./InfoSection";
 import ZaloHotDealsSection from "./ZaloHotDealsSection";
 import { CanhMeProof } from "./canh-me-proof";
-import { blackFridayDeal, deals, faqs, GID_ORDER } from "./data";
+import {
+  blackFridayAmdDeal,
+  blackFridayDealClone,
+  deals,
+  faqs,
+  GID_ORDER,
+} from "./data";
 import type { ApiProduct } from "@/lib/canh-me-pricing";
 import type { BlackFridayProduct } from "@/lib/black-friday-pricing";
 import styles from "./canh-me.module.css";
@@ -11,9 +17,11 @@ import theme from "./canh-me-theme.module.css";
 
 export function CanhMePage({
   pricingByGid,
+  amdProducts,
   platinumProducts,
 }: {
   pricingByGid: Record<number, ApiProduct[]>;
+  amdProducts: BlackFridayProduct[];
   platinumProducts: BlackFridayProduct[];
 }) {
   const orderedDeals = GID_ORDER.flatMap((gid) =>
@@ -23,10 +31,11 @@ export function CanhMePage({
     <main id="main-content" className={`${styles.page} ${theme.theme} cm-page`}>
       <Hero />
       <HotDeals
-        deals={[blackFridayDeal, ...orderedDeals]}
+        deals={[blackFridayAmdDeal, blackFridayDealClone, ...orderedDeals]}
         pricingByGid={{
           ...pricingByGid,
-          [blackFridayDeal.gid]: platinumProducts,
+          [blackFridayAmdDeal.gid]: amdProducts,
+          [blackFridayDealClone.gid]: platinumProducts,
         }}
       />
       <ZaloHotDealsSection />

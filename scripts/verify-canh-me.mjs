@@ -19,7 +19,18 @@ const months = {
   triennially: 36,
 };
 const groups = [
-  { gid: 105, periods: ["annually", "biennially", "triennially"], selected: 0 },
+  {
+    gid: 107,
+    firstPid: 586,
+    periods: ["annually", "biennially", "triennially"],
+    selected: 0,
+  },
+  {
+    gid: 105,
+    firstPid: 570,
+    periods: ["annually", "biennially", "triennially"],
+    selected: 0,
+  },
   { gid: 87, periods: ["annually", "biennially", "triennially"], selected: 0 },
   { gid: 89, periods: ["quarterly"], selected: 0 },
   { gid: 96, periods: Object.keys(months), selected: 4 },
@@ -32,9 +43,9 @@ const pricing = await Promise.all(
     );
     assert(response.ok);
     const products = (await response.json()).products;
-    if (group.gid === 105) {
+    if (group.firstPid !== undefined) {
       return products
-        .filter(({ pid }) => pid >= 570 && pid <= 577)
+        .filter(({ pid }) => pid >= group.firstPid && pid < group.firstPid + 8)
         .sort((a, b) => a.pid - b.pid);
     }
     return products.filter(
@@ -62,9 +73,30 @@ try {
     "/canhme/",
   );
   const programs = page.locator(".cm-deal-program");
-  await expect(programs).toHaveCount(4);
-  const platinum = programs.nth(0);
-  const premium = programs.nth(1);
+  await expect(programs).toHaveCount(5);
+  const amd = programs.nth(0);
+  const platinum = programs.nth(1);
+  const premium = programs.nth(2);
+  await expect(amd).toHaveAttribute("id", "canhme-amd");
+  await expect(amd.locator(".cm-program-eyebrow")).toHaveText(
+    "VPS AMD Black Friday 2026",
+  );
+  const amdGrid = amd.locator(".cm-deal-grid");
+  await expect(amdGrid).toHaveAttribute("id", "canhme-amd-pricing");
+  await expect(amdGrid).toHaveClass(/cm-deal-grid-platinum/);
+  await expect(amdGrid.locator("article")).toHaveCount(8);
+  await expect(amdGrid.getByText(/\d+ vCore AMD EPYC Gen 2$/)).toHaveCount(8);
+  await expect(amdGrid.locator(".cm-original-price")).toHaveCount(0);
+  await expect(amdGrid.locator(".cm-deal-card.is-featured h3")).toHaveText(
+    "BF26 AMD E3",
+  );
+  await expect(
+    amdGrid.getByRole("list", { name: "Quà tặng chu kỳ 3 năm" }),
+  ).toHaveCount(7);
+  await expect(
+    amd.locator(".cm-program-pricing-toggle, .cm-deal-toggle"),
+  ).toHaveCount(0);
+  await expect(platinum).toHaveAttribute("id", "canhme-platinum-clone");
   await expect(platinum.locator(".cm-program-eyebrow")).toHaveText(
     "VPS Platinum Black Friday 2026",
   );
@@ -73,7 +105,7 @@ try {
   );
   await expect(platinum.locator(".cm-deal-grid")).toHaveAttribute(
     "id",
-    "canhme-pricing-105",
+    "canhme-platinum-clone-pricing",
   );
   await expect(
     platinum.locator(".cm-program-pricing-toggle, .cm-deal-toggle"),
@@ -94,6 +126,15 @@ try {
     "2 năm",
     "3 năm",
   ]);
+  await amd.getByRole("button", { name: "2 năm", exact: true }).click();
+  await expect(amdGrid.locator("article a").first()).toHaveAttribute(
+    "href",
+    `${pricing[0][0].product_url}&billingcycle=biennially`,
+  );
+  await expect(
+    platinum.getByRole("button", { name: "1 năm", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await amd.getByRole("button", { name: "1 năm", exact: true }).click();
   await platinum.getByRole("button", { name: "2 năm", exact: true }).click();
   await expect(
     premium.getByRole("button", { name: "1 năm", exact: true }),
@@ -128,7 +169,7 @@ try {
   for (const [index, group] of groups.entries()) {
     const groupPricing = pricing[index];
     const program = programs.nth(index);
-    const isPlatinum = group.gid === 105;
+    const isBlackFriday = group.firstPid !== undefined;
     await expect(program.locator(".cm-deal-card")).toHaveCount(
       groupPricing.length,
     );
@@ -141,14 +182,14 @@ try {
         await program.locator(".cm-period-tabs button").nth(cycleIndex).click();
       for (const [productIndex, product] of groupPricing.entries()) {
         const card = program.locator(".cm-deal-card").nth(productIndex);
-        const name = isPlatinum
+        const name = isBlackFriday
           ? product.name.replace(/^BF26-\s*/i, "BF26 ").toUpperCase()
           : product.name;
         await expect(card.locator("h3")).toHaveText(name);
         const value = product.pricing.VND[cycle];
         const total = Number(value);
         if (
-          isPlatinum &&
+          isBlackFriday &&
           (!value?.trim() || !Number.isFinite(total) || total < 0)
         ) {
           await expect(card.locator("a")).toHaveAttribute("href", "/lien-he/");
@@ -161,7 +202,7 @@ try {
         );
         const checkout = new URL(await card.locator("a").getAttribute("href"));
         assert.equal(checkout.hostname, "support.interdata.vn");
-        if (isPlatinum) {
+        if (isBlackFriday) {
           const portal = new URL(product.product_url);
           assert.equal(checkout.pathname, portal.pathname);
           assert.equal(
@@ -185,7 +226,7 @@ try {
       await disclosure.click();
       await expect(disclosure).toHaveAttribute("aria-expanded", "false");
     }
-    if (!isPlatinum) {
+    if (!isBlackFriday) {
       await program.locator(".cm-program-pricing-toggle").click();
       await expect(program.locator(".cm-deal-grid")).toHaveCount(0);
       await expect(platinum.locator(".cm-deal-grid")).toBeVisible();
@@ -322,7 +363,7 @@ try {
   );
   await expect(
     staticPage
-      .locator("#canhme-pricing-105")
+      .locator("#canhme-amd-pricing")
       .getByRole("list", {
         name: "Quà tặng chu kỳ 3 năm",
       })
@@ -335,7 +376,7 @@ try {
   );
   assert.deepEqual(errors, []);
   console.log(
-    "Canh Me: 4 visible programs with Black Friday Platinum first, hidden Inter Platinum, live prices and checkout for all billing cycles, disclosures, images, 7 viewport widths, Axe and no-JavaScript pricing/FAQ passed.",
+    "Canh Me: Black Friday AMD followed by Platinum, independent billing cycles, live prices and checkout, disclosures, images, 7 viewport widths, Axe and no-JavaScript pricing/FAQ passed.",
   );
 } finally {
   await browser.close();

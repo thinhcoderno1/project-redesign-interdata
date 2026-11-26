@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
 import { siteIdentity } from "@/data/site-identity";
-import { getBestPlansCatalog } from "@/lib/black-friday-best-plans";
+import {
+  getAmdBestPlansCatalog,
+  getBestPlansCatalog,
+} from "@/lib/black-friday-best-plans";
 import { getBlackFridayCoupons } from "@/lib/black-friday-coupons";
 import { getBlackFridayFlashSaleCheckoutLinks } from "@/lib/black-friday-flash-sale-checkout";
 import { BlackFridayPage } from "./black-friday-page";
@@ -37,12 +40,14 @@ export function getBlackFridayMetadata(path: "/" | "/blackfriday/"): Metadata {
 
 export async function BlackFridayCampaign() {
   await connection();
-  const [bestPlans, flashSaleCheckoutLinks] = await Promise.all([
+  const [amdBestPlans, bestPlans, flashSaleCheckoutLinks] = await Promise.all([
+    getAmdBestPlansCatalog(),
     getBestPlansCatalog(),
     getBlackFridayFlashSaleCheckoutLinks(),
   ]);
   return (
     <BlackFridayPage
+      amdBestPlans={amdBestPlans}
       bestPlans={bestPlans}
       coupons={getBlackFridayCoupons()}
       flashSaleCheckoutLinks={flashSaleCheckoutLinks}

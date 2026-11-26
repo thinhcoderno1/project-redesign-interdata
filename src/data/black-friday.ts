@@ -6,6 +6,14 @@ export const blackFridayPlatinumBestPlans = {
   title: "VPS Platinum Black Friday",
   subtitle: "Hiệu năng mạnh mẽ cho mọi dự án",
   featuredPid: 572,
+  featuredLabel: "Bán chạy nhất",
+  cpu: "Intel® Platinum Gen 2",
+  storage: "SSD NVMe U.2 Gen 4",
+  chip: {
+    src: "/images/black-friday/intel-xeon-platinum-8000-angled.webp",
+    width: 256,
+    height: 256,
+  },
   cycles: [
     { key: "annually", label: "1 năm", badgeDiscount: 60 },
     { key: "biennially", label: "2 năm", badgeDiscount: 65 },
@@ -15,6 +23,20 @@ export const blackFridayPlatinumBestPlans = {
     label: string;
     badgeDiscount: number;
   }[],
+} as const;
+
+export const blackFridayAmdBestPlans = {
+  title: "VPS AMD Black Friday",
+  subtitle: "Sức mạnh vượt trội cân mọi tác vụ.",
+  featuredPid: 588,
+  featuredLabel: "Đăng ký nhiều",
+  cpu: "AMD EPYC Gen 2",
+  storage: "SSD NVMe U.2 Gen 4",
+  chip: {
+    src: "/images/vps-amd/epyc-chip.webp",
+    width: 1920,
+    height: 1491,
+  },
 } as const;
 
 // Retain renewal copy and the additional offer for a future campaign update.

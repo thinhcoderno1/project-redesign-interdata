@@ -7,7 +7,7 @@ import type { BlackFridayProduct } from "@/lib/black-friday-pricing";
 import { BlogPlanCarousel } from "./blog-plan-carousel";
 import styles from "./blog-best-plans.module.css";
 
-const bestPlansHref = "/blackfriday/#best-plans";
+const bestPlansHref = "/blackfriday/#best-plans-clone";
 
 function BlogPlanGifts({ products }: { products: BlackFridayProduct[] }) {
   const groups = new Map<string, string[]>();
