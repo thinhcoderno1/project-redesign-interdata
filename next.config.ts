@@ -1,17 +1,9 @@
 import type { NextConfig } from "next";
-import { homepageCampaignPath } from "./src/data/page-availability";
 
 const config: NextConfig = {
   poweredByHeader: false,
   devIndicators: false,
   trailingSlash: true,
-  rewrites() {
-    return {
-      beforeFiles: homepageCampaignPath
-        ? [{ source: "/", destination: homepageCampaignPath }]
-        : [],
-    };
-  },
   redirects() {
     return [
       {

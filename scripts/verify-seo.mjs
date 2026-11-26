@@ -9,6 +9,7 @@ const { homepageCampaignPath } = loadProjectModule(
   "src/data/page-availability.ts",
 );
 function inspect(html) {
+  const canonicals = [];
   const robots = [];
   const ogImages = [];
   const twitterImages = [];
@@ -17,7 +18,6 @@ function inspect(html) {
   let scriptDepth = 0;
   let firstArticleImage;
   let articleDepth = 0;
-  let canonical;
   const parser = new Parser({
     onopentag(name, attrs) {
       if (name === "script" || name === "style") scriptDepth++;
@@ -25,7 +25,8 @@ function inspect(html) {
         telephoneLinks.push(attrs.href);
       if (name === "meta" && ["robots", "googlebot"].includes(attrs.name))
         robots.push(attrs.content);
-      if (name === "link" && attrs.rel === "canonical") canonical = attrs.href;
+      if (name === "link" && attrs.rel === "canonical")
+        canonicals.push(attrs.href);
       if (name === "meta" && attrs.property === "og:image")
         ogImages.push(attrs.content);
       if (name === "meta" && attrs.name === "twitter:image")
@@ -49,7 +50,7 @@ function inspect(html) {
   parser.end(html);
   return {
     robots,
-    canonical,
+    canonicals,
     ogImages,
     twitterImages,
     firstArticleImage,
@@ -100,11 +101,7 @@ assert.ok(
   ),
 );
 for (const path of publicPagePaths)
-  assert.equal(
-    locations.includes(`https://interdata.vn${path}`),
-    path !== "/" || !homepageCampaignPath,
-    path,
-  );
+  assert.ok(locations.includes(`https://interdata.vn${path}`), path);
 
 const results = [];
 for (const path of [
@@ -118,8 +115,8 @@ for (const path of [
   ).pathname,
 ]) {
   const metadata = await page(path);
-  const canonicalPath =
-    path === "/" && homepageCampaignPath ? homepageCampaignPath : path;
+  const showsBlackFriday =
+    path === "/blackfriday/" || (path === "/" && homepageCampaignPath);
   assert.equal(metadata.status, 200, path);
   assert.equal(metadata.hasRetiredPhone, false, `No retired phone on ${path}`);
   assert.ok(metadata.telephoneLinks.includes("tel:1900636822"), path);
@@ -137,11 +134,7 @@ for (const path of [
     metadata.robots.every((value) => !/noindex|nofollow/.test(value)),
     `Indexable page ${path}`,
   );
-  assert.equal(
-    metadata.canonical,
-    `https://interdata.vn${canonicalPath}`,
-    path,
-  );
+  assert.deepEqual(metadata.canonicals, [`https://interdata.vn${path}`], path);
   if (path.startsWith("/blog/") && path !== "/blog/") {
     assert.equal(metadata.ogImages.length, 1);
     if (metadata.firstArticleImage)
@@ -150,7 +143,7 @@ for (const path of [
     assert.deepEqual(
       metadata.ogImages,
       [
-        `https://interdata.vn${canonicalPath === "/blackfriday/" ? "/images/black-friday/og-image.png" : "/images/og/interdata.png"}`,
+        `https://interdata.vn${showsBlackFriday ? "/images/black-friday/og-image.png" : "/images/og/interdata.png"}`,
       ],
       path,
     );
@@ -189,9 +182,9 @@ assert.ok(review.robots.some((value) => /noindex/.test(value)));
 const missing = await page("/blog/seo-no-such-post-9927/");
 assert.ok(missing.robots.some((value) => /noindex/.test(value)));
 const firstPage = await page("/blog/?page=1&utm_source=qa");
-assert.equal(firstPage.canonical, "https://interdata.vn/blog/");
+assert.deepEqual(firstPage.canonicals, ["https://interdata.vn/blog/"]);
 const secondPage = await page("/blog/?page=2");
-assert.equal(secondPage.canonical, "https://interdata.vn/blog/?page=2");
+assert.deepEqual(secondPage.canonicals, ["https://interdata.vn/blog/?page=2"]);
 await fs.mkdir("artifacts/seo", { recursive: true });
 await fs.writeFile(
   "artifacts/seo/verification.json",

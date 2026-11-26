@@ -12,7 +12,7 @@ Exceptions:
 
 Canonical URLs remain on `https://interdata.vn/`, including blog posts fetched from `admin.interdata.vn`. Blog pagination has its own canonical URL; `page=1`, tracking parameters and unused query parameters are removed from the canonical. Search/category state is preserved when relevant. Existing URL redirects remain unchanged.
 
-During the Black Friday campaign, an internal rewrite serves `/blackfriday/` at `/` with the campaign's canonical URL and structured data. The sitemap lists the campaign URL. Set `homepageCampaignPath` in `src/data/page-availability.ts` to `null` at rollback to restore the original homepage, its canonical and its sitemap entry.
+During the Black Friday campaign, `/` and `/blackfriday/` render the same campaign content. Each route has its own canonical URL, structured data, and sitemap entry. Set `homepageCampaignPath` in `src/data/page-availability.ts` to `null` to restore the standard homepage content and sharing metadata.
 
 ## Sharing images
 

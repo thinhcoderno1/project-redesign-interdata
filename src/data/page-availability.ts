@@ -3,4 +3,4 @@
 export const toolsPageApproved: boolean = false;
 
 // Set to null when the standard homepage should return.
-export const homepageCampaignPath: string | null = "/blackfriday/";
+export const homepageCampaignPath: "/blackfriday/" | null = "/blackfriday/";
