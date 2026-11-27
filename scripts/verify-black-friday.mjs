@@ -322,15 +322,16 @@ try {
     (response) => response.json(),
   );
   const flash = page.locator("#flash-sale");
-  await expect(flash.locator("article")).toHaveCount(7);
+  await expect(flash.locator("article")).toHaveCount(9);
   await expect(flash.locator("time").first()).toHaveAttribute(
     "dateTime",
     "2026-11-27T11:00:00+07:00",
   );
-  await expect(flash.locator('[data-offer="free"]')).toContainText(
-    "Săn tên miền đẹp cho thương hiệu của bạn",
-  );
+  const domainCycle = flash
+    .locator('[data-offer="free"]')
+    .getByText("Chu kỳ 1 năm", { exact: true });
   if (release.status === "live") {
+    await expect(domainCycle).toBeVisible();
     await expect(flash.getByRole("button")).toHaveText(
       Object.values(release.offers).map((offer) => offer.code),
     );
@@ -345,6 +346,7 @@ try {
       ).toBeVisible();
     }
   } else {
+    await expect(domainCycle).toHaveCount(0);
     await expect(flash.getByRole("timer")).toHaveCount(1);
     await expect(flash.getByRole("button")).toHaveCount(0);
     await expect(flash.getByText(/^Chỉ \d{2} mã$/i)).toHaveCount(0);
@@ -717,7 +719,7 @@ try {
     staticPage.locator("#ma-giam-gia details").first(),
   ).toHaveAttribute("open", "");
   await expect(staticPage.locator("#black-friday-faq details")).toHaveCount(8);
-  await expect(staticPage.locator("#flash-sale article")).toHaveCount(7);
+  await expect(staticPage.locator("#flash-sale article")).toHaveCount(9);
   await expect(staticPage.locator("#flash-sale button")).toHaveCount(0);
   await expect(
     staticPage.locator("#flash-sale").getByText(/^Chỉ \d{2} mã$/i),

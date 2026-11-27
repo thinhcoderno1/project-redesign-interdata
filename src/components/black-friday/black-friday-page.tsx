@@ -20,7 +20,6 @@ import {
   blackFridayRenewal,
   type BlackFridayCouponGroup,
 } from "@/data/black-friday";
-import type { FlashSaleCheckoutLinks } from "@/data/black-friday-flash-sale";
 import { contactDetails } from "@/data/contact";
 import type { BestPlansCatalog } from "@/lib/black-friday-best-plans";
 import {
@@ -47,13 +46,11 @@ export function BlackFridayPage({
   amdBestPlans,
   bestPlans,
   coupons,
-  flashSaleCheckoutLinks,
 }: {
   children: ReactNode;
   amdBestPlans: BestPlansCatalog;
   bestPlans: BestPlansCatalog;
   coupons: BlackFridayCouponGroup[];
-  flashSaleCheckoutLinks: FlashSaleCheckoutLinks;
 }) {
   const flashSaleVisible = useFlashSaleVisibility();
   const [activeSection, setActiveSection] = useState("best-plans");
@@ -249,9 +246,7 @@ export function BlackFridayPage({
       </section>
 
       <div className={styles.offersArea}>
-        {flashSaleVisible && (
-          <FlashSaleOffers checkoutLinks={flashSaleCheckoutLinks} />
-        )}
+        {flashSaleVisible && <FlashSaleOffers />}
 
         <PromotionGroupsCta />
 

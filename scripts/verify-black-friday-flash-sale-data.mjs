@@ -34,11 +34,23 @@ const publicSource = await fs.readFile(
   "utf8",
 );
 const {
-  blackFridayFlashSaleFreeOffer: freeOffer,
+  blackFridayFlashSaleFreeOffers: freeOffers,
   blackFridayFlashSaleGroups: groups,
 } = load(publicSource);
 const discountOffers = groups.flatMap((group) => group.offers);
-const codePattern = /(?:BF26FLASH(?:20|23)|FLASHBF26)-/;
+const expectedOffers = {
+  freeAmd: { code: "FREEAMD-BF26FLASH", quantity: 10 },
+  freePlatinum: { code: "FREEVPS27-BF26FLASH", quantity: 10 },
+  free: { code: "FREEDOMAIN-BF26FLASH", quantity: 10 },
+  vps81: { code: "VPS81-FLASHBF27", quantity: 3 },
+  vps71: { code: "VPS71-FLASHBF27", quantity: 3 },
+  vps61: { code: "VPS61-FLASHBF27", quantity: 10 },
+  cloud61: { code: "CLOUD61-BF26FLASH27", quantity: 3 },
+  cloud51: { code: "CLOUD51-BF26FLASH27", quantity: 3 },
+  cloud41: { code: "CLOUD41-BF26FLASH27", quantity: 10 },
+};
+const containsReleaseCode = (content) =>
+  Object.values(expectedOffers).some(({ code }) => content.includes(code));
 assert.equal(data.blackFridayFlashSale.mode, "preview");
 assert.equal(data.blackFridayFlashSale.startsAt, "2026-11-27T11:00:00+07:00");
 assert.deepEqual(data.blackFridayFlashSaleUpcomingDates, []);
@@ -59,12 +71,11 @@ for (const now of [
 ]) {
   assert.equal(release(now).status, "upcoming");
   assert.deepEqual(release(now).offers, {});
-  assert(!codePattern.test(JSON.stringify(release(now))));
+  assert(!containsReleaseCode(JSON.stringify(release(now))));
 }
 for (const now of [start, start + 1, start + 86400000]) {
   assert.equal(release(now).status, "live");
-  assert.deepEqual(release(now).offers, {});
-  assert(!codePattern.test(JSON.stringify(release(now))));
+  assert.deepEqual(release(now).offers, expectedOffers);
 }
 assert.deepEqual(
   discountOffers.map(({ id }) => id),
@@ -74,9 +85,39 @@ assert.deepEqual(
   discountOffers.map(({ discount }) => discount),
   [81, 71, 61, 61, 51, 41],
 );
-assert(!codePattern.test(publicSource));
-assert(!/quantity/.test(JSON.stringify(discountOffers)));
-assert.equal(freeOffer.plan, "tên miền .COM");
+assert(!containsReleaseCode(publicSource));
+assert(!/quantity/.test(JSON.stringify([...freeOffers, ...discountOffers])));
+assert.deepEqual(freeOffers, [
+  {
+    id: "freeAmd",
+    plan: "VPS AMD",
+    specs: "2 vCore - 2GB RAM - 30GB SSD NVMe",
+    cycle: "6 tháng",
+    checkoutHref: "https://support.interdata.vn/index.php?rp=/store/amd-g3-vps",
+  },
+  {
+    id: "freePlatinum",
+    plan: "VPS Platinum",
+    specs: "2 vCore - 2GB RAM - 30GB SSD NVMe",
+    cycle: "6 tháng",
+    checkoutHref:
+      "https://support.interdata.vn/index.php?rp=/store/vps-platinum-viettel-hcm",
+  },
+  {
+    id: "free",
+    plan: "tên miền .COM",
+    subtitle: "Săn Tên Miền Đẹp Cho Thương Hiệu Của Bạn",
+    cycle: "1 năm",
+    checkoutHref: "https://support.interdata.vn/cart.php?a=add&domain=register",
+  },
+]);
+assert.deepEqual(
+  groups.map(({ checkoutHref }) => checkoutHref),
+  [
+    "https://support.interdata.vn/index.php?rp=/store/vps-platinum-viettel-hcm",
+    "https://support.interdata.vn/index.php?rp=/store/platinum-g2-cloud",
+  ],
+);
 assert.deepEqual(
   discountOffers.map(({ plan, specs }) => `${plan} ${specs}`),
   [
@@ -115,65 +156,9 @@ const scheduled = load(source, {
 }).getBlackFridayFlashSaleRelease;
 assert.equal(scheduled(start - 1).status, "upcoming");
 assert.equal(scheduled(start).status, "live");
-assert.deepEqual(scheduled(start).offers, {});
+assert.deepEqual(scheduled(start).offers, expectedOffers);
 assert.equal(scheduled(start + 3600000).status, "upcoming");
 assert.deepEqual(scheduled(start + 3600000).offers, {});
-const checkoutSource = await fs.readFile(
-  "src/lib/black-friday-flash-sale-checkout.ts",
-  "utf8",
-);
-const vpsProduct = {
-  pid: 533,
-  slug: "plan-2-2c-2g-30g-platinum-vt",
-  product_url:
-    "https://support.interdata.vn/index.php?rp=/store/vps-platinum-viettel-hcm/plan-2-2c-2g-30g-platinum-vt",
-  pricing: { VND: { quarterly: "300000" } },
-};
-const checkoutImports = {
-  "server-only": {},
-  "@/data/black-friday": data,
-  "@/data/vps-pricing": {
-    checkoutUrl: (product, cycle) =>
-      `${product.product_url}&billingcycle=${cycle}`,
-  },
-  "./vps-platinum-pricing": {
-    getPlatinumProducts: async (gid) => {
-      assert.equal(gid, 101);
-      return [vpsProduct];
-    },
-  },
-  "./platinum-cloud-server-pricing": {
-    getPlatinumCloudProducts: async () => {
-      throw new Error("Catalog unavailable");
-    },
-  },
-};
-const { getBlackFridayFlashSaleCheckoutLinks: getCheckoutLinks } = load(
-  checkoutSource,
-  checkoutImports,
-);
-const vpsCheckout = `${vpsProduct.product_url}&billingcycle=quarterly`;
-const domainRegistrationUrl =
-  "https://support.interdata.vn/cart.php?a=add&domain=register";
-assert.deepEqual(await getCheckoutLinks(), {
-  free: domainRegistrationUrl,
-  vps81: vpsCheckout,
-});
-const invalidCheckout = load(checkoutSource, {
-  ...checkoutImports,
-  "./vps-platinum-pricing": {
-    getPlatinumProducts: async () => [
-      {
-        ...vpsProduct,
-        product_url: vpsProduct.product_url.replace(
-          "vps-platinum-viettel-hcm",
-          "vps-platinum",
-        ),
-      },
-    ],
-  },
-}).getBlackFridayFlashSaleCheckoutLinks;
-assert.deepEqual(await invalidCheckout(), { free: domainRegistrationUrl });
 const { GET } = load(
   await fs.readFile("src/app/api/black-friday-flash-sale/route.ts", "utf8"),
   {
@@ -203,7 +188,7 @@ if (process.argv.includes("--built")) {
   for await (const file of files(".next/static")) {
     if (!/\.(?:js|map|json)$/.test(file)) continue;
     assert(
-      !codePattern.test(await fs.readFile(file, "utf8")),
+      !containsReleaseCode(await fs.readFile(file, "utf8")),
       `Flash Sale code shipped in ${file}`,
     );
     checked++;
@@ -217,7 +202,10 @@ if (process.argv.includes("--built")) {
     const response = await fetch(`${base}/blackfriday/`, { headers });
     assert(response.ok, `Black Friday ${format} HTTP ${response.status}`);
     const content = await response.text();
-    assert(!codePattern.test(content), `Flash Sale code exposed in ${format}`);
+    assert(
+      !containsReleaseCode(content),
+      `Flash Sale code exposed in ${format}`,
+    );
     assert(
       !/Chỉ (?:03|05|10) mã/i.test(content),
       `Flash Sale quantity exposed in ${format}`,
@@ -228,5 +216,5 @@ if (process.argv.includes("--built")) {
   );
 }
 console.log(
-  "Flash Sale data: November 27 opening boundary, retired November 25 codes, no approved codes for the new round, domain checkout and no-store response passed.",
+  "Flash Sale data: November 27 opening boundary, nine offers, registration links and no-store response passed.",
 );

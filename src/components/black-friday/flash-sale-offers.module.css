@@ -253,7 +253,7 @@
 .freePrice,
 .discount,
 .groupHeading h3,
-.freeInfo h3 {
+.freeInfo h4 {
   font-family: "Be Vietnam Pro Plan ExtraBold", "Be Vietnam Pro", sans-serif;
   font-weight: 800;
 }
@@ -289,7 +289,6 @@
   gap: 25px;
   min-height: 124px;
   overflow: hidden;
-  margin-top: 16px;
   padding: 15px 29px 15px 22px;
   border: 1px solid #448dff;
   border-radius: 12px;
@@ -297,6 +296,10 @@
     radial-gradient(ellipse 64% 210% at 34% -54%, #408bff 3%, transparent 67%),
     linear-gradient(108deg, #043a9d, #064dc0 56%, #082a64);
   box-shadow: 0 10px 32px #00113635;
+}
+
+.free + .free {
+  margin-top: 12px;
 }
 
 .free::before {
@@ -341,7 +344,8 @@
   color: #fff;
 }
 
-.freeInfo h3 {
+.freeInfo h4 {
+  margin: 0;
   color: #fff;
   font-size: clamp(1.0625rem, 2.15vw, 1.75rem);
   line-height: 1.23;
@@ -760,7 +764,7 @@
     display: contents;
   }
 
-  .freeInfo h3 {
+  .freeInfo h4 {
     grid-column: -2 / -1;
   }
 

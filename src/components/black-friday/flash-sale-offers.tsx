@@ -16,9 +16,8 @@ import {
   blackFridayFlashSaleUpcomingDates,
 } from "@/data/black-friday";
 import {
-  blackFridayFlashSaleFreeOffer,
+  blackFridayFlashSaleFreeOffers,
   blackFridayFlashSaleGroups,
-  type FlashSaleCheckoutLinks,
   type PublishedFlashSaleOffer,
 } from "@/data/black-friday-flash-sale";
 import { splitCountdown } from "@/lib/flash-sale";
@@ -60,7 +59,7 @@ function OfferAction({
 }: {
   label: string;
   offer: PublishedFlashSaleOffer | undefined;
-  checkoutHref?: string;
+  checkoutHref: string;
   hasOpeningDate: boolean;
 }) {
   return (
@@ -82,25 +81,19 @@ function OfferAction({
           {hasOpeningDate ? "Mã đang cập nhật" : "Mã chưa mở"}
         </div>
       )}
-      {checkoutHref && (
-        <a
-          className={styles.register}
-          href={checkoutHref}
-          rel="nofollow"
-          aria-label={`Đăng ký ngay ${label}`}
-        >
-          Đăng ký ngay <ArrowRight size={16} aria-hidden="true" />
-        </a>
-      )}
+      <a
+        className={styles.register}
+        href={checkoutHref}
+        rel="nofollow"
+        aria-label={`Đăng ký ngay ${label}`}
+      >
+        Đăng ký ngay <ArrowRight size={16} aria-hidden="true" />
+      </a>
     </>
   );
 }
 
-export function FlashSaleOffers({
-  checkoutLinks,
-}: {
-  checkoutLinks: FlashSaleCheckoutLinks;
-}) {
+export function FlashSaleOffers() {
   const { release, remainingSeconds, syncFailed } = useFlashSaleRelease();
   const startsAt = release?.startsAt ?? blackFridayFlashSale.startsAt;
   const openingDate = new Date(startsAt ?? NaN);
@@ -118,8 +111,6 @@ export function FlashSaleOffers({
     remainingSeconds === null
       ? ["--", "--", "--", "--"]
       : splitCountdown(remainingSeconds);
-  const freeOffer = blackFridayFlashSaleFreeOffer;
-
   return (
     <section
       id="flash-sale"
@@ -217,79 +208,97 @@ export function FlashSaleOffers({
           </div>
         </header>
 
-        <article
-          className={styles.free}
-          data-offer={freeOffer.id}
-          aria-labelledby="flash-free-title"
-        >
-          <div className={styles.freeInfo}>
-            <span className={styles.freeIcon}>
-              <Gift size={29} aria-hidden="true" />
+        <section className={styles.group} aria-labelledby="flash-gifts-title">
+          <div className={styles.groupHeading}>
+            <span className={styles.groupIcon}>
+              <Gift size={18} aria-hidden="true" />
             </span>
-            <div>
-              <h3 id="flash-free-title">TẶNG MIỄN PHÍ TÊN MIỀN .COM</h3>
-              <p>Săn tên miền đẹp cho thương hiệu của bạn</p>
-            </div>
+            <h3 id="flash-gifts-title">Quà tặng đặc biệt</h3>
           </div>
-          <div className={styles.freePrice}>
-            0<span>đ</span>
-          </div>
-          <div className={styles.freeEnd}>
-            <OfferAction
-              hasOpeningDate={hasOpeningDate}
-              label={`${freeOffer.plan} miễn phí`}
-              offer={publishedOffers[freeOffer.id]}
-              checkoutHref={checkoutLinks[freeOffer.id]}
-            />
-          </div>
-        </article>
+          {blackFridayFlashSaleFreeOffers.map((offer) => {
+            const headingId = `flash-${offer.id}-title`;
+            return (
+              <article
+                className={styles.free}
+                data-offer={offer.id}
+                aria-labelledby={headingId}
+                key={offer.id}
+              >
+                <div className={styles.freeInfo}>
+                  <span className={styles.freeIcon}>
+                    <Gift size={29} aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h4 id={headingId}>Tặng miễn phí {offer.plan}</h4>
+                    {"specs" in offer && <p>{offer.specs}</p>}
+                    {"subtitle" in offer && <p>{offer.subtitle}</p>}
+                    {live && <p>Chu kỳ {offer.cycle}</p>}
+                  </div>
+                </div>
+                <div className={styles.freePrice}>
+                  0<span>đ</span>
+                </div>
+                <div className={styles.freeEnd}>
+                  <OfferAction
+                    hasOpeningDate={hasOpeningDate}
+                    label={`${offer.plan} miễn phí`}
+                    offer={publishedOffers[offer.id]}
+                    checkoutHref={offer.checkoutHref}
+                  />
+                </div>
+              </article>
+            );
+          })}
+        </section>
 
-        {blackFridayFlashSaleGroups.map(({ id, title, offers }) => {
-          const Icon = groupIcons[id];
-          const headingId = `flash-${id}-title`;
-          return (
-            <section
-              className={styles.group}
-              key={id}
-              aria-labelledby={headingId}
-            >
-              <div className={styles.groupHeading}>
-                <span className={styles.groupIcon}>
-                  <Icon size={18} aria-hidden="true" />
-                </span>
-                <h3 id={headingId}>{title}</h3>
-              </div>
-              <div className={styles.grid}>
-                {offers.map(({ id: offerId, plan, specs, discount }) => (
-                  <article
-                    className={styles.ticket}
-                    data-service={id}
-                    data-offer={offerId}
-                    key={offerId}
-                  >
-                    <div className={styles.ticketBody}>
-                      <div className={styles.discount}>
-                        Giảm <strong>{discount}%</strong>
+        {blackFridayFlashSaleGroups.map(
+          ({ id, title, checkoutHref, offers }) => {
+            const Icon = groupIcons[id];
+            const headingId = `flash-${id}-title`;
+            return (
+              <section
+                className={styles.group}
+                key={id}
+                aria-labelledby={headingId}
+              >
+                <div className={styles.groupHeading}>
+                  <span className={styles.groupIcon}>
+                    <Icon size={18} aria-hidden="true" />
+                  </span>
+                  <h3 id={headingId}>{title}</h3>
+                </div>
+                <div className={styles.grid}>
+                  {offers.map(({ id: offerId, plan, specs, discount }) => (
+                    <article
+                      className={styles.ticket}
+                      data-service={id}
+                      data-offer={offerId}
+                      key={offerId}
+                    >
+                      <div className={styles.ticketBody}>
+                        <div className={styles.discount}>
+                          Giảm <strong>{discount}%</strong>
+                        </div>
+                        <h4>
+                          {plan} <span className={styles.specs}>{specs}</span>
+                        </h4>
+                        <p className={styles.cycle}>Chu kỳ 3 tháng – 1 năm</p>
                       </div>
-                      <h4>
-                        {plan} <span className={styles.specs}>{specs}</span>
-                      </h4>
-                      <p className={styles.cycle}>Chu kỳ 3 tháng – 1 năm</p>
-                    </div>
-                    <div className={styles.ticketEnd}>
-                      <OfferAction
-                        hasOpeningDate={hasOpeningDate}
-                        label={`${plan} ${specs} giảm ${discount}%`}
-                        offer={publishedOffers[offerId]}
-                        checkoutHref={checkoutLinks[offerId]}
-                      />
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </section>
-          );
-        })}
+                      <div className={styles.ticketEnd}>
+                        <OfferAction
+                          hasOpeningDate={hasOpeningDate}
+                          label={`${plan} ${specs} giảm ${discount}%`}
+                          offer={publishedOffers[offerId]}
+                          checkoutHref={checkoutHref}
+                        />
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            );
+          },
+        )}
 
         <details className={styles.flashTerms}>
           <summary>

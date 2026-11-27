@@ -5,15 +5,39 @@ const specs = {
   "4-8-80": "4 vCPU - 8GB RAM - 80GB SSD",
 };
 
-export const blackFridayFlashSaleFreeOffer = {
-  id: "free",
-  plan: "tên miền .COM",
-} as const;
+const platinumVpsStoreUrl =
+  "https://support.interdata.vn/index.php?rp=/store/vps-platinum-viettel-hcm";
+const freeVpsSpecs = "2 vCore - 2GB RAM - 30GB SSD NVMe";
+
+export const blackFridayFlashSaleFreeOffers = [
+  {
+    id: "freeAmd",
+    plan: "VPS AMD",
+    specs: freeVpsSpecs,
+    cycle: "6 tháng",
+    checkoutHref: "https://support.interdata.vn/index.php?rp=/store/amd-g3-vps",
+  },
+  {
+    id: "freePlatinum",
+    plan: "VPS Platinum",
+    specs: freeVpsSpecs,
+    cycle: "6 tháng",
+    checkoutHref: platinumVpsStoreUrl,
+  },
+  {
+    id: "free",
+    plan: "tên miền .COM",
+    subtitle: "Săn Tên Miền Đẹp Cho Thương Hiệu Của Bạn",
+    cycle: "1 năm",
+    checkoutHref: "https://support.interdata.vn/cart.php?a=add&domain=register",
+  },
+] as const;
 
 export const blackFridayFlashSaleGroups = [
   {
     id: "vps",
-    title: "Flash Sale VPS",
+    title: "Flash Sale VPS Platinum Giảm Đến 81%",
+    checkoutHref: platinumVpsStoreUrl,
     offers: [
       {
         id: "vps81",
@@ -37,7 +61,9 @@ export const blackFridayFlashSaleGroups = [
   },
   {
     id: "cloud",
-    title: "Flash Sale Cloud Server",
+    title: "Flash Sale Cloud Platinum Giảm Đến 61%",
+    checkoutHref:
+      "https://support.interdata.vn/index.php?rp=/store/platinum-g2-cloud",
     offers: [
       {
         id: "cloud61",
@@ -62,10 +88,8 @@ export const blackFridayFlashSaleGroups = [
 ] as const;
 
 export type FlashSaleOfferId =
-  | typeof blackFridayFlashSaleFreeOffer.id
+  | (typeof blackFridayFlashSaleFreeOffers)[number]["id"]
   | (typeof blackFridayFlashSaleGroups)[number]["offers"][number]["id"];
-
-export type FlashSaleCheckoutLinks = Partial<Record<FlashSaleOfferId, string>>;
 
 export type PublishedFlashSaleOffer = { code: string; quantity: number };
 

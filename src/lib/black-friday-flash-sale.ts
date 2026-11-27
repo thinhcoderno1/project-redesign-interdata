@@ -1,11 +1,24 @@
 import "server-only";
 
 import { blackFridayFlashSale } from "@/data/black-friday";
-import type { FlashSaleRelease } from "@/data/black-friday-flash-sale";
+import type {
+  FlashSaleOfferId,
+  FlashSaleRelease,
+  PublishedFlashSaleOffer,
+} from "@/data/black-friday-flash-sale";
 import { getFlashSaleState } from "./flash-sale";
 
-// Fill in approved codes and quantities for the November 27 round.
-const offers: FlashSaleRelease["offers"] = {};
+const offers = {
+  freeAmd: { code: "FREEAMD-BF26FLASH", quantity: 10 },
+  freePlatinum: { code: "FREEVPS27-BF26FLASH", quantity: 10 },
+  free: { code: "FREEDOMAIN-BF26FLASH", quantity: 10 },
+  vps81: { code: "VPS81-FLASHBF27", quantity: 3 },
+  vps71: { code: "VPS71-FLASHBF27", quantity: 3 },
+  vps61: { code: "VPS61-FLASHBF27", quantity: 10 },
+  cloud61: { code: "CLOUD61-BF26FLASH27", quantity: 3 },
+  cloud51: { code: "CLOUD51-BF26FLASH27", quantity: 3 },
+  cloud41: { code: "CLOUD41-BF26FLASH27", quantity: 10 },
+} satisfies Record<FlashSaleOfferId, PublishedFlashSaleOffer>;
 
 export function getBlackFridayFlashSaleRelease(
   now = Date.now(),

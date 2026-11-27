@@ -6,7 +6,6 @@ import {
   getBestPlansCatalog,
 } from "@/lib/black-friday-best-plans";
 import { getBlackFridayCoupons } from "@/lib/black-friday-coupons";
-import { getBlackFridayFlashSaleCheckoutLinks } from "@/lib/black-friday-flash-sale-checkout";
 import { BlackFridayPage } from "./black-friday-page";
 import { InfoSection } from "./info-section";
 
@@ -40,17 +39,15 @@ export function getBlackFridayMetadata(path: "/" | "/blackfriday/"): Metadata {
 
 export async function BlackFridayCampaign() {
   await connection();
-  const [amdBestPlans, bestPlans, flashSaleCheckoutLinks] = await Promise.all([
+  const [amdBestPlans, bestPlans] = await Promise.all([
     getAmdBestPlansCatalog(),
     getBestPlansCatalog(),
-    getBlackFridayFlashSaleCheckoutLinks(),
   ]);
   return (
     <BlackFridayPage
       amdBestPlans={amdBestPlans}
       bestPlans={bestPlans}
       coupons={getBlackFridayCoupons()}
-      flashSaleCheckoutLinks={flashSaleCheckoutLinks}
     >
       <InfoSection />
     </BlackFridayPage>
