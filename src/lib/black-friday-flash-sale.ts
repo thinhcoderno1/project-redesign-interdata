@@ -9,9 +9,9 @@ import type {
 import { getFlashSaleState } from "./flash-sale";
 
 const offers = {
-  freeAmd: { code: "FREEAMD-BF26FLASH", quantity: 10 },
-  freePlatinum: { code: "FREEVPS27-BF26FLASH", quantity: 10 },
-  free: { code: "FREEDOMAIN-BF26FLASH", quantity: 10 },
+  freeAmd: { code: "FREEAMD-BF26FLASH", quantity: 5 },
+  freePlatinum: { code: "FREEVPS27-BF26FLASH", quantity: 5 },
+  free: { code: "FREEDOMAIN-BF26FLASH", quantity: 5 },
   vps81: { code: "VPS81-FLASHBF27", quantity: 3 },
   vps71: { code: "VPS71-FLASHBF27", quantity: 3 },
   vps61: { code: "VPS61-FLASHBF27", quantity: 10 },

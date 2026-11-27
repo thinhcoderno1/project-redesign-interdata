@@ -8,9 +8,9 @@ const startsAt = "2026-11-27T11:00:00+07:00";
 const previousStartsAt = "2026-11-25T11:00:00+07:00";
 const start = Date.parse(startsAt);
 const offers = {
-  freeAmd: { code: "FREEAMD-TESTFLASH", quantity: 10 },
-  freePlatinum: { code: "FREEVPS27-TESTFLASH", quantity: 10 },
-  free: { code: "FREEDOMAIN-TESTFLASH", quantity: 10 },
+  freeAmd: { code: "FREEAMD-TESTFLASH", quantity: 5 },
+  freePlatinum: { code: "FREEVPS27-TESTFLASH", quantity: 5 },
+  free: { code: "FREEDOMAIN-TESTFLASH", quantity: 5 },
   vps81: { code: "VPS81-TESTFLASH", quantity: 3 },
   vps71: { code: "VPS71-TESTFLASH", quantity: 3 },
   vps61: { code: "VPS61-TESTFLASH", quantity: 10 },
