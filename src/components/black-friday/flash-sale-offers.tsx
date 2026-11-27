@@ -35,10 +35,13 @@ const openingDateLabel = new Intl.DateTimeFormat("vi-VN", {
   year: "numeric",
   timeZone: "Asia/Ho_Chi_Minh",
 });
-const openingShortDateLabel = new Intl.DateTimeFormat("vi-VN", {
+const upcomingDateLabel = new Intl.DateTimeFormat("vi-VN", {
   day: "2-digit",
   month: "2-digit",
   year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
   timeZone: "Asia/Ho_Chi_Minh",
 });
 const bannerTimeLabel = new Intl.DateTimeFormat("en-US", {
@@ -49,7 +52,7 @@ const bannerTimeLabel = new Intl.DateTimeFormat("en-US", {
 });
 const upcomingDates = blackFridayFlashSaleUpcomingDates.map((date) => ({
   date,
-  label: openingShortDateLabel.format(new Date(date)),
+  label: upcomingDateLabel.format(new Date(date)),
 }));
 
 function OfferAction({
@@ -151,7 +154,7 @@ export function FlashSaleOffers() {
             )}
             {upcomingDates.length > 0 && (
               <p className={styles.upcoming}>
-                <span>Các đợt tiếp theo</span>
+                <span>Khung giờ tiếp theo</span>
                 <span className={styles.upcomingDates}>
                   {upcomingDates.map(({ date, label }) => (
                     <time key={date} dateTime={date}>

@@ -26,6 +26,7 @@ import {
   BestPlansCircuit,
   BlackFridayBestPlans,
 } from "./black-friday-best-plans";
+import { BuyTwoGetOne } from "./buy-two-get-one";
 import { CouponCopyButton } from "./coupon-copy-button";
 import { EyebrowBadge } from "./eyebrow-badge";
 import { FlashSaleOffers } from "./flash-sale-offers";
@@ -162,6 +163,7 @@ export function BlackFridayPage({
 
       <div className={styles.bestPlansGroup}>
         <BestPlansCircuit />
+        <BuyTwoGetOne />
         <BlackFridayBestPlans bestPlans={amdBestPlans} grouped />
         <BlackFridayBestPlans
           bestPlans={bestPlans}

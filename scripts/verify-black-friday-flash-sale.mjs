@@ -4,19 +4,20 @@ import { chromium, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 const base = process.env.TEST_BASE_URL || "http://localhost:3000";
-const startsAt = "2026-11-27T11:00:00+07:00";
-const previousStartsAt = "2026-11-25T11:00:00+07:00";
+const startsAt = "2026-11-27T15:00:00+07:00";
+const previousStartsAt = "2026-11-27T11:00:00+07:00";
 const start = Date.parse(startsAt);
 const offers = {
-  freeAmd: { code: "FREEAMD-TESTFLASH", quantity: 5 },
-  freePlatinum: { code: "FREEVPS27-TESTFLASH", quantity: 5 },
-  free: { code: "FREEDOMAIN-TESTFLASH", quantity: 5 },
-  vps99: { code: "VPS99-TESTFLASH", quantity: 5 },
-  vps70: { code: "VPS70-TESTFLASH", quantity: 5 },
-  vps60: { code: "VPS60-TESTFLASH", quantity: 5 },
+  freeAmd: { code: "FLASH27-AMD0D", quantity: 5 },
+  freePlatinum: { code: "FLASH27-FREE0D", quantity: 5 },
+  free: { code: "FLASH27-DOMAIN0D", quantity: 5 },
+  vps99: { code: "FLASHBF26-DEAL99", quantity: 5 },
+  vps70: { code: "FLASHBF26-DEAL70", quantity: 5 },
+  vps60: { code: "FLASHBF26-DEAL60", quantity: 5 },
 };
 const offerCount = Object.keys(offers).length;
-const codePattern = /-(?:BF26FLASH(?:27)?|FLASHBF27)\b/;
+const codePattern =
+  /\b(?:FLASHBF26-DEAL(?:99|70|60)|FLASH27-(?:AMD0D|FREE0D|DOMAIN0D))\b/;
 const vpsStore =
   "https://support.interdata.vn/index.php?rp=/store/vps-platinum-viettel-hcm";
 const checkouts = {
@@ -87,9 +88,15 @@ try {
   const section = page.locator("#flash-sale");
   await expect(section).toBeVisible();
   await expect(section.locator(`time[datetime="${startsAt}"]`)).toHaveText(
-    "11:00AM · Thứ Sáu, 27/11/2026",
+    "3:00PM · Thứ Sáu, 27/11/2026",
   );
-  await expect(section.locator("time")).toHaveCount(1);
+  await expect(section.locator("time")).toHaveCount(2);
+  await expect(
+    section.getByText("Khung giờ tiếp theo", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    section.locator('time[datetime="2026-11-27T20:00:00+07:00"]'),
+  ).toHaveText("20:00 27/11/2026");
   await expect(
     section.getByText("Flash Sale tiếp theo", { exact: true }),
   ).toBeVisible();
@@ -97,7 +104,7 @@ try {
     section.getByText("Đếm ngược đến giờ mở sale", { exact: true }),
   ).toHaveCount(0);
   await expect(
-    section.getByText("Mã và số lượng sẽ hiện lúc 11:00 (giờ Việt Nam).", {
+    section.getByText("Mã và số lượng sẽ hiện lúc 15:00 (giờ Việt Nam).", {
       exact: true,
     }),
   ).toHaveCount(0);
@@ -360,10 +367,10 @@ try {
   await expect(locked).toHaveCount(offerCount);
   await expect(freeCycles).toHaveCount(0);
   await expect(section.locator(`time[datetime="${startsAt}"]`)).toHaveText(
-    "11:00AM · Thứ Sáu, 27/11/2026",
+    "3:00PM · Thứ Sáu, 27/11/2026",
   );
   await page.goto(`${base}/`);
-  await expect(page.locator("#flash-sale time")).toHaveAttribute(
+  await expect(page.locator("#flash-sale time").first()).toHaveAttribute(
     "datetime",
     startsAt,
   );
