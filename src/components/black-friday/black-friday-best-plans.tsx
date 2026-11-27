@@ -117,7 +117,7 @@ export function BlackFridayBestPlans({
         : "annually";
   const period = bestPlanCycles.find(({ key }) => key === selectedCycle)?.label;
   const hasReferencePrice =
-    platinum &&
+    bestPlans.edition !== "legacy" &&
     bestPlans.products.some(
       (product) => product.referencePrices[selectedCycle] !== undefined,
     );
@@ -287,9 +287,13 @@ export function BlackFridayBestPlans({
                     const referencePrice =
                       product.referencePrices[selectedCycle];
                     const isEstimate = referencePrice?.source === "estimate";
-                    const referenceLabel = isEstimate
-                      ? "Giá tham chiếu ước tính theo bảng tài nguyên VPS Platinum Viettel"
-                      : "Giá tham chiếu VPS Platinum Viettel";
+                    const referenceLabel = amd
+                      ? isEstimate
+                        ? "Giá gốc ước tính từ VPS AMD trên Portal và phí nâng cấp tài nguyên"
+                        : "Giá gốc VPS AMD trên Portal"
+                      : isEstimate
+                        ? "Giá tham chiếu ước tính theo bảng tài nguyên VPS Platinum Viettel"
+                        : "Giá tham chiếu VPS Platinum Viettel";
                     return (
                       <article
                         key={product.pid}

@@ -65,7 +65,11 @@ const referencePlan = {
   pricing: { VND: { annually: "2853600.00" } },
 };
 
-const loadPricing = (fetcher, getViettelPlans = async () => [referencePlan]) =>
+const loadPricing = (
+  fetcher,
+  getViettelPlans = async () => [referencePlan],
+  getAmdPlans = async () => [],
+) =>
   loadData(
     "src/lib/black-friday-pricing.ts",
     {
@@ -77,6 +81,7 @@ const loadPricing = (fetcher, getViettelPlans = async () => [referencePlan]) =>
           return getViettelPlans();
         },
       },
+      "./vps-amd-pricing": { getAmdProducts: getAmdPlans },
     },
     fetcher,
   );
@@ -121,6 +126,135 @@ const offlineReferences = await loadPricing(respond(testPlans), async () => {
 const [first, second] = await offlineReferences.getBlackFridayProducts();
 assert.deepEqual(first.referencePrices, {});
 assert.deepEqual(second.referencePrices, products[1].referencePrices);
+
+const amdResources = [
+  [2, 2, 20],
+  [4, 4, 30],
+  [5, 6, 60],
+  [6, 8, 70],
+  [8, 10, 90],
+  [12, 14, 120],
+  [14, 18, 140],
+  [18, 32, 160],
+];
+const amdTestPlans = testPlans.map((plan, index) => {
+  const [cpu, ram, disk] = amdResources[index];
+  const slug = `bf26-amd-e${index + 1}`;
+  return {
+    ...plan,
+    pid: 586 + index,
+    gid: 107,
+    slug,
+    name: `BF26-AMD E${index + 1}`,
+    description: `${cpu} vCore\n${ram} GB RAM\n${disk} GB SSD NVMe`,
+    product_url: `https://support.interdata.vn/index.php?rp=/store/black-friday-26-vps-amd-epyc-gen2/${slug}`,
+  };
+});
+const amdReferences = [
+  [371, 1, 2, 20, 2_160_000, 4_080_000, 5_760_000],
+  [372, 2, 2, 30, 3_024_000, 5_712_000, 8_064_000],
+  [375, 4, 6, 60, 7_128_000, 13_464_000, 19_008_000],
+  [376, 4, 8, 80, 8_640_000, 16_320_000, 23_040_000],
+  [377, 6, 8, 120, 10_800_000, 20_400_000, 28_800_000],
+  [378, 8, 12, 160, 15_120_000, 28_560_000, 40_320_000],
+].map(([pid, cpu, ram, disk, annually, biennially, triennially]) => ({
+  pid,
+  description: `${cpu} vCPU AMD G2&G3\n${ram} GB RAM\n${disk} GB SSD NVMe G4 R10`,
+  pricing: {
+    VND: {
+      annually: String(annually),
+      biennially: String(biennially),
+      triennially: String(triennially),
+    },
+  },
+}));
+const amdRespond =
+  (plans = amdTestPlans) =>
+  async (url, options) => {
+    assert.equal(
+      url,
+      "https://support.interdata.vn/packages.php?gid=107&module",
+    );
+    assert.equal(options.next.revalidate, 60);
+    return { ok: true, json: async () => ({ success: true, products: plans }) };
+  };
+const amdLoader = await loadPricing(amdRespond(), undefined, async () =>
+  [...amdReferences].reverse(),
+);
+const amdProducts = await amdLoader.getBlackFridayAmdProducts();
+const expectedAmdPrices = [
+  [2_880_000, 5_520_000, 7_920_000],
+  [5_664_000, 10_992_000, 15_984_000],
+  [7_848_000, 14_904_000, 21_168_000],
+  [10_248_000, 19_704_000, 28_368_000],
+  [13_200_000, 25_440_000, 36_720_000],
+  [18_720_000, 36_240_000, 52_560_000],
+  [23_520_000, 45_840_000, 66_960_000],
+  [34_320_000, 66_960_000, 97_920_000],
+];
+assert.deepEqual(
+  amdProducts.map(({ pricing }) => pricing),
+  amdTestPlans.map(({ pricing }) => pricing),
+);
+for (const [index, product] of amdProducts.entries()) {
+  for (const [cycleIndex, cycle] of cycles.entries()) {
+    assert.deepEqual(product.referencePrices[cycle], {
+      amount: expectedAmdPrices[index][cycleIndex],
+      source: "estimate",
+    });
+  }
+}
+const exactAmdReference = {
+  ...amdReferences[0],
+  description: "2 vCPU\n2 GB RAM\n20 GB SSD NVMe",
+};
+const exactAmd = await loadPricing(amdRespond(), undefined, async () => [
+  exactAmdReference,
+]);
+assert.deepEqual(
+  (await exactAmd.getBlackFridayAmdProducts())[0].referencePrices.annually,
+  { amount: 2_160_000, source: "portal" },
+);
+// A plan with more disk cannot be used by subtracting resources to inflate a reference.
+const oversizedAmd = await loadPricing(amdRespond(), undefined, async () => [
+  amdReferences[1],
+]);
+assert.deepEqual(
+  (await oversizedAmd.getBlackFridayAmdProducts())[0].referencePrices,
+  {},
+);
+const unavailableAmd = await loadPricing(amdRespond(), undefined, async () => {
+  throw new Error("Portal offline");
+});
+assert(
+  (await unavailableAmd.getBlackFridayAmdProducts()).every(
+    (product) => Object.keys(product.referencePrices).length === 0,
+  ),
+);
+const missingAmdCycle = await loadPricing(amdRespond(), undefined, async () => [
+  {
+    ...exactAmdReference,
+    pricing: { VND: { annually: "-1", biennially: "4080000" } },
+  },
+]);
+assert.deepEqual(
+  (await missingAmdCycle.getBlackFridayAmdProducts())[0].referencePrices,
+  { biennially: { amount: 4_080_000, source: "portal" } },
+);
+const cheaperAmdReference = await loadPricing(
+  amdRespond(),
+  undefined,
+  async () => [
+    {
+      ...exactAmdReference,
+      pricing: { VND: { annually: "100" } },
+    },
+  ],
+);
+assert.deepEqual(
+  (await cheaperAmdReference.getBlackFridayAmdProducts())[0].referencePrices,
+  {},
+);
 
 const updateFirst = (products, changes) => [
   { ...products[0], ...changes },

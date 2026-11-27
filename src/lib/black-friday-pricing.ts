@@ -4,6 +4,7 @@ import {
   blackFridayPlans,
 } from "@/data/black-friday-legacy-plans";
 import { getPlatinumProducts } from "./vps-platinum-pricing";
+import { getAmdProducts } from "./vps-amd-pricing";
 
 const groupId = 105;
 const storefront = "/store/black-friday-26-vps-intel-platinum-gen2";
@@ -115,6 +116,52 @@ function getReferencePrices(
   return prices;
 }
 
+function getAmdReferencePrices(
+  product: BlackFridayProduct,
+  amdPlans: { product: VpsProduct; resources: Resources | null }[],
+) {
+  const prices: BlackFridayProduct["referencePrices"] = {};
+  const target = product.resources;
+  if (!target) return prices;
+
+  // Monthly upgrade rates supplied for this campaign. Never subtract resources.
+  const candidates = amdPlans.flatMap(({ product: plan, resources }) => {
+    if (
+      !resources ||
+      resources.cpu > target.cpu ||
+      resources.ram > target.ram ||
+      resources.nvme > target.nvme
+    )
+      return [];
+    const upgrade =
+      (target.cpu - resources.cpu) * 60_000 +
+      (target.ram - resources.ram) * 50_000 +
+      (target.nvme - resources.nvme) * 4_000;
+    return [{ plan, upgrade }];
+  });
+  // Prefer an exact Portal configuration, otherwise the smallest resource uplift.
+  candidates.sort((a, b) => a.upgrade - b.upgrade || a.plan.pid - b.plan.pid);
+  for (const cycle of cycles) {
+    const checkoutPrice = product.pricing.VND[cycle];
+    if (checkoutPrice === undefined) continue;
+    const reference = candidates.find(({ plan }) => {
+      const value = Number(plan.pricing.VND[cycle]);
+      return Number.isFinite(value) && value > 0;
+    });
+    if (!reference) continue;
+    const amount = Math.round(
+      Number(reference.plan.pricing.VND[cycle]) +
+        reference.upgrade * referenceTerms[cycle].months,
+    );
+    if (amount > Number(checkoutPrice))
+      prices[cycle] = {
+        amount,
+        source: reference.upgrade === 0 ? "portal" : "estimate",
+      };
+  }
+  return prices;
+}
+
 async function loadCampaignProducts(
   gid: number,
   storefront: string,
@@ -216,8 +263,19 @@ export async function getBlackFridayAmdProducts(): Promise<
     pid,
     slug: `bf26-amd-e${index + 1}`,
   }));
-  const products = await loadCampaignProducts(amdGroupId, amdStorefront, plans);
-  return products.map(presentCampaignProduct);
+  const [products, amd] = await Promise.all([
+    loadCampaignProducts(amdGroupId, amdStorefront, plans),
+    getAmdProducts().catch(() => []),
+  ]);
+  const amdPlans = amd.map((product) => ({
+    product,
+    resources: readResources(productSpecs(product).join("\n")),
+  }));
+  return products.map((item) => {
+    const product = presentCampaignProduct(item);
+    product.referencePrices = getAmdReferencePrices(product, amdPlans);
+    return product;
+  });
 }
 
 /** Best Plans checkout uses the campaign catalog. Viettel is a separate price reference. */

@@ -69,7 +69,7 @@ try {
     amdPlans.map((_, index) => `BF26 AMD E${index + 1}`),
   );
   await expect(amdCards.nth(2).getByText("Đăng ký nhiều")).toBeVisible();
-  await expect(amdCards.locator("del")).toHaveCount(0);
+  await expect(amdCards.locator("del")).toHaveCount(8);
   await expect(amdSection.getByText("Quà Tặng Chu Kỳ 3 Năm")).toHaveCount(7);
 
   const platinumSection = page.locator("#best-plans-clone");
@@ -99,6 +99,10 @@ try {
     );
     for (const [planIndex, product] of amdPlans.entries()) {
       const card = amdCards.nth(planIndex);
+      await expect(card.locator("del")).toHaveAttribute("title", /VPS AMD/);
+      await expect(card.locator("del")).toContainText(
+        ["/ 1 năm", "/ 2 năm", "/ 3 năm"][index],
+      );
       await expect(card).toHaveAttribute("data-pid", String(product.pid));
       await expect(card.getByRole("link")).toHaveAttribute(
         "href",
