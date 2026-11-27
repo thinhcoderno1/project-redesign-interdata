@@ -42,6 +42,14 @@ const marqueeMessages = [
   "Nâng Cấp Hạ Tầng",
 ];
 
+const sectionLinks = [
+  { id: "mua-2-tang-1", title: "Mua 2 Tặng 1" },
+  { id: "best-plans", title: "Best Plans" },
+  { id: "gia-han", title: "Gia hạn" },
+  { id: "flash-sale", title: "Flash Sale" },
+  { id: "ma-giam-gia", title: "Mã giảm giá" },
+];
+
 export function BlackFridayPage({
   children,
   amdBestPlans,
@@ -54,7 +62,7 @@ export function BlackFridayPage({
   coupons: BlackFridayCouponGroup[];
 }) {
   const flashSaleVisible = useFlashSaleVisibility();
-  const [activeSection, setActiveSection] = useState("best-plans");
+  const [activeSection, setActiveSection] = useState(sectionLinks[0].id);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -66,7 +74,7 @@ export function BlackFridayPage({
       },
       { rootMargin: "-20% 0px -40% 0px", threshold: [0, 0.2, 0.5] },
     );
-    ["best-plans", "gia-han", "flash-sale", "ma-giam-gia"].forEach((id) => {
+    sectionLinks.forEach(({ id }) => {
       const element = document.getElementById(id);
       if (element) observer.observe(element);
     });
@@ -140,12 +148,7 @@ export function BlackFridayPage({
 
       <nav className={styles.sectionNav} aria-label="Nội dung Black Friday">
         <div className={`container ${styles.navInner}`}>
-          {[
-            { id: "best-plans", title: "Best Plans" },
-            { id: "gia-han", title: "Gia hạn" },
-            { id: "flash-sale", title: "Flash Sale" },
-            { id: "ma-giam-gia", title: "Mã giảm giá" },
-          ]
+          {sectionLinks
             .filter(({ id }) => id !== "flash-sale" || flashSaleVisible)
             .map(({ id, title }, index) => (
               <a

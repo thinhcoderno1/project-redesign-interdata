@@ -357,6 +357,7 @@
   justify-content: center;
   gap: 18px;
   font-size: 14px;
+  text-align: center;
   border-bottom: 3px solid transparent;
   transition:
     color 0.2s,
@@ -1791,6 +1792,7 @@
     font-size: 11px;
     gap: 2px;
     flex-direction: column;
+    justify-content: flex-start;
   }
   .bestPlans {
     padding: 33px 0 39px;

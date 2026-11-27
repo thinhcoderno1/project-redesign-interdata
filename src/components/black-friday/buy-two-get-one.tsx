@@ -10,7 +10,7 @@ const offers = [
   },
   {
     id: "cloud",
-    service: "Cloud Server",
+    service: "CLOUD SERVER",
     icon: Cloud,
   },
 ] as const;
@@ -32,7 +32,7 @@ export function BuyTwoGetOne() {
               Mua 2 <span>tặng 1</span>
             </h2>
             <p className={styles.description}>
-              Áp dụng cho mọi gói VPS và Cloud Server.
+              Áp dụng cho mọi gói VPS và CLOUD SERVER.
             </p>
           </div>
 

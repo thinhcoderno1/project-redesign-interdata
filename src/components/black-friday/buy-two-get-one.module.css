@@ -149,9 +149,9 @@
   display: block;
   margin-bottom: 3px;
   color: #526075;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.5;
-  font-weight: 500;
+  font-weight: 600;
 }
 .root .amount {
   display: block;
@@ -189,6 +189,14 @@
 .root .plus svg {
   width: 20px;
   height: 20px;
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .root .offer {
+    transition: transform 220ms ease;
+  }
+  .root .offer:hover {
+    transform: scale(1.02);
+  }
 }
 @container (max-width: 1199px) {
   .root .section {
