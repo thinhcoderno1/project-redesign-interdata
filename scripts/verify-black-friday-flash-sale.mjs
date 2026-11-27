@@ -51,11 +51,7 @@ try {
     actualRelease.serverNow < start ? "upcoming" : "live",
   );
   if (actualRelease.status === "live") {
-    assert.deepEqual(Object.keys(actualRelease.offers), [
-      "freeAmd",
-      "freePlatinum",
-      "free",
-    ]);
+    assert.deepEqual(Object.keys(actualRelease.offers), Object.keys(offers));
     for (const [id, { code, quantity }] of Object.entries(
       actualRelease.offers,
     )) {
