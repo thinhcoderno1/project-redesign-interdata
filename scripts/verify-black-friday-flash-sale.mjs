@@ -11,28 +11,21 @@ const offers = {
   freeAmd: { code: "FREEAMD-TESTFLASH", quantity: 5 },
   freePlatinum: { code: "FREEVPS27-TESTFLASH", quantity: 5 },
   free: { code: "FREEDOMAIN-TESTFLASH", quantity: 5 },
-  vps81: { code: "VPS81-TESTFLASH", quantity: 3 },
-  vps71: { code: "VPS71-TESTFLASH", quantity: 3 },
-  vps61: { code: "VPS61-TESTFLASH", quantity: 10 },
-  cloud61: { code: "CLOUD61-TESTFLASH27", quantity: 3 },
-  cloud51: { code: "CLOUD51-TESTFLASH27", quantity: 3 },
-  cloud41: { code: "CLOUD41-TESTFLASH27", quantity: 10 },
+  vps99: { code: "VPS99-TESTFLASH", quantity: 5 },
+  vps70: { code: "VPS70-TESTFLASH", quantity: 5 },
+  vps60: { code: "VPS60-TESTFLASH", quantity: 10 },
 };
+const offerCount = Object.keys(offers).length;
 const codePattern = /-(?:BF26FLASH(?:27)?|FLASHBF27)\b/;
 const vpsStore =
   "https://support.interdata.vn/index.php?rp=/store/vps-platinum-viettel-hcm";
-const cloudStore =
-  "https://support.interdata.vn/index.php?rp=/store/platinum-g2-cloud";
 const checkouts = {
   freeAmd: "https://support.interdata.vn/index.php?rp=/store/amd-g3-vps",
   freePlatinum: vpsStore,
   free: "https://support.interdata.vn/cart.php?a=add&domain=register",
-  vps81: vpsStore,
-  vps71: vpsStore,
-  vps61: vpsStore,
-  cloud61: cloudStore,
-  cloud51: cloudStore,
-  cloud41: cloudStore,
+  vps99: vpsStore,
+  vps70: vpsStore,
+  vps60: vpsStore,
 };
 const directory = "artifacts/black-friday";
 await fs.mkdir(directory, { recursive: true });
@@ -58,7 +51,11 @@ try {
     actualRelease.serverNow < start ? "upcoming" : "live",
   );
   if (actualRelease.status === "live") {
-    assert.deepEqual(Object.keys(actualRelease.offers), Object.keys(offers));
+    assert.deepEqual(Object.keys(actualRelease.offers), [
+      "freeAmd",
+      "freePlatinum",
+      "free",
+    ]);
     for (const [id, { code, quantity }] of Object.entries(
       actualRelease.offers,
     )) {
@@ -109,20 +106,22 @@ try {
     }),
   ).toHaveCount(0);
   await expect(page.locator('nav a[href="#flash-sale"]')).toBeVisible();
-  await expect(section.locator("article")).toHaveCount(9);
+  await expect(section.locator("article")).toHaveCount(offerCount);
+  await expect(section.locator('[data-service="cloud"]')).toHaveCount(0);
   await expect(section.locator("h3")).toHaveText([
     "Quà tặng đặc biệt",
-    "Flash Sale VPS Platinum Giảm Đến 81%",
-    "Flash Sale Cloud Platinum Giảm Đến 61%",
+    "Flash Sale VPS Platinum Giảm Đến 99%",
   ]);
   const specs = section.locator('[class*="specs"]');
   await expect(specs).toHaveText([
     "2 vCPU - 2GB RAM - 30GB SSD",
-    "2 vCPU - 4GB RAM - 50GB SSD",
-    "4 vCPU - 8GB RAM - 80GB SSD",
-    "2 vCPU - 2GB RAM - 30GB SSD",
-    "2 vCPU - 4GB RAM - 50GB SSD",
-    "4 vCPU - 8GB RAM - 80GB SSD",
+    "Tối đa 4 vCPU - 8GB RAM - 80GB SSD",
+    "Tối đa 4 vCPU - 8GB RAM - 80GB SSD",
+  ]);
+  await expect(section.locator('[data-service="vps"] strong')).toHaveText([
+    "99%",
+    "70%",
+    "60%",
   ]);
   for (const [id, name] of [
     ["freeAmd", "VPS AMD"],
@@ -144,19 +143,17 @@ try {
     section.getByText("2 vCore - 2GB RAM - 30GB SSD NVMe", { exact: true }),
   ).toHaveCount(2);
   const discountCycles = section.locator('[data-service] [class*="cycle"]');
-  await expect(discountCycles).toHaveText(
-    Array(6).fill("Chu kỳ 3 tháng – 1 năm"),
-  );
+  await expect(discountCycles).toHaveText(Array(3).fill("Chu kỳ 3–12 tháng"));
   await expect(discountCycles.first()).toHaveCSS("color", "rgb(75, 89, 112)");
   const locked = section.getByText("Mã đang cập nhật", { exact: true });
   const quantities = section.getByText(/^Chỉ \d{2} mã$/i);
-  await expect(locked).toHaveCount(9);
+  await expect(locked).toHaveCount(offerCount);
   await expect(section.getByRole("timer").locator("strong").first()).toHaveText(
     "01",
   );
   await expect(section.getByRole("button")).toHaveCount(0);
   const registerLinks = section.getByRole("link", { name: /^Đăng ký ngay/ });
-  await expect(registerLinks).toHaveCount(9);
+  await expect(registerLinks).toHaveCount(offerCount);
   for (const [id, href] of Object.entries(checkouts)) {
     const card = section.locator(`[data-offer="${id}"]`);
     const register = card.getByRole("link", { name: /^Đăng ký ngay/ });
@@ -181,9 +178,8 @@ try {
           const text = document.createRange();
           text.selectNodeContents(line);
           const box = line.getBoundingClientRect();
-          return (
-            text.getClientRects().length !== 1 ||
-            text.getBoundingClientRect().right > box.right + 1
+          return Array.from(text.getClientRects()).some(
+            (rect) => rect.left < box.left - 1 || rect.right > box.right + 1,
           );
         })
         .map((line) => line.textContent),
@@ -227,12 +223,12 @@ try {
     .poll(() => requests, { timeout: 5000 })
     .toBeGreaterThan(countBefore);
   await expect(section.getByRole("button")).toHaveCount(0);
-  await expect(registerLinks).toHaveCount(9);
+  await expect(registerLinks).toHaveCount(offerCount);
   await expect(quantities).toHaveCount(0);
   failure = false;
   serverNow = start;
   await expect(section.getByRole("timer")).toHaveCount(0, { timeout: 5000 });
-  await expect(locked).toHaveCount(9);
+  await expect(locked).toHaveCount(offerCount);
   await expect(section.getByRole("button")).toHaveCount(0);
   await expect(quantities).toHaveCount(0);
   await expect(
@@ -242,15 +238,17 @@ try {
     section.getByText("Mã ưu đãi đang cập nhật.", { exact: true }),
   ).toBeVisible();
   await expect(freeCycles).toHaveText([
-    "Chu kỳ 6 tháng",
-    "Chu kỳ 6 tháng",
+    "Chu kỳ 3–12 tháng",
+    "Chu kỳ 3–12 tháng",
     "Chu kỳ 1 năm",
   ]);
 
   codesReady = true;
   await page.evaluate(() => window.dispatchEvent(new Event("pageshow")));
-  await expect(section.getByRole("button")).toHaveCount(9, { timeout: 5000 });
-  await expect(registerLinks).toHaveCount(9);
+  await expect(section.getByRole("button")).toHaveCount(offerCount, {
+    timeout: 5000,
+  });
+  await expect(registerLinks).toHaveCount(offerCount);
   await expect(section.getByRole("timer")).toHaveCount(0);
   await expect(section.locator('[class*="countdown"] strong')).toHaveText(
     Array(4).fill("00"),
@@ -258,7 +256,7 @@ try {
   await expect(
     section.getByText("Flash Sale đã mở", { exact: true }),
   ).toBeVisible();
-  await expect(quantities).toHaveCount(9);
+  await expect(quantities).toHaveCount(offerCount);
   await expect(quantities.first()).toHaveCSS("color", "rgb(0, 66, 166)");
   for (const [id, { code, quantity }] of Object.entries(offers)) {
     const card = section.locator(`[data-offer="${id}"]`);
@@ -293,8 +291,8 @@ try {
     "BF26-CLOUD30",
   ]);
   await page.reload();
-  await expect(section.getByRole("button")).toHaveCount(9);
-  await expect(quantities).toHaveCount(9);
+  await expect(section.getByRole("button")).toHaveCount(offerCount);
+  await expect(quantities).toHaveCount(offerCount);
   for (const width of [320, 390, 640, 768, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 1000 });
     assert(
@@ -341,15 +339,15 @@ try {
   // A slow device clock must not delay codes once the server has opened.
   await page.clock.setFixedTime(new Date(start - 86400000));
   await page.reload();
-  await expect(section.getByRole("button")).toHaveCount(9);
+  await expect(section.getByRole("button")).toHaveCount(offerCount);
   // An already-open page also picks up the release at the boundary without a visibility event.
   serverNow = start - 2000;
   await page.reload();
-  await expect(locked).toHaveCount(9);
+  await expect(locked).toHaveCount(offerCount);
   await expect(quantities).toHaveCount(0);
   serverNow = start;
-  await expect(quantities).toHaveCount(9);
-  await expect(section.getByRole("button")).toHaveCount(9);
+  await expect(quantities).toHaveCount(offerCount);
+  await expect(section.getByRole("button")).toHaveCount(offerCount);
   // A live page must retire its published offers when the server advances the round.
   roundStartsAt = previousStartsAt;
   serverNow = Date.parse(previousStartsAt) + 3600000;
@@ -357,13 +355,13 @@ try {
   await expect(
     section.locator(`time[datetime="${previousStartsAt}"]`),
   ).toBeVisible();
-  await expect(section.getByRole("button")).toHaveCount(9);
+  await expect(section.getByRole("button")).toHaveCount(offerCount);
   roundStartsAt = startsAt;
   await page.evaluate(() => window.dispatchEvent(new Event("pageshow")));
   await expect(section.getByRole("button")).toHaveCount(0);
   await expect(quantities).toHaveCount(0);
   await expect(section.getByRole("timer")).toHaveCount(1);
-  await expect(locked).toHaveCount(9);
+  await expect(locked).toHaveCount(offerCount);
   await expect(freeCycles).toHaveCount(0);
   await expect(section.locator(`time[datetime="${startsAt}"]`)).toHaveText(
     "11:00AM · Thứ Sáu, 27/11/2026",

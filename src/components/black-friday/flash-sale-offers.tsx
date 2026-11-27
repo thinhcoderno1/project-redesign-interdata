@@ -18,6 +18,7 @@ import {
 import {
   blackFridayFlashSaleFreeOffers,
   blackFridayFlashSaleGroups,
+  blackFridayVpsFlashSaleCycle,
   type PublishedFlashSaleOffer,
 } from "@/data/black-friday-flash-sale";
 import { splitCountdown } from "@/lib/flash-sale";
@@ -282,7 +283,9 @@ export function FlashSaleOffers() {
                         <h4>
                           {plan} <span className={styles.specs}>{specs}</span>
                         </h4>
-                        <p className={styles.cycle}>Chu kỳ 3 tháng – 1 năm</p>
+                        <p className={styles.cycle}>
+                          Chu kỳ {blackFridayVpsFlashSaleCycle}
+                        </p>
                       </div>
                       <div className={styles.ticketEnd}>
                         <OfferAction

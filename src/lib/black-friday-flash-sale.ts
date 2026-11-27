@@ -1,24 +1,41 @@
 import "server-only";
 
 import { blackFridayFlashSale } from "@/data/black-friday";
-import type {
-  FlashSaleOfferId,
-  FlashSaleRelease,
-  PublishedFlashSaleOffer,
+import {
+  blackFridayFlashSaleFreeOffers,
+  blackFridayFlashSaleGroups,
+  type FlashSaleOfferId,
+  type FlashSaleRelease,
 } from "@/data/black-friday-flash-sale";
 import { getFlashSaleState } from "./flash-sale";
 
-const offers = {
+const offers: Record<
+  FlashSaleOfferId,
+  { code: string | null; quantity: number }
+> = {
   freeAmd: { code: "FREEAMD-BF26FLASH", quantity: 5 },
   freePlatinum: { code: "FREEVPS27-BF26FLASH", quantity: 5 },
   free: { code: "FREEDOMAIN-BF26FLASH", quantity: 5 },
-  vps81: { code: "VPS81-FLASHBF27", quantity: 3 },
-  vps71: { code: "VPS71-FLASHBF27", quantity: 3 },
-  vps61: { code: "VPS61-FLASHBF27", quantity: 10 },
+  vps99: { code: null, quantity: 5 },
+  vps70: { code: null, quantity: 5 },
+  vps60: { code: null, quantity: 10 },
   cloud61: { code: "CLOUD61-BF26FLASH27", quantity: 3 },
   cloud51: { code: "CLOUD51-BF26FLASH27", quantity: 3 },
   cloud41: { code: "CLOUD41-BF26FLASH27", quantity: 10 },
-} satisfies Record<FlashSaleOfferId, PublishedFlashSaleOffer>;
+};
+
+const visibleOfferIds = [
+  ...blackFridayFlashSaleFreeOffers.map(({ id }) => id),
+  ...blackFridayFlashSaleGroups.flatMap(({ offers }) =>
+    offers.map(({ id }) => id),
+  ),
+];
+const visibleOffers = Object.fromEntries(
+  visibleOfferIds.flatMap((id) => {
+    const { code, quantity } = offers[id];
+    return code ? [[id, { code, quantity }] as const] : [];
+  }),
+);
 
 export function getBlackFridayFlashSaleRelease(
   now = Date.now(),
@@ -33,6 +50,6 @@ export function getBlackFridayFlashSaleRelease(
     serverNow: now,
     startsAt,
     status: live ? "live" : "upcoming",
-    offers: live ? offers : {},
+    offers: live ? visibleOffers : {},
   };
 }

@@ -33,24 +33,30 @@ const publicSource = await fs.readFile(
   "src/data/black-friday-flash-sale.ts",
   "utf8",
 );
+const publicData = load(publicSource);
 const {
   blackFridayFlashSaleFreeOffers: freeOffers,
   blackFridayFlashSaleGroups: groups,
-} = load(publicSource);
+} = publicData;
 const discountOffers = groups.flatMap((group) => group.offers);
 const expectedOffers = {
   freeAmd: { code: "FREEAMD-BF26FLASH", quantity: 5 },
   freePlatinum: { code: "FREEVPS27-BF26FLASH", quantity: 5 },
   free: { code: "FREEDOMAIN-BF26FLASH", quantity: 5 },
-  vps81: { code: "VPS81-FLASHBF27", quantity: 3 },
-  vps71: { code: "VPS71-FLASHBF27", quantity: 3 },
-  vps61: { code: "VPS61-FLASHBF27", quantity: 10 },
-  cloud61: { code: "CLOUD61-BF26FLASH27", quantity: 3 },
-  cloud51: { code: "CLOUD51-BF26FLASH27", quantity: 3 },
-  cloud41: { code: "CLOUD41-BF26FLASH27", quantity: 10 },
 };
+const unpublishedCodes = [
+  "VPS81-FLASHBF27",
+  "VPS71-FLASHBF27",
+  "VPS61-FLASHBF27",
+  "CLOUD61-BF26FLASH27",
+  "CLOUD51-BF26FLASH27",
+  "CLOUD41-BF26FLASH27",
+];
 const containsReleaseCode = (content) =>
-  Object.values(expectedOffers).some(({ code }) => content.includes(code));
+  [
+    ...Object.values(expectedOffers).map(({ code }) => code),
+    ...unpublishedCodes,
+  ].some((code) => content.includes(code));
 assert.equal(data.blackFridayFlashSale.mode, "preview");
 assert.equal(data.blackFridayFlashSale.startsAt, "2026-11-27T11:00:00+07:00");
 assert.deepEqual(data.blackFridayFlashSaleUpcomingDates, []);
@@ -59,6 +65,7 @@ assert.equal(start, Date.parse("2026-11-27T04:00:00Z"));
 const imports = {
   "server-only": {},
   "@/data/black-friday": data,
+  "@/data/black-friday-flash-sale": publicData,
   "./flash-sale": load(await fs.readFile("src/lib/flash-sale.ts", "utf8")),
 };
 const { getBlackFridayFlashSaleRelease: release } = load(source, imports);
@@ -79,11 +86,11 @@ for (const now of [start, start + 1, start + 86400000]) {
 }
 assert.deepEqual(
   discountOffers.map(({ id }) => id),
-  ["vps81", "vps71", "vps61", "cloud61", "cloud51", "cloud41"],
+  ["vps99", "vps70", "vps60"],
 );
 assert.deepEqual(
   discountOffers.map(({ discount }) => discount),
-  [81, 71, 61, 61, 51, 41],
+  [99, 70, 60],
 );
 assert(!containsReleaseCode(publicSource));
 assert(!/quantity/.test(JSON.stringify([...freeOffers, ...discountOffers])));
@@ -92,14 +99,14 @@ assert.deepEqual(freeOffers, [
     id: "freeAmd",
     plan: "VPS AMD",
     specs: "2 vCore - 2GB RAM - 30GB SSD NVMe",
-    cycle: "6 tháng",
+    cycle: "3–12 tháng",
     checkoutHref: "https://support.interdata.vn/index.php?rp=/store/amd-g3-vps",
   },
   {
     id: "freePlatinum",
     plan: "VPS Platinum",
     specs: "2 vCore - 2GB RAM - 30GB SSD NVMe",
-    cycle: "6 tháng",
+    cycle: "3–12 tháng",
     checkoutHref:
       "https://support.interdata.vn/index.php?rp=/store/vps-platinum-viettel-hcm",
   },
@@ -113,20 +120,14 @@ assert.deepEqual(freeOffers, [
 ]);
 assert.deepEqual(
   groups.map(({ checkoutHref }) => checkoutHref),
-  [
-    "https://support.interdata.vn/index.php?rp=/store/vps-platinum-viettel-hcm",
-    "https://support.interdata.vn/index.php?rp=/store/platinum-g2-cloud",
-  ],
+  ["https://support.interdata.vn/index.php?rp=/store/vps-platinum-viettel-hcm"],
 );
 assert.deepEqual(
   discountOffers.map(({ plan, specs }) => `${plan} ${specs}`),
   [
     "VPS Platinum 2 vCPU - 2GB RAM - 30GB SSD",
-    "VPS Platinum 2 vCPU - 4GB RAM - 50GB SSD",
-    "VPS Platinum 4 vCPU - 8GB RAM - 80GB SSD",
-    "Cloud Platinum 2 vCPU - 2GB RAM - 30GB SSD",
-    "Cloud Platinum 2 vCPU - 4GB RAM - 50GB SSD",
-    "Cloud Platinum 4 vCPU - 8GB RAM - 80GB SSD",
+    "VPS Platinum Tối đa 4 vCPU - 8GB RAM - 80GB SSD",
+    "VPS Platinum Tối đa 4 vCPU - 8GB RAM - 80GB SSD",
   ],
 );
 const hidden = load(source, {
@@ -216,5 +217,5 @@ if (process.argv.includes("--built")) {
   );
 }
 console.log(
-  "Flash Sale data: November 27 opening boundary, nine offers, registration links and no-store response passed.",
+  "Flash Sale data: November 27 opening boundary, VPS tiers, unpublished codes, registration links and no-store response passed.",
 );

@@ -8,20 +8,22 @@ const specs = {
 const platinumVpsStoreUrl =
   "https://support.interdata.vn/index.php?rp=/store/vps-platinum-viettel-hcm";
 const freeVpsSpecs = "2 vCore - 2GB RAM - 30GB SSD NVMe";
+const platinumSpecsLimit = "Tối đa 4 vCPU - 8GB RAM - 80GB SSD";
+export const blackFridayVpsFlashSaleCycle = "3–12 tháng";
 
 export const blackFridayFlashSaleFreeOffers = [
   {
     id: "freeAmd",
     plan: "VPS AMD",
     specs: freeVpsSpecs,
-    cycle: "6 tháng",
+    cycle: blackFridayVpsFlashSaleCycle,
     checkoutHref: "https://support.interdata.vn/index.php?rp=/store/amd-g3-vps",
   },
   {
     id: "freePlatinum",
     plan: "VPS Platinum",
     specs: freeVpsSpecs,
-    cycle: "6 tháng",
+    cycle: blackFridayVpsFlashSaleCycle,
     checkoutHref: platinumVpsStoreUrl,
   },
   {
@@ -33,34 +35,36 @@ export const blackFridayFlashSaleFreeOffers = [
   },
 ] as const;
 
-export const blackFridayFlashSaleGroups = [
+const flashSaleGroups = [
   {
     id: "vps",
-    title: "Flash Sale VPS Platinum Giảm Đến 81%",
+    hidden: false,
+    title: "Flash Sale VPS Platinum Giảm Đến 99%",
     checkoutHref: platinumVpsStoreUrl,
     offers: [
       {
-        id: "vps81",
+        id: "vps99",
         plan: "VPS Platinum",
         specs: specs["2-2-30"],
-        discount: 81,
+        discount: 99,
       },
       {
-        id: "vps71",
+        id: "vps70",
         plan: "VPS Platinum",
-        specs: specs["2-4-50"],
-        discount: 71,
+        specs: platinumSpecsLimit,
+        discount: 70,
       },
       {
-        id: "vps61",
+        id: "vps60",
         plan: "VPS Platinum",
-        specs: specs["4-8-80"],
-        discount: 61,
+        specs: platinumSpecsLimit,
+        discount: 60,
       },
     ],
   },
   {
     id: "cloud",
+    hidden: true,
     title: "Flash Sale Cloud Platinum Giảm Đến 61%",
     checkoutHref:
       "https://support.interdata.vn/index.php?rp=/store/platinum-g2-cloud",
@@ -87,9 +91,13 @@ export const blackFridayFlashSaleGroups = [
   },
 ] as const;
 
+export const blackFridayFlashSaleGroups = flashSaleGroups.filter(
+  ({ hidden }) => !hidden,
+);
+
 export type FlashSaleOfferId =
   | (typeof blackFridayFlashSaleFreeOffers)[number]["id"]
-  | (typeof blackFridayFlashSaleGroups)[number]["offers"][number]["id"];
+  | (typeof flashSaleGroups)[number]["offers"][number]["id"];
 
 export type PublishedFlashSaleOffer = { code: string; quantity: number };
 

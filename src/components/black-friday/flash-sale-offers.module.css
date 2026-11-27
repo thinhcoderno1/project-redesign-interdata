@@ -497,7 +497,6 @@
 .specs {
   --spec-font-size: 1rem;
   font-size: min(var(--spec-font-size), 6.15cqi);
-  white-space: nowrap;
 }
 
 .ticket h4 .specs {

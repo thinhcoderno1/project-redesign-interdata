@@ -322,7 +322,7 @@ try {
     (response) => response.json(),
   );
   const flash = page.locator("#flash-sale");
-  await expect(flash.locator("article")).toHaveCount(9);
+  await expect(flash.locator("article")).toHaveCount(6);
   await expect(flash.locator("time").first()).toHaveAttribute(
     "dateTime",
     "2026-11-27T11:00:00+07:00",
@@ -719,7 +719,7 @@ try {
     staticPage.locator("#ma-giam-gia details").first(),
   ).toHaveAttribute("open", "");
   await expect(staticPage.locator("#black-friday-faq details")).toHaveCount(8);
-  await expect(staticPage.locator("#flash-sale article")).toHaveCount(9);
+  await expect(staticPage.locator("#flash-sale article")).toHaveCount(6);
   await expect(staticPage.locator("#flash-sale button")).toHaveCount(0);
   await expect(
     staticPage.locator("#flash-sale").getByText(/^Chỉ \d{2} mã$/i),
