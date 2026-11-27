@@ -45,7 +45,7 @@ const expectedOffers = {
   free: { code: "FREEDOMAIN-BF26FLASH", quantity: 5 },
   vps99: { code: "VPS99-FLASHBF27", quantity: 5 },
   vps70: { code: "VPS70-FLASHBF27", quantity: 5 },
-  vps60: { code: "VPS60-FLASHBF27", quantity: 10 },
+  vps60: { code: "VPS60-FLASHBF27", quantity: 5 },
 };
 const unpublishedCodes = [
   "VPS81-FLASHBF27",

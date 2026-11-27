@@ -13,7 +13,7 @@ const offers = {
   free: { code: "FREEDOMAIN-TESTFLASH", quantity: 5 },
   vps99: { code: "VPS99-TESTFLASH", quantity: 5 },
   vps70: { code: "VPS70-TESTFLASH", quantity: 5 },
-  vps60: { code: "VPS60-TESTFLASH", quantity: 10 },
+  vps60: { code: "VPS60-TESTFLASH", quantity: 5 },
 };
 const offerCount = Object.keys(offers).length;
 const codePattern = /-(?:BF26FLASH(?:27)?|FLASHBF27)\b/;
