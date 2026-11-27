@@ -329,7 +329,7 @@ try {
   await expect(flash.locator("article")).toHaveCount(6);
   await expect(flash.locator("time").first()).toHaveAttribute(
     "dateTime",
-    "2026-11-27T15:00:00+07:00",
+    "2026-11-27T20:00:00+07:00",
   );
   const domainCycle = flash
     .locator('[data-offer="free"]')

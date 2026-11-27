@@ -49,16 +49,14 @@ export const blackFridayRenewal = {
 // Set all dates and switch to "scheduled" when the official schedule is ready.
 // Scheduled mode shows the section from visibleFrom until endsAt; "hidden" hides it.
 export const blackFridayFlashSale: FlashSaleSchedule = {
-  // The 11:00 round has ended. Count down to November 27 at 15:00 VN.
+  // The 15:00 round has ended. Count down to November 27 at 20:00 VN.
   mode: "preview",
   visibleFrom: null,
-  startsAt: "2026-11-27T15:00:00+07:00",
+  startsAt: "2026-11-27T20:00:00+07:00",
   endsAt: null,
 };
 
-export const blackFridayFlashSaleUpcomingDates: readonly string[] = [
-  "2026-11-27T20:00:00+07:00",
-];
+export const blackFridayFlashSaleUpcomingDates: readonly string[] = [];
 
 export const blackFridayCoupons = [
   {

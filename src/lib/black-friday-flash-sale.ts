@@ -13,12 +13,12 @@ const offers: Record<
   FlashSaleOfferId,
   { code: string | null; quantity: number }
 > = {
-  freeAmd: { code: "FLASH27-AMD0D", quantity: 5 },
-  freePlatinum: { code: "FLASH27-FREE0D", quantity: 5 },
-  free: { code: "FLASH27-DOMAIN0D", quantity: 5 },
-  vps99: { code: "FLASHBF26-DEAL99", quantity: 5 },
-  vps70: { code: "FLASHBF26-DEAL70", quantity: 5 },
-  vps60: { code: "FLASHBF26-DEAL60", quantity: 5 },
+  freeAmd: { code: "FLASHBF26-AMDFREE", quantity: 5 },
+  freePlatinum: { code: "FLASHBF26-VPSFREE", quantity: 5 },
+  free: { code: "FLASHBF26-DOMAINFREE", quantity: 5 },
+  vps99: { code: "BF26-HOTDEAL99", quantity: 5 },
+  vps70: { code: "BF26-HOTDEAL70", quantity: 5 },
+  vps60: { code: "BF26-HOTDEAL60", quantity: 5 },
   cloud61: { code: "CLOUD61-BF26FLASH27", quantity: 3 },
   cloud51: { code: "CLOUD51-BF26FLASH27", quantity: 3 },
   cloud41: { code: "CLOUD41-BF26FLASH27", quantity: 10 },

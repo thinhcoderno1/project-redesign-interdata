@@ -40,14 +40,20 @@ const {
 } = publicData;
 const discountOffers = groups.flatMap((group) => group.offers);
 const expectedOffers = {
-  freeAmd: { code: "FLASH27-AMD0D", quantity: 5 },
-  freePlatinum: { code: "FLASH27-FREE0D", quantity: 5 },
-  free: { code: "FLASH27-DOMAIN0D", quantity: 5 },
-  vps99: { code: "FLASHBF26-DEAL99", quantity: 5 },
-  vps70: { code: "FLASHBF26-DEAL70", quantity: 5 },
-  vps60: { code: "FLASHBF26-DEAL60", quantity: 5 },
+  freeAmd: { code: "FLASHBF26-AMDFREE", quantity: 5 },
+  freePlatinum: { code: "FLASHBF26-VPSFREE", quantity: 5 },
+  free: { code: "FLASHBF26-DOMAINFREE", quantity: 5 },
+  vps99: { code: "BF26-HOTDEAL99", quantity: 5 },
+  vps70: { code: "BF26-HOTDEAL70", quantity: 5 },
+  vps60: { code: "BF26-HOTDEAL60", quantity: 5 },
 };
 const unpublishedCodes = [
+  "FLASH27-AMD0D",
+  "FLASH27-FREE0D",
+  "FLASH27-DOMAIN0D",
+  "FLASHBF26-DEAL99",
+  "FLASHBF26-DEAL70",
+  "FLASHBF26-DEAL60",
   "FREEAMD-BF26FLASH",
   "FREEVPS27-BF26FLASH",
   "FREEDOMAIN-BF26FLASH",
@@ -67,12 +73,10 @@ const containsReleaseCode = (content) =>
     ...unpublishedCodes,
   ].some((code) => content.includes(code));
 assert.equal(data.blackFridayFlashSale.mode, "preview");
-assert.equal(data.blackFridayFlashSale.startsAt, "2026-11-27T15:00:00+07:00");
-assert.deepEqual(data.blackFridayFlashSaleUpcomingDates, [
-  "2026-11-27T20:00:00+07:00",
-]);
+assert.equal(data.blackFridayFlashSale.startsAt, "2026-11-27T20:00:00+07:00");
+assert.deepEqual(data.blackFridayFlashSaleUpcomingDates, []);
 const start = Date.parse(data.blackFridayFlashSale.startsAt);
-assert.equal(start, Date.parse("2026-11-27T08:00:00Z"));
+assert.equal(start, Date.parse("2026-11-27T13:00:00Z"));
 const imports = {
   "server-only": {},
   "@/data/black-friday": data,
@@ -86,6 +90,8 @@ for (const now of [
   Date.parse("2026-11-25T11:00:00+07:00"),
   Date.parse("2026-11-27T11:00:00+07:00"),
   Date.parse("2026-11-27T14:30:00+07:00"),
+  Date.parse("2026-11-27T15:00:00+07:00"),
+  Date.parse("2026-11-27T19:59:59+07:00"),
   start - 1000,
   start - 1,
 ]) {
@@ -167,9 +173,9 @@ const scheduled = load(source, {
   "@/data/black-friday": {
     blackFridayFlashSale: {
       mode: "scheduled",
-      visibleFrom: "2026-11-27T14:00:00+07:00",
+      visibleFrom: "2026-11-27T19:00:00+07:00",
       startsAt: data.blackFridayFlashSale.startsAt,
-      endsAt: "2026-11-27T16:00:00+07:00",
+      endsAt: "2026-11-27T21:00:00+07:00",
     },
   },
 }).getBlackFridayFlashSaleRelease;
