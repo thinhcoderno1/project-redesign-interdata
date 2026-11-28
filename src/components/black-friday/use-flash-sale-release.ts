@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { blackFridayFlashSale } from "@/data/black-friday";
 import type { FlashSaleRelease } from "@/data/black-friday-flash-sale";
 
 export function useFlashSaleRelease() {
@@ -9,6 +10,8 @@ export function useFlashSaleRelease() {
   const [syncFailed, setSyncFailed] = useState(false);
 
   useEffect(() => {
+    if (blackFridayFlashSale.mode === "ended") return;
+
     let clock: {
       serverNow: number;
       measuredAt: number;
@@ -16,12 +19,13 @@ export function useFlashSaleRelease() {
       openingConfirmed: boolean;
     } | null = null;
     let published = false;
+    let ended = false;
     let stopped = false;
     let request: AbortController | null = null;
     let lastAttempt = -Infinity;
 
     async function sync() {
-      if (request || stopped) return;
+      if (request || stopped || ended) return;
       const controller = new AbortController();
       request = controller;
       lastAttempt = performance.now();
@@ -37,6 +41,7 @@ export function useFlashSaleRelease() {
         if (!Number.isFinite(startsAt) || !Number.isFinite(data.serverNow))
           throw new Error("Invalid Flash Sale clock");
         if (controller.signal.aborted) return;
+        ended = data.status === "ended";
         clock = {
           serverNow: data.serverNow,
           measuredAt: performance.now(),
@@ -47,7 +52,9 @@ export function useFlashSaleRelease() {
           clock.openingConfirmed && Object.keys(data.offers).length > 0;
         setRelease(data);
         setRemainingSeconds(
-          Math.max(0, Math.ceil((startsAt - data.serverNow) / 1000)),
+          ended
+            ? null
+            : Math.max(0, Math.ceil((startsAt - data.serverNow) / 1000)),
         );
         setSyncFailed(false);
       } catch {
@@ -59,6 +66,7 @@ export function useFlashSaleRelease() {
     }
 
     function tick() {
+      if (ended) return;
       const elapsed = performance.now();
       if (published) {
         if (elapsed - lastAttempt >= 30000) void sync();

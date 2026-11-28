@@ -72,7 +72,7 @@ const containsReleaseCode = (content) =>
     ...Object.values(expectedOffers).map(({ code }) => code),
     ...unpublishedCodes,
   ].some((code) => content.includes(code));
-assert.equal(data.blackFridayFlashSale.mode, "hidden");
+assert.equal(data.blackFridayFlashSale.mode, "ended");
 assert.equal(data.blackFridayFlashSale.startsAt, "2026-11-27T20:00:00+07:00");
 assert.deepEqual(data.blackFridayFlashSaleUpcomingDates, []);
 const start = Date.parse(data.blackFridayFlashSale.startsAt);
@@ -85,13 +85,13 @@ const imports = {
 };
 const { getBlackFridayFlashSaleRelease: release } = load(source, imports);
 for (const now of [start - 1, start, start + 1, start + 86400000, Date.now()]) {
-  assert.notEqual(release(now).status, "live");
+  assert.equal(release(now).status, "ended");
   assert.deepEqual(release(now).offers, {});
   assert(!containsReleaseCode(JSON.stringify(release(now))));
   assert.equal(
     imports["./flash-sale"].getFlashSaleState(data.blackFridayFlashSale, now)
       .visible,
-    false,
+    true,
   );
 }
 // Retain opening-boundary coverage for a future explicitly enabled round.

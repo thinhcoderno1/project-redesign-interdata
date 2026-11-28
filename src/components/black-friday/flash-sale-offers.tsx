@@ -60,12 +60,21 @@ function OfferAction({
   offer,
   checkoutHref,
   hasOpeningDate,
+  ended,
 }: {
   label: string;
   offer: PublishedFlashSaleOffer | undefined;
   checkoutHref: string;
   hasOpeningDate: boolean;
+  ended: boolean;
 }) {
+  if (ended)
+    return (
+      <div className={styles.locked}>
+        <LockKeyhole size={14} aria-hidden="true" /> Mã đã ẩn
+      </div>
+    );
+
   return (
     <>
       {offer ? (
@@ -108,7 +117,9 @@ export function FlashSaleOffers() {
   const bannerTime = hasOpeningDate
     ? bannerTimeLabel.format(openingDate).replace(/\s+/g, "")
     : null;
-  const live = release?.status === "live";
+  const ended =
+    blackFridayFlashSale.mode === "ended" || release?.status === "ended";
+  const live = !ended && release?.status === "live";
   const publishedOffers = live ? release.offers : {};
   const hasPublishedOffers = Object.keys(publishedOffers).length > 0;
   const values =
@@ -152,7 +163,7 @@ export function FlashSaleOffers() {
                 </time>
               </p>
             )}
-            {upcomingDates.length > 0 && (
+            {!ended && upcomingDates.length > 0 && (
               <p className={styles.upcoming}>
                 <span>Khung giờ tiếp theo</span>
                 <span className={styles.upcomingDates}>
@@ -167,48 +178,61 @@ export function FlashSaleOffers() {
           </div>
 
           <div className={styles.clock}>
-            {(!live || hasPublishedOffers) && (
-              <p className={styles.clockHeading}>
-                {live && (
-                  <span className={styles.indicator} aria-hidden="true" />
+            {ended ? (
+              <>
+                <p className={styles.clockHeading} role="status">
+                  Flash Sale đã kết thúc
+                </p>
+                <p className={styles.clockNote}>
+                  Các mã Flash Sale đã được ẩn.
+                </p>
+              </>
+            ) : (
+              <>
+                {(!live || hasPublishedOffers) && (
+                  <p className={styles.clockHeading}>
+                    {live && (
+                      <span className={styles.indicator} aria-hidden="true" />
+                    )}
+                    {live ? "Flash Sale đã mở" : "Flash Sale tiếp theo"}
+                  </p>
                 )}
-                {live ? "Flash Sale đã mở" : "Flash Sale tiếp theo"}
-              </p>
-            )}
-            <div
-              className={styles.countdown}
-              role={live ? undefined : "timer"}
-              aria-hidden={live || undefined}
-              aria-live={live ? undefined : "off"}
-              aria-label={
-                live
-                  ? undefined
-                  : remainingSeconds === null
-                    ? "Đang đồng bộ thời gian"
-                    : values
-                        .map(
-                          (value, index) =>
-                            `${value} ${countdownLabels[index]}`,
-                        )
-                        .join(", ")
-              }
-            >
-              {values.map((value, index) => (
-                <div key={countdownLabels[index]} aria-hidden="true">
-                  <strong>{value}</strong>
-                  <span>{countdownLabels[index]}</span>
+                <div
+                  className={styles.countdown}
+                  role={live ? undefined : "timer"}
+                  aria-hidden={live || undefined}
+                  aria-live={live ? undefined : "off"}
+                  aria-label={
+                    live
+                      ? undefined
+                      : remainingSeconds === null
+                        ? "Đang đồng bộ thời gian"
+                        : values
+                            .map(
+                              (value, index) =>
+                                `${value} ${countdownLabels[index]}`,
+                            )
+                            .join(", ")
+                  }
+                >
+                  {values.map((value, index) => (
+                    <div key={countdownLabels[index]} aria-hidden="true">
+                      <strong>{value}</strong>
+                      <span>{countdownLabels[index]}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <p className={styles.clockNote} role="status">
-              {hasPublishedOffers
-                ? "Chọn ưu đãi bên dưới để sao chép mã."
-                : syncFailed
-                  ? "Đang kết nối lại để cập nhật giờ mở bán…"
-                  : live
-                    ? "Mã ưu đãi đang cập nhật."
-                    : null}
-            </p>
+                <p className={styles.clockNote} role="status">
+                  {hasPublishedOffers
+                    ? "Chọn ưu đãi bên dưới để sao chép mã."
+                    : syncFailed
+                      ? "Đang kết nối lại để cập nhật giờ mở bán…"
+                      : live
+                        ? "Mã ưu đãi đang cập nhật."
+                        : null}
+                </p>
+              </>
+            )}
           </div>
         </header>
 
@@ -236,7 +260,7 @@ export function FlashSaleOffers() {
                     <h4 id={headingId}>Tặng miễn phí {offer.plan}</h4>
                     {"specs" in offer && <p>{offer.specs}</p>}
                     {"subtitle" in offer && <p>{offer.subtitle}</p>}
-                    {live && <p>Chu kỳ {offer.cycle}</p>}
+                    {(live || ended) && <p>Chu kỳ {offer.cycle}</p>}
                   </div>
                 </div>
                 <div className={styles.freePrice}>
@@ -244,6 +268,7 @@ export function FlashSaleOffers() {
                 </div>
                 <div className={styles.freeEnd}>
                   <OfferAction
+                    ended={ended}
                     hasOpeningDate={hasOpeningDate}
                     label={`${offer.plan} miễn phí`}
                     offer={publishedOffers[offer.id]}
@@ -292,6 +317,7 @@ export function FlashSaleOffers() {
                       </div>
                       <div className={styles.ticketEnd}>
                         <OfferAction
+                          ended={ended}
                           hasOpeningDate={hasOpeningDate}
                           label={`${plan} ${specs} giảm ${discount}%`}
                           offer={publishedOffers[offerId]}
@@ -316,12 +342,14 @@ export function FlashSaleOffers() {
             ))}
           </ul>
         </details>
-        <noscript>
-          <p className={styles.noScript}>
-            Vui lòng bật JavaScript để xem đếm ngược và nhận mã ưu đãi khi mở
-            bán.
-          </p>
-        </noscript>
+        {!ended && (
+          <noscript>
+            <p className={styles.noScript}>
+              Vui lòng bật JavaScript để xem đếm ngược và nhận mã ưu đãi khi mở
+              bán.
+            </p>
+          </noscript>
+        )}
       </div>
     </section>
   );

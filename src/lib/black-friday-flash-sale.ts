@@ -49,7 +49,12 @@ export function getBlackFridayFlashSaleRelease(
   return {
     serverNow: now,
     startsAt,
-    status: live ? "live" : "upcoming",
+    status:
+      blackFridayFlashSale.mode === "ended"
+        ? "ended"
+        : live
+          ? "live"
+          : "upcoming",
     offers: live ? visibleOffers : {},
   };
 }

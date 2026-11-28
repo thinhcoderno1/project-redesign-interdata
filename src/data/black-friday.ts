@@ -48,9 +48,10 @@ export const blackFridayRenewal = {
 // Preview keeps the section visible; Flash Sale releases are timed on the server.
 // Set all dates and switch to "scheduled" when the official schedule is ready.
 // Scheduled mode shows the section from visibleFrom until endsAt; "hidden" hides it.
+// "ended" retains the section while hiding codes and registration controls.
 export const blackFridayFlashSale: FlashSaleSchedule = {
-  // Flash Sale has ended. Hide its section, navigation and homepage countdown.
-  mode: "hidden",
+  // Flash Sale has ended. Keep its section visible without releasing codes.
+  mode: "ended",
   visibleFrom: null,
   startsAt: "2026-11-27T20:00:00+07:00",
   endsAt: null,

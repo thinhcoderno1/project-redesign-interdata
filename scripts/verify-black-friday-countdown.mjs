@@ -48,6 +48,11 @@ for (const now of [0, visibleFrom, start, end]) {
     remainingSeconds: 0,
   });
   assert.equal(state({ ...schedule, mode: "hidden" }, now).visible, false);
+  assert.deepEqual(state({ ...schedule, mode: "ended" }, now), {
+    visible: true,
+    phase: "ended",
+    remainingSeconds: 0,
+  });
 }
 for (const invalid of [
   { startsAt: null },

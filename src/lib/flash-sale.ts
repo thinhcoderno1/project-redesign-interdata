@@ -1,5 +1,5 @@
 export type FlashSaleSchedule = {
-  mode: "preview" | "scheduled" | "hidden";
+  mode: "preview" | "scheduled" | "ended" | "hidden";
   // Use ISO 8601 dates with an explicit timezone, e.g. +07:00 for Vietnam.
   visibleFrom: string | null;
   startsAt: string | null;
@@ -7,6 +7,9 @@ export type FlashSaleSchedule = {
 };
 
 export function getFlashSaleState(schedule: FlashSaleSchedule, now: number) {
+  if (schedule.mode === "ended")
+    return { visible: true, phase: "ended", remainingSeconds: 0 } as const;
+
   if (schedule.mode === "preview")
     return { visible: true, phase: "preview", remainingSeconds: 0 } as const;
 

@@ -104,6 +104,6 @@ export type PublishedFlashSaleOffer = { code: string; quantity: number };
 export type FlashSaleRelease = {
   serverNow: number;
   startsAt: string;
-  status: "upcoming" | "live";
+  status: "upcoming" | "live" | "ended";
   offers: Partial<Record<FlashSaleOfferId, PublishedFlashSaleOffer>>;
 };
