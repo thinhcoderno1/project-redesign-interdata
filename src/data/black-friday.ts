@@ -48,10 +48,9 @@ export const blackFridayRenewal = {
 // Preview keeps the section visible; Flash Sale releases are timed on the server.
 // Set all dates and switch to "scheduled" when the official schedule is ready.
 // Scheduled mode shows the section from visibleFrom until endsAt; "hidden" hides it.
-// "ended" retains the section while hiding codes and registration controls.
 export const blackFridayFlashSale: FlashSaleSchedule = {
-  // Flash Sale has ended. Keep its section visible without releasing codes.
-  mode: "ended",
+  // The 15:00 round has ended. Count down to November 27 at 20:00 VN.
+  mode: "preview",
   visibleFrom: null,
   startsAt: "2026-11-27T20:00:00+07:00",
   endsAt: null,
@@ -134,7 +133,7 @@ export const blackFridayFaqs: {
   {
     question: "Tôi nhận và sử dụng mã ưu đãi như thế nào?",
     answer:
-      "Chương trình Flash Sale đã kết thúc. Các mã ưu đãi VPS và Cloud Server vẫn được hiển thị tại mục Mã giảm giá. Chọn đúng dịch vụ và chu kỳ áp dụng, sao chép mã và nhập ở bước thanh toán. Đối chiếu mức giảm và tổng tiền trên đơn hàng trước khi thanh toán.",
+      "Mã ưu đãi được hiển thị trực tiếp trong các khung mã tại Flash Sale và Mã giảm giá. Chọn đúng dịch vụ, thời gian mở bán và chu kỳ áp dụng, nhấn “Nhận ưu đãi” để xem các gói dịch vụ, sau đó nhập mã ở bước thanh toán. Đối chiếu mức giảm và tổng tiền trên đơn hàng trước khi thanh toán.",
     action: { label: "Xem mã ưu đãi", href: "#ma-giam-gia" },
   },
   {

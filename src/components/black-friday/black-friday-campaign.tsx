@@ -13,7 +13,7 @@ export function getBlackFridayMetadata(path: "/" | "/blackfriday/"): Metadata {
   const url = `${siteIdentity.origin}${path}`;
   const title = "Black Friday VPS & Cloud Server 2026 - Tiết Kiệm Đến 75%";
   const description =
-    "Best Offers VPS Platinum Tiết Kiệm Đến 80% - AntiDDoS 120Gbps - Tặng S3 Storage, Nón Sơn & Ly Sứ.";
+    "Best Offers VPS Platinum Tiết Kiệm Đến 80% - AntiDDoS 120Gbps - Mã Giảm VPS / Cloud Đến 81% - Flash Sale 0Đ - Tặng S3 Storage, Nón Sơn & Ly Sứ.";
 
   return {
     title,

@@ -18,11 +18,8 @@ import {
 import {
   blackFridayFlashSaleFreeOffers,
   blackFridayFlashSaleGroups,
-  blackFridayVpsFlashSaleCycle,
-  type PublishedFlashSaleOffer,
 } from "@/data/black-friday-flash-sale";
 import { splitCountdown } from "@/lib/flash-sale";
-import { CouponCopyButton } from "./coupon-copy-button";
 import { useFlashSaleRelease } from "./use-flash-sale-release";
 import styles from "./flash-sale-offers.module.css";
 
@@ -57,43 +54,16 @@ const upcomingDates = blackFridayFlashSaleUpcomingDates.map((date) => ({
 
 function OfferAction({
   label,
-  offer,
   checkoutHref,
-  hasOpeningDate,
-  ended,
 }: {
   label: string;
-  offer: PublishedFlashSaleOffer | undefined;
   checkoutHref: string;
-  hasOpeningDate: boolean;
-  ended: boolean;
 }) {
-  if (ended)
-    return (
-      <div className={styles.locked}>
-        <LockKeyhole size={14} aria-hidden="true" /> Mã đã ẩn
-      </div>
-    );
-
   return (
     <>
-      {offer ? (
-        <>
-          <p className={styles.quantity}>
-            Chỉ {String(offer.quantity).padStart(2, "0")} mã
-          </p>
-          <CouponCopyButton
-            className={styles.copy}
-            code={offer.code}
-            label={label}
-          />
-        </>
-      ) : (
-        <div className={styles.locked}>
-          <LockKeyhole size={14} aria-hidden="true" />
-          {hasOpeningDate ? "Mã đang cập nhật" : "Mã chưa mở"}
-        </div>
-      )}
+      <div className={styles.locked}>
+        <LockKeyhole size={14} aria-hidden="true" /> Đang cập nhật
+      </div>
       <a
         className={styles.register}
         href={checkoutHref}
@@ -107,7 +77,7 @@ function OfferAction({
 }
 
 export function FlashSaleOffers() {
-  const { release, remainingSeconds, syncFailed } = useFlashSaleRelease();
+  const { release } = useFlashSaleRelease();
   const startsAt = release?.startsAt ?? blackFridayFlashSale.startsAt;
   const openingDate = new Date(startsAt ?? NaN);
   const hasOpeningDate = Number.isFinite(openingDate.getTime());
@@ -117,15 +87,8 @@ export function FlashSaleOffers() {
   const bannerTime = hasOpeningDate
     ? bannerTimeLabel.format(openingDate).replace(/\s+/g, "")
     : null;
-  const ended =
-    blackFridayFlashSale.mode === "ended" || release?.status === "ended";
-  const live = !ended && release?.status === "live";
-  const publishedOffers = live ? release.offers : {};
-  const hasPublishedOffers = Object.keys(publishedOffers).length > 0;
-  const values =
-    remainingSeconds === null
-      ? ["--", "--", "--", "--"]
-      : splitCountdown(remainingSeconds);
+  const live = release?.status === "live";
+  const values = splitCountdown(0);
   return (
     <section
       id="flash-sale"
@@ -163,7 +126,7 @@ export function FlashSaleOffers() {
                 </time>
               </p>
             )}
-            {!ended && upcomingDates.length > 0 && (
+            {upcomingDates.length > 0 && (
               <p className={styles.upcoming}>
                 <span>Khung giờ tiếp theo</span>
                 <span className={styles.upcomingDates}>
@@ -178,61 +141,25 @@ export function FlashSaleOffers() {
           </div>
 
           <div className={styles.clock}>
-            {ended ? (
-              <>
-                <p className={styles.clockHeading} role="status">
-                  Flash Sale đã kết thúc
-                </p>
-                <p className={styles.clockNote}>
-                  Các mã Flash Sale đã được ẩn.
-                </p>
-              </>
-            ) : (
-              <>
-                {(!live || hasPublishedOffers) && (
-                  <p className={styles.clockHeading}>
-                    {live && (
-                      <span className={styles.indicator} aria-hidden="true" />
-                    )}
-                    {live ? "Flash Sale đã mở" : "Flash Sale tiếp theo"}
-                  </p>
-                )}
-                <div
-                  className={styles.countdown}
-                  role={live ? undefined : "timer"}
-                  aria-hidden={live || undefined}
-                  aria-live={live ? undefined : "off"}
-                  aria-label={
-                    live
-                      ? undefined
-                      : remainingSeconds === null
-                        ? "Đang đồng bộ thời gian"
-                        : values
-                            .map(
-                              (value, index) =>
-                                `${value} ${countdownLabels[index]}`,
-                            )
-                            .join(", ")
-                  }
-                >
-                  {values.map((value, index) => (
-                    <div key={countdownLabels[index]} aria-hidden="true">
-                      <strong>{value}</strong>
-                      <span>{countdownLabels[index]}</span>
-                    </div>
-                  ))}
+            <p className={styles.clockHeading}>
+              {live && <span className={styles.indicator} aria-hidden="true" />}
+              {live ? "Flash Sale đã mở" : "Flash Sale tiếp theo"}
+            </p>
+            <div
+              className={styles.countdown}
+              role="timer"
+              aria-live="off"
+              aria-label={values
+                .map((value, index) => `${value} ${countdownLabels[index]}`)
+                .join(", ")}
+            >
+              {values.map((value, index) => (
+                <div key={countdownLabels[index]} aria-hidden="true">
+                  <strong>{value}</strong>
+                  <span>{countdownLabels[index]}</span>
                 </div>
-                <p className={styles.clockNote} role="status">
-                  {hasPublishedOffers
-                    ? "Chọn ưu đãi bên dưới để sao chép mã."
-                    : syncFailed
-                      ? "Đang kết nối lại để cập nhật giờ mở bán…"
-                      : live
-                        ? "Mã ưu đãi đang cập nhật."
-                        : null}
-                </p>
-              </>
-            )}
+              ))}
+            </div>
           </div>
         </header>
 
@@ -260,7 +187,6 @@ export function FlashSaleOffers() {
                     <h4 id={headingId}>Tặng miễn phí {offer.plan}</h4>
                     {"specs" in offer && <p>{offer.specs}</p>}
                     {"subtitle" in offer && <p>{offer.subtitle}</p>}
-                    {(live || ended) && <p>Chu kỳ {offer.cycle}</p>}
                   </div>
                 </div>
                 <div className={styles.freePrice}>
@@ -268,10 +194,7 @@ export function FlashSaleOffers() {
                 </div>
                 <div className={styles.freeEnd}>
                   <OfferAction
-                    ended={ended}
-                    hasOpeningDate={hasOpeningDate}
                     label={`${offer.plan} miễn phí`}
-                    offer={publishedOffers[offer.id]}
                     checkoutHref={offer.checkoutHref}
                   />
                 </div>
@@ -311,16 +234,10 @@ export function FlashSaleOffers() {
                         <h4>
                           {plan} <span className={styles.specs}>{specs}</span>
                         </h4>
-                        <p className={styles.cycle}>
-                          Chu kỳ {blackFridayVpsFlashSaleCycle}
-                        </p>
                       </div>
                       <div className={styles.ticketEnd}>
                         <OfferAction
-                          ended={ended}
-                          hasOpeningDate={hasOpeningDate}
                           label={`${plan} ${specs} giảm ${discount}%`}
-                          offer={publishedOffers[offerId]}
                           checkoutHref={checkoutHref}
                         />
                       </div>
@@ -342,14 +259,6 @@ export function FlashSaleOffers() {
             ))}
           </ul>
         </details>
-        {!ended && (
-          <noscript>
-            <p className={styles.noScript}>
-              Vui lòng bật JavaScript để xem đếm ngược và nhận mã ưu đãi khi mở
-              bán.
-            </p>
-          </noscript>
-        )}
       </div>
     </section>
   );

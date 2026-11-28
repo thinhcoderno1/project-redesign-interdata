@@ -57,10 +57,8 @@ function BlackFridayCountdown() {
   const startsAt = release?.startsAt ?? blackFridayFlashSale.startsAt;
   const openingDate = new Date(startsAt ?? NaN);
   const live = release?.status === "live";
-  const ended =
-    blackFridayFlashSale.mode === "ended" || release?.status === "ended";
   const countdown =
-    !ended && !live && remainingSeconds !== null
+    !live && remainingSeconds !== null
       ? splitCountdown(remainingSeconds)
       : null;
 
@@ -70,17 +68,11 @@ function BlackFridayCountdown() {
     <div className={styles.flashSale}>
       <a href={`${homepageBlackFriday2026Banner.href}#flash-sale`}>
         <strong>
-          {ended
-            ? "Flash Sale đã kết thúc"
-            : live
-              ? "Flash Sale Black Friday"
-              : "Flash Sale tiếp theo"}
+          {live ? "Flash Sale Black Friday" : "Flash Sale tiếp theo"}
         </strong>
-        {!ended && (
-          <time dateTime={startsAt ?? undefined}>
-            {flashSaleDateLabel.format(openingDate)}
-          </time>
-        )}
+        <time dateTime={startsAt ?? undefined}>
+          {flashSaleDateLabel.format(openingDate)}
+        </time>
         <ArrowRight size={16} aria-hidden="true" />
       </a>
       {countdown && (

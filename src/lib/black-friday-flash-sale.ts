@@ -9,6 +9,9 @@ import {
 } from "@/data/black-friday-flash-sale";
 import { getFlashSaleState } from "./flash-sale";
 
+// Flash Sale currently displays placeholders instead of codes and quantities.
+const publishFlashSaleCodes = false;
+
 const offers: Record<
   FlashSaleOfferId,
   { code: string | null; quantity: number }
@@ -49,12 +52,7 @@ export function getBlackFridayFlashSaleRelease(
   return {
     serverNow: now,
     startsAt,
-    status:
-      blackFridayFlashSale.mode === "ended"
-        ? "ended"
-        : live
-          ? "live"
-          : "upcoming",
-    offers: live ? visibleOffers : {},
+    status: live ? "live" : "upcoming",
+    offers: live && publishFlashSaleCodes ? visibleOffers : {},
   };
 }

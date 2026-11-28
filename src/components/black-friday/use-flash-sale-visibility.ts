@@ -6,8 +6,7 @@ import { getFlashSaleState } from "@/lib/flash-sale";
 
 export function useFlashSaleVisibility() {
   const [visible, setVisible] = useState(
-    blackFridayFlashSale.mode === "preview" ||
-      blackFridayFlashSale.mode === "ended",
+    blackFridayFlashSale.mode === "preview",
   );
 
   useEffect(() => {
