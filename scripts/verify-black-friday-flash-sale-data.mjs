@@ -72,7 +72,7 @@ const containsReleaseCode = (content) =>
     ...Object.values(expectedOffers).map(({ code }) => code),
     ...unpublishedCodes,
   ].some((code) => content.includes(code));
-assert.equal(data.blackFridayFlashSale.mode, "preview");
+assert.equal(data.blackFridayFlashSale.mode, "hidden");
 assert.equal(data.blackFridayFlashSale.startsAt, "2026-11-27T20:00:00+07:00");
 assert.deepEqual(data.blackFridayFlashSaleUpcomingDates, []);
 const start = Date.parse(data.blackFridayFlashSale.startsAt);
@@ -84,6 +84,23 @@ const imports = {
   "./flash-sale": load(await fs.readFile("src/lib/flash-sale.ts", "utf8")),
 };
 const { getBlackFridayFlashSaleRelease: release } = load(source, imports);
+for (const now of [start - 1, start, start + 1, start + 86400000, Date.now()]) {
+  assert.notEqual(release(now).status, "live");
+  assert.deepEqual(release(now).offers, {});
+  assert(!containsReleaseCode(JSON.stringify(release(now))));
+  assert.equal(
+    imports["./flash-sale"].getFlashSaleState(data.blackFridayFlashSale, now)
+      .visible,
+    false,
+  );
+}
+// Retain opening-boundary coverage for a future explicitly enabled round.
+const previewRelease = load(source, {
+  ...imports,
+  "@/data/black-friday": {
+    blackFridayFlashSale: { ...data.blackFridayFlashSale, mode: "preview" },
+  },
+}).getBlackFridayFlashSaleRelease;
 for (const now of [
   Date.parse("2026-11-20T11:00:00+07:00"),
   Date.parse("2026-11-23T11:00:00+07:00"),
@@ -95,16 +112,16 @@ for (const now of [
   start - 1000,
   start - 1,
 ]) {
-  assert.equal(release(now).status, "upcoming");
-  assert.deepEqual(release(now).offers, {});
-  assert(!containsReleaseCode(JSON.stringify(release(now))));
+  assert.equal(previewRelease(now).status, "upcoming");
+  assert.deepEqual(previewRelease(now).offers, {});
+  assert(!containsReleaseCode(JSON.stringify(previewRelease(now))));
 }
 for (const now of [start, start + 1, start + 86400000]) {
-  assert.equal(release(now).status, "live");
-  assert.deepEqual(release(now).offers, expectedOffers);
+  assert.equal(previewRelease(now).status, "live");
+  assert.deepEqual(previewRelease(now).offers, expectedOffers);
   assert(
     !unpublishedCodes.some((code) =>
-      JSON.stringify(release(now)).includes(code),
+      JSON.stringify(previewRelease(now)).includes(code),
     ),
   );
 }
@@ -164,7 +181,11 @@ assert.deepEqual(hidden.getBlackFridayFlashSaleRelease(start).offers, {});
 const invalid = load(source, {
   ...imports,
   "@/data/black-friday": {
-    blackFridayFlashSale: { ...data.blackFridayFlashSale, startsAt: null },
+    blackFridayFlashSale: {
+      ...data.blackFridayFlashSale,
+      mode: "preview",
+      startsAt: null,
+    },
   },
 });
 assert.deepEqual(invalid.getBlackFridayFlashSaleRelease(start).offers, {});
@@ -241,5 +262,5 @@ if (process.argv.includes("--built")) {
   );
 }
 console.log(
-  "Flash Sale data: November 27 opening boundary, VPS tiers, unpublished codes, registration links and no-store response passed.",
+  "Flash Sale data: ended campaign hides codes at all times; optional opening boundary, VPS tiers, registration links and no-store response passed.",
 );
